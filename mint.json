@@ -25,17 +25,30 @@
     "name": "Dashboard",
     "url": "https://dashboard.mintlify.com"
   },
+  "versions": ["English","한국어"],
   "tabs": [
     {
       "name": "API Reference",
-      "url": "api-reference"
+      "url": "api-reference",
+      "version": "English"
+    },
+    {
+      "name": "Changelog",
+      "url": "changelog/en",
+      "version": "English"
+    },
+    {
+      "name": "Changelog",
+      "url": "changelog/ko",
+      "version": "한국어"
     }
   ],
   "anchors": [
     {
       "name": "Documentation",
       "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs"
+      "url": "https://mintlify.com/docs",
+      "version": "English"
     },
     {
       "name": "Community",
@@ -55,7 +68,8 @@
         "introduction",
         "quickstart",
         "development"
-      ]
+      ],
+      "version": "English"
     },
     {
       "group": "Essentials",
@@ -66,13 +80,15 @@
         "essentials/settings",
         "essentials/navigation",
         "essentials/reusable-snippets"
-      ]
+      ],
+       "version": "English"
     },
     {
       "group": "API Documentation",
       "pages": [
         "api-reference/introduction"
-      ]
+      ],
+       "version": "English"
     },
     {
       "group": "Endpoint Examples",
@@ -80,12 +96,35 @@
         "api-reference/endpoint/get",
         "api-reference/endpoint/create",
         "api-reference/endpoint/delete"
-      ]
+      ],
+       "version": "English"
+    },
+    {
+      "group": "Changelog",
+      "pages": [
+        "changelog/en/overview"
+      ],
+       "version": "English"
+    },
+    {
+      "group": "변경 로그",
+      "pages": [
+        "changelog/ko/overview"
+      ],
+       "version": "한국어"
     }
   ],
   "footerSocials": {
     "x": "https://x.com/mintlify",
     "github": "https://github.com/mintlify",
     "linkedin": "https://linkedin.com/company/mintlify"
+  },
+  "feedback": {
+    "thumbsRating": true,
+    "suggestEdit": true,
+    "raiseIssue": true
+  },
+  "search": {
+    "prompt": "Search"
   }
 }

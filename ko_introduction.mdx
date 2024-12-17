@@ -1,0 +1,59 @@
+---
+mode: 'custom'
+---
+
+export function openSearch() {
+  document.getElementById('search-bar-entry').click();
+}
+
+<div
+  className="relative w-full flex items-center justify-center"
+  style={{ height: '24rem', backgroundColor: '#00020F', overflow: 'hidden' }}
+>
+  <div style={{ flex: 'none' }}>
+    <img
+    src="/images/image.svg"
+    style={{ height: '400px', width: '2000px', pointerEvents: 'none' }}
+    />
+  </div>
+</div>
+<div style={{marginTop: '6rem', marginBottom: '8rem', maxWidth: '70rem', marginLeft: 'auto',
+    marginRight: 'auto', paddingLeft: '1.25rem',
+    paddingRight: '1.25rem' }}>
+
+<div
+  style={{
+    textAlign: 'center',
+    fontSize: '24px',
+    fontWeight: '600',
+    color: '#0064FF',
+    marginBottom: '3rem',
+    topMargin: '-1rem'
+  }}
+>
+  Choose a topic below or simply{' '}
+  <span className="text-primary">get started</span>
+</div>
+
+<CardGroup cols={3}>
+  <Card title="가이드" icon="book-open" href="/guides/quickstart">
+    Practical guides and best practices to get you up and running quickly.
+  </Card>
+  <Card title="Reference" icon="code-simple" href="/reference">
+    Comprehensive details about the Mintlify API.
+  </Card>
+  <Card title="Examples" icon="grid-round" iconType="solid" href="/examples">
+    Hands-on examples of Mintlify documentation. 
+  </Card>
+  <Card title="Integrations" icon="link-simple" href="/guides/integrations">
+    Mintlify's growing number of third-party integrations.
+  </Card>
+  <Card title="Tools" icon="wrench" href="/tools">
+    Practical toolkits for building your documentation
+  </Card>
+  <Card title="Releases" icon="party-horn" href="/release-notes">
+    News about features and changes in Mintlify.
+  </Card>
+</CardGroup>
+
+</div>

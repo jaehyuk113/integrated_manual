@@ -7,12 +7,12 @@
   },
   "favicon": "/favicon.svg",
   "colors": {
-    "primary": "#0D9373",
-    "light": "#07C983",
-    "dark": "#0D9373",
+    "primary": "#0064FF",
+    "light": "#0064FF",
+    "dark": "#0064FF",
     "anchors": {
-      "from": "#0D9373",
-      "to": "#07C983"
+      "from": "#00D9D7",
+      "to": "#0064FF"
     }
   },
   "topbarLinks": [
@@ -23,7 +23,7 @@
   ],
   "topbarCtaButton": {
     "name": "Dashboard",
-    "url": "https://dashboard.mintlify.com"
+    "url": "https://idcheck.argosidentity.com"
   },
   "versions": ["English","한국어"],
   "tabs": [
@@ -38,30 +38,71 @@
       "version": "English"
     },
     {
-      "name": "Changelog",
+      "name": "API Reference",
+      "url": "api-reference/ko",
+      "version": "한국어"
+    },
+    {
+      "name": "변경 로그",
       "url": "changelog/ko",
       "version": "한국어"
     }
   ],
   "anchors": [
     {
-      "name": "Documentation",
-      "icon": "book-open-cover",
-      "url": "https://mintlify.com/docs",
+      "name": "User Guide",
+      "icon": "book",
+      "url": "https://support.argosidentity.com/hc/en-us",
       "version": "English"
-    },
-    {
-      "name": "Community",
-      "icon": "slack",
-      "url": "https://mintlify.com/community"
     },
     {
       "name": "Blog",
       "icon": "newspaper",
-      "url": "https://mintlify.com/blog"
+      "url": "https://blog.argosidentity.com/",
+      "version": "English"
+    },
+    {
+      "name": "Contact Support",
+      "icon": "messages",
+      "url": "https://support.argosidentity.com/hc/en-us/requests/new",
+      "version": "English"
+    },
+    {
+      "name": "사용자 가이드",
+      "icon": "book",
+      "url": "https://support.argosidentity.com/hc/ko",
+      "version": "한국어"
+    },
+    {
+      "name": "블로그",
+      "icon": "newspaper",
+      "url": "https://blog.ko.argosidentity.com/",
+      "version": "한국어"
+    },
+    {
+      "name": "지원",
+      "icon": "messages",
+      "url": "https://support.argosidentity.com/hc/ko/requests/new",
+      "version": "한국어"
     }
   ],
+  "primaryTab": {
+    "name": "Welcome"
+  },
   "navigation": [
+    {
+      "group": "",
+      "pages": [
+        "introduction"
+      ],
+      "version": "English"
+    },
+    {
+      "group":"",
+      "pages": [
+        "ko_introduction"],
+      "version": "한국어"
+    },
     {
       "group": "Get Started",
       "pages": [
@@ -115,9 +156,8 @@
     }
   ],
   "footerSocials": {
-    "x": "https://x.com/mintlify",
-    "github": "https://github.com/mintlify",
-    "linkedin": "https://linkedin.com/company/mintlify"
+    "linkedin": "https://www.linkedin.com/company/argosidentity/",
+    "youtube": "https://www.youtube.com/@argosidentity"
   },
   "feedback": {
     "thumbsRating": true,

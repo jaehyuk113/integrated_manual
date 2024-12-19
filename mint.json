@@ -173,14 +173,14 @@
     {
       "group": "Code and Formats",
       "pages": [
-        "api-reference/code-and-formats/en/introduction2"
+        "api-reference/code-and-formats/en/test"
       ],
        "version": "English"
     },
     {
       "group": "Code and Formats",
       "pages": [
-        "api-reference/code-and-formats/ko/introduction2"
+        "api-reference/code-and-formats/ko/test"
       ],
        "version": "한국어"
     },
@@ -211,4 +211,5 @@
   "search": {
     "prompt": "Search"
   }
+    
 }

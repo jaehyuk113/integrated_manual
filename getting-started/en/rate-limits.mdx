@@ -1,0 +1,23 @@
+---
+mode: 'default'
+title: API Rate Limits
+description: Brief description of what ID Check is and its purpose. Key use cases (e.g., KYC, compliance, user verification).
+
+---
+
+## api Limits
+
+To ensure optimal performance and fair usage of our services, we enforce the following API rate limits:
+
+Request Rate Limits
+Per-Second Limit:
+
+5,000 requests/second
+Each API key can make up to 5,000 requests per second across all endpoints.
+Daily Limit:
+
+100,000 requests/day
+Each API key is allowed a maximum of 100,000 requests in a 24-hour period.
+Rate Limiting Details
+Rate limits are applied globally across all endpoints (GET, POST, PUT, PATCH, and DELETE).
+If the limit is exceeded, the API will return a 429 Too Many Requests response, with a Retry-After header indicating when you can retry.

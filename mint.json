@@ -132,14 +132,18 @@
     {
       "group": "Get Started",
       "pages": [
-        "getting-started/en/introduction"
+        "getting-started/en/introduction",
+        "getting-started/en/supported-browsers-and-devices",
+        "getting-started/en/rate-limits"
       ],
       "version": "English"
     },
     {
       "group": "시작하기",
       "pages": [
-        "getting-started/ko/introduction"
+        "getting-started/ko/introduction",
+        "getting-started/ko/supported-browsers-and-devices",
+        "getting-started/ko/rate-limits"
       ],
       "version": "한국어"
     },
@@ -210,6 +214,11 @@
   },
   "search": {
     "prompt": "Search"
-  }
+  },
+  "mdx": {
+    "remarkPlugins": [],
+    "rehypePlugins": []
+  },
+  "reactStrictMode": true
     
 }

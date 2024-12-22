@@ -1,35 +1,10 @@
 ---
-title: Country Codes
-description: List of country codes with search functionality
+title: '검색 가능한 카드 목록'
+description: '카드 목록을 검색할 수 있는 페이지'
 ---
 
-# Country Codes
+import CountrySearch from '/snippets/CountrySearch';
 
-<div id="country-table-container">
-  <input
-    type="text"
-    id="country-search"
-    placeholder="Search by country name"
-    style={{marginBottom: '10px', padding: '5px'}}
-  />
-  <table id="country-table">
-    <thead>
-      <tr>
-        <th>Country Name</th>
-        <th>Country Code</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr><td>United States</td><td>US</td></tr>
-      <tr><td>United Kingdom</td><td>UK</td></tr>
-      <tr><td>South Korea</td><td>KR</td></tr>
-      <tr><td>Japan</td><td>JP</td></tr>
-      <tr><td>Germany</td><td>DE</td></tr>
-      <tr><td>France</td><td>FR</td></tr>
-      <tr><td>Canada</td><td>CA</td></tr>
-      <tr><td>Australia</td><td>AU</td></tr>
-      <tr><td>Brazil</td><td>BR</td></tr>
-      <tr><td>China</td><td>CN</td></tr>
-    </tbody>
-  </table>
-</div>
+# 검색 가능한 카드 목록
+
+<CountrySearch />

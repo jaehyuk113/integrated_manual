@@ -28,51 +28,56 @@
   "versions": ["English","한국어"],
   "tabs": [
     {
-      "name" : "Getting Started",
-      "url" : "getting-started/en",
-      "version" : "English"
+      "name": "Welcome",
+      "url": "introduction",
+      "version": "English"
     },
     {
-      "name" : "시작하기",
-      "url" : "getting-started/ko",
-      "version" : "한국어"
+      "name": "Getting Started",
+      "url": "getting-started/en",
+      "version": "English"
     },
     {
       "name": "API Reference",
-      "url": "api-reference",
+      "url": "api-reference/api-reference-guide/en",
       "version": "English"
     },
     {
-      "name": "API 레퍼런스",
-      "url": "api-reference",
-      "version": "한국어"
-    },
-
-    {
-      "name": "API Reference",
-      "url": "api-reference/ko",
-      "version": "한국어"
-    },
-    {
-      "name":"Resources",
-      "url" : "resources/en",
+      "name": "Webhooks",
+      "url": "webhooks/en",
       "version": "English"
     },
     {
-      "name":"Resources",
-      "url" : "resources/ko",
+      "name":"Changelog",
+      "url":"changelog/en",
+      "version":"English"
+    },
+    {
+      "name": "Welcome",
+      "url": "ko_introduction",
       "version": "한국어"
     },
     {
-      "name": "Changelog",
-      "url": "changelog/en",
-      "version": "English"
+      "name":"시작하기",
+      "url":"getting-started/ko",
+      "version":"한국어"
     },
     {
-      "name": "변경 로그",
-      "url": "changelog/ko",
+      "name": "API 참조",
+      "url": "api-reference/api-reference-guide/ko",
       "version": "한국어"
+    },
+    {
+      "name":"웹훅 이벤트",
+      "url":"webhooks/ko",
+      "version":"한국어"
+    },
+    {
+      "name":"변경 로그",
+      "url":"changelog/ko",
+      "version":"한국어"
     }
+    
   ],
   "anchors": [
     {
@@ -115,92 +120,135 @@
   "primaryTab": {
     "name": "Welcome"
   },
+
   "navigation": [
     {
-      "group": "",
-      "pages": [
+      "group":"Welcome",
+      "pages":[
         "introduction"
       ],
-      "version": "English"
+      "version":"English"
     },
     {
-      "group":"",
+      "group": "Getting Started",
       "pages": [
-        "ko_introduction"],
-      "version": "한국어"
-    },
-    {
-      "group": "Get Started",
-      "pages": [
-        "getting-started/en/introduction",
-        "getting-started/en/supported-browsers-and-devices",
-        "getting-started/en/rate-limits"
+         "getting-started/en/introduction",
+         "getting-started/en/recommended-browsers-and-devices",
+         "getting-started/en/rate-limits"
       ],
       "version": "English"
     },
     {
-      "group": "시작하기",
+      "group": "Liveform URL",
       "pages": [
-        "getting-started/ko/introduction",
-        "getting-started/ko/supported-browsers-and-devices",
-        "getting-started/ko/rate-limits"
+        "getting-started/en/liveform-url/introduction",
+        "getting-started/en/liveform-url/data-injection-with-custom-fields",
+        "getting-started/en/liveform-url/querystring-and-token-guide"
       ],
-      "version": "한국어"
+      "version": "English"
     },
     {
-      "group": "Essentials",
+      "group": "Security",
       "pages": [
-        "essentials/markdown",
-        "essentials/code",
-        "essentials/images",
-        "essentials/settings",
-        "essentials/navigation",
-        "essentials/reusable-snippets"
+          "getting-started/en/encrypt-and-decrpyt-data/overview"
       ],
-       "version": "English"
+      "version": "English"
     },
     {
-      "group": "API Documentation",
+      "group": "API Reference",
       "pages": [
-        "api-reference/api-reference-guide/en/introduction",
-        "api-reference//api-reference-guide/en/introduction2"
+          "api-reference/api-reference-guide/en/overview",
+          {
+              "group": "Submission",
+              "pages": ["api-reference/api-reference-guide/en/post-submission"]
+          },
+          {
+            "group": "Image",
+            "pages": [ "api-reference/api-reference-guide/en/aml"]
+          },
+          {
+            "group": "AML",
+            "pages": [ "api-reference/api-reference-guide/en/image"]
+          }
       ],
-       "version": "English"
+      "version": "English"
     },
     {
-      "group": "API Documentation",
+      "group": "Webhooks",
       "pages": [
-        "api-reference/api-reference-guide/ko/introduction"
-      ],
-       "version": "한국어"
-    },
-    {
-      "group": "Code and Formats",
-      "pages": [
-        "api-reference/code-and-formats/en/test"
-      ],
-       "version": "English"
-    },
-    {
-      "group": "Code and Formats",
-      "pages": [
-        "api-reference/code-and-formats/ko/test"
-      ],
-       "version": "한국어"
+        "webhooks/en/overview"],
+      "version": "English"
     },
     {
       "group": "Changelog",
       "pages": [
         "changelog/en/overview"
       ],
-       "version": "English"
+      "version": "English"
     },
     {
-      "group": "변경 로그",
-      "pages": [
-        "changelog/ko/overview"
+      "group":"Welcome",
+      "pages":[
+        "introduction"
       ],
-       "version": "한국어"
+      "version":"한국어"
+    },
+    {
+      "group": "시작하기",
+      "pages": [
+         "getting-started/ko/introduction",
+         "getting-started/ko/recommended-browsers-and-devices",
+         "getting-started/ko/rate-limits"
+      ],
+      "version": "한국어"
+    },
+    {
+      "group": "라이브폼 URL",
+      "pages": [
+        "getting-started/ko/liveform-url/introduction",
+        "getting-started/ko/liveform-url/data-injection-with-custom-fields",
+        "getting-started/ko/liveform-url/querystring-and-token-guide"
+      ],
+      "version": "한국어"
+    },
+    {
+      "group": "보안",
+      "pages": [
+          "getting-started/ko/encrypt-and-decrpyt-data/overview"
+      ],
+      "version": "한국어"
+    },
+    {
+      "group": "API Reference",
+      "pages": [
+          "api-reference/api-reference-guide/ko/overview",
+          {
+              "group": "Submission",
+              "pages": ["api-reference/api-reference-guide/ko/post-submission"]
+          },
+          {
+            "group": "Image",
+            "pages": [ "api-reference/api-reference-guide/ko/aml"]
+          },
+          {
+            "group": "AML",
+            "pages": [ "api-reference/api-reference-guide/ko/image"]
+          }
+      ],
+      "version": "한국어"
+    },
+    {
+      "group": "Webhooks",
+      "pages": [
+        "webhooks/ko/overview"],
+      "version": "한국어"
+    },
+    {
+      "group":"변경 로그",
+      "pages":[
+         "changelog/ko/overview"
+      ],
+      "version":"한국어"
     }
   ],
   "footerSocials": {
@@ -214,11 +262,6 @@
   },
   "search": {
     "prompt": "Search"
-  },
-  "mdx": {
-    "remarkPlugins": [],
-    "rehypePlugins": []
-  },
-  "reactStrictMode": true
+  }
     
 }

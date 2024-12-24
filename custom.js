@@ -1,34 +1,43 @@
-document.addEventListener('DOMContentLoaded', function () {
-  const input = document.getElementById('countryFilter');
-  const table = document.querySelector('table');
-  if (!input || !table) {
-      console.error("Input field or table not found.");
-      return;
+console.log("custom.js is loaded and executed");
+
+function filterCards() {
+  console.log("filterCards function called");
+  const searchInput = document.getElementById('search-input');
+  const cardGroup = document.querySelector('.card-group');
+  
+  console.log("Search input:", searchInput);
+  console.log("Card group:", cardGroup);
+
+  if (!searchInput || !cardGroup) {
+    console.error('Search input or card group not found');
+    return;
   }
 
-  const rows = table.querySelectorAll('tbody tr');
-  if (rows.length === 0) {
-      console.error("No rows found in the table.");
+  const searchTerm = searchInput.value.toLowerCase();
+  console.log("Search term:", searchTerm);
+
+  const cards = cardGroup.querySelectorAll('.card');
+  console.log("Number of cards found:", cards.length);
+
+  cards.forEach(card => {
+    const titleElement = card.querySelector('h3');
+    if (!titleElement) {
+      console.error('Title element not found in card');
       return;
-  }
-
-  input.addEventListener('keyup', function () {
-      const filter = input.value.toUpperCase();
-
-      rows.forEach(row => {
-          const countryCode = row.querySelector('td:nth-child(1)').textContent.toUpperCase();
-          const countryISO = row.querySelector('td:nth-child(2)').textContent.toUpperCase();
-          const countryName = row.querySelector('td:nth-child(3)').textContent.toUpperCase();
-
-          if (
-              countryCode.includes(filter) ||
-              countryISO.includes(filter) ||
-              countryName.includes(filter)
-          ) {
-              row.style.display = '';
-          } else {
-              row.style.display = 'none';
-          }
-      });
+    }
+    const title = titleElement.textContent.toLowerCase();
+    console.log("Card title:", title);
+    
+    if (title.includes(searchTerm)) {
+      card.style.display = '';
+      console.log("Showing card:", title);
+    } else {
+      card.style.display = 'none';
+      console.log("Hiding card:", title);
+    }
   });
-});
+}
+
+if (typeof window !== 'undefined') {
+  window.filterCards = filterCards;
+}

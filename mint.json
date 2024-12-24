@@ -48,6 +48,11 @@
       "version": "English"
     },
     {
+      "name":"Verify",
+      "url":"verify/en",
+      "version":"English"
+    },
+    {
       "name":"Changelog",
       "url":"changelog/en",
       "version":"English"
@@ -70,6 +75,11 @@
     {
       "name":"웹훅 이벤트",
       "url":"webhooks/ko",
+      "version":"한국어"
+    },
+    {
+      "name":"Verify",
+      "url":"verify/ko",
       "version":"한국어"
     },
     {
@@ -155,21 +165,28 @@
       "version": "English"
     },
     {
-      "group": "API Reference",
+      "group": "Submission",
+      "pages":[
+        "api-reference/api-reference-guide/en/post-submission",
+        "api-reference/api-reference-guide/en/patch-submission",
+        "api-reference/api-reference-guide/en/get-submission",
+        "api-reference/api-reference-guide/en/delete-submission"
+      ],
+      "version": "English"
+    },
+    {
+      "group" : "Image",
       "pages": [
-          "api-reference/api-reference-guide/en/overview",
-          {
-              "group": "Submission",
-              "pages": ["api-reference/api-reference-guide/en/post-submission"]
-          },
-          {
-            "group": "Image",
-            "pages": [ "api-reference/api-reference-guide/en/aml"]
-          },
-          {
-            "group": "AML",
-            "pages": [ "api-reference/api-reference-guide/en/image"]
-          }
+        "api-reference/api-reference-guide/en/get-image",
+        "api-reference/api-reference-guide/en/put-image"
+      ],
+      "version": "English"
+    },
+    {
+      "group" : "AML",
+      "pages": [
+        "api-reference/api-reference-guide/en/get-aml-report",
+        "api-reference/api-reference-guide/en/post-aml"
       ],
       "version": "English"
     },
@@ -177,6 +194,12 @@
       "group": "Webhooks",
       "pages": [
         "webhooks/en/overview"],
+      "version": "English"
+    },
+    {
+      "group": "Verify",
+      "pages": [
+        "verify/en/overview"],
       "version": "English"
     },
     {
@@ -219,28 +242,49 @@
       "version": "한국어"
     },
     {
-      "group": "API Reference",
+      "group": "Submission",
+      "pages":[
+        "api-reference/api-reference-guide/ko/post-submission",
+        "api-reference/api-reference-guide/ko/patch-submission",
+        "api-reference/api-reference-guide/ko/get-submission",
+        "api-reference/api-reference-guide/ko/delete-submission"
+      ],
+      "version": "한국어"
+    },
+    {
+      "group" : "Image",
       "pages": [
-          "api-reference/api-reference-guide/ko/overview",
-          {
-              "group": "Submission",
-              "pages": ["api-reference/api-reference-guide/ko/post-submission"]
-          },
-          {
-            "group": "Image",
-            "pages": [ "api-reference/api-reference-guide/ko/aml"]
-          },
-          {
-            "group": "AML",
-            "pages": [ "api-reference/api-reference-guide/ko/image"]
-          }
+        "api-reference/api-reference-guide/ko/get-image",
+        "api-reference/api-reference-guide/ko/put-image"
+      ],
+      "version": "한국어"
+    },
+    {
+      "group" : "AML",
+      "pages": [
+        "api-reference/api-reference-guide/ko/get-aml-report",
+        "api-reference/api-reference-guide/ko/post-aml"
       ],
       "version": "한국어"
     },
     {
       "group": "Webhooks",
       "pages": [
-        "webhooks/ko/overview"],
+        "webhooks/ko/overview",
+        "webhooks/ko/idcheck-approved",
+        "webhooks/ko/idcheck-rejected",
+        "webhooks/ko/idcheck-updated",
+        "webhooks/ko/idcheck-delete",
+        "webhooks/ko/idcheck-submit",
+        "webhooks/ko/idcheck-injection",
+        "webhooks/ko/idcheck-aml-result"
+      ],
+      "version": "한국어"
+    },
+    {
+      "group": "Verify",
+      "pages": [
+        "verify/ko/overview"],
       "version": "한국어"
     },
     {

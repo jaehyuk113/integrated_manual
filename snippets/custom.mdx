@@ -1,0 +1,15 @@
+export function filterCards() {
+  const input = document.getElementById('search-bar-entry');
+  const filter = input.value.toUpperCase();
+  const cards = document.getElementsByClassName('card');
+
+  for (let i = 0; i < cards.length; i++) {
+    const title = cards[i].getElementsByClassName('card-title')[0];
+    const txtValue = title.textContent || title.innerText;
+    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+      cards[i].style.display = "";
+    } else {
+      cards[i].style.display = "none";
+    }
+  }
+}

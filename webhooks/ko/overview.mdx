@@ -1,47 +1,107 @@
 ---
 mode: 'default'
 title: 웹훅 이벤트
-description: Brief description of what ID Check is and its purpose. Key use cases (e.g., KYC, compliance, user verification).
+description: ARGOS ID Check의 KYC 프로세스 상태 변경을 실시간으로 확인하세요. 웹훅을 통해 즉각적인 업데이트를 받아볼 수 있습니다.
 
 ---
 
-## Prerequisites
 
-ARGOS provides ID Check, a dedicated submission page for each project, accessible via a unique URL. To obtain the URL:
+## 웹훅이란?
 
-<Steps>
-  <Step title="Log in to the dashboard.">
-      <Card title="Open the Dashboard" icon="link" href="https://idcheck.argosidentity.com">
+웹훅은 특정 이벤트가 발생했을 때 실시간으로 알림을 받을 수 있는 기능입니다. KYC 데이터가 변경되거나 새로운 정보가 추가될 때마다 지정된 URL로 자동으로 알림을 보냅니다.
+
+## 1. 웹훅 이벤트 타입을 알아보세요
+ARGOS Identity 웹훅으로 다음과 같은 실시간 업데이트를 받아보세요
+
+<CardGroup cols={4}>
+  <Card title="Approved" icon="badge-check" href="/webhooks/ko/idcheck-approved">
   </Card>
+  <Card title="Rejected" icon="ban" href="/webhooks/ko/idcheck-rejected">
 
+  </Card>
+  <Card title="Updated" icon="pen-to-square" href="/webhooks/ko/idcheck-updated">
+
+  </Card>
+  <Card title="Delete" icon="trash" href="/webhooks/ko/idcheck-delete">
+
+  </Card>
+    <Card title="Submit" icon="plus" href="/webhooks/ko/idcheck-submit">
+
+  </Card>
+    <Card title="Data injection" icon="table" href="/webhooks/ko/idcheck-injection">
+
+  </Card>
+    <Card title="AML 결과" icon="radar" href="/webhooks/ko/idcheck-aml-result">
+
+  </Card>
+</CardGroup>
+
+
+웹훅을 활용하면 KYC 프로세스의 모든 단계를 실시간으로 모니터링하고, 필요한 조치를 즉시 취할 수 있어 고객 온보딩 프로세스를 더욱 효율적으로 관리할 수 있습니다.
+
+## 2. 웹훅 이벤트를 등록하세요
+
+<img height="200" src="/images/webhooks/webhook.png" />
+<Steps>
+  <Step title="대시보드 로그인">
+    ID Check [대시보드](https://idcheck.argosidentity.com/)에 로그인합니다.
   </Step>
-  <Step title="Navigate to Settings -> Access Management to locate the URL.">
+  <Step title="설정 메뉴 접근">
+    대시보드 상단 네비게이션 바에서 `설정` 메뉴를 클릭합니다.
+  </Step>
+  <Step title="Access Management 페이지 이동">
+    좌측 사이드바의 `General` 섹션에서 `Access Management`를 선택합니다.
+  </Step>
+  <Step title="웹훅 URL 입력">
+    `Webhook URL` 섹션을 찾아 입력 필드에 원하는 웹훅 주소를 입력합니다. 입력한 URL은 `HTTPS` 프로토콜을 사용해야 하며, 유효한 형식이어야 합니다.
+  </Step>
+  <Step title="설정 저장">
+    페이지 하단의 `저장` 버튼을 클릭하여 변경사항을 적용합니다.
   </Step>
 </Steps>
 
-## Options for Using ID Check in Verification Processes
 
-ID Check supports two methods for completing identity verification
 
-<img
-  src="/images/getting-started_banner.png"
-  alt="Hero Light"
-/>
+## 3. 안전한 데이터 전송을 위한 암호화 옵션을 활성화하세요
+ARGOS Identity는 웹훅을 통해 전송되는 민감한 KYC 데이터를 보호하기 위해 암호화 옵션을 제공합니다. 이 기능을 활성화하면 모든 웹훅 데이터가 자동으로 암호화되어 더욱 안전한 정보 교환이 가능해집니다.
+
+
+### a. 암호화된 웹훅 데이터는 어떤 모습인가요?
+암호화가 적용된 웹훅 응답은 다음과 같은 형식으로 전달됩니다:
+
+
+```json data-encrpyted.json
+{
+  "response": {
+    "body": "encrypted-string"
+  }
+}
+
+```
+
+
+여기서 `encrypted-string`은 원본 데이터를 암호화한 결과입니다.
+
+### b. 암호화 옵션을 쉽게 설정하세요
+
+<img height="200" src="/images/webhooks/secure-data-transfer.png" />
 
 <Steps>
-  <Step title="Using a PC">
-      <img
-    src="/images/getting-started_web.png"
-    alt="Hero Light"
-  />
-  1. Open the ID Check URL on your computer.
-  2. A QR code will be displayed.
-  3. Scan the QR code with a mobile device to access the ID Check page in a mobile web browser.
+  <Step title="대시보드 로그인">
+    ID Check [대시보드](https://idcheck.argosidentity.com/)에 로그인합니다.
   </Step>
-  <Step title="Using a Mobile Device">
-    <img
-  src="/images/getting-started_mobile.png"
-  alt="Hero Light"/>
-  Link the URL to the event in your app where user ID verification is required. This will allow users to open the ID Check page directly.
+  <Step title="설정 메뉴 접근">
+    대시보드 상단 네비게이션 바에서 `설정` 메뉴를 클릭합니다.
+  </Step>
+  <Step title="Access Management 페이지 이동">
+    좌측 사이드바의 `General` 섹션에서 `Access Management`를 선택합니다.
+  </Step>
+  <Step title="안전한 데이터 전송 옵션 활성화">
+    안전한 데이터 전송" 옵션을 켭니다.
+  </Step>
+  <Step title="설정 저장">
+    페이지 하단의 `저장` 버튼을 클릭하여 변경사항을 적용합니다.
   </Step>
 </Steps>
+
+이제 모든 웹훅 데이터가 암호화되어 전송되므로, KYC 프로세스의 각 단계에서 발생하는 중요한 정보를 더욱 안전하게 주고받을 수 있습니다.

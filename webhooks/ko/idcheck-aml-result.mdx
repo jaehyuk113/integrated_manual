@@ -1,47 +1,87 @@
 ---
 mode: 'default'
 title: AML 결과
-description: Brief description of what ID Check is and its purpose. Key use cases (e.g., KYC, compliance, user verification).
+description: 이 이벤트는 Anti-Money Laundering (AML) 스크리닝 결과가 확인될 때 트리거됩니다. AML 검사는 KYC 과정의 핵심 요소로, 잠재적 금융 범죄 위험을 평가합니다. 이 웹훅을 통해 실시간으로 AML 스크리닝 결과를 수신하여 즉각적인 조치를 취할 수 있습니다.
 
 ---
 
-## Prerequisites
+<Note>AML 스크리닝은 KYC 승인 후에만 수행됩니다. KYC가 승인된 경우에만 AML 스크리닝이 진행되며, 그 결과와 함께 submission 정보가 반환됩니다. KYC가 거절된 경우에는 AML 스크리닝이 수행되지 않습니다.</Note>
 
-ARGOS provides ID Check, a dedicated submission page for each project, accessible via a unique URL. To obtain the URL:
 
-<Steps>
-  <Step title="Log in to the dashboard.">
-      <Card title="Open the Dashboard" icon="link" href="https://idcheck.argosidentity.com">
-  </Card>
+```json aml-result-webhook-sample.json
 
-  </Step>
-  <Step title="Navigate to Settings -> Access Management to locate the URL.">
-  </Step>
-</Steps>
+{
+	"webhook_trigger":"aml",
+	"submission_id":"string",
+	"email":"sample@test.com",
+	"userid":"test",
+	"cf":{
+		"cf1":"cf1",
+		"cf2":"cf2",
+		"cf3":"cf3"
+	},
+	"aml_result":{
+		"currentstatus":"Not Screened",
+		"risk_level_summary":"Not Screened"
+	},
+	"tokenId": "test"
+}
+```
 
-## Options for Using ID Check in Verification Processes
+<ResponseField name="webhook_trigger" type="string">
+  웹훅 이벤트 유형 - `aml`은 AML 스크리닝 결과가 준비되었음을 나타냄
+</ResponseField>
 
-ID Check supports two methods for completing identity verification
 
-<img
-  src="/images/getting-started_banner.png"
-  alt="Hero Light"
-/>
+<ResponseField name="submission_id" type="string" >
+  KYC 제출 건별 고유 식별자
+</ResponseField>
 
-<Steps>
-  <Step title="Using a PC">
-      <img
-    src="/images/getting-started_web.png"
-    alt="Hero Light"
-  />
-  1. Open the ID Check URL on your computer.
-  2. A QR code will be displayed.
-  3. Scan the QR code with a mobile device to access the ID Check page in a mobile web browser.
-  </Step>
-  <Step title="Using a Mobile Device">
-    <img
-  src="/images/getting-started_mobile.png"
-  alt="Hero Light"/>
-  Link the URL to the event in your app where user ID verification is required. This will allow users to open the ID Check page directly.
-  </Step>
-</Steps>
+<ResponseField name="email" type="string" >
+  KYC 제출자 이메일 주소
+</ResponseField>
+
+
+<ResponseField name="userid" type="string" >
+  고객사에서 정의한 KYC 제출자 고유 식별자
+</ResponseField>
+
+
+<ResponseField name="cf" type="object">
+	사용자 정의 필드 (cf1, cf2, cf3) 데이터를 포함하는 객체
+  <Expandable title="properties">
+    <ResponseField name="cf1" type="string">
+      사용자 정의 필드 1의 값
+    </ResponseField>
+
+    <ResponseField name="cf2" type="boolean">
+      사용자 정의 필드 2의 값
+    </ResponseField>
+    <ResponseField name="cf3" type="boolean">
+      사용자 정의 필드 3의 값
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="aml_result" type="object">
+	사용자 정의 필드 (cf1, cf2, cf3) 데이터를 포함하는 객체
+  <Expandable title="properties">
+    <ResponseField name="currentstatus" type="string">
+      AML 스크리닝 최종 결과. 가능한 값: `Not Screened`, `Red Flag`
+    </ResponseField>
+
+    <ResponseField name="risk_level_summary" type="boolean">
+      AML 위험 수준 요약. 가능한 값: `Not Screened`, `HIGH`, `MEDIUM`, `LOW`
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+
+
+<ResponseField name="tokenId" type="string" >
+  비공개 모드의 라이브 폼 제출 시 사용된 토큰 ID
+</ResponseField>
+
+
+
+

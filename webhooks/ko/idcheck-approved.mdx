@@ -1,47 +1,201 @@
 ---
 mode: 'default'
-title: Approved
-description: Brief description of what ID Check is and its purpose. Key use cases (e.g., KYC, compliance, user verification).
+title: Approved (승인)
+description: 이 이벤트는 KYC(Know Your Customer) 제출이 승인될 때 트리거될테야. 승인은 자동화된 시스템 검증을 통과하거나 수동 검토 후 이루어질 수 있습니다. 이 이벤트는 KYC 프로세스가 성공적으로 완료되었음을 나타내며, 사용자 계정 활성화나 서비스 접근 권한 부여 등의 후속 조치를 시작할 수 있는 신호가 됩니다.
 
 ---
 
-## Prerequisites
+```json approved-webhook-sample.json
 
-ARGOS provides ID Check, a dedicated submission page for each project, accessible via a unique URL. To obtain the URL:
+{
+    "webhook_trigger": "approved",
+    "kyc_result": {
+      "status": "string",
+      "updated_at": "string",
+      "created_at": "string",
+      "kyc_result_at": "string",
+      "pending_at" : "string",
+      "reviewer": "string"
+    },
+    "applicant_id": "string",
+    "submission_id": "string",
+    "email": "string",
+    "tokenId" : "string",
+    "cf": {
+      "cf1": "string",
+      "cf2": "string",
+      "cf3": "string"
+    },
+    "userid": "string",
+    "age_group" : "string",
+    "gender": "string",
+    "date_of_birth": "string",
+    "nationality": "string",
+    "ipAddress": "string",
+    "fullName": "string",
+    "idType": "string",
+    "issuingCountry": "string",
+    "issueDate": "string",
+    "expireDate": "string",
+    "identityNumber" : "string",
+    "documentNumber" : "string",
+    "additional_list" : [{
+        "answer" : "string",
+        "inputValue" : "string",
+        "blockType" : "string"
+    },...]
+  }
 
-<Steps>
-  <Step title="Log in to the dashboard.">
-      <Card title="Open the Dashboard" icon="link" href="https://idcheck.argosidentity.com">
-  </Card>
+```
 
-  </Step>
-  <Step title="Navigate to Settings -> Access Management to locate the URL.">
-  </Step>
-</Steps>
+<ResponseField name="webhook_trigger" type="string">
+  웹훅 트리거 유형 - `approved`는 KYC가 자동 승인되거나 대기 상태에서 승인됨을 의미
+</ResponseField>
 
-## Options for Using ID Check in Verification Processes
+<ResponseField name="kyc_result" type="object">
+KYC 제출 결과를 포함하는 객체
+  <Expandable title="properties">
+    <ResponseField name="status" type="string">
+      KYC 검토 결과. `approved` 또는 `rejected`
+    </ResponseField>
 
-ID Check supports two methods for completing identity verification
+    <ResponseField name="updated_at" type="string">
+      KYC 상태가 최종 변경된 UTC 시간 (ISO 8601 형식)
+    </ResponseField>
 
-<img
-  src="/images/getting-started_banner.png"
-  alt="Hero Light"
-/>
+    <ResponseField name="created_at" type="string">
+      KYC가 최초 제출된 UTC 시간 (ISO 8601 형식)
+    </ResponseField>
 
-<Steps>
-  <Step title="Using a PC">
-      <img
-    src="/images/getting-started_web.png"
-    alt="Hero Light"
-  />
-  1. Open the ID Check URL on your computer.
-  2. A QR code will be displayed.
-  3. Scan the QR code with a mobile device to access the ID Check page in a mobile web browser.
-  </Step>
-  <Step title="Using a Mobile Device">
-    <img
-  src="/images/getting-started_mobile.png"
-  alt="Hero Light"/>
-  Link the URL to the event in your app where user ID verification is required. This will allow users to open the ID Check page directly.
-  </Step>
-</Steps>
+    <ResponseField name="kyc_result_at" type="string">
+      KYC 결과가 처음 결정된 UTC 시간. 승인/거부 시에만 제공 (ISO 8601 형식)
+    </ResponseField>
+
+    <ResponseField name="pending_at" type="string">
+      KYC가 대기 상태로 제출된 UTC 시간 (ISO 8601 형식)
+    </ResponseField>
+    
+    <ResponseField name="reviewer" type="string">
+      	검토자 유형. `system`은 AI 시스템 검수, `agent`는 인간 검수
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+
+<ResponseField name="applicant_id" type="string" >
+  중복 제출을 확인하기 위해 부여되는 고유 식별 ID로, KYC 상태가 승인일 때만 전달 됩니다.
+</ResponseField>
+
+<ResponseField name="submission_id" type="string" >
+  KYC 제출 건별 고유 식별자
+</ResponseField>
+
+<ResponseField name="email" type="string" >
+  KYC 제출자 이메일 주소
+</ResponseField>
+
+<ResponseField name="tokenId" type="string" >
+  비공개 모드의 라이브 폼 제출 시 사용된 토큰 ID
+</ResponseField>
+
+
+<ResponseField name="cf" type="object">
+	사용자 정의 필드 (cf1, cf2, cf3) 데이터를 포함하는 객체
+  <Expandable title="properties">
+    <ResponseField name="cf1" type="string">
+      사용자 정의 필드 1의 값
+    </ResponseField>
+
+    <ResponseField name="cf2" type="boolean">
+      사용자 정의 필드 2의 값
+    </ResponseField>
+    <ResponseField name="cf3" type="boolean">
+      사용자 정의 필드 3의 값
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+
+
+<ResponseField name="userid" type="string" >
+  고객사에서 정의한 KYC 제출자 고유 식별자
+</ResponseField>
+
+
+<ResponseField name="age_group" type="string" >
+  제출자의 연령대 카테고리
+  `minor` : 13세 이하, 
+  `early-teen`: 14 ~ 15세, 
+  `teen`: 16 ~ 17세, 
+  `adult`: 18세 이상 
+
+</ResponseField>
+
+
+<ResponseField name="gender" type="string" >
+  	제출자의 성별 (`male` 또는 `female`)
+</ResponseField>
+
+
+<ResponseField name="date_of_birth" type="string" >
+  제출자의 생년월일 (YYYY-MM-DD 형식)
+</ResponseField>
+
+<ResponseField name="nationality" type="string" >
+  제출자의 국적 (ISO 3166-1 alpha-3 국가 코드)
+</ResponseField>
+
+<ResponseField name="ipAddress" type="string" >
+  제출자의 IP 주소
+</ResponseField>
+
+
+<ResponseField name="fullName" type="string" >
+  제출자의 전체 이름
+</ResponseField>
+
+
+<ResponseField name="idType" type="string" >
+  제출된 신분증 유형
+</ResponseField>
+
+
+<ResponseField name="issuingCountry" type="string" >
+  신분증 발급 국가
+</ResponseField>
+
+
+<ResponseField name="issueDate" type="string" >
+  신분증 발급일 (YYYY-MM-DD 형식)
+</ResponseField>
+
+
+<ResponseField name="expireDate" type="string" >
+  신분증 만료일 (YYYY-MM-DD 형식)
+</ResponseField>
+
+<ResponseField name="identityNumber" type="string" >
+  주민등록번호 또는 이에 준하는 식별 번호
+</ResponseField>
+
+<ResponseField name="documentNumber" type="string" >
+  신분증 고유 번호 (예: 여권번호, 운전면허번호)
+</ResponseField>
+
+<ResponseField name="additional_list" type="array">
+  대시보드 설정에서 Additional Information을 설정한 경우, 추가 양식 데이터 배열. 특정 조건에서만 포함됨
+  <ResponseField name="additional_list_obj" type="object">
+  <Expandable title="properties">
+    <ResponseField name="answer" type="string">
+      추가 양식의 질문 또는 필드명
+    </ResponseField>
+
+    <ResponseField name="inputValue" type="boolean">
+      추가 양식 필드에 대한 사용자 입력값
+    </ResponseField>
+    <ResponseField name="blockType" type="boolean">
+      추가 양식 필드의 데이터 유형
+    </ResponseField>
+  </Expandable>
+  </ResponseField>
+</ResponseField>

@@ -205,7 +205,8 @@
     {
       "group": "Changelog",
       "pages": [
-        "changelog/en/overview"
+        "changelog/en/idcheck/overview",
+        "changelog/en/verify/overview"
       ],
       "version": "English"
     },
@@ -290,7 +291,8 @@
     {
       "group":"변경 로그",
       "pages":[
-         "changelog/ko/overview"
+         "changelog/ko/idcheck/overview",
+         "changelog/ko/verify/overview"
       ],
       "version":"한국어"
     }

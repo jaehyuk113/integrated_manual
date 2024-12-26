@@ -1,47 +1,35 @@
 ---
 mode: 'default'
 title: Delete
-description: Brief description of what ID Check is and its purpose. Key use cases (e.g., KYC, compliance, user verification).
+description: 이 이벤트는 KYC 제출 건이 시스템에서 삭제될 때 트리거됩니다. 삭제는 관리자의 수동 조작, 정책에 따른 자동 삭제, 또는 사용자의 요청에 의해 발생할 수 있습니다. 이 이벤트를 통해 KYC 데이터의 삭제를 실시간으로 감지하고 필요한 후속 조치를 취할 수 있습니다
 
 ---
+```json delete-webhook-sample.json
+{
+	"webhook_trigger":"delete",
+	"submission_id":"string",
+	"account_email":"string",
+	"delete_time":"string",
+	"comment":"string"
+}
+```
 
-## Prerequisites
+<ResponseField name="webhook_trigger" type="string">
 
-ARGOS provides ID Check, a dedicated submission page for each project, accessible via a unique URL. To obtain the URL:
+</ResponseField>
 
-<Steps>
-  <Step title="Log in to the dashboard.">
-      <Card title="Open the Dashboard" icon="link" href="https://idcheck.argosidentity.com">
-  </Card>
+<ResponseField name="submission_id" type="string">
 
-  </Step>
-  <Step title="Navigate to Settings -> Access Management to locate the URL.">
-  </Step>
-</Steps>
+</ResponseField>
 
-## Options for Using ID Check in Verification Processes
+<ResponseField name="account_email" type="string">
 
-ID Check supports two methods for completing identity verification
+</ResponseField>
 
-<img
-  src="/images/getting-started_banner.png"
-  alt="Hero Light"
-/>
+<ResponseField name="delete_time" type="string">
 
-<Steps>
-  <Step title="Using a PC">
-      <img
-    src="/images/getting-started_web.png"
-    alt="Hero Light"
-  />
-  1. Open the ID Check URL on your computer.
-  2. A QR code will be displayed.
-  3. Scan the QR code with a mobile device to access the ID Check page in a mobile web browser.
-  </Step>
-  <Step title="Using a Mobile Device">
-    <img
-  src="/images/getting-started_mobile.png"
-  alt="Hero Light"/>
-  Link the URL to the event in your app where user ID verification is required. This will allow users to open the ID Check page directly.
-  </Step>
-</Steps>
+</ResponseField>
+
+<ResponseField name="comment" type="string">
+
+</ResponseField>

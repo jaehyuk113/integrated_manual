@@ -1,47 +1,104 @@
 ---
 mode: 'default'
 title: Rejected
-description: Brief description of what ID Check is and its purpose. Key use cases (e.g., KYC, compliance, user verification).
+description: 이 이벤트는 KYC 제출이 거부될 때 트리거됩니다. 거부는 자동화된 검증 실패, 수동 검토 결과, 또는 기타 정책적 이유로 발생할 수 있습니다. 이 이벤트를 통해 KYC 거부 사유를 즉시 파악하고, 사용자에게 피드백을 제공하거나 추가 정보 요청 등의 필요한 조치를 취할 수 있습니다.
 
 ---
 
-## Prerequisites
+---
 
-ARGOS provides ID Check, a dedicated submission page for each project, accessible via a unique URL. To obtain the URL:
+```json rejected-webhook-sample.json
 
-<Steps>
-  <Step title="Log in to the dashboard.">
-      <Card title="Open the Dashboard" icon="link" href="https://idcheck.argosidentity.com">
-  </Card>
+{
+    "webhook_trigger": "rejected",
+    "kyc_result": {
+      "status": "string",
+      "comment": "string",
+      "updated_at": "string",
+      "commentCode": "string"
+    },
+    "submission_id": "string",
+    "applicant_id" : "string",
+    "email": "string",
+    "cf": {
+      "cf1": "string",
+      "cf2": "string",
+      "cf3" : "string"
+    },
+    "userid": "string",
+    "tokenId" : "string",
+    "ipAddress": "string"
+}
+```
 
-  </Step>
-  <Step title="Navigate to Settings -> Access Management to locate the URL.">
-  </Step>
-</Steps>
+<ResponseField name="webhook_trigger" type="string">
+  웹훅 이벤트 유형 - `rejected(거절)`는 KYC가 자동 거절되거나 pending(대기) 상태에서 거절됨을 의미
+</ResponseField>
 
-## Options for Using ID Check in Verification Processes
+<ResponseField name="kyc_result" type="object">
+KYC 제출 결과를 포함하는 객체
+  <Expandable title="properties">
+    <ResponseField name="status" type="string">
+      KYC 검토 결과. `approved` 또는 `rejected`
+    </ResponseField>
 
-ID Check supports two methods for completing identity verification
+    <ResponseField name="comment" type="string">
+      거절 사유 설명
+    </ResponseField>
 
-<img
-  src="/images/getting-started_banner.png"
-  alt="Hero Light"
-/>
+    <ResponseField name="updated_at" type="string">
+      KYC 상태가 최종 변경된 UTC 시간 (ISO 8601 형식)
+    </ResponseField>
 
-<Steps>
-  <Step title="Using a PC">
-      <img
-    src="/images/getting-started_web.png"
-    alt="Hero Light"
-  />
-  1. Open the ID Check URL on your computer.
-  2. A QR code will be displayed.
-  3. Scan the QR code with a mobile device to access the ID Check page in a mobile web browser.
-  </Step>
-  <Step title="Using a Mobile Device">
-    <img
-  src="/images/getting-started_mobile.png"
-  alt="Hero Light"/>
-  Link the URL to the event in your app where user ID verification is required. This will allow users to open the ID Check page directly.
-  </Step>
-</Steps>
+    <ResponseField name="commentCode" type="string">
+      거절 사유에 대한 고유 코드
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="submission_id" type="string" >
+  KYC 제출 건별 고유 식별자
+</ResponseField>
+
+<ResponseField name="applicant_id" type="string" >
+  중복 제출을 확인하기 위해 부여되는 고유 식별 ID로, KYC 상태가 승인일 때만 전달 됩니다.
+</ResponseField>
+
+
+
+<ResponseField name="email" type="string" >
+  KYC 제출자 이메일 주소
+</ResponseField>
+
+
+<ResponseField name="cf" type="object">
+	사용자 정의 필드 (cf1, cf2, cf3) 데이터를 포함하는 객체
+  <Expandable title="properties">
+    <ResponseField name="cf1" type="string">
+      사용자 정의 필드 1의 값
+    </ResponseField>
+
+    <ResponseField name="cf2" type="boolean">
+      사용자 정의 필드 2의 값
+    </ResponseField>
+    <ResponseField name="cf3" type="boolean">
+      사용자 정의 필드 3의 값
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+
+
+<ResponseField name="userid" type="string" >
+  고객사에서 정의한 KYC 제출자 고유 식별자
+</ResponseField>
+
+<ResponseField name="tokenId" type="string" >
+  비공개 모드의 라이브 폼 제출 시 사용된 토큰 ID
+</ResponseField>
+
+
+<ResponseField name="ipAddress" type="string" >
+  제출자의 IP 주소
+</ResponseField>
+

@@ -1,0 +1,72 @@
+---
+title: Verify 
+description: 'New updates and improvements'
+---
+
+
+<Update label="2024-11-18" description="v1.0.1">
+##  API Changes
+### callbackUrl Parameter Update
+The callbackUrl parameter in the request BODY has been made optional. This change affects the API's operational mode as follows:
+1. Asynchronous Operation: When callbackUrl is provided
+Results are sent to the specified callbackUrl.
+Refer to the Callback Response Example for detailed information.
+
+2. Synchronous Operation: When callbackUrl is omitted
+Results are included directly in the immediate response.
+
+### Affected APIs
+
+The following APIs are impacted by this change:
+- Global ID Recognition
+- ID Liveness
+- Face Compare
+
+<Note>For synchronous responses, please refer to the 200 Response documentation. For asynchronous responses, consult the Callback Response Example.</Note>
+
+</Update>
+
+
+<Update label="2024-11-05" description="v1.0.0">
+ ## New features
+ Textify API is now available, allowing you to automate data extraction and streamline document workflows like never before. Now supported in US region, Textify empowers teams with easy access to critical document data.
+ ## ✨ Expanded Template Library to Meet Every Need
+ Textify now supports key templates to enhance productivity across finance, logistics, HR, and healthcare and more!
+
+<Card title="Business Registration">
+  Capture business details quickly for compliance and onboarding.
+</Card>
+<Card title="Contract">
+  Extract vital terms from agreements to speed up decision-making.
+</Card>
+<Card title="Balance Certificate (KR only)">
+  Support compliance with verified financial information.
+</Card>
+<Card title="General Invoice">
+  Summarize billing information for efficient accounts payable.
+</Card>
+<Card title="Job Application">
+  Access candidate information for faster, smarter hiring.
+</Card>
+<Card title="Employment Contract" >
+  Organize employment details to simplify HR workflows.
+</Card>
+<Card title="Proof of Address" >
+  Enhance KYC with easy verification of residential data.
+</Card>
+<Card title="Bill of Lading" >
+  Ensure logistics accuracy with detailed shipment information.
+</Card>
+<Card title="Arrival Notice" >
+  Manage shipments with visibility into arrival details.
+</Card>
+<Card title="Medical Invoice" >
+  Streamline healthcare billing and claims processes.
+</Card>
+<Card title="Medical Observation">
+  Simplify record-keeping for medical histories and treatments.
+</Card>
+
+
+Textify brings efficiency to document management so you can focus on what matters most.
+</Update>

@@ -1,47 +1,100 @@
 ---
 mode: 'default'
 title: Updated
-description: Brief description of what ID Check is and its purpose. Key use cases (e.g., KYC, compliance, user verification).
+description: 이 이벤트는 기존에 제출된 KYC 정보가 업데이트될 때 트리거됩니다. 업데이트는 관리자의 수동 변경, 시스템의 자동 업데이트, 또는 사용자의 추가 정보 제공 등으로 인해 발생할 수 있습니다. 이 이벤트를 통해 KYC 데이터의 변경 사항을 실시간으로 추적하고 필요한 조치를 취할 수 있습니다.
 
 ---
 
-## Prerequisites
+```json rejected-webhook-sample.json
+{
+	"webhook_trigger":"updated",
+	"submission_id":"string",
+	"email":"email",
+	"data":
+	{
+		"update":
+			[
+				"idType",
+				"issuingCountry",
+				"fullName",
+				"gender",
+				"birthDate",
+				"nationality",
+				"kycStatus",
+				"issueDate",
+				"identityNumber"
+			],
+		"kyc_result":"rejected"
+	},
+	"admin":"sample@test.com",
+	"update_time":"2024-06-21T01:47:12.321Z",
+	"age_group":"N/A",
+	"gender":"female",
+	"date_of_birth":"1999-10-19",
+	"nationality":"KOR",
+	"userid": "test",
+	"tokenId": "test"
+}
+```
 
-ARGOS provides ID Check, a dedicated submission page for each project, accessible via a unique URL. To obtain the URL:
+<ResponseField name="webhook_trigger" type="string">
+  웹훅 이벤트 유형 - "rejected"는 KYC가 자동 거절되거나 대기 상태에서 거절됨을 의미
+</ResponseField>
 
-<Steps>
-  <Step title="Log in to the dashboard.">
-      <Card title="Open the Dashboard" icon="link" href="https://idcheck.argosidentity.com">
-  </Card>
+<ResponseField name="submission_id" type="string" >
+  KYC 제출 건별 고유 식별자
+</ResponseField>
 
-  </Step>
-  <Step title="Navigate to Settings -> Access Management to locate the URL.">
-  </Step>
-</Steps>
 
-## Options for Using ID Check in Verification Processes
+<ResponseField name="email" type="string" >
+  KYC 제출자 이메일 주소
+</ResponseField>
 
-ID Check supports two methods for completing identity verification
 
-<img
-  src="/images/getting-started_banner.png"
-  alt="Hero Light"
-/>
 
-<Steps>
-  <Step title="Using a PC">
-      <img
-    src="/images/getting-started_web.png"
-    alt="Hero Light"
-  />
-  1. Open the ID Check URL on your computer.
-  2. A QR code will be displayed.
-  3. Scan the QR code with a mobile device to access the ID Check page in a mobile web browser.
-  </Step>
-  <Step title="Using a Mobile Device">
-    <img
-  src="/images/getting-started_mobile.png"
-  alt="Hero Light"/>
-  Link the URL to the event in your app where user ID verification is required. This will allow users to open the ID Check page directly.
-  </Step>
-</Steps>
+<ResponseField name="data" type="object">
+    <Expandable title="update" type="array">
+      <ResponseField name="update" type="array">
+        The full name of the user
+      </ResponseField>
+
+      <ResponseField name="kyc_result" type="string">
+        Whether the user is over 21 years old
+      </ResponseField>
+    </Expandable>
+</ResponseField>
+
+
+
+<ResponseField name="admin" type="string" >
+  
+</ResponseField>
+
+<ResponseField name="update_time" type="string" >
+
+</ResponseField>
+<ResponseField name="age_group" type="string" >
+
+</ResponseField>
+<ResponseField name="gender" type="string" >
+
+</ResponseField>
+<ResponseField name="date_of_birth" type="string" >
+
+</ResponseField>
+<ResponseField name="nationality" type="string" >
+
+</ResponseField>
+
+
+
+<ResponseField name="userid" type="string" >
+  고객사에서 정의한 KYC 제출자 고유 식별자
+</ResponseField>
+
+<ResponseField name="tokenId" type="string" >
+  비공개 모드의 라이브 폼 제출 시 사용된 토큰 ID
+</ResponseField>
+
+
+

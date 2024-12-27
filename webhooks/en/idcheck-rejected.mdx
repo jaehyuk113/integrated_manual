@@ -1,0 +1,93 @@
+---
+mode: 'default'
+title: Rejected
+description: This event is triggered when a KYC submission is rejected. Rejection can occur due to automated verification failures, manual review results, or other policy-related reasons. This event allows you to immediately identify the reasons for the KYC rejection and take necessary actions, such as providing feedback to the user or requesting additional information.
+---
+
+```json rejected-webhook-sample.json
+
+{
+    "webhook_trigger": "rejected",
+    "kyc_result": {
+      "status": "string",
+      "comment": "string",
+      "updated_at": "string",
+      "commentCode": "string"
+    },
+    "submission_id": "string",
+    "applicant_id" : "string",
+    "email": "string",
+    "cf": {
+      "cf1": "string",
+      "cf2": "string",
+      "cf3" : "string"
+    },
+    "userid": "string",
+    "tokenId" : "string",
+    "ipAddress": "string"
+}
+```
+<ResponseField name="webhook_trigger" type="string">
+  Webhook event type - `rejected` indicates that the KYC has been automatically rejected or rejected after being in a `pending` state.
+</ResponseField>
+
+<ResponseField name="kyc_result" type="object">
+  An object containing the results of the KYC submission
+  <Expandable title="properties">
+    <ResponseField name="status" type="string">
+      The result of the KYC review. Possible values: `approved` or `rejected`.
+    </ResponseField>
+
+    <ResponseField name="comment" type="string">
+      Description of the rejection reason.
+    </ResponseField>
+
+    <ResponseField name="updated_at" type="string">
+      The UTC time (ISO 8601 format) when the KYC status was last updated.
+    </ResponseField>
+
+    <ResponseField name="commentCode" type="string">
+      A unique code representing the rejection reason.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="submission_id" type="string">
+  A unique identifier for each KYC submission.
+</ResponseField>
+
+<ResponseField name="applicant_id" type="string">
+  A unique identifier assigned to identify duplicate submissions, provided only when the KYC status is approved.
+</ResponseField>
+
+<ResponseField name="email" type="string">
+  The email address of the KYC submitter.
+</ResponseField>
+
+<ResponseField name="cf" type="object">
+  An object containing custom field (cf1, cf2, cf3) data
+  <Expandable title="properties">
+    <ResponseField name="cf1" type="string">
+      Value of custom field 1.
+    </ResponseField>
+
+    <ResponseField name="cf2" type="string">
+      Value of custom field 2.
+    </ResponseField>
+    <ResponseField name="cf3" type="string">
+      Value of custom field 3.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="userid" type="string">
+  A unique identifier for the KYC submitter as defined by the customer.
+</ResponseField>
+
+<ResponseField name="tokenId" type="string">
+  The token ID used for submissions in private mode via live forms.
+</ResponseField>
+
+<ResponseField name="ipAddress" type="string">
+  The IP address of the submitter.
+</ResponseField>

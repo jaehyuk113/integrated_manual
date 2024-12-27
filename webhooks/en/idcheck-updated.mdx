@@ -1,0 +1,109 @@
+---
+mode: 'default'
+title: Updated
+description: This event is triggered when previously submitted KYC information is updated. Updates can occur due to manual changes by an administrator or system-driven modifications. This webhook allows you to track changes to KYC data in real-time and take immediate necessary actions.
+---
+
+```json updated-webhook-sample.json
+{
+	"webhook_trigger":"updated",
+	"submission_id":"string",
+	"email":"string",
+	"data":
+	{
+		"update":
+			[   // List of Updated Fields
+				"idType",
+				"issuingCountry",
+				"fullName",
+				"gender",
+				"birthDate",
+				"nationality",
+				"kycStatus",
+				"issueDate",
+				"identityNumber"
+			],
+		"kyc_result":"rejected", // rejected or approved
+		"pending_at":"string",
+		"reviewer":"string",
+		"kyc_result":"string"
+	},
+	"admin":"string",
+	"update_time":"string",
+	"age_group":"string",
+	"gender":"string",
+	"date_of_birth":"string",
+	"nationality":"string",
+	"userid": "string",
+	"tokenId": "string"
+}
+```
+
+<ResponseField name="webhook_trigger" type="string">
+  Webhook event type - `updated` indicates that user information has been updated.
+</ResponseField>
+
+<ResponseField name="submission_id" type="string">
+  Unique identifier for each KYC submission.
+</ResponseField>
+
+<ResponseField name="email" type="string">
+  Email address of the KYC submitter.
+</ResponseField>
+
+<ResponseField name="data" type="object">
+  An object containing the updated user data.
+  <Expandable title="update" type="array">
+    <ResponseField name="update" type="array">
+      List of updated fields.
+    </ResponseField>
+    <ResponseField name="kyc_result" type="string">
+      Result of the KYC review.
+    </ResponseField>
+    <ResponseField name="pending_at" type="string">
+      Timestamp when the KYC was set to pending status (UTC+0, ISO 8601 format).
+    </ResponseField>
+    <ResponseField name="reviewer" type="string">
+      Reviewer type. `system` indicates AI system review, `agent` indicates human review.
+    </ResponseField>
+    <ResponseField name="kyc_result" type="string">
+      UTC timestamp when the KYC result was first determined. Provided only for approved/rejected statuses (ISO 8601 format).
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="admin" type="string">
+  Email of the administrator who performed the update via the dashboard.
+</ResponseField>
+
+<ResponseField name="update_time" type="string">
+  Timestamp of the update (UTC+0, ISO 8601 format).
+</ResponseField>
+
+<ResponseField name="age_group" type="string">
+  Age category of the submitter:
+  `minor`: 13 years and under,
+  `early-teen`: 14–15 years,
+  `teen`: 16–17 years,
+  `adult`: 18 years and older.
+</ResponseField>
+
+<ResponseField name="gender" type="string">
+  Gender of the submitter ("male" or "female").
+</ResponseField>
+
+<ResponseField name="date_of_birth" type="string">
+  Submitter's date of birth (YYYY-MM-DD format).
+</ResponseField>
+
+<ResponseField name="nationality" type="string">
+  Submitter's nationality (ISO 3166-1 alpha-3 country code).
+</ResponseField>
+
+<ResponseField name="userid" type="string">
+  Unique identifier for the KYC submitter as defined by the client.
+</ResponseField>
+
+<ResponseField name="tokenId" type="string">
+  Token ID used for submissions in private mode live forms.
+</ResponseField>

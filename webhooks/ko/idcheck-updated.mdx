@@ -1,19 +1,19 @@
 ---
 mode: 'default'
 title: Updated
-description: 이 이벤트는 기존에 제출된 KYC 정보가 업데이트될 때 트리거됩니다. 업데이트는 관리자의 수동 변경, 시스템의 자동 업데이트, 또는 사용자의 추가 정보 제공 등으로 인해 발생할 수 있습니다. 이 이벤트를 통해 KYC 데이터의 변경 사항을 실시간으로 추적하고 필요한 조치를 취할 수 있습니다.
+description: 이 이벤트는 기존에 제출된 KYC 정보가 업데이트될 때 트리거됩니다. 업데이트는 관리자의 수동 변경이나 시스템에 의해 발생할 수 있습니다. 이 웹훅을 통해 KYC 데이터의 변경 사항을 실시간으로 추적하고 필요한 조치를 즉시 취할 수 있습니다.
 
 ---
 
-```json rejected-webhook-sample.json
+```json updated-webhook-sample.json
 {
 	"webhook_trigger":"updated",
 	"submission_id":"string",
-	"email":"email",
+	"email":"string",
 	"data":
 	{
 		"update":
-			[
+			[   // List of Updated Fields
 				"idType",
 				"issuingCountry",
 				"fullName",
@@ -24,21 +24,24 @@ description: 이 이벤트는 기존에 제출된 KYC 정보가 업데이트될 
 				"issueDate",
 				"identityNumber"
 			],
-		"kyc_result":"rejected"
+		"kyc_result":"rejected", // rejected or approved
+		"pending_at":"string",
+		"reviewer":"string",
+		"kyc_result":"string"
 	},
-	"admin":"sample@test.com",
-	"update_time":"2024-06-21T01:47:12.321Z",
-	"age_group":"N/A",
-	"gender":"female",
-	"date_of_birth":"1999-10-19",
-	"nationality":"KOR",
-	"userid": "test",
-	"tokenId": "test"
+	"admin":"string",
+	"update_time":"string",
+	"age_group":"string",
+	"gender":"string",
+	"date_of_birth":"string",
+	"nationality":"string",
+	"userid": "string",
+	"tokenId": "string"
 }
 ```
 
 <ResponseField name="webhook_trigger" type="string">
-  웹훅 이벤트 유형 - "rejected"는 KYC가 자동 거절되거나 대기 상태에서 거절됨을 의미
+  웹훅 이벤트 유형 - `updated`는 사용자 정보가 업데이트되었음을 의미
 </ResponseField>
 
 <ResponseField name="submission_id" type="string" >
@@ -53,13 +56,23 @@ description: 이 이벤트는 기존에 제출된 KYC 정보가 업데이트될 
 
 
 <ResponseField name="data" type="object">
+	업데이트된 사용자 데이터를 포함하는 객체
     <Expandable title="update" type="array">
       <ResponseField name="update" type="array">
-        The full name of the user
+        업데이트된 필드 목록
       </ResponseField>
 
       <ResponseField name="kyc_result" type="string">
-        Whether the user is over 21 years old
+        KYC 검토 결과
+      </ResponseField>
+	  <ResponseField name="pending_at" type="string">
+        KYC가 pending 상태로 설정된 시간 (UTC+0, ISO 8601 형식)
+      </ResponseField>
+	  <ResponseField name="reviewer" type="string">
+  		검토자 유형. `system`은 AI 시스템 검수, `agent`는 인간 검수
+      </ResponseField>
+	  <ResponseField name="kyc_result" type="string">
+     	KYC 결과가 처음 결정된 UTC 시간. 승인/거부 시에만 제공 (ISO 8601 형식)
       </ResponseField>
     </Expandable>
 </ResponseField>
@@ -67,23 +80,27 @@ description: 이 이벤트는 기존에 제출된 KYC 정보가 업데이트될 
 
 
 <ResponseField name="admin" type="string" >
-  
+  대시보드에서 업데이트를 수행한 관리자 이메일
 </ResponseField>
 
 <ResponseField name="update_time" type="string" >
-
+ 업데이트가 발생한 시간 (UTC+0, ISO 8601 형식)
 </ResponseField>
 <ResponseField name="age_group" type="string" >
-
+  제출자의 연령대 카테고리
+  `minor` : 13세 이하, 
+  `early-teen`: 14 ~ 15세, 
+  `teen`: 16 ~ 17세, 
+  `adult`: 18세 이상 
 </ResponseField>
 <ResponseField name="gender" type="string" >
-
+	제출자 성별 ("male" 또는 "female")
 </ResponseField>
 <ResponseField name="date_of_birth" type="string" >
-
+제출자 생년월일 (YYYY-MM-DD 형식)
 </ResponseField>
 <ResponseField name="nationality" type="string" >
-
+제출자 국적 (ISO 3166-1 alpha-3 국가 코드)
 </ResponseField>
 
 

@@ -15,21 +15,21 @@ description: 이 이벤트는 KYC 제출 건이 시스템에서 삭제될 때 �
 ```
 
 <ResponseField name="webhook_trigger" type="string">
-
+  웹훅 이벤트 유형 - `delete`는 사용자 제출건이 삭제되었음을 의미
 </ResponseField>
 
 <ResponseField name="submission_id" type="string">
-
+ 삭제된 KYC 제출 건의 고유 식별자
 </ResponseField>
 
 <ResponseField name="account_email" type="string">
-
+ KYC 제출건 삭제를 수행한 관리자 계정의 이메일 주소
 </ResponseField>
 
 <ResponseField name="delete_time" type="string">
-
+ KYC 제출건이 삭제된 시간 (UTC+0, ISO 8601 형식)
 </ResponseField>
 
 <ResponseField name="comment" type="string">
-
+ 제출건 삭제 시 관리자가 남긴 코멘트 (선택적)
 </ResponseField>

@@ -1,6 +1,6 @@
 {
   "$schema": "https://mintlify.com/schema.json",
-  "name": "Starter Kit",
+  "name": "ARGOS Identity",
   "logo": {
     "dark": "/logo/dark_argos_logo.svg",
     "light": "/logo/light_argos_logo.svg"
@@ -8,12 +8,23 @@
   "favicon": "/favicon.svg",
   "colors": {
     "primary": "#0064FF",
-    "light": "#0064FF",
+    "light": "#01d9d9",
     "dark": "#0064FF",
     "anchors": {
       "from": "#00D9D7",
       "to": "#0064FF"
     }
+  },
+  "font": {
+    "headings": {
+      "family": "Montserrat"
+    },
+    "body": {
+      "family": "Inter"
+    }
+  },
+  "codeBlock": {
+     "mode": "auto"
   },
   "topbarLinks": [
     {
@@ -193,7 +204,15 @@
     {
       "group": "Webhooks",
       "pages": [
-        "webhooks/en/overview"],
+        "webhooks/en/overview",
+        "webhooks/en/idcheck-approved",
+        "webhooks/en/idcheck-rejected",
+        "webhooks/en/idcheck-updated",
+        "webhooks/en/idcheck-delete",
+        "webhooks/en/idcheck-submit",
+        "webhooks/en/idcheck-injection",
+        "webhooks/en/idcheck-aml-result"
+      ],
       "version": "English"
     },
     {

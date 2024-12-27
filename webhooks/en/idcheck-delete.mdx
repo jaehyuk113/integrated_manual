@@ -1,0 +1,34 @@
+---
+mode: 'default'
+title: Delete
+description: This event is triggered when a KYC submission is deleted from the system. Deletion can occur due to manual action by an administrator, automated deletion based on policies, or a user request. This event allows you to detect the deletion of KYC data in real-time and take necessary follow-up actions.
+---
+```json delete-webhook-sample.json
+{
+	"webhook_trigger":"delete",
+	"submission_id":"string",
+	"account_email":"string",
+	"delete_time":"string",
+	"comment":"string"
+}
+```
+
+<ResponseField name="webhook_trigger" type="string">
+  Webhook event type - `delete` indicates that a user submission has been deleted.
+</ResponseField>
+
+<ResponseField name="submission_id" type="string">
+  Unique identifier of the deleted KYC submission.
+</ResponseField>
+
+<ResponseField name="account_email" type="string">
+  Email address of the administrator account that performed the deletion.
+</ResponseField>
+
+<ResponseField name="delete_time" type="string">
+  Timestamp when the KYC submission was deleted (UTC+0, ISO 8601 format).
+</ResponseField>
+
+<ResponseField name="comment" type="string">
+  Comment left by the administrator at the time of deletion (optional).
+</ResponseField>

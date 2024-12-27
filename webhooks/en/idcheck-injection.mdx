@@ -1,0 +1,73 @@
+---
+mode: 'default'
+title: Data Injection
+description: This event is triggered when additional data is injected into the KYC system. It is primarily used for adding or updating specific data types, such as address information. Through this event, you can track the data enrichment process of KYC profiles and update related systems accordingly.
+---
+
+
+
+```json injection-webhook-sample.json
+
+{
+	"webhook_trigger":"injection",
+	"action":{
+		"type":"address",
+		"created_at":"2024-06-21T03:24:57.565Z"
+	},
+	"submission_id":"string",
+	"email":"sample@test.com",
+	"kyc_status":"approved",
+	"applicant_id":"string",
+	"cf1":"cf1",
+	"cf2":"cf2",
+	"cf3":"cf3",
+	"userid":"test",
+	"tokenId":"test"
+}
+```
+
+<ResponseField name="webhook_trigger" type="string">
+  Webhook event type - `injection` indicates a data injection event.
+</ResponseField>
+
+<ResponseField name="action" type="object">
+  An object containing information about the data injection operation.
+  <Expandable title="properties">
+    <ResponseField name="type" type="string">
+      The type of data being injected (e.g., "address").
+    </ResponseField>
+    <ResponseField name="created_at" type="string">
+      The UTC timestamp when the data injection operation was executed (ISO 8601 format).
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="submission_id" type="string">
+  Unique identifier for each KYC submission.
+</ResponseField>
+
+<ResponseField name="email" type="string">
+  Email address of the KYC submitter.
+</ResponseField>
+
+<ResponseField name="applicant_id" type="string">
+  A unique identifier assigned to detect duplicate submissions, provided only when the KYC status is approved.
+</ResponseField>
+
+<ResponseField name="cf1" type="string">
+  Value of custom field 1.
+</ResponseField>
+<ResponseField name="cf2" type="string">
+  Value of custom field 2.
+</ResponseField>
+<ResponseField name="cf3" type="string">
+  Value of custom field 3.
+</ResponseField>
+
+<ResponseField name="userid" type="string">
+  Unique identifier for the KYC submitter as defined by the client.
+</ResponseField>
+
+<ResponseField name="tokenId" type="string">
+  Token ID used for submissions in private mode live forms.
+</ResponseField>

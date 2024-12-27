@@ -1,7 +1,7 @@
 ---
 mode: 'default'
 title: Approved (승인)
-description: 이 이벤트는 KYC(Know Your Customer) 제출이 승인될 때 트리거될테야. 승인은 자동화된 시스템 검증을 통과하거나 수동 검토 후 이루어질 수 있습니다. 이 이벤트는 KYC 프로세스가 성공적으로 완료되었음을 나타내며, 사용자 계정 활성화나 서비스 접근 권한 부여 등의 후속 조치를 시작할 수 있는 신호가 됩니다.
+description: 이 이벤트는 KYC(Know Your Customer) 제출이 승인될 때 트리거됩니다. 승인은 자동화된 시스템 검증을 통과하거나 수동 검토 후 이루어질 수 있습니다. 이 이벤트는 KYC 프로세스가 성공적으로 완료되었음을 나타내며, 사용자 계정 활성화나 서비스 접근 권한 부여 등의 후속 조치를 시작할 수 있는 신호가 됩니다.
 
 ---
 
@@ -106,10 +106,10 @@ KYC 제출 결과를 포함하는 객체
       사용자 정의 필드 1의 값
     </ResponseField>
 
-    <ResponseField name="cf2" type="boolean">
+    <ResponseField name="cf2" type="string">
       사용자 정의 필드 2의 값
     </ResponseField>
-    <ResponseField name="cf3" type="boolean">
+    <ResponseField name="cf3" type="string">
       사용자 정의 필드 3의 값
     </ResponseField>
   </Expandable>
@@ -190,10 +190,10 @@ KYC 제출 결과를 포함하는 객체
       추가 양식의 질문 또는 필드명
     </ResponseField>
 
-    <ResponseField name="inputValue" type="boolean">
+    <ResponseField name="inputValue" type="string">
       추가 양식 필드에 대한 사용자 입력값
     </ResponseField>
-    <ResponseField name="blockType" type="boolean">
+    <ResponseField name="blockType" type="string">
       추가 양식 필드의 데이터 유형
     </ResponseField>
   </Expandable>

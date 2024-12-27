@@ -1,47 +1,84 @@
 ---
 mode: 'default'
 title: Overview
-description: Brief description of what ID Check is and its purpose. Key use cases (e.g., KYC, compliance, user verification).
+description: Monitor ARGOS ID Check's KYC process status changes in real-time. Receive instant updates through webhooks.
 
 ---
 
-## Prerequisites
 
-ARGOS provides ID Check, a dedicated submission page for each project, accessible via a unique URL. To obtain the URL:
+## What are Webhooks?
+Webhooks are a feature that allows you to receive real-time notifications when specific events occur. They automatically send alerts to a designated URL whenever KYC data changes or new information is added.
 
+## 1. Explore Webhook Event Types
+Receive real-time updates through ARGOS Identity webhooks
+
+<img height="500" src="/images/webhooks/webhook_events.png" />
+ <CardGroup cols={4}>
+  <Card title="Approved" icon="badge-check" href="/webhooks/en/idcheck-approved"></Card> 
+  <Card title="Rejected" icon="ban" href="/webhooks/en/idcheck-rejected"></Card>
+  <Card title="Updated" icon="pen-to-square" href="/webhooks/en/idcheck-updated"></Card>
+  <Card title="Delete" icon="trash" href="/webhooks/en/idcheck-delete"></Card>
+  <Card title="Submit" icon="plus" href="/webhooks/en/idcheck-submit"></Card> 
+  <Card title="Data injection" icon="table" href="/webhooks/en/idcheck-injection"> </Card>
+  <Card title="AML Result" icon="radar" href="/webhooks/en/idcheck-aml-result"> </Card> 
+ </CardGroup> 
+   
+  By utilizing webhooks, you can monitor all stages of the KYC process in real-time and take immediate action when necessary, enabling more efficient management of your customer onboarding process.
+
+
+## 2. Register Webhook Events
+<img height="200" src="/images/webhooks/webhook.png" /> 
 <Steps>
-  <Step title="Log in to the dashboard.">
-      <Card title="Open the Dashboard" icon="link" href="https://idcheck.argosidentity.com">
-  </Card>
-
-  </Step>
-  <Step title="Navigate to Settings -> Access Management to locate the URL.">
-  </Step>
+ <Step title="Dashboard Login"> 
+ Log in to the ID Check [Dashboard](https://idcheck.argosidentity.com/). 
+ </Step>
+<Step title="Access Settings Menu">
+ Click on the `Settings` menu in the top navigation bar of the dashboard.
+</Step>
+<Step title="Navigate to Access Management"> 
+Select `Access Management` from the `General` section in the left sidebar.
+</Step> 
+<Step title="Enter Webhook URL"> 
+Find the `Webhook URL` section and enter your desired webhook address in the input field. The URL must use the `HTTPS` protocol and be in a valid format. 
+</Step>
+<Step title="Save Settings"> 
+Click the `Save` button at the bottom of the page to apply the changes.
+</Step>
 </Steps>
 
-## Options for Using ID Check in Verification Processes
+## 3. Activate Encryption Option for Secure Data Transfer
+ARGOS Identity provides an encryption option to protect sensitive KYC data transmitted through webhooks. When this feature is activated, all webhook data is automatically encrypted, enabling more secure information exchange.
 
-ID Check supports two methods for completing identity verification
+### a. What does encrypted webhook data look like?
+Encrypted webhook responses are delivered in the following format:
 
-<img
-  src="/images/getting-started_banner.png"
-  alt="Hero Light"
-/>
+```json data-encrpyted.json
+{
+  "response": {
+    "body": "encrypted-string"
+  }
+}
 
-<Steps>
-  <Step title="Using a PC">
-      <img
-    src="/images/getting-started_web.png"
-    alt="Hero Light"
-  />
-  1. Open the ID Check URL on your computer.
-  2. A QR code will be displayed.
-  3. Scan the QR code with a mobile device to access the ID Check page in a mobile web browser.
-  </Step>
-  <Step title="Using a Mobile Device">
-    <img
-  src="/images/getting-started_mobile.png"
-  alt="Hero Light"/>
-  Link the URL to the event in your app where user ID verification is required. This will allow users to open the ID Check page directly.
-  </Step>
+```
+Here, encrypted-string is the result of encrypting the original data.
+
+### b. Easily Set Up the Encryption Option
+<img height="200" src="/images/webhooks/secure-data-transfer.png" />
+ <Steps> 
+ <Step title="Dashboard Login"> 
+ Log in to the ID Check [Dashboard](https://idcheck.argosidentity.com/). 
+ </Step> 
+ <Step title="Access Settings Menu"> 
+ Click on the `Settings` menu in the top navigation bar of the dashboard.
+ </Step> 
+ <Step title="Navigate to Access Management"> 
+ Select `Access Management` from the `General` section in the left sidebar. 
+ </Step> 
+ <Step title="Enable Secure Data Transfer"> 
+ Turn on the "Secure Data Transfer" option. 
+ </Step> 
+ <Step title="Save Settings"> 
+ Click the `Save` button at the bottom of the page to apply the changes.
+</Step> 
 </Steps>
+ Now that all webhook data is encrypted during transmission, you can exchange important information generated at each stage of the KYC process more securely.

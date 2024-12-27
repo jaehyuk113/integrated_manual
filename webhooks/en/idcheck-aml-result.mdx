@@ -1,0 +1,74 @@
+---
+mode: 'default'
+title: AML Results
+description: This event is triggered when the results of an Anti-Money Laundering (AML) screening are confirmed. AML screening is a critical component of the KYC process, assessing potential risks of financial crimes. This webhook enables you to receive AML screening results in real-time and take immediate action as needed.
+---
+
+<Note>AML screening is performed only after KYC approval. AML screening proceeds exclusively when the KYC has been approved, and the results are returned along with the submission information. If the KYC is rejected, AML screening will not be conducted.</Note>
+
+
+```json aml-result-webhook-sample.json
+
+{
+	"webhook_trigger":"aml",
+	"submission_id":"string",
+	"email":"string",
+	"userid":"test",
+	"cf":{
+		"cf1":"cf1",
+		"cf2":"cf2",
+		"cf3":"cf3"
+	},
+	"aml_result":{
+		"currentstatus":"Not Screened",
+		"risk_level_summary":"Not Screened"
+	},
+	"tokenId": "test"
+}
+```
+<ResponseField name="webhook_trigger" type="string">
+  Webhook event type - `aml` indicates that AML screening results are ready.
+</ResponseField>
+
+<ResponseField name="submission_id" type="string">
+  Unique identifier for each KYC submission.
+</ResponseField>
+
+<ResponseField name="email" type="string">
+  Email address of the KYC submitter.
+</ResponseField>
+
+<ResponseField name="userid" type="string">
+  Unique identifier for the KYC submitter as defined by the client.
+</ResponseField>
+
+<ResponseField name="cf" type="object">
+  An object containing user-defined fields (cf1, cf2, cf3).
+  <Expandable title="properties">
+    <ResponseField name="cf1" type="string">
+      Value of custom field 1.
+    </ResponseField>
+    <ResponseField name="cf2" type="string">
+      Value of custom field 2.
+    </ResponseField>
+    <ResponseField name="cf3" type="string">
+      Value of custom field 3.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="aml_result" type="object">
+  An object containing AML screening results.
+  <Expandable title="properties">
+    <ResponseField name="currentstatus" type="string">
+      Final result of AML screening. Possible values: `Not Screened`, `Red Flag`.
+    </ResponseField>
+    <ResponseField name="risk_level_summary" type="string">
+      Summary of AML risk level. Possible values: `Not Screened`, `HIGH`, `MEDIUM`, `LOW`.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="tokenId" type="string">
+  Token ID used for submissions in private mode live forms.
+</ResponseField>

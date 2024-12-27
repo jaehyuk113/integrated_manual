@@ -5,7 +5,7 @@ description: 이 이벤트는 Anti-Money Laundering (AML) 스크리닝 결과가
 
 ---
 
-<Note>AML 스크리닝은 KYC 승인 후에만 수행됩니다. KYC가 승인된 경우에만 AML 스크리닝이 진행되며, 그 결과와 함께 submission 정보가 반환됩니다. KYC가 거절된 경우에는 AML 스크리닝이 수행되지 않습니다.</Note>
+<Note>AML 스크리닝은 KYC 승인(approved) 후에만 수행됩니다. KYC가 승인된 경우에만 AML 스크리닝이 진행되며, 그 결과와 함께 submission 정보가 반환됩니다. KYC가 거절된 경우에는 AML 스크리닝이 수행되지 않습니다.</Note>
 
 
 ```json aml-result-webhook-sample.json
@@ -13,7 +13,7 @@ description: 이 이벤트는 Anti-Money Laundering (AML) 스크리닝 결과가
 {
 	"webhook_trigger":"aml",
 	"submission_id":"string",
-	"email":"sample@test.com",
+	"email":"string",
 	"userid":"test",
 	"cf":{
 		"cf1":"cf1",
@@ -54,10 +54,10 @@ description: 이 이벤트는 Anti-Money Laundering (AML) 스크리닝 결과가
       사용자 정의 필드 1의 값
     </ResponseField>
 
-    <ResponseField name="cf2" type="boolean">
+    <ResponseField name="cf2" type="string">
       사용자 정의 필드 2의 값
     </ResponseField>
-    <ResponseField name="cf3" type="boolean">
+    <ResponseField name="cf3" type="string">
       사용자 정의 필드 3의 값
     </ResponseField>
   </Expandable>
@@ -70,7 +70,7 @@ description: 이 이벤트는 Anti-Money Laundering (AML) 스크리닝 결과가
       AML 스크리닝 최종 결과. 가능한 값: `Not Screened`, `Red Flag`
     </ResponseField>
 
-    <ResponseField name="risk_level_summary" type="boolean">
+    <ResponseField name="risk_level_summary" type="string">
       AML 위험 수준 요약. 가능한 값: `Not Screened`, `HIGH`, `MEDIUM`, `LOW`
     </ResponseField>
   </Expandable>

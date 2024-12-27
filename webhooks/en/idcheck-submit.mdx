@@ -1,0 +1,60 @@
+---
+mode: 'default'
+title: Submit
+description: This event is triggered when new KYC information is submitted to the system. Submissions occur when a user completes and submits a KYC form or when KYC data is transmitted via an API. This event enables you to immediately recognize new KYC submissions and initiate the verification process or perform any necessary initial actions.
+---
+
+```json submit-webhook-sample.json
+{
+    "webhook_trigger": "submit",
+    "created_at": "string",
+    "submission_id": "string",
+    "email": "string",
+    "cf": {
+      "cf1": "string",
+      "cf2": "string",
+      "cf3": "string"
+    },
+    "userid": "string",
+    "tokenid": "string",
+    "ipAddress": "string"
+  }
+```
+<ResponseField name="webhook_trigger" type="string">
+  Webhook trigger type - `submit` indicates a Pending status after submission.
+</ResponseField>
+
+<ResponseField name="created_at" type="string">
+  The UTC timestamp when the KYC was initially submitted (ISO 8601 format).
+</ResponseField>
+
+<ResponseField name="submission_id" type="string">
+  Unique identifier for each KYC submission.
+</ResponseField>
+
+<ResponseField name="cf" type="object">
+  An object containing user-defined fields (cf1, cf2, cf3).
+  <Expandable title="properties">
+    <ResponseField name="cf1" type="string">
+      Value of custom field 1.
+    </ResponseField>
+    <ResponseField name="cf2" type="string">
+      Value of custom field 2.
+    </ResponseField>
+    <ResponseField name="cf3" type="string">
+      Value of custom field 3.
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="userid" type="string">
+  Unique identifier for the KYC submitter as defined by the client.
+</ResponseField>
+
+<ResponseField name="tokenId" type="string">
+  Token ID used for submissions in private mode live forms.
+</ResponseField>
+
+<ResponseField name="ipAddress" type="string">
+  IP address of the submitter.
+</ResponseField>

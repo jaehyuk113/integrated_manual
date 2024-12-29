@@ -1,11 +1,25 @@
 ---
 title: 'POST/Submission'
-description: 'Example section for showcasing API endpoints'
+description: '이 API를 사용하면 고객사가 ARGOS ID 검증을 거치지 않고 사용자 ID 확인 데이터를 강제로 삽입하여 제출 건을 생성할 수 있습니다. 문자열 데이터만 지원하며, 이미지 데이터는 별도의 `PUT Image API`를 사용하세요'
 ---
 
+
 <Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
+  POST/Submission API로 생성된 제출 건은 OCR 및 검증 절차를 거치지 않습니다.
 </Note>
+
+## Example curl request
+
+```cURL POST/Submission
+curl --location 'https://rest-api.argosidentity.com/v3/submission/migration' \
+--header 'Content-Type: application/json' \
+--header 'x-api-key: {yourAPIKey}' \
+```
+
+
+
+### API responses
+
+
 
 

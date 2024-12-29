@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "@mintlify/widget-react": "^0.0.11"
+  }
+}

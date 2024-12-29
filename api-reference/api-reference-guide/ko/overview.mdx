@@ -3,4 +3,72 @@ title: 'Overview'
 description: 'Example section for showcasing API endpoints'
 ---
 
+아르고스 API는 기업 고객이 KYC(Know Your Customer) 및 AML(Anti-Money Laundering) 프로세스를 보다 체계적이고 효율적으로 관리할 수 있도록 설계된 솔루션입니다. 이 API는 기존 시스템과의 원활한 통합을 지원하며, 사용자 데이터를 안전하게 처리하고 관리할 수 있는 기능을 제공합니다.
 
+이를 통해 고객사는 사용자 관리를 간소화하고, KYC/AML 프로세스의 진행 상황을 실시간으로 추적할 수 있습니다.
+
+## 주요 기능
+아르고스 KYC API는 다음과 같은 핵심 기능을 제공합니다:
+- KYC 데이터 제출 및 관리: 고객 정보를 생성, 조회, 수정, 삭제할 수 있습니다.
+- AML 검사 요청 및 보고서 조회: AML 검사를 요청하고 결과를 확인할 수 있습니다.
+- 이미지 처리: 신분증 및 기타 필요 문서의 이미지를 업로드하고 관리할 수 있습니다.
+
+
+## API 엔드포인트
+아르고스 KYC API는 RESTful 아키텍처를 따르며, 다음과 같은 주요 엔드포인트를 제공합니다:
+- POST /submission: KYC 데이터 제출
+- POST /aml: AML 검사 요청
+- GET /submission: KYC 데이터 조회
+- GET /report/aml: AML 보고서 조회
+- GET /image: 이미지 조회
+- PATCH /submission: KYC 데이터 수정
+- PUT /image: 이미지 업로드/수정
+- DELETE /submission: KYC 데이터 삭제
+
+
+## API 키
+ID Check API 키는 클라이언트 및 서버 요청을 확인하고 인증하는 역할을 해요. 요청자의 인증 정보를 확인하고 아르고스 아이덴티티는 요청에 따른 올바른 응답을 내려줘요.
+
+
+
+
+
+## API 키 확인하기
+
+
+<img height="200" src="/images/api-reference/api-key.png" />
+<Steps>
+  <Step title="대시보드 로그인">
+    ID Check [대시보드](https://idcheck.argosidentity.com/)에 로그인합니다.
+  </Step>
+  <Step title="설정 메뉴 접근">
+    대시보드 상단 네비게이션 바에서 `설정` 메뉴를 클릭합니다.
+  </Step>
+  <Step title="Access Management 페이지 이동">
+    좌측 사이드바의 `General` 섹션에서 `Access Management`를 선택합니다.
+  </Step>
+  <Step title="웹훅 URL 입력">
+    `API 키` 섹션을 찾아 우측 아이콘을 클릭하여 API 키를 복사하고 보관합니다.
+  </Step>
+  <Step title="요청 헤더 구조">
+    `API 키` 섹션을 찾아 우측 아이콘을 클릭하여 API 키를 복사하고 보관합니다.
+  </Step>
+</Steps>
+
+## 에러 처리
+공통 에러 코드 및 설명:
+
+Code	Message	Description
+400	Bad Request	요청 데이터가 올바르지 않음
+401	Unauthorized	인증 실패
+404	Not Found	요청한 리소스를 찾을 수 없음
+500	Internal Server Error	서버 내부 에러
+
+### 아르고스 KYC API 사용을 시작하려면 다음 단계를 따르세요:
+아르고스 고객 포털에서 계정을 생성합니다.
+API 키를 발급받습니다.
+API 문서를 검토하고 필요한 엔드포인트를 파악합니다.
+테스트 환경에서 API 통합을 구현하고 테스트합니다.
+프로덕션 환경으로 전환하여 실제 데이터 처리를 시작합니다.
+
+아르고스 KYC API를 통해 KYC 및 AML 프로세스를 간소화하고, 규정 준수를 강화하며, 고객 온보딩 경험을 개선해보세요.

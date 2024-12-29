@@ -175,6 +175,7 @@
       ],
       "version": "English"
     },
+    
     {
       "group": "Submission",
       "pages":[
@@ -262,6 +263,13 @@
       "version": "한국어"
     },
     {
+      "group": " ",
+      "pages": [
+        "api-reference/api-reference-guide/ko/overview"
+      ],
+      "version": "한국어"
+    },
+    {
       "group": "Submission",
       "pages":[
         "api-reference/api-reference-guide/ko/post-submission",
@@ -284,6 +292,15 @@
       "pages": [
         "api-reference/api-reference-guide/ko/get-aml-report",
         "api-reference/api-reference-guide/ko/post-aml"
+      ],
+      "version": "한국어"
+    },
+    {
+      "group" : "Additional Settings",
+      "pages": [
+        "api-reference/api-reference-guide/ko/liveform-languages",
+        "api-reference/api-reference-guide/ko/iso-alpha-3-country-codes",
+        "api-reference/api-reference-guide/ko/id-card-types"
       ],
       "version": "한국어"
     },

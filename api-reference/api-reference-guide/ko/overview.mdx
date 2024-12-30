@@ -16,14 +16,33 @@ description: 'Example section for showcasing API endpoints'
 
 ## API 엔드포인트
 아르고스 KYC API는 RESTful 아키텍처를 따르며, 다음과 같은 주요 엔드포인트를 제공합니다:
-- POST /submission: KYC 데이터 제출
-- POST /aml: AML 검사 요청
-- GET /submission: KYC 데이터 조회
-- GET /report/aml: AML 보고서 조회
-- GET /image: 이미지 조회
-- PATCH /submission: KYC 데이터 수정
-- PUT /image: 이미지 업로드/수정
-- DELETE /submission: KYC 데이터 삭제
+
+<CardGroup cols={3}>
+  <Card title=" POST/Submission" icon="person-circle-plus" href="/api-reference/api-reference-guide/ko/post-submission">
+  KYC 데이터 제출
+  </Card>
+  <Card title="PATCH/Submission" icon="person-chalkboard" href="/api-reference/api-reference-guide/ko/patch-submission">
+  KYC 데이터 수정
+  </Card>
+  <Card title="GET/Submission" icon="person-circle-check" href="/api-reference/api-reference-guide/ko/get-submission">
+  KYC 데이터 조회
+  </Card>
+  <Card title="DELETE/Submission" icon="person-circle-xmark" href="/api-reference/api-reference-guide/ko/delete-submission">
+  KYC 데이터 삭제
+  </Card>
+  <Card title="GET/Image" icon="image" href="/api-reference/api-reference-guide/ko/get-image">
+  이미지 조회
+  </Card>
+  <Card title="PUT/Image" icon="images" href="/api-reference/api-reference-guide/ko/put-image">
+  이미지 업로드/수정
+  </Card>
+  <Card title="GET/Report/AML" icon="file-chart-column" href="/api-reference/api-reference-guide/ko/get-aml-report">
+  AML 보고서 조회
+  </Card>
+  <Card title="POST/AML" icon="radar" href="/api-reference/api-reference-guide/ko/post-aml">
+  AML 검사 요청
+  </Card>
+</CardGroup>
 
 
 ## API 키
@@ -34,7 +53,6 @@ ID Check API 키는 클라이언트 및 서버 요청을 확인하고 인증하�
 
 
 ## API 키 확인하기
-
 
 <img height="200" src="/images/api-reference/api-key.png" />
 <Steps>
@@ -53,22 +71,32 @@ ID Check API 키는 클라이언트 및 서버 요청을 확인하고 인증하�
   <Step title="요청 헤더 구조">
     `API 키` 섹션을 찾아 우측 아이콘을 클릭하여 API 키를 복사하고 보관합니다.
   </Step>
+  <Step title="요청 헤더 구조">
+    테스트 환경에서 API 통합을 구현하고 테스트합니다.
+  </Step>
+  <Step title="요청 헤더 구조">
+    프로덕션 환경으로 전환하여 실제 데이터 처리를 시작합니다.
+  </Step>
 </Steps>
 
-## 에러 처리
-공통 에러 코드 및 설명:
+## 응답 HTTP 상태 코드
 
-Code	Message	Description
-400	Bad Request	요청 데이터가 올바르지 않음
-401	Unauthorized	인증 실패
-404	Not Found	요청한 리소스를 찾을 수 없음
-500	Internal Server Error	서버 내부 에러
+HTTP 응답 코드를 통해 상태를 반환합니다. 각 응답 코드는 요청에 대한 결과를 나타내며, 아래와 같은 규칙을 따릅니다:
 
-### 아르고스 KYC API 사용을 시작하려면 다음 단계를 따르세요:
-아르고스 고객 포털에서 계정을 생성합니다.
-API 키를 발급받습니다.
-API 문서를 검토하고 필요한 엔드포인트를 파악합니다.
-테스트 환경에서 API 통합을 구현하고 테스트합니다.
-프로덕션 환경으로 전환하여 실제 데이터 처리를 시작합니다.
+- `2xx`  성공적인 요청
+- `4xx`  클라이언트 오류
+- `5xx`  서버 오류
+
+
+| HTTP 상태 코드 | 메시지 | 설명 |
+| :---: | :----: | :----: |
+| `200` | OK     | 요청이 성공적으로 처리되었습니다. |
+| `400` | Invalid Query String parameters  |  요청을 처리할 수 없습니다. 필수 파라미터가 누락되었거나, 파라미터 형식이 잘못되었습니다. 요청 파라미터를 다시 확인해 주세요. |
+| `403` | User is not authorized to access this resource with an explicit deny | 권한이 없습니다. IP 화이트리스트에 등록되지 않은 IP에서 접근했습니다. | 
+| `403` | Forbidden | 권한이 없습니다. 잘못된 API 키를 사용했을 수 있습니다.| 
+| `413` | Request Entity Too Large | 요청이 너무 큽니다. 서버에서 처리할 수 있는 크기를 초과한 데이터가 포함된 요청입니다. 요청 데이터를 축소해 다시 시도해 주세요.| 
+| `500` | Internal Server Error | 서버 오류가 발생했습니다. 아르고스 서버에서 문제가 발생했을 수 있습니다. 이 경우 아르고스 팀에 문의해 주세요.| 
+| `502` | Bad Gateway | 서버가 업스트림 서버로부터 잘못된 응답을 받았습니다. 잠시 후 다시 시도하거나, 아르고스 팀에 문의해 주세요. | 
+
 
 아르고스 KYC API를 통해 KYC 및 AML 프로세스를 간소화하고, 규정 준수를 강화하며, 고객 온보딩 경험을 개선해보세요.

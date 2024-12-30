@@ -1,35 +1,13 @@
+.full-width-table-container {
+  width: 100%;
+}
 
-  .full-width-table-container {
-    width: 100vw; /* Viewport width for full-width */
-    margin-left: calc(-50vw + 50%); /* Center align the table outside the container */
-    overflow-x: auto; /* Handle overflow for small screens */
-  }
+.full-width-table-container table {
+  width: 100%;
+  table-layout: fixed;
+}
 
-  .full-width-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14px;
-    text-align: left;
-    margin: 20px 0;
-  }
-
-  .full-width-table th,
-  .full-width-table td {
-    width: 500%;
-    padding: 10px;
-    border: 1px solid #ddd;
-  }
-
-  .full-width-table th {
-    width:60%;
-    background-color: #f4f4f4;
-    font-weight: bold;
-  }
-
-  .full-width-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-  }
-
-  .full-width-table tr:hover {
-    background-color: #eaeaea;
-  }
+.full-width-table-container th,
+.full-width-table-container td {
+  width: 50%;
+}

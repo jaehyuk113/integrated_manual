@@ -154,8 +154,7 @@
       "group": "Getting Started",
       "pages": [
          "getting-started/en/introduction",
-         "getting-started/en/recommended-browsers-and-devices",
-         "getting-started/en/rate-limits"
+         "getting-started/en/recommended-browsers-and-devices"
       ],
       "version": "English"
     },
@@ -241,8 +240,7 @@
       "group": "시작하기",
       "pages": [
          "getting-started/ko/introduction",
-         "getting-started/ko/recommended-browsers-and-devices",
-         "getting-started/ko/rate-limits"
+         "getting-started/ko/recommended-browsers-and-devices"
       ],
       "version": "한국어"
     },
@@ -265,7 +263,8 @@
     {
       "group": " ",
       "pages": [
-        "api-reference/api-reference-guide/ko/overview"
+        "api-reference/api-reference-guide/ko/overview",
+        "api-reference/api-reference-guide/ko/rate-limits"
       ],
       "version": "한국어"
     },

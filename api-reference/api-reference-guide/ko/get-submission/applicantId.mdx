@@ -1,0 +1,71 @@
+---
+title: 'GET/Submission/applicantId'
+description: '이 API를 사용하여 중복으로 제출된 KYC 데이터의 고유 식별 ID(submission_id)와 이메일을 조회할 수 있습니다. 중복 제출은 이름, 생년월일, 국적, 성별, 얼굴이 동일한 경우로 판단됩니다.'
+---
+
+<Warning>
+주의사항
+- `applicant_id`는 신원정보(이름, 생년월일, 성별, 국적)와 Selfie 총 5가지 데이터를 비교하여 생성됩니다.
+- 중복 제출이 없는 경우, 승인된 단일 `submission`만 반환됩니다.
+-  `applicant_id` 정보는 `GET/submission` API를 통해 먼저 확인해야 합니다.
+- 비교 대상 정보가 없는 경우 랜덤으로 `applicant_id`가 생성됩니다.
+</Warning>
+
+
+## 1. 엔드포인트
+
+```text GET/Submission/applicantId
+GET https://rest-api.argosidentity.com/v3/submission/applicant
+```
+## 2. 인증
+
+x-api-key 헤더에 API 키를 포함시켜야 합니다:
+
+```text x-api-key
+x-api-key: {yourAPIKey}
+```
+
+
+## 3. 요청 파라미터
+요청 본문은 JSON 형식이어야 합니다. 다음은 필드 설명입니다:
+
+<ResponseField name="applicant_id" type="string" required="true">
+  	제출자의 고유 applicant_id
+</ResponseField>
+
+
+## 4. 요청 예시
+
+```curl GET/Submission/applicantId
+curl --location --request GET 'https://rest-api.argosidentity.com/v3/submission/applicant?applicant_id={applicant_id}' \
+--header 'x-api-key: {yourAPIKey}'
+```
+
+## 5. 응답
+
+### 5-1. 성공 응답
+```json result.json
+[
+    {
+        "submission_id": "{submission_id1}",
+        "email": "{email1}"
+    },
+    {
+        "submission_id": "{submission_id2}",
+        "email": "{email2}"
+    },
+    {
+        "submission_id": "{submission_id3}",
+        "email": "{email3}"
+    }
+]
+```
+
+### 5-2. 응답 데이터
+| 필드명                        | 설명                                                        | 데이터 타입         |
+|-------------------------------|-----------------------------------------------------------|---------------------|
+| `submission_id`                        | 중복제출로 확인된 submission의 고유 값             | String              |
+| `email`                   | 중복 제출로 확인된 submission에 기록된 이메일 주소               | String           |
+
+
+이 API를 통해 중복 제출된 KYC 데이터를 효과적으로 관리하고 모니터링할 수 있습니다.

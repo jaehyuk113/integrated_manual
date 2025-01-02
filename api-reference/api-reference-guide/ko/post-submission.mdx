@@ -5,21 +5,189 @@ description: '이 API를 사용하면 고객사가 ARGOS ID 검증을 거치지 
 
 
 <Note>
-  POST/Submission API로 생성된 제출 건은 OCR 및 검증 절차를 거치지 않습니다.
+이 API는 데이터 마이그레이션을 위해 기존 시스템에서 ARGOS 시스템으로 사용자 데이터를 이전할 때 유용하게 사용될 수 있습니다. 또한, ID Check 검증을 거치기 어려운 특수한 상황에서 직접 사용자 ID 확인 데이터를 제출해야 할 경우에도 활용할 수 있습니다. 마지막으로, 개발 단계에서 다양한 시나리오를 테스트할 때에도 이 API가 도움이 될 수 있습니다.
 </Note>
+<Warning>
+이 API를 통해 생성된 Submission은 ARGOS의 표준 검증 절차를 거치지 않으므로, 제출된 데이터의 정확성과 유효성에 대한 책임은 전적으로 클라이언트에게 있습니다. 따라서 일반적인 ID 확인 프로세스를 대체하지 않으며, 특수한 경우에만 사용하는 것이 바람직합니다.
+</Warning>
 
-## Example curl request
+## 1. 엔드포인트
 
-```cURL POST/Submission
-curl --location 'https://rest-api.argosidentity.com/v3/submission/migration' \
---header 'Content-Type: application/json' \
---header 'x-api-key: {yourAPIKey}' \
+```text POST/Submission
+POST https://rest-api.argosidentity.com/v3/submission/migration
+```
+## 2. 인증
+
+x-api-key 헤더에 API 키를 포함시켜야 합니다:
+
+```text x-api-key
+x-api-key: {yourAPIKey}
 ```
 
 
+## 3. 요청 본문
+요청 본문은 JSON 형식이어야 합니다. 다음은 필드 설명입니다:
 
-### API responses
+<ResponseField name="admin" type="string" required="true">
+  프로젝트 관리자의 이메일 (대시보드에 등록되어 있어야 함)
+</ResponseField>
+
+<ResponseField name="email" type="string" required="true">
+  KYC 제출자의 이메일 주소
+</ResponseField>
+
+<ResponseField name="fullName" type="string" required="true">
+  KYC 제출자의 전체 이름
+</ResponseField>
+
+<ResponseField name="birthDate" type="string" required="true">
+  KYC 제출자의 생년월일
+</ResponseField>
+
+<ResponseField name="kycStatus" type="string" required="true">
+  	KYC 결과: `approved` 또는 `rejected`
+</ResponseField>
+
+
+<ResponseField name="idType" type="string" required="true">
+  ID 유형  [ID 카드 코드](/api-reference-guide/ko/id-card-types)
+</ResponseField>
+
+
+<ResponseField name="issuingCountry" type="string" required="true">
+  ID 발급 국가 [국가 코드](/api-reference/api-reference-guide/ko/iso-alpha-3-country-codes)
+</ResponseField>
+
+<ResponseField name="nationality" type="string">
+  KYC 제출자의 국적 [국가 코드](/api-reference/api-reference-guide/ko/iso-alpha-3-country-codes)
+</ResponseField>
+<ResponseField name="gender" type="string">
+  `female` 또는 `male`
+</ResponseField>
+<ResponseField name="issueDate" type="string">
+  ID 발급일 `YYY-MM-DD` 형식
+</ResponseField>
+<ResponseField name="expireDate" type="string">
+  ID 만료일 `YYY-MM-DD` 형식
+</ResponseField>
+<ResponseField name="ipAddress" type="string">
+  KYC 제출자의 IP 주소
+</ResponseField>
+<ResponseField name="identityNumber" type="string">
+  KYC 제출자의 신분증 번호
+</ResponseField>
+<ResponseField name="documentNumber" type="string">
+  KYC 제출자의 문서 번호
+</ResponseField>
+<ResponseField name="address_city" type="string">
+  거주 도시
+</ResponseField>
+<ResponseField name="address_country" type="string" >
+  거주 국가
+</ResponseField>
+<ResponseField name="address_state" type="string">
+  거주 주/도
+</ResponseField>
+<ResponseField name="address_street" type="string" >
+  거리 주소
+</ResponseField>
+<ResponseField name="address_full" type="string">
+  전체 주소
+</ResponseField>
+<ResponseField name="cf1" type="string" >
+  사용자 정의 필드 #1
+</ResponseField>
+<ResponseField name="cf2" type="string">
+  사용자 정의 필드 #2
+</ResponseField>
+<ResponseField name="cf3" type="string">
+  사용자 정의 필드 #3
+</ResponseField>
+<ResponseField name="userid" type="string">
+  고유 사용자 ID
+</ResponseField>
+
+
+
+## 4. 요청 예시
+
+```curl POST/Submission
+curl --location 'https://rest-api.argosidentity.com/v3/submission/migration' \
+--header 'Content-Type: application/json' \
+--header 'x-api-key: {yourAPIKey}' \
+--data-raw '{
+  "admin": "{admin}",
+  "email": "{email}",
+  "fullName": "{fullName}",
+  "birthDate": "{birthDate}",
+  "kycStatus": "approved",
+  "idType": "drvlic",
+  "issuingCountry": "USA",
+  ...
+}'
+
+```
+
+## 5. 응답
+
+### 5-1. 성공 응답
+```json result.json
+{
+    "message": "success",
+    "submissionId": "submissionId123"
+}
+
+```
+
+### 5-2. 오류 응답
+오류가 발생하면 400 상태 코드와 함께 응답 본문에 세부 정보가 포함됩니다:
+```json error.json
+{
+    "errorCode": "invalid_payload",
+    "message": "잘못된 페이로드입니다."
+}
+
+```
+### 5-3. 오류 코드
+| 에러 코드                | 메시지  | 설명 |
+|-------------------------|------| ---- |
+| `invalid_payload`      | Invalid payload | 요청 본문을 파싱할 수 없음 |
+| `missing_data`         | Required input data is missing | 필수 필드가 누락됨 |
+| `invalid_project`      | Invalid project | 프로젝트 ID가 유효하지 않음 |
+| `invalid_admin`        | Invalid admin | 관리자 계정에 이 프로젝트에 대한 권한이 없음 |
+| `invalid_parameter`     | invalid parameter: `{parameter}` | 예상치 못한 매개변수가 제출됨 |
+| `invalid_format`       | invalid format: `${parameter}` | 매개변수가 예상 형식과 일치하지 않음 |
+| `processing_error`      | Failed to complete migration | 처리 중 알 수 없는 오류 발생 |
 
 
 
 
+## 6. 암호화 옵션
+보안 강화를 위해 요청 본문을 암호화할 수 있습니다. 암호화를 사용할 때:
+전체 요청 본문 객체를 암호화합니다.
+암호화된 문자열을 `body` 매개변수로 전송합니다.
+
+### 6-1. 암호화된 요청 예시
+
+```json result.json
+body : encrypt({
+		email : 'string',
+		fullName : 'string',
+		issuingCountry : 'string',
+		birthDate: 'string'
+		...
+	})
+
+```
+### 6-2. 암호화된 응답
+응답에는 isEncrypted 플래그와 암호화된 데이터가 포함됩니다:
+
+```json result.json
+response : {
+   body : {
+    "data": "encrypted-string",
+    "isEncrypted": true
+   }
+}
+
+```

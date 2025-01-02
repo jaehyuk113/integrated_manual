@@ -1,47 +1,64 @@
 ---
 mode: 'default'
 title: 쿼리 스트링 및 토큰
-description: Brief description of what ID Check is and its purpose. Key use cases (e.g., KYC, compliance, user verification).
+description: 라이브폼의 QueryString 및 Token ID 옵션에 대한 종합 가이드입니다. API 호출 시 추가 정보 전송, 중복 제출 방지, 사용자 식별 등 다양한 기능을 제공합니다. ID Check 프로세스 최적화를 위한 필수 정보를 확인하세요.
 
 ---
 
-## Prerequisites
+## 1. QueryString 변경 가능 옵션
+라이브폼과 API에서 사용 가능한 QueryString 옵션을 통해 추가 정보를 전송하고 KYC 프로세스를 커스터마이즈할 수 있습니다.
 
-ARGOS provides ID Check, a dedicated submission page for each project, accessible via a unique URL. To obtain the URL:
+## 2. 기본 URL 구조
 
-<Steps>
-  <Step title="Log in to the dashboard.">
-      <Card title="Open the Dashboard" icon="link" href="https://idcheck.argosidentity.com">
-  </Card>
+- 기본 폼 URL: `https://form.argosidentity.com/?pid={project_Id}`
+- QueryString 포함 URL: `https://form.argosidentity.com/?pid={project_Id}&blacklistCountries=false`
 
-  </Step>
-  <Step title="Navigate to Settings -> Access Management to locate the URL.">
-  </Step>
-</Steps>
+### 2-1. 주요 QueryString 파라미터
+| 파라미터                   | 설명                                                                                     |
+|-----------------------|-------------------------------------------------------------------------------------------------|
+| `blacklistCountries`  | 블랙리스트 국가에 대한 옵션을 해당 submission에 대하여 OFF 함 (`false`만 가능)                         |
+| `approvePeriod`       | Approved 중복 제출 방지 기간에 대한 옵션을 해당 submission에 대하여 OFF 함 (`false`만 가능)             |
+| `rejectPeriod`        | Rejected 중복 제출 방지 기간에 대한 옵션을 해당 submission에 대하여 OFF 함 (`false`만 가능)             |
+| `ageLimit`            | 연령 제한에 대한 옵션을 해당 submission에 대하여 OFF 함 (`false`만 가능)                               |
+| `rejectDuplicateUser` | 중복 제출 방지에 대한 옵션을 해당 submission에 대하여 ON / OFF 함 (`true` 및 `false` 모두 가능)         |
+| `userid`              | 사용자의 사용자 지정 고유 식별자                                                                     |
+| `pid`                 | 각각의 project를 구분하는 고유의 구분자                                                              |
+| `sid`                 | 각각의 submission을 구분하는 고유의 구분자                                                          |
+| `cf1`                 | 사용자 정의 옵션 필드1                                                                              |
+| `cf2`                 | 사용자 정의 옵션 필드2                                                                              |
+| `cf3`                 | 사용자 정의 옵션 필드3                                                                              |
+                                                                         |
 
-## Options for Using ID Check in Verification Processes
+<Note>
+ 모든 쿼리 스트링 값은 URL에 인코딩되어야 합니다.
+</Note>
 
-ID Check supports two methods for completing identity verification
+### 2-2. 고유 유저 ID 및 커스텀 필드
+- API 호출 시 KYC 제출자 식별을 위한 고유 유저 ID를 생성할 수 있습니다.
+- 최대 3개의 커스텀 필드(cf1, cf2, cf3)를 추가하여 추가 정보를 전송할 수 있습니다.
 
-<img
-  src="/images/getting-started_banner.png"
-  alt="Hero Light"
-/>
 
-<Steps>
-  <Step title="Using a PC">
-      <img
-    src="/images/getting-started_web.png"
-    alt="Hero Light"
-  />
-  1. Open the ID Check URL on your computer.
-  2. A QR code will be displayed.
-  3. Scan the QR code with a mobile device to access the ID Check page in a mobile web browser.
-  </Step>
-  <Step title="Using a Mobile Device">
-    <img
-  src="/images/getting-started_mobile.png"
-  alt="Hero Light"/>
-  Link the URL to the event in your app where user ID verification is required. This will allow users to open the ID Check page directly.
-  </Step>
-</Steps>
+## 3. Token ID 옵션
+tokenId는 Private Mode에서 Liveform 제출 시 사용되는  String 데이터입니다.
+
+목적 : 동일한 URL의 공유 및 중복 사용 방지
+
+### 3-1. Token 검증 방식
+다음 조건 중 하나라도 해당되면 검증 실패(에러) 발생:
+시간 만료: 최초 사용으로부터 3분 경과
+유효한 제출 건 존재: KYC Status가 결정된 제출건 존재 (approved, rejected, pending)
+<Warning>
+주의
+-  위 조건에 해당하지 않으면 여러 사용자가 동시에 동일한 Token ID로 KYC를 진행할 수 있습니다.
+</Warning>
+
+### 3-2. Token ID 확인 방법
+- Webhook
+- GET Submission API (submission_id를 이용한 단건 조회)
+- 대시보드의 Submission CSV 다운로드
+
+### 3-3. Token ID 사용 URL 구조
+- 기본 폼 URL: `https://form.argosidentity.com/?pid={project_Id}`
+- Token ID 포함 URL: `https://form.argosidentity.com/?pid={project_Id}&token={tokenId}`
+
+이 가이드를 통해 ID Check의 QueryString 및 Token ID 옵션을 효과적으로 활용하여 KYC 프로세스를 최적화하고 사용자 경험을 개선할 수 있습니다

@@ -59,11 +59,6 @@
       "version": "English"
     },
     {
-      "name":"Verify",
-      "url":"verify/en",
-      "version":"English"
-    },
-    {
       "name":"Changelog",
       "url":"changelog/en",
       "version":"English"
@@ -86,11 +81,6 @@
     {
       "name":"웹훅 이벤트",
       "url":"webhooks/ko",
-      "version":"한국어"
-    },
-    {
-      "name":"Verify",
-      "url":"verify/ko",
       "version":"한국어"
     },
     {
@@ -230,9 +220,9 @@
       "version": "English"
     },
     {
-      "group":"Welcome",
+      "group":"환영합니다",
       "pages":[
-        "introduction"
+        "ko_introduction"
       ],
       "version":"한국어"
     },
@@ -240,14 +230,14 @@
       "group": "시작하기",
       "pages": [
          "getting-started/ko/introduction",
-         "getting-started/ko/recommended-browsers-and-devices"
+         "getting-started/ko/recommended-browsers-and-devices",
+         "getting-started/ko/liveform-languages"
       ],
       "version": "한국어"
     },
     {
       "group": "라이브폼 URL",
       "pages": [
-        "getting-started/ko/liveform-url/introduction",
         "getting-started/ko/liveform-url/data-injection-with-custom-fields",
         "getting-started/ko/liveform-url/querystring-and-token-guide"
       ],
@@ -269,17 +259,27 @@
       "version": "한국어"
     },
     {
-      "group": "Submission",
+      "group": "Submission (제출건)",
       "pages":[
         "api-reference/api-reference-guide/ko/post-submission",
         "api-reference/api-reference-guide/ko/patch-submission",
-        "api-reference/api-reference-guide/ko/get-submission",
+        {
+          "group":"GET/Submission",
+          "pages":[
+            "api-reference/api-reference-guide/ko/get-submission",
+            "api-reference/api-reference-guide/ko/get-submission/submissionId",
+            "api-reference/api-reference-guide/ko/get-submission/userId",
+            "api-reference/api-reference-guide/ko/get-submission/email",
+            "api-reference/api-reference-guide/ko/get-submission/list",
+            "api-reference/api-reference-guide/ko/get-submission/applicantId"
+          ]
+        },
         "api-reference/api-reference-guide/ko/delete-submission"
       ],
       "version": "한국어"
     },
     {
-      "group" : "Image",
+      "group" : "Image (이미지)",
       "pages": [
         "api-reference/api-reference-guide/ko/get-image",
         "api-reference/api-reference-guide/ko/put-image"
@@ -287,7 +287,7 @@
       "version": "한국어"
     },
     {
-      "group" : "AML",
+      "group" : "AML (자금세탁방지)",
       "pages": [
         "api-reference/api-reference-guide/ko/get-aml-report",
         "api-reference/api-reference-guide/ko/post-aml"
@@ -295,11 +295,12 @@
       "version": "한국어"
     },
     {
-      "group" : "Additional Settings",
+      "group" : "데이터 구조 가이드",
       "pages": [
-        "api-reference/api-reference-guide/ko/liveform-languages",
         "api-reference/api-reference-guide/ko/iso-alpha-3-country-codes",
-        "api-reference/api-reference-guide/ko/id-card-types"
+        "api-reference/api-reference-guide/ko/id-card-types",
+        "api-reference/api-reference-guide/ko/bank-codes",
+        "api-reference/api-reference-guide/ko/aml-codes"
       ],
       "version": "한국어"
     },

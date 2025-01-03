@@ -214,7 +214,9 @@
         "api-reference/api-reference-guide/en/iso-alpha-3-country-codes",
         "api-reference/api-reference-guide/en/id-card-types",
         "api-reference/api-reference-guide/en/bank-codes",
-        "api-reference/api-reference-guide/en/aml-codes"
+        "api-reference/api-reference-guide/en/aml-codes",
+        "api-reference/api-reference-guide/en/kyc-status",
+        "api-reference/api-reference-guide/en/reject-codes-and-comments"
       ],
       "version": "English"
     },
@@ -327,7 +329,9 @@
         "api-reference/api-reference-guide/ko/iso-alpha-3-country-codes",
         "api-reference/api-reference-guide/ko/id-card-types",
         "api-reference/api-reference-guide/ko/bank-codes",
-        "api-reference/api-reference-guide/ko/aml-codes"
+        "api-reference/api-reference-guide/ko/aml-codes",
+        "api-reference/api-reference-guide/ko/kyc-status",
+        "api-reference/api-reference-guide/ko/reject-codes-and-comments"
       ],
       "version": "한국어"
     },
@@ -371,6 +375,9 @@
   },
   "search": {
     "prompt": "Search"
+  },
+  "metadata": {
+    "og:image": "/images/og-image.png"
   }
     
 }

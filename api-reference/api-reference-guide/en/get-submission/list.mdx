@@ -1,46 +1,38 @@
 ---
 title: 'GET/Submission/list'
-description: '이 API를 사용하여 모든 KYC 제출 데이터(submissions)를 조회할 수 있습니다. KYC 신원 정보 데이터, KYC 결과, AML 결과, 거절 사유 및 코드, 재시도 사유 및 코드 등의 정보를 확인할 수 있습니다.'
+description: 'This API allows you to retrieve all KYC submission data. The data includes KYC identity information, KYC results, AML results, rejection reasons and codes, retry reasons and codes, and more.'
 ---
 
 <Warning>
-주의사항
-1. 이 API 호출은 모든 제출 건을 반환하므로 대량의 데이터가 포함될 수 있습니다.
-2. 성능 최적화를 위해 페이지네이션 파라미터를 사용하는 것이 좋습니다.
+### Important Notes:
+1. This API retrieves all submission records, which may include a large volume of data.
+2. It is recommended to use pagination parameters for optimal performance.
 </Warning>
 
-## 1. 엔드포인트
+## 1. Endpoint
 
-```text GET/Submission/submissionId
+```text GET/Submission/list
 GET https://rest-api.argosidentity.com/v3/submission
 ```
-## 2. 인증
+## 2. Authentication
 
-x-api-key 헤더에 API 키를 포함시켜야 합니다:
+Include the API key in the x-api-key header:
 
 ```text x-api-key
 x-api-key: {yourAPIKey}
 ```
 
 
-## 3. 요청 파라미터
-요청 본문은 JSON 형식이어야 합니다. 다음은 필드 설명입니다:
+## 3. Request Example
 
-<ResponseField name="admin" type="string" required="true">
-  조회할 제출 건의 고유 ID
-</ResponseField>
-
-
-## 4. 요청 예시
-
-```curl POST/Submission
-curl --location --request GET 'https://rest-api.argosidentity.com/v3/submission?submission_id={submission_id}' \
+```curl GET/Submission/list
+curl --location --request GET 'https://rest-api.argosidentity.com/v3/submission' \
 --header 'x-api-key: {yourAPIKey}'
 ```
 
-## 5. 응답
+## 4. Response
 
-### 5-1. 성공 응답
+### 4-1. Success Response  
 ```json result.json
 {
   "Items": [
@@ -92,4 +84,4 @@ curl --location --request GET 'https://rest-api.argosidentity.com/v3/submission?
 
 
 ```
-이 API를 통해 모든 KYC 제출 데이터를 효율적으로 조회하고 관리할 수 있습니다.
+This API enables you to efficiently retrieve and manage all KYC submission data. 

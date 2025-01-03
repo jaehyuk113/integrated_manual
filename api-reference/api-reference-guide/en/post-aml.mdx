@@ -1,32 +1,32 @@
 ---
 title: 'POST/AML'
-description: '이 API를 사용하여 이미 생성된 Submission에 대해 AML(Anti-Money Laundering) 검색을 수행할 수 있습니다.'
+description: 'Use this API to perform AML (Anti-Money Laundering) screening on an already created Submission.'
 ---
 
-## 1. 엔드포인트
+## 1. Endpoint
 
 ```text POST/AML
 POST https://rest-api.argosidentity.com/v3/submission/aml
 ```
-## 2. 인증
+## 2. Authentification
 
-x-api-key 헤더에 API 키를 포함시켜야 합니다:
+Include the API key in the x-api-key header:
 
 ```text x-api-key
 x-api-key: {yourAPIKey}
 ```
 
 
-## 3. 요청 파라미터
+## 3. Request Parameters
 
 <ResponseField name="submissionId" type="string" required="true">
- 제출 건의 고유 ID
+Unique ID of the submission.
 </ResponseField>
 
 
 
 
-## 4. 요청 예시
+## 4. Request Example
 
 ```curl POST/Submission
 curl --location 'https://rest-api.argosidentity.com/v3/submission/aml' \
@@ -37,9 +37,9 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission/aml' \
 }'
 ```
 
-## 5. 응답
+## 5. Response
 
-### 5-1. 성공 응답
+### 5-1. Success Response
 ```json result.json
 {
     "message": "complete to search AML.",
@@ -49,24 +49,24 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission/aml' \
 
 ```
 
-### 5-2. 오류 응답
-오류 발생 시 400 상태 코드와 함께 다음과 같은 형식의 응답이 반환됩니다:
+### 5-2. Error Response
+If an error occurs, the response will include a `400` status code with details in the following format:
 ```json error.json
 {
     "errorCode": "invalid_payload",
     "message": "Invalid payload."
 }
 ```
-### 5-3. 오류 코드
-| 에러 코드                | 메시지  | 설명 |
-|-------------------------|------| ---- |
-| `invalid_payload`      | Invalid payload | 요청 본문(페이로드)이 유효하지 않음 |
-| `missing_parameter`         | submissionId is required | 필수 파라미터 누락 |
-| `invalid_submissionId`      | Cannot find submission. | 유효하지 않은 Submission ID |
-| `invalid_country`        | The nationality is invalid: `{nationality}` | 유효하지 않은 국가명 |
-| `request_failed`     | Fail to search AML. | 	AML 검색 중 알 수 없는 오류 발생 |
+### 5-3. Error Codes
+| Error Code             | Message                              | Description                                |
+|------------------------|--------------------------------------|--------------------------------------------|
+| `invalid_payload`      | Invalid payload                     | The request payload is invalid.           |
+| `missing_parameter`    | submissionId is required            | A required parameter is missing.          |
+| `invalid_submissionId` | Cannot find submission.             | The provided Submission ID is invalid.    |
+| `invalid_country`      | The nationality is invalid: `{nationality}` | The specified nationality is invalid.    |
+| `request_failed`       | Fail to search AML.                 | An unknown error occurred during AML search. |
 
 
 
 
-이 API를 사용하여 특정 Submission에 대한 AML 검색을 수행할 수 있습니다. 오류 발생 시 제공된 오류 코드를 참조하여 문제를 해결하세요.
+This API enables you to perform AML screening for a specific submission. Refer to the error codes provided to troubleshoot issues effectively.

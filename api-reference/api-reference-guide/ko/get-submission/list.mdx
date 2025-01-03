@@ -11,7 +11,7 @@ description: '이 API를 사용하여 모든 KYC 제출 데이터(submissions)�
 
 ## 1. 엔드포인트
 
-```text GET/Submission/submissionId
+```text GET/Submission/list
 GET https://rest-api.argosidentity.com/v3/submission
 ```
 ## 2. 인증
@@ -23,24 +23,17 @@ x-api-key: {yourAPIKey}
 ```
 
 
-## 3. 요청 파라미터
-요청 본문은 JSON 형식이어야 합니다. 다음은 필드 설명입니다:
 
-<ResponseField name="admin" type="string" required="true">
-  조회할 제출 건의 고유 ID
-</ResponseField>
+## 3. 요청 예시
 
-
-## 4. 요청 예시
-
-```curl POST/Submission
-curl --location --request GET 'https://rest-api.argosidentity.com/v3/submission?submission_id={submission_id}' \
+```curl GET/Submission/list
+curl --location --request GET 'https://rest-api.argosidentity.com/v3/submission' \
 --header 'x-api-key: {yourAPIKey}'
 ```
 
-## 5. 응답
+## 4. 응답
 
-### 5-1. 성공 응답
+### 4-1. 성공 응답
 ```json result.json
 {
   "Items": [
@@ -89,7 +82,5 @@ curl --location --request GET 'https://rest-api.argosidentity.com/v3/submission?
     }
   ]
 }
-
-
 ```
 이 API를 통해 모든 KYC 제출 데이터를 효율적으로 조회하고 관리할 수 있습니다.

@@ -1,0 +1,26 @@
+---
+title: '거절 코드와 코멘트'
+description: 'KYC 과정에서 생성된 거절 코드와 코멘트 목록을 제공합니다'
+---
+
+
+| 거절 코드             | 거절 코멘트                                                                         |
+|---------------------------|-----------------------------------------------------------------------------------------------|
+| `id_image_invalidImage`   | ID 문서를 감지할 수 없습니다. ID 문서를 명확하게 촬영하여 제출해 주세요.                            |
+| `id_image_invalidId`      | 유효하지 않은 ID 문서입니다. 유효한 ID 문서를 다시 제출해 주세요.                                   |
+| `id_image_error`          | ID 문서 이미지를 업로드하지 못했습니다. KYC 과정을 다시 시도해 주세요.                               |
+| `id_image_badImage`       | ID 문서를 읽을 수 없습니다. 명확한 이미지로 다시 제출해 주세요.                                      |
+| `id_info_dataMismatch`    | 입력된 정보가 ID 문서와 일치하지 않습니다.                                                        |
+| `id_info_blacklist`       | 정책에 따라 {country} 출신의 KYC는 승인되지 않습니다.                                             |
+| `id_info_notOfAge`        | 정책에 따라 {13}세 미만의 개인은 KYC를 진행할 수 없습니다.                                         |
+| `too_many_retry`          | 여러 차례 잘못된 KYC 시도가 감지되었습니다.                                                       |
+| `blacklistCountry`        | 정책에 따라 {country} 출신의 KYC는 승인되지 않습니다.                                             |
+| `under_ageLimit`          | 정책에 따라 {13}세 미만의 개인은 KYC를 진행할 수 없습니다.                                         |
+| `invalid_acceptedID`      | 유효하지 않은 ID 유형입니다. 유효한 ID 문서를 제출해 주세요. 승인 가능한 ID 목록은 제출 페이지를 참조하세요. |
+| `address_image_invalidImage` | 유효하지 않은 주소 증명 문서입니다. 이름과 주소가 포함된 명확한 문서를 제출해 주세요. 예: 공과금 청구서, 은행 명세서, 거주 증명서. |
+| `address_image_error`     | 주소 증명 문서 이미지를 업로드하지 못했습니다. 다시 시도해 주세요.                                  |
+| `address_image_badImage`  | 주소 증명 문서를 읽을 수 없습니다. 이미지를 선명하게 다시 제출해 주세요.                            |
+| `address_info_expiredDocument` | 주소 증명 문서가 만료되었습니다. 최근 6개월 이내에 발급된 문서여야 합니다.                        |
+| `address_info_dataMismatch` | 입력된 정보가 주소 증명 문서와 일치하지 않습니다.                                                |
+| `timeout`                 | 시간 초과로 인해 KYC가 거절되었습니다.                                                           |
+| `other`                   | 검수자가 수동 검토 중 추가한 코멘트입니다.   

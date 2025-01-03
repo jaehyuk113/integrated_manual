@@ -18,16 +18,14 @@ x-api-key: {yourAPIKey}
 
 
 ## 3. 요청 파라미터
-요청 본문은 JSON 형식이어야 합니다. 다음은 필드 설명입니다:
 
-<ResponseField name="admin" type="string" required="true">
-  조회할 제출 건의 고유 ID
+<ResponseField name="submission_id" type="string" required="true"> 
+특정 제출 건의 고유 ID
 </ResponseField>
-
 
 ## 4. 요청 예시
 
-```curl POST/Submission
+```curl GET/Submission/submissionId
 curl --location --request GET 'https://rest-api.argosidentity.com/v3/submission?submission_id={submission_id}' \
 --header 'x-api-key: {yourAPIKey}'
 ```
@@ -40,7 +38,7 @@ curl --location --request GET 'https://rest-api.argosidentity.com/v3/submission?
     "Items": [
         {
             "data": {
-                "name": "홍길동",
+                "name": "Ji Sung Park",
                 "gender": "male",
                 "nationality": "KOR",
                 "date_of_birth": "YYYY-MM-DD",
@@ -96,6 +94,5 @@ curl --location --request GET 'https://rest-api.argosidentity.com/v3/submission?
         }
     ]
 }
-
 ```
 이 API를 통해 특정 Submission ID에 대한 상세 정보를 효율적으로 조회할 수 있습니다. 응답에는 사용자의 개인 정보, KYC 결과, 그리고 각 시도에 대한 상세 정보가 포함됩니다.

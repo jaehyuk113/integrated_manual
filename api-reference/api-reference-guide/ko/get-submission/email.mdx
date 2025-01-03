@@ -6,7 +6,7 @@ description: '이 API를 사용하여 특정 이메일 주소와 연관된 모�
 
 ## 1. 엔드포인트
 
-```text GET/Submission/applicantId
+```text GET/Submission/email
 GET https://rest-api.argosidentity.com/v3/submission/applicant
 ```
 ## 2. 인증
@@ -38,45 +38,73 @@ curl --location --request GET 'https://rest-api.argosidentity.com/v3/submission?
 ### 5-1. 성공 응답
 ```json result.json
 {
-  "Items": [
-    {
-      "data": {
-        "name": "{name}",
-        "gender": "male",
-        "nationality": "KOR",
-        "date_of_birth": "YYYY-MM-DD"
-      },
-      "email": "{email}",
-      "submission_id": "{submission_id}",
-      "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
-      "reviewer": "{reviewer}",
-      "kyc": {
-        "result": "rejected",
-        "comment": [
-          "Multiple invalid KYC attempts "
-        ],
-        "commentCode": [
-          "too_many_retry"
-        ]
-      }
-    },
-    // 추가 제출 건...
-  ]
+    "Items": [
+        {
+            "data": {
+                "name": "{name}",
+                "gender": "male",
+                "nationality": "KOR",
+                "date_of_birth": "YYYY-MM-DD"
+            },
+            "email": "{email}",
+            "submission_id": "{submission_id}",
+            "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
+            "reviewer": "{reviewer}",
+            "kyc": {
+                "result": "rejected",
+                "comment": [
+                    "Multiple invalid KYC attempts"
+                ],
+                "commentCode": [
+                    "too_many_retry"
+                ]
+            }
+        },
+        {
+            "data": {
+                "name": "{name}",
+                "gender": "male",
+                "nationality": "BRA",
+                "date_of_birth": "YYYY-MM-DD"
+            },
+            "email": "{email}",
+            "submission_id": "{submission_id}",
+            "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
+            "pending_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
+            "reviewer": "{reviewer}",
+            "kyc": {
+                "result": "rejected",
+                "comment": [
+                    "test"
+                ],
+                "commentCode": [
+                    "other"
+                ]
+            }
+        },
+        {
+            "data": {
+                "name": "{name}",
+                "gender": "male",
+                "nationality": "KOR",
+                "date_of_birth": "YYYY-MM-DD"
+            },
+            "email": "{email}",
+            "submission_id": "{submission_id}",
+            "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
+            "reviewer": "{reviewer}",
+            "kyc": {
+                "result": "rejected",
+                "comment": [
+                    "Multiple invalid KYC attempts"
+                ],
+                "commentCode": [
+                    "too_many_retry"
+                ]
+            }
+        }
+    ]
 }
-
 ```
-
-### 5-2. 응답 데이터
-| 필드명                        | 설명                                                        | 데이터 타입         |
-|-------------------------------|-----------------------------------------------------------|---------------------|
-| `data`                        | 중복제출로 확인된 submission의 고유 값             | String              |
-| `email`                   | 중복 제출로 확인된 submission에 기록된 이메일 주소               | String           |
-| `submission_id`                   | 중복 제출로 확인된 submission에 기록된 이메일 주소               | String           |
-| `created_at`                   | 중복 제출로 확인된 submission에 기록된 이메일 주소               | String           |
-| `pending_at`                   | 중복 제출로 확인된 submission에 기록된 이메일 주소               | String           |
-| `reviewer`                   | 중복 제출로 확인된 submission에 기록된 이메일 주소               | String           |
-| `kyc`                   | 중복 제출로 확인된 submission에 기록된 이메일 주소               | String           |
-
-
 
 이 API를 통해 특정 이메일 주소와 관련된 모든 KYC 제출 데이터를 효율적으로 조회하고 관리할 수 있습니다.

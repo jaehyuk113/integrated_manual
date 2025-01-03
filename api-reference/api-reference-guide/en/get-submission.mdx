@@ -1,5 +1,367 @@
 ---
 title: 'GET/Submission'
-description: 'Example section for showcasing API endpoints'
+description: '이 API를 사용하면 제출된 ID Check 데이터를 조회할 수 있습니다. 특정 제출 건의 상세 정보를 확인하거나 여러 제출 건의 목록을 필터링하여 가져올 수 있습니다.'
 ---
 
+
+## 1. 엔드포인트
+
+```text GET/Submission
+GET https://rest-api.argosidentity.com/v3/submission
+```
+## 2. 인증
+
+x-api-key 헤더에 API 키를 포함시켜야 합니다:
+
+```text x-api-key
+x-api-key: {yourAPIKey}
+```
+
+
+## 3. 요청 본문
+요청 본문은 JSON 형식이어야 합니다. 다음은 필드 설명입니다:
+
+
+<ResponseField name="submissionId" type="string">
+ 특정 제출 건의 고유 ID
+</ResponseField>
+
+<ResponseField name="userid" type="string">
+ 사용자 ID와 일치하는 목록 조회
+</ResponseField>
+<ResponseField name="email" type="string">
+ 이메일 주소와 일치하는 제출 목록 조회
+</ResponseField>
+<ResponseField name="count" type="string">
+ 반환할 결과의 수 (기본값: 50)
+</ResponseField>
+
+<ResponseField name="nextpage_id" type="string">
+ 다음 페이지 조회를 위한 ID
+</ResponseField>
+<ResponseField name="nextpage_date" type="string">
+ 다음 페이지 조회를 위한 날짜
+</ResponseField>
+<ResponseField name="start_date" type="string">
+ 조회 시작 날짜 (YYYY-MM-DD)
+</ResponseField>
+<ResponseField name="end_date" type="string">
+ 조회 종료 날짜 (YYYY-MM-DD) 
+</ResponseField>
+<ResponseField name="request_type" type="string">
+ 	request_type 파라미터를 사용하여 특정 데이터 유형만 선택적으로 조회할 수 있습니다. 다음 옵션 중 하나를 선택하여 입력할 수 있습니다:
+    - `kyc`: KYC 관련 데이터와 submission_id를 반환합니다.
+    - `aml`: AML 관련 데이터와 submission_id를 반환합니다.
+    - `data`: 제출자의 개인 정보 데이터와 submission_id를 반환합니다.
+    - `others`: KYC, AML, 개인 정보를 제외한 나머지 모든 데이터 항목을 반환합니다.
+</ResponseField>
+
+## 4. 요청 예시
+
+```curl POST/Submission
+curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id={submission_id}' \
+--header 'x-api-key: {yourAPIKey}'
+
+```
+
+## 5. 응답
+
+### 5-1. 성공 응답
+```json result.json
+{
+    "Items": [
+        {
+            "data": {
+                "name": "{name}",
+                "gender": "male",
+                "nationality": "KOR",
+                "date_of_birth": "YYYY-MM-DD",
+                "address_city": "{city}",
+                "address_country": "KOR",
+                "address_state": "{state}",
+                "address_street": "{street}",
+                "address_street2": "{street2}",
+                "address_zipcode": "{zipcode}",
+                "ip_address": "{ip_address}",
+                "idcard_issuingCountry": "KOR",
+                "idcard_issueDate": "YYYY-MM-DD",
+                "idType": "government_id",
+                "identityNumber": "{******-*******}"
+            },
+            "email": "{email}",
+            "submission_id": "{submission_id}",
+            "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
+            "updated_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
+            "reviewer": "{reviewer}",
+      "aml" : {
+	      "raw_data": {...},
+	      "matches": [...],
+	      "risk_level_summary": "HIGH",
+        "currentstatus": "Red Flag"
+      },
+            "kyc": {
+                "result": "rejected",
+                "comment": [
+                    "Multiple invalid KYC attempts "
+                ],
+                "commentCode": [
+                    "too_many_retry"
+                ],
+                "attempts": [
+                    {
+                        "attemptCnt": 1,
+                        "step1Time1st": "YYYY-MM-DD-HH-MM-SS-ZZZ",
+                        "ocrResult": "success",
+                        "verificationResult": "success",
+                        "verification": {
+                            "result": {
+                                "code": "CF-00000",
+                                "message": "성공",
+                                "transactionId": "{transactionId}",
+                                "extraMessage": ""
+                            },
+                            "data": {
+                                "resUserIdentiyNo": "*************",
+                                "resAuthenticity": "1",
+                                "resAuthenticityDesc": "입력하신 내용은 등록된 내용과 일치합니다.",
+                                "resUserNm": "{resUserNm}"
+                            }
+                        },
+                        "verificationParams": {
+                            "fullName": "{fullName}",
+                            "idType": "government_id",
+                            "issueDate": "{YYYY-MM-DD}",
+                            "identityNumber": "******-*******"
+                        },
+                        "step2Time1st": "YYYY-MM-DD-HH-MM-SS-ZZZ",
+                        "liveness": {
+                            "score": 8.097455,
+                            "probability": 0.9996958,
+                            "quality": 0.7537264
+                        },
+                        "faceSimilarityScore": 0,
+                        "retryMsg": [
+                            "The face doesn’t match. Please retry with another face image."
+                        ],
+                        "livenessScore": 99,
+                        "selfieImage": "{selfieImage URL}",
+                        "retryCode": [
+                            "face_compare_underscore"
+                        ]
+                    },
+                    {
+                        "attemptCnt": 2,
+                        "verificationResult": "success",
+                        "verification": {
+                            "result": {
+                                "code": "CF-00000",
+                                "message": "성공",
+                                "transactionId": "{transactionId}",
+                                "extraMessage": ""
+                            },
+                            "data": {
+                                "resUserIdentiyNo": "*************",
+                                "resAuthenticity": "1",
+                                "resAuthenticityDesc": "입력하신 내용은 등록된 내용과 일치합니다.",
+                                "resUserNm": "{resUserNm}"
+                            }
+                        },
+                        "verificationParams": {
+                            "fullName": "{fullName}",
+                            "idType": "government_id",
+                            "issueDate": "{YYYY-MM-DD}",
+                            "identityNumber": "******-*******"
+                        },
+                        "step2Time2nd": "YYYY-MM-DD-HH-MM-SS-ZZZ",
+                        "liveness": {
+                            "score": 8.097455,
+                            "probability": 0.9996958,
+                            "quality": 0.7537264
+                        },
+                        "faceSimilarityScore": 0,
+                        "retryMsg": [
+                            "The face doesn’t match. Please retry with another face image."
+                        ],
+                        "livenessScore": 99,
+                        "selfieImage": "{selfieImage URL}",
+                        "retryCode": [
+                            "face_compare_underscore"
+                        ]
+                    },
+                    {
+                        "attemptCnt": 3,
+                        "verificationResult": "success",
+                        "verification": {
+                            "result": {
+                                "code": "CF-00000",
+                                "message": "성공",
+                                "transactionId": "{selfieImage URL}",
+                                "extraMessage": ""
+                            },
+                            "data": {
+                                "resUserIdentiyNo": "*************",
+                                "resAuthenticity": "1",
+                                "resAuthenticityDesc": "입력하신 내용은 등록된 내용과 일치합니다.",
+                                "resUserNm": "{resUserNm}"
+                            }
+                        },
+                        "verificationParams": {
+                            "fullName": "{fullName}",
+                            "idType": "government_id",
+                            "issueDate": "{YYYY-MM-DD}",
+                            "identityNumber": "981112-1******"
+                        },
+                        "step2Time3rd": "YYYY-MM-DD-HH-MM-SS-ZZZ",
+                        "liveness": {
+                            "score": 8.097455,
+                            "probability": 0.9996958,
+                            "quality": 0.7537264
+                        },
+                        "faceSimilarityScore": 0,
+                        "retryMsg": [
+                            "The face doesn’t match. Please retry with another face image."
+                        ],
+                        "livenessScore": 99,
+                        "selfieImage": "{selfieImage URL}",
+                        "retryCode": [
+                            "face_compare_underscore"
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
+}
+
+```
+
+### 5-2. 응답 데이터
+| 필드명                        | 설명                                                        | 데이터 타입         | 카테고리                  |
+|-------------------------------|-----------------------------------------------------------|---------------------|---------------------------|
+| `data`                        | KYC 제출자 데이터                                           | Object              | KYC 제출자 정보           |
+| `data.name`                   | 이름                                                       | String              | KYC 제출자 정보           |
+| `data.gender`                 | 성별                                                       | Enum  | KYC 제출자 정보           |
+| `data.nationality`            | 3글자 형식의 국가코드 (ISO alpha3 형식)                     | String              | KYC 제출자 정보           |
+| `data.date_of_birth`          | YYYY-MM-DD의 날짜 형식                                     | Date                | KYC 제출자 정보           |
+| `data.ip_address`             | IPv4 형식의 IP 주소                                        | String              | KYC 제출자 정보           |
+| `data.idType`                 | 신분증 종류                                               | Enum  | KYC 제출자 정보 |
+| `data.idcard_issuingCountry`  | 신분증 발급 국가의 ISO alpha 3 형식의 코드                | String              | KYC 제출자 정보           |
+| `data.idcard_issueDate`       | YYYY-MM-DD 형식의 신분증 발급일자                         | Date                | KYC 제출자 정보           |
+| `data.idcard_expireDate`      | YYYY-MM-DD 형식의 신분증 만료일자                         | Date                | KYC 제출자 정보           |
+| `data.identityNumber`         | 주민등록번호                                               | String              | KYC 제출자 정보           |
+| `data.documentNumber`         | 신분증 번호                                               | String              | KYC 제출자 정보           |
+| `data.address_city`           | 도시                                                       | String              | KYC 제출자 정보           |
+| `data.address_country`        | 국가                                                       | String              | KYC 제출자 정보           |
+| `data.address_state`          | 주                                                         | String              | KYC 제출자 정보           |
+| `data.address_street`         | 도로                                                       | String              | KYC 제출자 정보           |
+| `data.address_zipcode`        | 우편번호                                                   | String              | KYC 제출자 정보           |
+| `data.address_globalCode`     | 전체 주소에 대한 상세코드 값 (ex. 8Q98HXPG+MP)             | String              | KYC 제출자 정보           |
+| `data.address_compoundCode`   | 국가 및 도시와 상세주소 코드 값 (ex. HXPG+MP Seoul, South Korea) | String              | KYC 제출자 정보           |
+| `data.address_formatted`      | 상세 코드를 변환한 주소                                    | String              | KYC 제출자 정보           |
+| `data.address_input`          | 사용자 입력 주소 값                                        | String              | KYC 제출자 정보           |
+| `data.address_detail`         | 사용자 입력 상세주소 값                                    | String              | KYC 제출자 정보           |
+| `data.cf1`                    | submission을 제출할 때 선택적으로 추가되는 값 1            | String              | KYC 제출자 정보           |
+| `data.cf2`                    | submission을 제출할 때 선택적으로 추가되는 값 2            | String              | KYC 제출자 정보           |
+| `data.cf3`                    | submission을 제출할 때 선택적으로 추가되는 값 3            | String              | KYC 제출자 정보           |
+| `email`                       | 이메일 주소                                               | String              | KYC 제출자 정보           |
+| `reviewer`                    | 검수자 (AI 또는 사람)                                      | Enum | KYC 검수 정보             |
+| `submission_id`               | 각 제출건(submission)에 부여된 고유 식별 ID               | String              | KYC 제출 정보             |
+| `applicant_id`                | 중복 제출한 사용자에게 부여되는 식별 ID                   | String              | KYC 제출 정보             |
+| `created_at`                  | KYC가 제출된 날짜와 시간 (UTC+0)                          | DateTime            | KYC 제출 정보             |
+| `kyc_result_at`               | KYC 결과가 최초로 정해진 시간                             | DateTime            | KYC 제출 정보             |
+| `updated_at`                  | KYC 상태가 최종 업데이트된 날짜와 시간                    | DateTime            | KYC 제출 정보             |
+| `pending_at`                  | KYC가 Pending으로 제출된 날짜와 시간                      | DateTime            | KYC 제출 정보             |
+| `userid`                      | submission을 생성할 때 선택적으로 추가되는 파라미터        | String              | KYC 제출 정보             |
+| `additional_list`             | 대시보드에서 설정한 Additional form에 대해 사용자가 입력한 데이터 | Array               | KYC 추가 양식 정보        |
+| `additional_list.answer`      | Additional form의 각 항목 명                              | String              | KYC 추가 양식 정보        |
+| `additional_list.inputValue`  | 각 항목에 대한 사용자 입력값                              | String              | KYC 추가 양식 정보        |
+| `additional_list.blockType`   | 각 항목에 대한 데이터 타입                                | String              | KYC 추가 양식 정보        |
+| `kyc`                         | KYC 데이터 오브젝트                                       | Object              | KYC 상태 정보             |
+| `kyc.result`                  | KYC 결과 상태                                             | Enum  | KYC 상태 정보 |
+| `kyc.comment`                 | KYC 거절 사유                                             | String              | KYC 상태 정보             |
+| `kyc.commentCode`             | KYC 거절 사유 코드 값                                     | String              | KYC 상태 정보             |
+| `kyc.attempts`                | KYC 실행건에 대한 오브젝트                                | Array               | KYC 실행 정보             |
+| `kyc.attempts[i].attemptCnt`  | KYC 제출 실패 후 재시도 횟수                              | Integer             | KYC 실행 정보             |
+| `kyc.attempts[i].idBarcodeResult` | 신분증 바코드 진위 확인 결과                           | String              | KYC 실행 정보             |
+| `kyc.attempts[i].verificationResult` | 신분증 진위 확인 결과 값                           | Enum | KYC 실행 정보             |
+| `kyc.attempts[i].verification` | 진위 확인 결과 상세 데이터                               | Object              | KYC 실행 정보             |
+| `kyc.attempts[i].verificationParams` | 진위 확인 실행 시 필요한 값                         | Object              | KYC 실행 정보             |
+| `kyc.attempts[i].errorCode`   | 오류 코드                                                | String              | KYC 실행 정보             |
+| `kyc.attempts[i].errorMsg`    | 오류 메시지                                              | String              | KYC 실행 정보             |
+| `kyc.attempts[i].retryMsg`    | 실패 원인 메시지                                         | String              | KYC 실행 정보             |
+| `kyc.attempts[i].retryCode`   | 실패 원인 코드                                           | String              | KYC 실행 정보             |
+| `kyc.attempts[i].faceSimilarityScore` | 얼굴 비교 값                                       | Float               | KYC 실행 정보             |
+| `kyc.attempts[i].selfieImage` | Selfie 이미지 저장 URL                                   | String              | KYC 실행 정보             |
+| `kyc.attempts[i].livenessScore` | liveness 점수 값                                       | Float               | KYC 실행 정보             |
+| `aml`                         | AML 스크리닝 결과 데이터 오브젝트                         | Object              | AML SCREENING           |
+| `aml.raw_data`                | AML 스크리닝 결과의 원시 데이터                          | Object              | AML SCREENING           |
+| `aml.risk_level_summary`      | 리스크 수준 요약                                          | Enum | AML SCREENING |
+| `aml.currentstatus`           | 현재 상태                                                | Enum | AML SCREENING           |
+| `aml.matches`                 | 상세 AML 스크리닝 결과                                    | Array               | AML SCREENING           |
+| `aml.matches[i].risk_level`   | 위험도                                                   | Enum| AML SCREENING       |
+| `aml.matches[i].argos_number` | AML 보고서 조회를 위한 고유 ID                           | String              | AML SCREENING           |
+| `aml.matches[i].resource_id`  | AML 보고서를 조회하기 위한 리소스 고유 ID                | String              | AML SCREENING           |
+| `aml.matches[i].score`        | 매칭 점수                                                | Float               | AML SCREENING           |
+| `aml.matches[i].risk_icons`   | 리스크 아이콘                                            | Array               | AML SCREENING           |
+| `nextpageKey`                 | 추가로 출력될 다음 페이지의 키                           | Object              | 페이지 네비게이션 정보    |
+| `nextpageKey.id`              | 다음 페이지 호출 시 가장 마지막으로 조회된 submission의 ID 값 | String           | 페이지 네비게이션 정보    |
+| `nextpageKey.created_at`      | 다음 페이지 호출 시 가장 마지막으로 조회된 submission의 created_at 값 | DateTime | 페이지 네비게이션 정보 |
+| `bank_verification`           | 계좌 인증 결과 데이터                                     | Object              | 계좌 인증                |
+| `bank_verification.result`    | 계좌 인증 성공 결과                                       | Enum | 계좌 인증                |
+| `bank_verification.type`      | 계좌 인증 유형                                            | Enum `<occupancy(1원인증), nameCheck(예금주조회)>` | 계좌 인증 |
+| `bank_verification.bank_code` | 은행 코드                                                | String              | 계좌 인증                |
+| `bank_verification.account_number` | 계좌 번호                                          | String              | 계좌 인증                |
+| `bank_verification.retry_count` | 계좌 인증 중 실패 횟수                                  | Integer             | 계좌 인증                |
+| `id_LivenessScore`            | ID Card Liveness Score 데이터                            | Object              | Liveness Score          |
+| `id_LivenessScore.Screen_play` | Screen play liveness score                              | Float               | Liveness Score          |
+| `id_LivenessScore.Paper_printed` | Paper printed liveness score                          | Float               | Liveness Score          |
+| `id_LivenessScore.Replace_portraits` | Replace portraits liveness score                  | Float               | Liveness Score          |
+| `Injection_action`            | Injection Process 실행 내역                             | Object              | Injection Process       |
+| `Injection_action.type`       | Injection Process 타입                                  | String              | Injection Process       |
+| `Injection_action.time`       | Injection Process의 최근 실행 일자                      | DateTime            | Injection Process       |
+| `tokenId`                     | Private mode에서 제출 시 사용한 tokenID                 | String              | 제출 정보               |
+
+
+### 5-3. 오류 코드
+| 에러 코드                | 메시지  | 설명 |
+|-------------------------|------| ---- |
+| `invalid_payload`      | Invalid payload | 요청 본문을 파싱할 수 없음 |
+| `missing_data`         | Required input data is missing | 필수 필드가 누락됨 |
+| `invalid_project`      | Invalid project | 프로젝트 ID가 유효하지 않음 |
+| `invalid_admin`        | Invalid admin | 관리자 계정에 이 프로젝트에 대한 권한이 없음 |
+| `invalid_parameter`     | invalid parameter: `{parameter}` | 예상치 못한 매개변수가 제출됨 |
+| `invalid_format`       | invalid format: `${parameter}` | 매개변수가 예상 형식과 일치하지 않음 |
+| `processing_error`      | Failed to complete migration | 처리 중 알 수 없는 오류 발생 |
+
+
+
+
+## 6. 암호화 옵션
+보안 강화를 위해 요청 본문을 암호화할 수 있습니다. 암호화를 사용할 때:
+전체 요청 본문 객체를 암호화합니다.
+암호화된 문자열을 `body` 매개변수로 전송합니다.
+
+### 6-1. 암호화된 요청 예시
+
+```json result.json
+body : encrypt({
+		email : 'string',
+		fullName : 'string',
+		issuingCountry : 'string',
+		birthDate: 'string'
+		...
+	})
+
+```
+### 6-2. 암호화된 응답
+응답에는 isEncrypted 플래그와 암호화된 데이터가 포함됩니다:
+
+```json result.json
+response : {
+   body : {
+    "data": "encrypted-string",
+    "isEncrypted": true
+   }
+}
+
+```

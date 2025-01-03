@@ -1,6 +1,87 @@
 ---
-title: 'Overview'
-description: 'Example section for showcasing API endpoints'
+title: 'Getting Started'
+description: 'The ID Check API is a solution designed to help enterprise clients manage KYC (Know Your Customer) and AML (Anti-Money Laundering) processes more systematically and efficiently. This API supports seamless integration with existing systems and provides features to securely handle and manage user data.'
 ---
 
+## Key Features
+The Argos KYC API offers the following core functionalities:
+- **KYC Data Submission and Management**: Create, retrieve, update, and delete customer information.
+- **AML Checks and Report Retrieval**: Request AML checks and review results.
+- **Image Processing**: Upload and manage ID documents and other required images.
 
+## API Endpoints
+The Argos KYC API follows a RESTful architecture and provides the following key endpoints:
+
+<CardGroup cols={3}>
+  <Card title="POST/Submission" icon="person-circle-plus" href="/api-reference/api-reference-guide/en/post-submission">
+  Submit KYC Data
+  </Card>
+  <Card title="PATCH/Submission" icon="person-chalkboard" href="/api-reference/api-reference-guide/en/patch-submission">
+  Update KYC Data
+  </Card>
+  <Card title="GET/Submission" icon="person-circle-check" href="/api-reference/api-reference-guide/en/get-submission">
+  Retrieve KYC Data
+  </Card>
+  <Card title="DELETE/Submission" icon="person-circle-xmark" href="/api-reference/api-reference-guide/en/delete-submission">
+  Delete KYC Data
+  </Card>
+  <Card title="GET/Image" icon="image" href="/api-reference/api-reference-guide/en/get-image">
+  Retrieve Images
+  </Card>
+  <Card title="PUT/Image" icon="images" href="/api-reference/api-reference-guide/en/put-image">
+  Upload/Update Images
+  </Card>
+  <Card title="GET/Report/AML" icon="file-chart-column" href="/api-reference/api-reference-guide/en/get-aml-report">
+  Retrieve AML Reports
+  </Card>
+  <Card title="POST/AML" icon="radar" href="/api-reference/api-reference-guide/en/post-aml">
+  Request AML Checks
+  </Card>
+</CardGroup>
+
+## API Key
+The ID Check API key plays a vital role in authenticating and authorizing client and server requests. It ensures that the requester's credentials are validated, and Argos Identity provides the appropriate response.
+
+## How to Access the API Key
+
+<img height="200" src="/images/api-reference/api-key.png" />
+<Steps>
+  <Step title="Log in to the Dashboard">
+    Log in to the ID Check [Dashboard](https://idcheck.argosidentity.com/).
+  </Step>
+  <Step title="Access the Settings Menu">
+    Click on the `Settings` menu in the top navigation bar of the dashboard.
+  </Step>
+  <Step title="Navigate to the Access Management Page">
+    From the `General` section in the left sidebar, select `Access Management`.
+  </Step>
+  <Step title="Copy the API Key">
+    Locate the `API Key` section, click the icon to copy the API key, and store it securely.
+  </Step>
+  <Step title="Implement API Integration">
+    Implement and test the API integration in your development environment.
+  </Step>
+  <Step title="Switch to Production">
+    Transition to the production environment and begin processing live data.
+  </Step>
+</Steps>
+
+## HTTP Response Status Codes
+
+HTTP response codes are used to indicate the status of a request. Each code represents the result of the request, following these rules:
+
+- `2xx`: Successful request
+- `4xx`: Client error
+- `5xx`: Server error
+
+| HTTP Status Code | Message                                | Description                                                                                     |
+|------------------|----------------------------------------|-------------------------------------------------------------------------------------------------|
+| `200`            | OK                                    | The request was successfully processed.                                                        |
+| `400`            | Invalid Query String Parameters       | Required parameters are missing or incorrectly formatted. Verify your request parameters.       |
+| `403`            | User Not Authorized (Explicit Deny)   | Access denied. The IP address is not on the whitelist.                                         |
+| `403`            | Forbidden                             | Access denied. The API key used may be incorrect.                                              |
+| `413`            | Request Entity Too Large              | The request contains data exceeding the server's limits. Reduce the size and try again.        |
+| `500`            | Internal Server Error                 | A server error occurred. Contact the Argos team if the problem persists.                       |
+| `502`            | Bad Gateway                           | The server received an invalid response from the upstream server. Retry later or contact Argos support. |
+
+Simplify your KYC and AML processes, enhance regulatory compliance, and improve customer onboarding experiences using the Argos ID Check API.

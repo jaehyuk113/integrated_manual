@@ -1,47 +1,63 @@
 ---
 mode: 'default'
-title: Querystring and Token Guide
-description: Brief description of what ID Check is and its purpose. Key use cases (e.g., KYC, compliance, user verification).
-
+title: Query String and Token Guide
+description: A comprehensive guide to the Query String and Token ID options for Liveform. These options enable features such as transmitting additional information, preventing duplicate submissions, and identifying users. Explore essential tools to optimize your ID Check process.
 ---
 
-## Prerequisites
+## 1. Customizable Query String Options
+The Query String options available in Liveform and API allow you to send additional information and customize the KYC process.
 
-ARGOS provides ID Check, a dedicated submission page for each project, accessible via a unique URL. To obtain the URL:
+## 2. Basic URL Structure
 
-<Steps>
-  <Step title="Log in to the dashboard.">
-      <Card title="Open the Dashboard" icon="link" href="https://idcheck.argosidentity.com">
-  </Card>
+- **Base Form URL**: `https://form.argosidentity.com/?pid={project_Id}`  
+- **URL with Query String**: `https://form.argosidentity.com/?pid={project_Id}&blacklistCountries=false`
 
-  </Step>
-  <Step title="Navigate to Settings -> Access Management to locate the URL.">
-  </Step>
-</Steps>
+### 2-1. Key Query String Parameters
 
-## Options for Using ID Check in Verification Processes
+| Parameter               | Description                                                                                     |
+|-------------------------|-------------------------------------------------------------------------------------------------|
+| `blacklistCountries`    | Turns off blacklist country restrictions for the specific submission (`false` only).            |
+| `approvePeriod`         | Turns off the approved duplicate submission prevention period (`false` only).                   |
+| `rejectPeriod`          | Turns off the rejected duplicate submission prevention period (`false` only).                   |
+| `ageLimit`              | Turns off age restriction for the specific submission (`false` only).                          |
+| `rejectDuplicateUser`   | Enables/disables duplicate submission prevention (`true` or `false` accepted).                  |
+| `userid`                | Custom unique identifier for the user.                                                         |
+| `pid`                   | Unique identifier for each project.                                                            |
+| `sid`                   | Unique identifier for each submission.                                                         |
+| `cf1`                   | Custom option field #1.                                                                        |
+| `cf2`                   | Custom option field #2.                                                                        |
+| `cf3`                   | Custom option field #3.                                                                        |
 
-ID Check supports two methods for completing identity verification
+<Note>
+All Query String values must be URL-encoded.
+</Note>
 
-<img
-  src="/images/getting-started_banner.png"
-  alt="Hero Light"
-/>
+### 2-2. Unique User ID and Custom Fields
+- Generate a unique user ID for KYC submitter identification during API calls.
+- Add up to three custom fields (`cf1`, `cf2`, `cf3`) to transmit additional information.
 
-<Steps>
-  <Step title="Using a PC">
-      <img
-    src="/images/getting-started_web.png"
-    alt="Hero Light"
-  />
-  1. Open the ID Check URL on your computer.
-  2. A QR code will be displayed.
-  3. Scan the QR code with a mobile device to access the ID Check page in a mobile web browser.
-  </Step>
-  <Step title="Using a Mobile Device">
-    <img
-  src="/images/getting-started_mobile.png"
-  alt="Hero Light"/>
-  Link the URL to the event in your app where user ID verification is required. This will allow users to open the ID Check page directly.
-  </Step>
-</Steps>
+## 3. Token ID Options
+The `tokenId` is a string used for Liveform submissions in Private Mode.
+
+**Purpose**: Prevent shared or duplicate use of the same URL.
+
+### 3-1. Token Validation
+Validation fails (error occurs) under the following conditions:  
+1. **Time Expiry**: More than 3 minutes have elapsed since the first use.  
+2. **Existing Valid Submission**: There is an existing submission with a determined KYC status (approved, rejected, pending).  
+
+<Warning>
+**Caution**:  
+If the above conditions are not met, multiple users may proceed with the same Token ID simultaneously.
+</Warning>
+
+### 3-2. Methods to Check Token ID
+- Webhook  
+- **GET Submission API** (single retrieval using `submission_id`)  
+- Download Submission CSV from the dashboard  
+
+### 3-3. URL Structure for Token ID
+- **Base Form URL**: `https://form.argosidentity.com/?pid={project_Id}`  
+- **URL with Token ID**: `https://form.argosidentity.com/?pid={project_Id}&token={tokenId}`  
+
+By using this guide, you can effectively leverage Query String and Token ID options in ID Check to optimize your KYC process and enhance user experience.

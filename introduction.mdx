@@ -2,107 +2,125 @@
 mode: 'custom'
 ---
 
-export function openSearch() {
-  document.getElementById('search-bar-entry').click();
-}
+<div style={{
+  textAlign: 'center',
+  padding: '4rem 0',
+  background: 'radial-gradient(circle, rgba(0,100,255,1) 0%, rgba(0,212,255,1) 100%)'
+}}>
+  <div style={{
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    gap: '1rem'
+  }}>
+    <h1 style={{
+      fontSize: '2.5rem',
+      fontWeight: 'normal',
+      display: 'flex',
+      alignItems: 'center',
+      gap: '0.5rem'
+    }}>
+      <span style={{color: '#f0f0f0'}}> Build with</span> <span style={{fontWeight: 'bold',color:'#f0f0f0'}}>ARGOS Identity</span>
+    </h1>
 
-
-<div
-  className="relative w-full flex items-center justify-center"
-  style={{ height: '24rem', backgroundColor: '#00020F', overflow: 'hidden' }}
->
-  <div style={{ flex: 'none' }}>
-    <img
-    src="/images/hero/hero_white.png"
-    style={{ height: '400px', width: '2000px', pointerEvents: 'none' }}
-    />
+    <p style={{
+      fontSize: '1rem',
+      color: '#f2f2f1',
+      margin: '0'
+    }}>
+      Discover how to get started with ID Check and Verify.
+    </p>
+  
   </div>
-
 </div>
+
 <div style={{marginTop: '6rem', marginBottom: '8rem', maxWidth: '70rem', marginLeft: 'auto',
     marginRight: 'auto', paddingLeft: '1.25rem',
     paddingRight: '1.25rem' }}>
 
 <div
+  className="block text-black dark:text-white"
   style={{
     textAlign: 'center',
     fontSize: '24px',
     fontWeight: '600',
-    color: '#000000',
     marginBottom: '3rem',
-    topMargin: '-1rem'
+    marginTop: '-1rem'
   }}
 >
-  Explore our guides and examples to integrate{' '}
-  <span className="text-primary">ARGOS Identity</span>
+  <span className="block">
+    <span className="text-primary">ID Check </span> is a powerful and flexible all-in-one identity verification solution. It provides all the tools you need for accurate identity verification and enhanced security in one place.
+  </span>
 </div>
 
-<CardGroup cols={3}>
-  <Card title="Getting Started" icon="book-open" href="/guides/quickstart">
-    Set up your environment, make your first API call, and launch your integration within minutes/
+<CardGroup cols={4}>
+  <Card title="Getting Started" icon="book-open" href="/getting-started/en/introduction">
+     Learn how to quickly start and integrate the ID Check service.
   </Card>
-  <Card title="Reference" icon="code-simple" href="/reference">
-    Comprehensive details about the Mintlify API.
+  <Card title="API Reference" icon="code" href="/api-reference/api-reference-guide/en/overview">
+    Implement ID Check features easily with detailed API documentation.
   </Card>
-  <Card title="Examples" icon="grid-round" iconType="solid" href="/examples">
-    Hands-on examples of Mintlify documentation. 
+  <Card title="Webhook Events" icon="webhook" href="/webhooks/en/overview">
+    Automate your ID verification process with real-time notifications.
   </Card>
-  <Card title="Integrations" icon="link-simple" href="/guides/integrations">
-    Mintlify's growing number of third-party integrations.
+  <Card title="Security" icon="grid-round" iconType="solid" href="/getting-started/en/encrypt-and-decrpyt-data/overview">
+    Apply encryption and decryption techniques to secure your data.
   </Card>
-   <Card title="Integrations" icon="Security & Compliance" href="/guides/integrations">
-    Security
+
+  <Card title="Recommended Browsers and Devices" icon="browser" href="/getting-started/en/recommended-browsers-and-devices">
+    Ensure the best user experience by setting up the optimal environment.
+  </Card>  
+  <Card title="Data Structure Guide" icon="database" href="/api-reference/api-reference-guide/en/iso-alpha-3-country-codes">
+    Learn about data formats and structures needed for API interaction.
   </Card>
-  <Card title="Tools" icon="wrench" href="/tools">
-    Practical toolkits for building your documentation
-  </Card>
-  <Card title="Releases" icon="party-horn" href="/release-notes">
-    News about features and changes in Mintlify.
+
+  <Card title="Changelog" icon="sparkles" href="/changelog/en/idcheck/overview">
+    Stay updated with the latest changes and updates.
   </Card>
 </CardGroup>
-
-</div>
-
-<div style={{marginTop: '1rem', marginBottom: '4rem', maxWidth: '70rem', marginLeft: 'auto',
-    marginRight: 'auto', paddingLeft: '1.25rem',
-    paddingRight: '1.25rem' }}>
 
 <div
+  className="block text-black dark:text-white"
   style={{
     textAlign: 'center',
     fontSize: '24px',
     fontWeight: '600',
-    color: '#121142',
     marginBottom: '3rem',
-    topMargin: '-2rem'
+    marginTop: '4rem'
   }}
 >
-  Choose a topic below or simply{' '}
-  <span className="text-primary">get started</span>
+  <span className="block">
+    <span className="text-primary">Verify </span> offers independent modules like building blocks. Select only the features you need, such as document data extraction, face ID, and global ID recognition, to create a customized identity verification process.
+  </span>
 </div>
 
-<CardGroup cols={3}>
-  <Card title="Textify" icon="book-open" href="/guides/quickstart">
-    Automate document data extraction across industries. Supported templates include Business Registrations, Invoices, Medical Records, and more.
+<CardGroup cols={4}>
+  <Card title="Getting Started" icon="book-open" href="https://dev.argosidentity.com/verify/getting-started">
+    Learn how to quickly start and use the Verify service.
   </Card>
-  <Card title="Face Id" icon="code-simple" href="/reference">
-    Manage, search, and verify faces within collections for identity verification and authentication.
+  <Card title="Textify" icon="file-contract" href="https://dev.argosidentity.com/verify/textify/introduction">
+    Digitize various documents quickly and easily. Supports templates for business registration, invoices, medical records, and more.
   </Card>
-  <Card title="Global ID Recognition" icon="grid-round" iconType="solid" href="/examples">
-    Verify and extract data from ID documents worldwide using advanced OCR technology.
+  <Card title="Face ID" icon="face-viewfinder" href="https://dev.argosidentity.com/face-id/face-id-1/introduction-5">
+    Manage and search face data effortlessly, providing robust identity verification and authentication features.
   </Card>
-  <Card title="ID Liveness" icon="link-simple" href="/guides/integrations">
-   Ensure document integrity by detecting tampering or forgery in ID images
+  <Card title="Global ID Recognition" icon="address-card" iconType="solid" href="https://dev.argosidentity.com/verify-id/global-id-recognition-api/global-id-recognition-api-1">
+     Experience advanced OCR solutions that automatically verify and extract data from ID documents worldwide.
   </Card>
-   <Card title="Face Compare" icon="Security & Compliance" href="/guides/integrations">
-    Compare two facial images to assess similarity, helping you validate identity with precision.
+  <Card title="ID Liveness" icon="wave-pulse" href="https://dev.argosidentity.com/verify-id/id-liveness/id-liveness-api-1">
+     Detect tampering in ID images to ensure document reliability.
   </Card>
-  <Card title="Text Verifier" icon="wrench" href="/tools">
-    Compare text to verify content similarity, aiding in content validation and fraud prevention.
+   <Card title="Face Compare" icon="code-compare" href="https://dev.argosidentity.com/verify-id/face-compare/face-compare-api-1">
+    Compare two facial images to verify identity with high accuracy.
   </Card>
-  <Card title="Image Verifier" icon="party-horn" href="/release-notes">
-    Assess similarity between two images, useful for applications needing visual verification
+  <Card title="Text Verifier" icon="text-size" href="https://dev.argosidentity.com/verifier/text-verifier/text-verifier-api">
+    Compare text to verify content similarity, useful for fraud prevention.
+  </Card>
+  <Card title="Image Verifier" icon="images" href="https://dev.argosidentity.com/verifier/image-verifier/image-verifier-api">
+    Assess the similarity between two images for applications requiring visual verification.
+  </Card>
+  <Card title="Changelog" icon="sparkles" href="/changelog/en/verify/overview">
+    Stay updated with the latest changes and updates.
   </Card>
 </CardGroup>
-
 </div>

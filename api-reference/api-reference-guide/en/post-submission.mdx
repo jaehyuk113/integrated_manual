@@ -1,11 +1,206 @@
 ---
 title: 'POST/Submission'
-description: 'Example section for showcasing API endpoints'
+description: 'This API allows clients to forcibly insert and submit user ID verification data without going through ARGOS ID verification. It supports string data only; for image data, use the separate `PUT Image API`.'
 ---
 
 <Note>
-  If you're not looking to build API reference documentation, you can delete
-  this section by removing the api-reference folder.
+This API is particularly useful for migrating user data from existing systems to the ARGOS system or in special cases where direct user ID verification data submission is necessary. It can also assist in testing various scenarios during development.
 </Note>
 
+<Warning>
+Submissions created using this API do not undergo ARGOS's standard verification process. The accuracy and validity of submitted data is entirely the client's responsibility. Therefore, this API should not replace the regular ID verification process and is recommended only for exceptional use cases.
+</Warning>
 
+## 1. Endpoint
+
+```plaintext
+POST https://rest-api.argosidentity.com/v3/submission/migration
+```
+## 2. Authentication
+
+Include the API key in the x-api-key header along with the Content-Type header:
+
+```text x-api-key
+x-api-key: {yourAPIKey}
+```
+
+
+## 3. Request Body
+The request body must be in JSON format. Below are the field descriptions:
+
+<ResponseField name="admin" type="string" required="true">
+  Email of the project administrator (must be registered in the dashboard).
+</ResponseField>
+
+<ResponseField name="email" type="string" required="true">
+  Email address of the KYC submitter.
+</ResponseField>
+
+<ResponseField name="fullName" type="string" required="true">
+  Full name of the KYC submitter.
+</ResponseField>
+
+<ResponseField name="birthDate" type="string" required="true">
+  Birthdate of the KYC submitter.
+</ResponseField>
+
+<ResponseField name="kycStatus" type="string" required="true">
+  KYC result: `approved` or `rejected`.
+</ResponseField>
+
+<ResponseField name="idType" type="string" required="true">
+  ID type [ID Card Codes](/api-reference-guide/en/id-card-types).
+</ResponseField>
+
+<ResponseField name="issuingCountry" type="string" required="true">
+  Issuing country of the ID [Country Codes](/api-reference-guide/en/iso-alpha-3-country-codes).
+</ResponseField>
+
+<ResponseField name="nationality" type="string">
+  Nationality of the KYC submitter [Country Codes](/api-reference-guide/en/iso-alpha-3-country-codes).
+</ResponseField>
+
+<ResponseField name="gender" type="string">
+  `female` or `male`.
+</ResponseField>
+
+<ResponseField name="issueDate" type="string">
+  Issue date of the ID in `YYYY-MM-DD` format.
+</ResponseField>
+
+<ResponseField name="expireDate" type="string">
+  Expiry date of the ID in `YYYY-MM-DD` format.
+</ResponseField>
+
+<ResponseField name="ipAddress" type="string">
+  IP address of the KYC submitter.
+</ResponseField>
+
+<ResponseField name="identityNumber" type="string">
+  Identity number of the KYC submitter.
+</ResponseField>
+
+<ResponseField name="documentNumber" type="string">
+  Document number of the KYC submitter.
+</ResponseField>
+
+<ResponseField name="address_city" type="string">
+  City of residence.
+</ResponseField>
+
+<ResponseField name="address_country" type="string">
+  Country of residence.
+</ResponseField>
+
+<ResponseField name="address_state" type="string">
+  State/Province of residence.
+</ResponseField>
+
+<ResponseField name="address_street" type="string">
+  Street address.
+</ResponseField>
+
+<ResponseField name="address_full" type="string">
+  Full address.
+</ResponseField>
+
+<ResponseField name="cf1" type="string">
+  Custom field #1.
+</ResponseField>
+
+<ResponseField name="cf2" type="string">
+  Custom field #2.
+</ResponseField>
+
+<ResponseField name="cf3" type="string">
+  Custom field #3.
+</ResponseField>
+
+<ResponseField name="userid" type="string">
+  Unique user ID.
+</ResponseField>
+
+
+
+
+## 4. Request Example
+
+```curl POST/Submission
+curl --location 'https://rest-api.argosidentity.com/v3/submission/migration' \
+--header 'Content-Type: application/json' \
+--header 'x-api-key: {yourAPIKey}' \
+--data-raw '{
+  "admin": "{admin}",
+  "email": "{email}",
+  "fullName": "{fullName}",
+  "birthDate": "{birthDate}",
+  "kycStatus": "approved",
+  "idType": "drvlic",
+  "issuingCountry": "USA",
+  ...
+}'
+```
+
+## 5. Responses
+
+### 5-1. Success Response
+```json result.json
+{
+    "message": "success",
+    "submissionId": "submissionId123"
+}
+```
+
+### 5-2. Error Response
+If an error occurs, a `400` status code is returned with details in the response body:
+```json error.json
+{
+    "errorCode": "invalid_payload",
+    "message": "Invalid payload."
+}
+
+```
+### 5-3. Error Codes
+| Error Code               | Message  | Description |
+|-------------------------|------| ---- |
+| `invalid_payload`      | Invalid payload | Unable to parse the request body |
+| `missing_data`         | Required input data is missing | One or more required fields are missing |
+| `invalid_project`      | Invalid project | The project ID is not valid |
+| `invalid_admin`        | Invalid admin | Administrator account lacks permissions for this project |
+| `invalid_parameter`     | invalid parameter: `{parameter}` | Unexpected parameter submitted |
+| `invalid_format`       | invalid format: `${parameter}` | Parameter does not match the expected format |
+| `processing_error`      | Failed to complete migration | Unknown error occurred during processing |
+
+
+
+
+## 6. Encryption Options
+
+To enhance security, the request body can be encrypted. When using encryption:
+
+- The entire request body object is encrypted.
+- The encrypted string is sent as the `body` parameter.
+
+### 6-1. Encrypted Request Example
+
+```json result.json
+body : encrypt({
+		email : 'string',
+		fullName : 'string',
+		issuingCountry : 'string',
+		birthDate: 'string'
+		...
+	})
+```
+### 6-2. Encrypted Response
+The response includes an `isEncrypted` flag and the encrypted data:
+
+
+```json result.json
+response : {
+   body : {
+    "data": "encrypted-string",
+    "isEncrypted": true
+   }
+}
+```

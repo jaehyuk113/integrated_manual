@@ -144,14 +144,14 @@
       "group": "Getting Started",
       "pages": [
          "getting-started/en/introduction",
-         "getting-started/en/recommended-browsers-and-devices"
+         "getting-started/en/recommended-browsers-and-devices",
+         "getting-started/en/liveform-languages"
       ],
       "version": "English"
     },
     {
       "group": "Liveform URL",
       "pages": [
-        "getting-started/en/liveform-url/introduction",
         "getting-started/en/liveform-url/data-injection-with-custom-fields",
         "getting-started/en/liveform-url/querystring-and-token-guide"
       ],
@@ -164,13 +164,30 @@
       ],
       "version": "English"
     },
-    
+    {
+      "group": " ",
+      "pages": [
+        "api-reference/api-reference-guide/en/overview",
+        "api-reference/api-reference-guide/en/rate-limits"
+      ],
+      "version": "English"
+    },
     {
       "group": "Submission",
       "pages":[
         "api-reference/api-reference-guide/en/post-submission",
         "api-reference/api-reference-guide/en/patch-submission",
-        "api-reference/api-reference-guide/en/get-submission",
+        {
+          "group":"GET/Submission",
+          "pages":[
+            "api-reference/api-reference-guide/en/get-submission",
+            "api-reference/api-reference-guide/en/get-submission/submissionId",
+            "api-reference/api-reference-guide/en/get-submission/userId",
+            "api-reference/api-reference-guide/en/get-submission/email",
+            "api-reference/api-reference-guide/en/get-submission/list",
+            "api-reference/api-reference-guide/en/get-submission/applicantId"
+          ]
+        },
         "api-reference/api-reference-guide/en/delete-submission"
       ],
       "version": "English"
@@ -188,6 +205,16 @@
       "pages": [
         "api-reference/api-reference-guide/en/get-aml-report",
         "api-reference/api-reference-guide/en/post-aml"
+      ],
+      "version": "English"
+    },
+    {
+      "group" : "Data Structure Guide",
+      "pages": [
+        "api-reference/api-reference-guide/en/iso-alpha-3-country-codes",
+        "api-reference/api-reference-guide/en/id-card-types",
+        "api-reference/api-reference-guide/en/bank-codes",
+        "api-reference/api-reference-guide/en/aml-codes"
       ],
       "version": "English"
     },

@@ -1,47 +1,68 @@
 ---
 mode: 'default'
-title: Data injection with custom fields
-description: Brief description of what ID Check is and its purpose. Key use cases (e.g., KYC, compliance, user verification).
-
+title: Data Injection
+description: Data Injection is a method to update information for an existing submission via a separate path. This process replaces existing category data with new information.
 ---
 
-## Prerequisites
+## 1. Prerequisites
+<Note>
+To perform an Injection, a submission must first be created via Liveform.
+</Note>
 
-ARGOS provides ID Check, a dedicated submission page for each project, accessible via a unique URL. To obtain the URL:
+## 2. Query String Options (Injection)
+Additional information sent via Query Strings is included in the response data when calling the API. This enables the following functionalities:
+- Generation of a unique user ID for KYC submitter identification.
+- Addition of up to three custom fields.
 
-<Steps>
-  <Step title="Log in to the dashboard.">
-      <Card title="Open the Dashboard" icon="link" href="https://idcheck.argosidentity.com">
-  </Card>
+## 3. Implementation Method
+Query String options can be applied using the ARGOS ID Check Liveform. All Query String values must be URL-encoded.
 
-  </Step>
-  <Step title="Navigate to Settings -> Access Management to locate the URL.">
-  </Step>
-</Steps>
+## 4. URL Structure
+- Basic Form URL: `https://form.argosidentity.com/?pid={project_Id}`
+- URL with Injection: `https://form.argosidentity.com/?pid={project_id}&action=addveri&sid={submission_id}`
 
-## Options for Using ID Check in Verification Processes
+### 4-1. Key Parameters
 
-ID Check supports two methods for completing identity verification
+<ResponseField name="pid" type="string" required="true">
+  Unique project identifier.
+</ResponseField>
+<ResponseField name="sid" type="string" required="true">
+  Unique submission identifier.
+</ResponseField>
+<ResponseField name="action" type="string" required="true">
+  Injection option action, use `addveri`.
+</ResponseField>
+<ResponseField name="cf1" type="string">
+  Custom option field #1.
+</ResponseField>
+<ResponseField name="cf2" type="string">
+  Custom option field #2.
+</ResponseField>
+<ResponseField name="cf3" type="string">
+  Custom option field #3.
+</ResponseField>
+<ResponseField name="userid" type="string">
+  Custom unique user identifier.
+</ResponseField>
 
-<img
-  src="/images/getting-started_banner.png"
-  alt="Hero Light"
-/>
+## 4-2. Error Responses
 
-<Steps>
-  <Step title="Using a PC">
-      <img
-    src="/images/getting-started_web.png"
-    alt="Hero Light"
-  />
-  1. Open the ID Check URL on your computer.
-  2. A QR code will be displayed.
-  3. Scan the QR code with a mobile device to access the ID Check page in a mobile web browser.
-  </Step>
-  <Step title="Using a Mobile Device">
-    <img
-  src="/images/getting-started_mobile.png"
-  alt="Hero Light"/>
-  Link the URL to the event in your app where user ID verification is required. This will allow users to open the ID Check page directly.
-  </Step>
-</Steps>
+| Error Code                   | Description                                                                                  |
+|------------------------------|----------------------------------------------------------------------------------------------|
+| `Invalid required`           | Missing required parameter.                                                                 |
+| `Required field is missing`  | Missing one or more of the following: sid, pid, or address data.                             |
+| `Invalid submissionId`       | The provided `sid` does not exist.                                                          |
+| `Invalid projectId`          | The provided `pid` does not exist.                                                          |
+| `Error in injecting address` | Undefined, unspecified error occurred during address injection.                             |
+
+## 5. Address Update Results
+
+### 5-1. On Success
+- Redirects to the results page.
+- Displays the message: "Address verification completed."
+
+### 5-2. On Failure
+- Redirects to an error page.
+- Displays the message: "An error occurred while processing the address information. Please try again." The user can then proceed with re-verification.
+
+This guide helps you effectively utilize the Data Injection feature and Query String options in ID Check to flexibly manage and customize the ID Check process.

@@ -26,12 +26,6 @@
   "codeBlock": {
      "mode": "auto"
   },
-  "topbarLinks": [
-    {
-      "name": "Support",
-      "url": "mailto:hi@mintlify.com"
-    }
-  ],
   "topbarCtaButton": {
     "name": "Dashboard",
     "url": "https://idcheck.argosidentity.com"
@@ -110,6 +104,12 @@
       "version": "English"
     },
     {
+      "name": "Contact Sales",
+      "icon": "message-middle",
+      "url": "https://tally.so/r/wg946l",
+      "version": "English"
+    },
+    {
       "name": "사용자 가이드",
       "icon": "book",
       "url": "https://support.argosidentity.com/hc/ko",
@@ -122,9 +122,15 @@
       "version": "한국어"
     },
     {
-      "name": "지원",
+      "name": "고객지원",
       "icon": "messages",
       "url": "https://support.argosidentity.com/hc/ko/requests/new",
+      "version": "한국어"
+    },
+    {
+      "name": "영업팀 문의",
+      "icon": "message-middle",
+      "url": "https://tally.so/r/nGRQ9e",
       "version": "한국어"
     }
   ],
@@ -379,5 +385,4 @@
   "metadata": {
     "og:image": "/images/og-image.png"
   }
-    
 }

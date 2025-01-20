@@ -2,6 +2,58 @@
 title: Verify 
 description: 'New updates and improvements'
 ---
+<Update label="2025-01-20" description="v1.0.2">
+
+## Face Liveness API Release ##
+The Face Liveness API is now available! This API verifies whether a facial image was captured from a live person, preventing fraud attempts using fake photos or videos. It ensures a more secure and trustworthy verification process.
+
+### Key Features
+<Steps>
+  <Step title="Face Verification">
+    Instantly checks whether the submitted facial image was captured from a live person. This effectively prevents the use of fake images or videos.
+  </Step>
+  <Step title="Confidence-Based Scoring">
+    Provides a confidence score for the verified face. Utilize the liveness score to flexibly set thresholds based on your organization's specific verification requirements or patterns. Higher scores indicate greater confidence in the verification result, supporting more accurate decision-making.
+  </Step>
+  <Step title="Fraud Prevention and Enhanced Security">
+    Prevents authentication bypass attempts using fake faces, ensuring a secure identity verification process for businesses. This helps build trust with customers and strengthens data security.
+  </Step>
+</Steps>
+
+Check out the links below for more information!
+- [Face Liveness API Documentation](https://app.theneo.io/argosidentity/verify-id/face-liveness/face-liveness-api)  
+- [Face Liveness Image Guidelines](https://app.theneo.io/argosidentity/verify-id/face-liveness/best-practices-for-image)  
+- [Test the API](https://dev.argosidentity.com/api-runner/argosidentity/verify-id/face-liveness/face-liveness-api)  
+
+---
+
+## Face Compare API Update
+
+The Face Compare API has been updated to provide more detailed information!
+
+New Response Data:
+- `Landmarks`: Locations of key facial features detected on the face.
+- `Pose`: 3D orientation of the face (roll, yaw, and pitch).
+- `Quality`: Brightness and sharpness of the image.
+
+Check out the links below for more information!
+- [Face Compare API Documentation](https://dev.argosidentity.com/verify-id/global-id-recognition/global-id-recognition-api-1)  
+- [Test the API](https://dev.argosidentity.com/verify-id/global-id-recognition/global-id-recognition-api-1)  
+
+---
+
+## Global ID Recognition API Update
+
+The Global ID Recognition API now includes support for **Middle Name**. You can now retrieve the middle name from recognized ID documents.
+
+New Response Data:
+- `ocr_middleName`: Middle name recognized by OCR.
+
+Check out the links below for more information!
+- [Global ID Recognition API Documentation](https://dev.argosidentity.com/verify-id/global-id-recognition/global-id-recognition-api-1)  
+- [Test the API](https://dev.argosidentity.com/verify-id/global-id-recognition/global-id-recognition-api-1)  
+
+</Update>
 
 
 <Update label="2024-11-18" description="v1.0.1">

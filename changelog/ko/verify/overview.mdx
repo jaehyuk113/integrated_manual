@@ -3,6 +3,60 @@ title: Verify
 description: 'Verify 최신 업데이트 및 변경 사항'  
 ---
 
+<Update label="2025-01-20" description="v1.0.2">
+
+## Face Liveness API 출시 ##
+Face Liveness API가 새롭게 출시되었습니다! 이 API는 얼굴 이미지가 실제 인물로부터 촬영된 것인지 확인해, 가짜 사진이나 영상을 이용한 사기 시도를 차단합니다. 이제 인증 과정에서 보다 안전하고 신뢰할 수 있는 검증을 할 수 있습니다.
+
+### 주요 기능
+<Steps>
+  <Step title="얼굴 인증">
+    제출된 얼굴 이미지가 실제 인물로부터 촬영된 것인지 즉각적으로 확인합니다. 이로써 가짜 이미지나 영상의 사용을 효과적으로 차단할 수 있습니다.
+  </Step>
+  <Step title="신뢰도 기반 점수 제공">
+    검증된 얼굴의 신뢰도를 점수화하여 제공합니다. liveness score를 활용해 결과 임계값을 고객사의 특정 인증 요구사항이나 패턴에 맞게 유연하게 설정할 수 있습니다. 높은 점수일수록 검증 결과에 대한 신뢰성이 높아져, 정확한 의사결정을 지원합니다
+  </Step>
+  <Step title="사기 방지 및 보안 강화">
+    가짜 얼굴을 이용한 인증 우회 시도를 차단하여 기업의 신원 검증 프로세스를 안전하게 보호합니다. 이를 통해 고객과의 신뢰도를 높이고, 데이터 보안을 강화할 수 있습니다.
+  </Step>
+</Steps>
+
+
+자세한 내용은 아래 링크에서 확인해보세요!
+- [Face Liveness API 문서](https://app.theneo.io/argosidentity/verify-id/face-liveness/face-liveness-api)
+- [Face Liveness 이미지 가이드](https://app.theneo.io/argosidentity/verify-id/face-liveness/best-practices-for-image)  
+- [API 테스트해보기](https://dev.argosidentity.com/api-runner/argosidentity/verify-id/face-liveness/face-liveness-api)  
+
+
+
+## Face Compare API 업데이트
+
+Face Compare API가 더욱 상세한 정보를 제공하도록 업데이트되었습니다!
+
+새로운 응답 데이터:
+`Landmarks`: 얼굴에서 감지된 주요 특징들의 위치.
+`Pose`: 얼굴의 3D 방향 (좌/우, 상/하 회전 정보).
+`Quality`: 이미지의 밝기와 선명도.
+
+
+자세한 내용은 아래 링크에서 확인해보세요!
+- [Face Compare API 문서](https://dev.argosidentity.com/verify-id/global-id-recognition/global-id-recognition-api-1)  
+- [API 테스트해보기](https://dev.argosidentity.com/verify-id/global-id-recognition/global-id-recognition-api-1)  
+
+
+## Global ID Recognition API 업데이트
+Global ID Recognition API에 Middle Name 정보가 추가되었습니다. 이제 인식된 신분증에서 중간 이름을 확인할 수 있습니다.
+
+새로운 응답 데이터:
+`ocr_middleName`: OCR로 인식된 중간 이름
+
+
+자세한 내용은 아래 링크에서 확인해보세요!
+- [Global ID Recognition API 문서](https://dev.argosidentity.com/verify-id/global-id-recognition/global-id-recognition-api-1)  
+- [API 테스트해보기](https://dev.argosidentity.com/verify-id/global-id-recognition/global-id-recognition-api-1)  
+
+</Update>
+
 <Update label="2024-11-18" description="v1.0.1">
 ## API 변경 사항
 ### callbackUrl 매개변수 업데이트

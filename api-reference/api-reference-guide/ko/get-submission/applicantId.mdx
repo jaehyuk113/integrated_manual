@@ -44,14 +44,17 @@ curl --location --request GET 'https://rest-api.argosidentity.com/v3/submission/
 [
     {
         "submission_id": "{submission_id1}",
+        "duplicated_information" : "{duplicated_information}",
         "email": "{email1}"
     },
     {
         "submission_id": "{submission_id2}",
+        "duplicated_information" : "{duplicated_information}",
         "email": "{email2}"
     },
     {
         "submission_id": "{submission_id3}",
+        "duplicated_information" : "{duplicated_information}",
         "email": "{email3}"
     }
 ]
@@ -60,8 +63,9 @@ curl --location --request GET 'https://rest-api.argosidentity.com/v3/submission/
 ### 5-2. 응답 데이터
 | 필드명                        | 설명                                                        | 데이터 타입         |
 |-------------------------------|-----------------------------------------------------------|---------------------|
-| `submission_id`                        | 중복제출로 확인된 submission의 고유 값             | String              |
-| `email`                   | 중복 제출로 확인된 submission에 기록된 이메일 주소               | String           |
+| `submission_id`               | 중복제출로 확인된 submission의 고유 값             | String              |
+| `duplicated_information`      | SHA-512 해시값으로, 중복된 정보가 있을 경우 해당 값을 저장    | String             |
+| `email`                       | 중복 제출로 확인된 submission에 기록된 이메일 주소               | String           |
 
 
 이 API를 통해 중복 제출된 KYC 데이터를 효과적으로 관리하고 모니터링할 수 있습니다.

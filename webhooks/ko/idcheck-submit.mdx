@@ -9,6 +9,7 @@ description: 이 이벤트는 새로운 KYC 정보가 시스템에 제출될 때
     "webhook_trigger": "submit",
     "created_at": "string",
     "submission_id": "string",
+    "duplicated_information" : "string",
     "email": "string",
     "cf": {
       "cf1": "string",
@@ -31,6 +32,10 @@ description: 이 이벤트는 새로운 KYC 정보가 시스템에 제출될 때
 
 <ResponseField name="submission_id" type="string" >
   KYC 제출 건별 고유 식별자
+</ResponseField>
+
+<ResponseField name="duplicated_information" type="string" >
+  SHA-512 해시값으로, 중복된 정보가 있을 경우 해당 값을 저장
 </ResponseField>
 
 

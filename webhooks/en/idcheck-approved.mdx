@@ -19,6 +19,7 @@ description: This event is triggered when a KYC submission is approved. Approval
     },
     "applicant_id": "string",
     "submission_id": "string",
+    "duplicated_information" : "string",
     "email": "string",
     "tokenId" : "string",
     "cf": {
@@ -81,6 +82,10 @@ Webhook trigger type - `approved` indicates that the KYC was automatically appro
   <ResponseField name="submission_id" type="string"> 
   Unique identifier for each KYC submission
   </ResponseField> 
+  <ResponseField name="duplicated_information" type="string" >
+    Stores the SHA-512 hash value for any duplicated information.
+  </ResponseField>
+
   <ResponseField name="email" type="string">
    Email address of the KYC submitter 
   </ResponseField> 

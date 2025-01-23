@@ -18,6 +18,7 @@ description: 이 이벤트는 KYC(Know Your Customer) 제출이 승인될 때 �
     },
     "applicant_id": "string",
     "submission_id": "string",
+    "duplicated_information" : "string",
     "email": "string",
     "tokenId" : "string",
     "cf": {
@@ -87,6 +88,10 @@ KYC 제출 결과를 포함하는 객체
 
 <ResponseField name="submission_id" type="string" >
   KYC 제출 건별 고유 식별자
+</ResponseField>
+
+<ResponseField name="duplicated_information" type="string" >
+  SHA-512 해시값으로, 중복된 정보가 있을 경우 해당 값을 저장
 </ResponseField>
 
 <ResponseField name="email" type="string" >

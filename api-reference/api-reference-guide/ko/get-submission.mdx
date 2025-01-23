@@ -90,6 +90,7 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
             },
             "email": "{email}",
             "submission_id": "{submission_id}",
+            "duplicated_information" : "{duplicated_information}",
             "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
             "updated_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
             "reviewer": "{reviewer}",
@@ -266,6 +267,7 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
 | `email`                       | 제출과 연관된 이메일 주소                                                                     | String             | KYC 제출자 정보           |
 | `reviewer`                    | 검수 유형: `system`은 AI 시스템 검수, `agent`는 사람 검수를 나타냄                           | Enum               | KYC 검수 정보             |
 | `submission_id`               | 각 제출 건에 부여된 고유 식별자                                                              | String             | 제출 정보                 |
+| `duplicated_information`      | SHA-512 해시값으로, 중복된 정보가 있을 경우 해당 값을 저장                                     | String             | 제출 정보                 |
 | `applicant_id`                | 중복 제출된 사용자에 부여된 식별자                                                            | String             | 제출 정보                 |
 | `created_at`                  | 제출된 날짜와 시간 (UTC+0)                                                                    | String             | 제출 정보                 |
 | `kyc_result_at`               | KYC 결과가 최종적으로 결정된 날짜와 시간                                                      | String             | 제출 정보                 |

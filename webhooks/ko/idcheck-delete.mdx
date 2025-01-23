@@ -8,6 +8,7 @@ description: 이 이벤트는 KYC 제출 건이 시스템에서 삭제될 때 �
 {
 	"webhook_trigger":"delete",
 	"submission_id":"string",
+    "duplicated_information" : "string",
 	"account_email":"string",
 	"delete_time":"string",
 	"comment":"string"
@@ -20,6 +21,10 @@ description: 이 이벤트는 KYC 제출 건이 시스템에서 삭제될 때 �
 
 <ResponseField name="submission_id" type="string">
  삭제된 KYC 제출 건의 고유 식별자
+</ResponseField>
+
+<ResponseField name="duplicated_information" type="string" >
+  SHA-512 해시값으로, 중복된 정보가 있을 경우 해당 값을 저장
 </ResponseField>
 
 <ResponseField name="account_email" type="string">

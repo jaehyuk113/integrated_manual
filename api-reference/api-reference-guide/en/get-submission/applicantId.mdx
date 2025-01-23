@@ -46,14 +46,17 @@ curl --location --request GET 'https://rest-api.argosidentity.com/v3/submission/
 [
     {
         "submission_id": "{submission_id1}",
-        "email": "{email1}"
+        "duplicated_information" : "{duplicated_information}",
+        "email": "{email1}",
     },
     {
         "submission_id": "{submission_id2}",
+        "duplicated_information" : "{duplicated_information}",
         "email": "{email2}"
     },
     {
         "submission_id": "{submission_id3}",
+        "duplicated_information" : "{duplicated_information}",
         "email": "{email3}"
     }
 ]
@@ -63,7 +66,7 @@ curl --location --request GET 'https://rest-api.argosidentity.com/v3/submission/
 | Field Name                    | Description                                               | Data Type           |
 |-------------------------------|-----------------------------------------------------------|---------------------|
 | `submission_id`               | Unique identifier of the duplicate submission          | String              |
+| `duplicated_information`      | Stores the SHA-512 hash value for any duplicated information.    | String      | 
 | `email`                   | Email address linked to the duplicate submission             | String           |
-
 
 This API allows you to efficiently monitor and manage duplicated KYC submissions.

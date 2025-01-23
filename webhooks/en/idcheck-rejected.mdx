@@ -15,6 +15,7 @@ description: This event is triggered when a KYC submission is rejected. Rejectio
       "commentCode": "string"
     },
     "submission_id": "string",
+    "duplicated_information" : "string",
     "applicant_id" : "string",
     "email": "string",
     "cf": {
@@ -55,6 +56,11 @@ description: This event is triggered when a KYC submission is rejected. Rejectio
 <ResponseField name="submission_id" type="string">
   A unique identifier for each KYC submission.
 </ResponseField>
+
+<ResponseField name="duplicated_information" type="string" >
+  Stores the SHA-512 hash value for any duplicated information.
+</ResponseField>
+
 
 <ResponseField name="applicant_id" type="string">
   A unique identifier assigned to identify duplicate submissions, provided only when the KYC status is approved.

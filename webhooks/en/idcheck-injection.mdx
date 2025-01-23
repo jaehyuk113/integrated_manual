@@ -15,6 +15,7 @@ description: This event is triggered when additional data is injected into the K
 		"created_at":"2024-06-21T03:24:57.565Z"
 	},
 	"submission_id":"string",
+  "duplicated_information" : "string",
 	"email":"sample@test.com",
 	"kyc_status":"approved",
 	"applicant_id":"string",
@@ -44,6 +45,10 @@ description: This event is triggered when additional data is injected into the K
 
 <ResponseField name="submission_id" type="string">
   Unique identifier for each KYC submission.
+</ResponseField>
+
+<ResponseField name="duplicated_information" type="string" >
+  Stores the SHA-512 hash value for any duplicated information.
 </ResponseField>
 
 <ResponseField name="email" type="string">

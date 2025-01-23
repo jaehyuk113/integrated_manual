@@ -12,6 +12,7 @@ description: This event is triggered when the results of an Anti-Money Launderin
 {
 	"webhook_trigger":"aml",
 	"submission_id":"string",
+  "duplicated_information" : "string",
 	"email":"string",
 	"userid":"test",
 	"cf":{
@@ -32,6 +33,10 @@ description: This event is triggered when the results of an Anti-Money Launderin
 
 <ResponseField name="submission_id" type="string">
   Unique identifier for each KYC submission.
+</ResponseField>
+
+<ResponseField name="duplicated_information" type="string" >
+  Stores the SHA-512 hash value for any duplicated information.
 </ResponseField>
 
 <ResponseField name="email" type="string">

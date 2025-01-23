@@ -14,6 +14,7 @@ description: 이 이벤트는 KYC 제출이 거부될 때 트리거됩니다. �
       "commentCode": "string"
     },
     "submission_id": "string",
+    "duplicated_information" : "string",
     "applicant_id" : "string",
     "email": "string",
     "cf": {
@@ -54,6 +55,10 @@ KYC 제출 결과를 포함하는 객체
 
 <ResponseField name="submission_id" type="string" >
   KYC 제출 건별 고유 식별자
+</ResponseField>
+
+<ResponseField name="duplicated_information" type="string" >
+  SHA-512 해시값으로, 중복된 정보가 있을 경우 해당 값을 저장
 </ResponseField>
 
 <ResponseField name="applicant_id" type="string" >

@@ -9,6 +9,7 @@ description: This event is triggered when new KYC information is submitted to th
     "webhook_trigger": "submit",
     "created_at": "string",
     "submission_id": "string",
+    "duplicated_information" : "string",
     "email": "string",
     "cf": {
       "cf1": "string",
@@ -31,6 +32,11 @@ description: This event is triggered when new KYC information is submitted to th
 <ResponseField name="submission_id" type="string">
   Unique identifier for each KYC submission.
 </ResponseField>
+
+<ResponseField name="duplicated_information" type="string" >
+  Stores the SHA-512 hash value for any duplicated information.
+</ResponseField>
+
 
 <ResponseField name="cf" type="object">
   An object containing user-defined fields (cf1, cf2, cf3).

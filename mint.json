@@ -241,12 +241,6 @@
       "version": "English"
     },
     {
-      "group": "Verify",
-      "pages": [
-        "verify/en/overview"],
-      "version": "English"
-    },
-    {
       "group": "Changelog",
       "pages": [
         "changelog/en/idcheck/overview",
@@ -353,12 +347,6 @@
         "webhooks/ko/idcheck-injection",
         "webhooks/ko/idcheck-aml-result"
       ],
-      "version": "한국어"
-    },
-    {
-      "group": "Verify",
-      "pages": [
-        "verify/ko/overview"],
       "version": "한국어"
     },
     {

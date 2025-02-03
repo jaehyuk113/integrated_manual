@@ -66,7 +66,7 @@ curl --location --request GET 'https://rest-api.argosidentity.com/v3/submission/
 | Field Name                    | Description                                               | Data Type           |
 |-------------------------------|-----------------------------------------------------------|---------------------|
 | `submission_id`               | Unique identifier of the duplicate submission          | String              |
-| `duplicated_information`      | Stores the SHA-512 hash value for any duplicated information.    | String      | 
+| `duplicated_information`      | A unique ID is generated based on name, date of birth, gender, and nationality for duplicate checks. (*Always generated when all four criteria are provided.)    | String      | 
 | `email`                   | Email address linked to the duplicate submission             | String           |
 
 This API allows you to efficiently monitor and manage duplicated KYC submissions.

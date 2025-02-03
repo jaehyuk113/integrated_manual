@@ -64,7 +64,7 @@ curl --location --request GET 'https://rest-api.argosidentity.com/v3/submission/
 | 필드명                        | 설명                                                        | 데이터 타입         |
 |-------------------------------|-----------------------------------------------------------|---------------------|
 | `submission_id`               | 중복제출로 확인된 submission의 고유 값             | String              |
-| `duplicated_information`      | SHA-512 해시값으로, 중복된 정보가 있을 경우 해당 값을 저장    | String             |
+| `duplicated_information`      | 이름, 생년월일, 성별, 국적을 기준으로 중복 확인용 식별자가 생성됩니다. (*네 가지 기준이 모두 제공되면 항상 생성됩니다.)    | String             |
 | `email`                       | 중복 제출로 확인된 submission에 기록된 이메일 주소               | String           |
 
 

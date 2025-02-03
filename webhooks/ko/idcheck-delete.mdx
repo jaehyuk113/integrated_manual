@@ -24,7 +24,7 @@ description: 이 이벤트는 KYC 제출 건이 시스템에서 삭제될 때 �
 </ResponseField>
 
 <ResponseField name="duplicated_information" type="string" >
-  SHA-512 해시값으로, 중복된 정보가 있을 경우 해당 값을 저장
+  이름, 생년월일, 성별, 국적을 기준으로 중복 확인용 식별자가 생성됩니다. (*네 가지 기준이 모두 제공되면 항상 생성됩니다.)
 </ResponseField>
 
 <ResponseField name="account_email" type="string">

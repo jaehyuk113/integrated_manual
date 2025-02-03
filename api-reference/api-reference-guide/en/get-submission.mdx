@@ -274,7 +274,7 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
 | `email`                        | Email address associated with the submission           | String             | KYC Applicant Info         |
 | `reviewer`                     | Reviewer Type `system` indicates AI system review, `agent` indicates human review                                  | Enum               | KYC Review Info            |
 | `submission_id`                | Unique identifier assigned to each submission          | String             | Submission Info            |
-| `duplicated_information`      | Stores the SHA-512 hash value for any duplicated information.    | String      | Submission Info            |
+| `duplicated_information`      | A unique ID is generated based on name, date of birth, gender, and nationality for duplicate checks. (*Always generated when all four criteria are provided.)    | String      | Submission Info            |
 | `applicant_id`                 | Identifier for users with duplicate submissions        | String             | Submission Info            |
 | `created_at`                   | Date and time of submission (UTC+0)                    | String           | Submission Info            |
 | `kyc_result_at`                | Date and time when the KYC result was finalized         | String           | Submission Info            |

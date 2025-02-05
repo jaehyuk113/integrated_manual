@@ -131,32 +131,36 @@ API 메서드(POST/SUBMISSION, GET/SUBMISSION, PUT/SUBMISSION, WEBHOOK)에서 �
 
     ```
     ```java java(crypto-js library)
-      import javax.crypto.Cipher;
-      import javax.crypto.spec.SecretKeySpec;
-      import java.nio.charset.StandardCharsets;
-      import java.security.MessageDigest;
-      import java.util.Base64;
+    import javax.crypto.Cipher;
+    import javax.crypto.spec.SecretKeySpec;
+    import java.nio.charset.StandardCharsets;
+    import java.security.MessageDigest;
+    import java.util.Base64;
 
-      public class Encryption {
-          public static String encrypt(String data, String apiKey) throws Exception {
-              // API 키를 SHA-256으로 해시
-              MessageDigest digest = MessageDigest.getInstance("SHA-256");
-              byte[] hashedKey = digest.digest(apiKey.getBytes(StandardCharsets.UTF_8));
-
-              // AES 암호화를 위한 키 생성
-              SecretKeySpec secretKey = new SecretKeySpec(hashedKey, "AES");
-
-              // AES/ECB/PKCS5Padding 모드로 Cipher 초기화
-              Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-              cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-
-              // 데이터 암호화
-              byte[] encryptedBytes = cipher.doFinal(data.getBytes(StandardCharsets.UTF_8));
-
-              // Base64 인코딩하여 결과 반환
-              return Base64.getEncoder().encodeToString(encryptedBytes);
-          }
-      }
+    public class Encryption {
+        public static String encrypt(String data, String apiKey) throws Exception {
+            // API 키를 SHA-256으로 해시
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hashedKey = digest.digest(apiKey.getBytes(StandardCharsets.UTF_8));
+            
+            // AES-256 호환을 위한 32바이트 길이 보장
+            byte[] aesCompatibleKey = new byte[32];
+            System.arraycopy(hashedKey, 0, aesCompatibleKey, 0, 32);
+            
+            // AES 암호화를 위한 키 생성
+            SecretKeySpec secretKey = new SecretKeySpec(hashedKey, "AES");
+            
+            // AES/ECB/PKCS5Padding 모드로 Cipher 초기화
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+            
+            // 데이터 암호화
+            byte[] encryptedBytes = cipher.doFinal(data.getBytes(StandardCharsets.UTF_8));
+            
+            // Base64 인코딩하여 결과 반환
+            return Base64.getEncoder().encodeToString(encryptedBytes);
+        }
+    }
     ```
     </CodeGroup>
   </Step>

@@ -134,21 +134,25 @@ Data in API methods (POST/SUBMISSION, GET/SUBMISSION, PUT/SUBMISSION, WEBHOOK) i
 
       public class Encryption {
           public static String encrypt(String data, String apiKey) throws Exception {
-              
+              // Hash the API key using SHA-256
               MessageDigest digest = MessageDigest.getInstance("SHA-256");
               byte[] hashedKey = digest.digest(apiKey.getBytes(StandardCharsets.UTF_8));
-
-             
-              SecretKeySpec secretKey = new SecretKeySpec(hashedKey, "AES");
-
               
+              // Ensure the key is 32 bytes long for AES-256 compatibility
+              byte[] aesCompatibleKey = new byte[32];
+              System.arraycopy(hashedKey, 0, aesCompatibleKey, 0, 32);
+              
+              // Create the AES key for encryption
+              SecretKeySpec secretKey = new SecretKeySpec(hashedKey, "AES");
+              
+              // Initialize the Cipher in AES/ECB/PKCS5Padding mode
               Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
               cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-
-             
+              
+              // Encrypt the data
               byte[] encryptedBytes = cipher.doFinal(data.getBytes(StandardCharsets.UTF_8));
-
-             
+              
+              // Return the encrypted result encoded in Base64
               return Base64.getEncoder().encodeToString(encryptedBytes);
           }
       }

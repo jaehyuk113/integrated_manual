@@ -47,20 +47,18 @@ URL의 쿼리 스트링으로 전송되는 민감한 데이터를 AES-256 방식
   </Step>
   <Step title="제공된 API 키로 AES-256 암호화 수행">
     <img height="200" src="/images/api-reference/api-key.png" />
-
+    <Note>AES-256 암호화 수행 전에 공통 쿼리 스트링 암호화 및 복호화 단계를 확인해주세요.</Note>
   </Step>
   <Step title="암호화된 데이터를 URL의 encrypted 쿼리 파라미터에 추가">
       <CodeGroup>
       ```text exmaple.txt
       https://form.argosidentity.com/?pid={project_Id}&encrypted={encrypted_json_text}
       ```
-
       </CodeGroup>
   </Step>
 </Steps>
 
-<Warning> 주의: pid, lang, sid, action 쿼리 파라미터는 암호화하지 않습니다</Warning>
- pid, lang 쿼리 스트링 및 ‘추가 프로세스 (Injection)’ 페이지에서 사용하는 sid, action 쿼리 스트링은 암호화를 지원하지 않습니다. 
+<Warning> 주의: pid, lang 쿼리 스트링 및 ‘추가 프로세스 (Injection)’ 페이지에서 사용하는 sid, action 쿼리 스트링은 암호화를 지원하지 않습니다. </Warning>
 
 ## 2. 안전한 데이터 전송 옵션
 
@@ -77,7 +75,7 @@ API 메서드(POST/SUBMISSION, GET/SUBMISSION, PUT/SUBMISSION, WEBHOOK)에서 �
 
 
 
-## 3. 암호화 및 복호화 방식
+## 3. 쿼리 스트링 암호화 및 복호화 방법
 
 ### 3-1. 키 생성 프로세스
 ```mermaid

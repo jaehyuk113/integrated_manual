@@ -217,7 +217,7 @@
     {
       "group" : "Data Structure Guide",
       "pages": [
-        "api-reference/api-reference-guide/en/iso-alpha-3-country-codes",
+        "api-reference/api-reference-guide/en/supported-id-types-alpha-3-country-codes",
         "api-reference/api-reference-guide/en/id-card-types",
         "api-reference/api-reference-guide/en/bank-codes",
         "api-reference/api-reference-guide/en/aml-codes",
@@ -326,7 +326,7 @@
     {
       "group" : "데이터 구조 가이드",
       "pages": [
-        "api-reference/api-reference-guide/ko/iso-alpha-3-country-codes",
+        "api-reference/api-reference-guide/ko/supported-id-types-alpha-3-country-codes",
         "api-reference/api-reference-guide/ko/id-card-types",
         "api-reference/api-reference-guide/ko/bank-codes",
         "api-reference/api-reference-guide/ko/aml-codes",

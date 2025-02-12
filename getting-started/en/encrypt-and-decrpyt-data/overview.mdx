@@ -3,16 +3,13 @@ mode: 'default'
 title: Data Encryption and Decryption
 description: Comprehensive guide to secure customer data through robust encryption solutions. Learn about methods to minimize risks of unauthorized access and data breaches while complying with the latest security standards.
 ---
-
-We provide robust encryption solutions to securely protect customer data, minimizing the risks of unauthorized access and data breaches. This guide explains how to implement these solutions easily in various environments while adhering to the latest security standards.
-
 ## Encryption Options
 <CardGroup cols={2}>
   <Card title="Query String Encryption" icon="square-1">
     Query String Encryption
   </Card>
-  <Card title="Secure Data Transfer Options" icon="square-2">
-    Secure Data Transfer Options
+  <Card title="Secure Data Transmission Options" icon="square-2">
+    Secure Data Transmission Options
   </Card>
   <Card title="Encryption/Decryption Methods" icon="square-3">
     Encryption/Decryption Methods
@@ -61,20 +58,10 @@ Sensitive data sent via URL query strings is encrypted using the AES-256 encrypt
 The `pid`, `lang` query strings and the `sid`, `action` query strings used on the "Additional Process (Injection)" page do not support encryption.
 </Warning>
 
-## 2. Secure Data Transfer Options
 
-Data in API methods (POST/SUBMISSION, GET/SUBMISSION, PUT/SUBMISSION, WEBHOOK) is encrypted using <Tooltip tip="A symmetric key encryption algorithm that encrypts data in 128-bit blocks using a 256-bit key. It is highly secure and widely used by government and financial institutions.">AES-256</Tooltip> and <Tooltip tip="A system that generates, manages, and distributes digital certificates to enable secure communication. It uses public key encryption for identity verification and data security over the internet.">PKI</Tooltip>.
+##  2. Query String Encryption and Decryption Methods
 
-### 2-1. Key Features
-- Data encryption using AES-256.
-- Data integrity and authentication guaranteed via PKI.
-- Enhanced data protection during transmission.
-
-<img height="200" src="/images/api-reference/secure-data-transfer.png" />
-
-## 3. Encryption and Decryption Methods
-
-### 3-1. Key Generation Process
+### 2-1. Key Generation Process
 ```mermaid
  graph LR
     A[API Key] -->|SHA-256 Hash| B[Hashed Key]
@@ -192,3 +179,139 @@ Data in API methods (POST/SUBMISSION, GET/SUBMISSION, PUT/SUBMISSION, WEBHOOK) i
   </Step>
 </Steps>
 
+
+
+## 3. Secure Data Transmission Options
+
+API methods (POST/SUBMISSION, GET/SUBMISSION, PUT/SUBMISSION, WEBHOOK) encrypt transmitted data using <Tooltip tip="AES-256-CBC is a symmetric-key block encryption algorithm that uses a 256-bit key to encrypt data in 128-bit blocks. The CBC (Cipher Block Chaining) mode enhances security by XORing each block with the previous block's ciphertext before encryption. It is widely used by financial institutions and government organizations.">AES-256-CBC</Tooltip> and <Tooltip tip="A system that enables secure communication through the creation, management, and distribution of digital certificates. It uses public-key encryption to verify identities and protect data over the internet.">PKI</Tooltip>.
+### 3-1. Key Features
+- Uses AES-256-CBC algorithm for data encryption
+- Ensures data integrity and authentication through PKI
+- Enhances data protection during transmission
+
+<img height="200" src="/images/api-reference/secure-data-transfer.png" />
+### 3-2. Data Encryption and Decryption Process
+Data transmitted via API is encrypted using AES-256-CBC, and key management is based on SHA-256 hashing.
+
+1. Encryption Algorithm Details
+- Encryption method: AES-256-CBC
+- Key generation: SHA-256 hash-based
+- Output encoding: Base64
+
+2. Encryption Parameters
+- Key size: 32 bytes (256 bits)
+- IV size: 16 bytes (128 bits)
+- Character encoding: UTF-8
+
+### 3-3. Payload Encryption Process
+The following JavaScript and Java/Kotlin example demonstrates the client-side data encryption process.
+    <CodeGroup>
+    ```javascript Node.js(crypto-js library)
+    var crypto = require('crypto');import CryptoJS from 'crypto-js';
+
+    function generateKeyAndIV(apiKey) {
+        const hashedKey = CryptoJS.SHA256(apiKey);
+        const key = CryptoJS.lib.WordArray.create(hashedKey.words.slice(0, 8), 32);
+        const iv = CryptoJS.lib.WordArray.create(hashedKey.words.slice(8, 12), 16);
+        return { key, iv };
+    }
+
+    function encrypt(data, apiKey) {
+        const { key, iv } = generateKeyAndIV(apiKey);
+        const encrypted = CryptoJS.AES.encrypt(JSON.stringify(data), key, { iv: iv, mode: CryptoJS.mode.CBC });
+        return encrypted.ciphertext.toString(CryptoJS.enc.Base64);
+    }
+
+    ```
+    </CodeGroup>
+
+### 3-4. Payload Decryption Process
+The following JavaScript and Java/Kotlin example demonstrates how to decrypt the received encrypted data.
+    <CodeGroup>
+    ```kotlin Decrpyt Module
+  import javax.crypto.Cipher
+  import javax.crypto.spec.IvParameterSpec
+  import javax.crypto.spec.SecretKeySpec
+  import java.security.MessageDigest
+  import java.util.Base64
+  import java.nio.charset.StandardCharsets
+
+  class DecryptionException(message: String, cause: Throwable? = null) : Exception(message, cause)
+
+  class Decryptor {
+      companion object {
+          private const val ALGORITHM = "AES/CBC/PKCS5Padding"
+          private const val KEY_ALGORITHM = "AES"
+          private const val HASH_ALGORITHM = "SHA-256"
+      }
+
+      fun decrypt(encryptedData: String, apiKey: String): String {
+          try {
+              val digest = MessageDigest.getInstance(HASH_ALGORITHM)
+              val hashedBytes = digest.digest(apiKey.toByteArray(StandardCharsets.UTF_8))
+              
+              val cipherBytes = Base64.getDecoder().decode(encryptedData.trim())
+              // Extracts the key from the hashed value
+              val key = SecretKeySpec(hashedBytes.copyOf(32), KEY_ALGORITHM)
+              // Extracts the IV from the hashed value
+              val iv = IvParameterSpec(hashedBytes.copyOfRange(16, 32)) 
+
+              val cipher = Cipher.getInstance(ALGORITHM)
+              cipher.init(Cipher.DECRYPT_MODE, key, iv)
+
+              val decryptedBytes = cipher.doFinal(cipherBytes)
+              return String(decryptedBytes, StandardCharsets.UTF_8)
+
+          } catch (e: Exception) {
+              throw DecryptionException("Decryption failed: ${e.message}", e)
+          }
+      }
+  }
+  ```
+  ```javascript Node.js(crpyto module)
+    import CryptoJS from 'crypto-js';
+
+    function generateKeyAndIV(apiKey) {
+        const hashedKey = CryptoJS.SHA256(apiKey); 
+        const key = CryptoJS.lib.WordArray.create(hashedKey.words.slice(0, 8), 32); 
+        const iv = CryptoJS.lib.WordArray.create(hashedKey.words.slice(8, 12), 16);
+        return { key, iv };
+    }
+
+    function decrypt(encryptedData, apiKey) {
+        const { key, iv } = generateKeyAndIV(apiKey);
+        const decrypted = CryptoJS.AES.decrypt(
+            CryptoJS.lib.CipherParams.create({ ciphertext: CryptoJS.enc.Base64.parse(encryptedData) }), key, { iv: iv, mode: CryptoJS.mode.CBC });
+        return JSON.parse(decrypted.toString(CryptoJS.enc.Utf8));
+    }
+    ```
+  </CodeGroup>
+
+### 3-5. Examples
+  <CodeGroup>
+    ```kotlin Decrpyt Module
+    fun main() {
+    val apiKey = "your-api-key"
+    val encryptedPayload = "encrypted-payload"
+
+    val decryptor = WebhookDecryptor()
+    try {
+        val decryptedJson = decryptor.decrypt(encryptedPayload, apiKey)
+        println("$decryptedJson")
+    } catch (e: DecryptionException) {
+        println("${e.message}")
+        e.printStackTrace()
+    }
+  }
+    ```
+    ```javascript Node.js(crpyto module)
+    import CryptoJS from 'crypto-js';
+
+    function main() {
+        const apiKey = "your-api-key"
+        const encryptedPayload = "encrypted-base64-string"
+        const decryptedJson = decrypt(encryptedPayload, apiKey);
+        console.log("Decrypted webhook payload: ", decryptedJson)
+    }
+    ```
+  </CodeGroup>

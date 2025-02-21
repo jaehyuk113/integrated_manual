@@ -1,0 +1,72 @@
+---
+title: 'DELETE/Faceauth'
+description: 'An API to securely delete the facial image and personal data of a specific submission while retaining key metadata such as auth_status and create_time.'
+---
+
+<Note>
+- Only one submission can be deleted per request.
+- **Deleted data:** The submitted facial image and personal information are permanently removed.
+- **Retained data:**
+  - Unique submission ID (`auth_id`)
+  - Authentication result (`auth_status`)
+  - Submission date and time (`createTime`)
+</Note>
+
+## 1. Base URL
+
+```text DELETE/FaceAuth
+https://rest-api.argosidentity.com/v3/faceauth
+```
+## 2. Authentication
+
+Include the API key in the x-api-key header:
+
+```text x-api-key
+x-api-key: {yourAPIKey}
+```
+
+## 3. Request Example
+```curl DELETE/FaceAuth
+curl -X DELETE "https://rest-api.argosidentity.com/v3/faceauth" \
+-H "x-api-key: {yourAPIKey}" \
+```
+
+## 4. Request Parameters
+
+<ResponseField name="authId" type="string"> 
+Used to specify the unique submission to be deleted.
+</ResponseField>
+
+<Note>
+- **Maximum retrieval limit**: A single request can delete only one submission.
+- **Fetching additional data**: If more data exists, the response will include the `nextPage_key` object.
+To continue retrieving data, use `nextPage_key`'s `authId` as `nextKey_id` and `createTime` as `nextKey_date` in the next request.
+</Note>
+
+## 5. Response
+
+### 5-1. Response (delete_check: false)
+```json result.json
+{
+    "message": "success"
+}
+```
+
+### 5-2. Response Data
+<ResponseField name="faceAuth_projectId" type="string"> 
+FaceAuth project ID
+</ResponseField>
+
+### 6. Error Codes
+If an error occurs, a 400 status code is returned along with details in the response body:
+```json error.json
+{
+    "errorCode": "required key is missing"
+}
+```
+| Error Codes  | Description |
+|---------------------------|--------------------------------------------------|
+| `required key is missing` | Ensure that the submitted API-Key is correct. |
+| `error in processing data` | An error occurred while retrieving the submission data. |
+| `Cannot find submission. Please check input data.` | The specified submission does not exist. |
+| `error in delete submission` | An error occurred while attempting to delete the submission. |

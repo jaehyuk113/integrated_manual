@@ -1,0 +1,157 @@
+---
+title: 'GET/Faceauth'
+description: 'An API to retrieve specific submissions or the entire submission list using filters such as authId, startDate, and endDate for efficient data retrieval.'
+---
+
+## 1. Base URL
+
+```text GET/FaceAuth
+https://rest-api.argosidentity.com/v3/faceauth
+```
+## 2. Authentication
+
+Include the API key in the x-api-key header:
+
+```text x-api-key
+x-api-key: {yourAPIKey}
+```
+
+## 3. Request Example
+```curl GET/FaceAuth
+curl -X GET "https://rest-api.argosidentity.com/v3/faceauth" \
+-H "x-api-key: {yourAPIKey}" \
+```
+
+## 4. Request Parameters
+
+<ResponseField name="authId" type="string"> 
+Used for retrieving a specific submission. If `authId` is provided, only the corresponding submission is returned; otherwise, the full list is retrieved.
+</ResponseField>
+<ResponseField name="startDate" type="string"> 
+Start date of the query (`yyyy-mm-dd` format). To filter data within a specific period, both `startDate` and `endDate` must be provided.
+</ResponseField>
+<ResponseField name="endDate" type="string"> 
+End date of the query (`yyyy-mm-dd` format).
+</ResponseField>
+<ResponseField name="nextKey_id" type="string"> 
+The `authId` value from the `nextPage_key` object in the response of the previous request.
+</ResponseField>
+<ResponseField name="nextKey_date" type="string"> 
+The `createTime` value from the `nextPage_key` object in the response of the previous request.
+</ResponseField>
+<ResponseField name="count" type="string"> 
+Specifies the number of data entries to retrieve (minimum 1, maximum 2,000). If not provided, the default value is 2,000.
+</ResponseField>
+
+<Note>
+- **Maximum retrieval limit**: A single request can retrieve up to 2,000 entries.
+- **Fetching additional data**: If more data is available, the response includes the `nextPage_key` object.
+To continue retrieving data, use `nextPage_key`'s `authId` as `nextKey_id` and `createTime` as `nextKey_date` in the next request.
+</Note>
+
+## 5. Response
+
+### 5-1. Response (delete_check: false)
+```json result.json
+[
+  {
+    "auth_id" : "sampleId1", 
+    "auth_status" : "approved",
+    "create_time" : "2023-08-18T15:00:00.000Z",
+    "submit_type" : "sampleType",
+    "kyc_submission_id" : "sampleKycId1",
+    "policy" : {
+        "faceSimilarity_threshold" : 70,
+        "occluded_threshold" : false, 
+        "faceCover_threshold" : 0,
+        "headCover_threshold" : 50
+    },
+    "delete_check": false
+  }
+]
+```
+### 5-2. Response (delete_check: true)
+```json result.json
+[     
+  { 
+    "auth_id" : "sampleId1", 
+    "auth_status" : "approved",
+    "create_time" : "2023-08-18T15:00:00.000Z",
+    "submit_type" : "sampleType",
+    "kyc_submission_id" : "sampleKycId1",
+    "policy" : {
+        "faceSimilarity_threshold" : 70,
+        "occluded_threshold" : false, 
+        "faceCover_threshold" : 0,
+        "headCover_threshold" : 50
+    },
+    "delete_check": true,
+    "delete_time": "2023-09-04T02:19:01.399Z"
+  }
+]
+```
+
+### 5-3. Response Data
+<ResponseField name="faceAuth_projectId" type="string"> 
+FaceAuth project ID
+</ResponseField>
+
+<ResponseField name="data" type="array"> 
+List of retrieved submissions
+ <Expandable title="Properties">
+  <ResponseField name="[i]" type="object" required="false">
+   Individual submission object
+   <Expandable title="Properties">
+    <ResponseField name="auth_id" type="string">
+      Unique authentication ID for each submission
+    </ResponseField>
+    <ResponseField name="auth_status" type="string">
+      Authentication result (e.g., `approved`, `rejected`)
+    </ResponseField>
+    <ResponseField name="create_time" type="string">
+      Submission date and time (UTC+0)
+    </ResponseField>
+    <ResponseField name="submit_type" type="string">
+      Submission type
+    </ResponseField>
+    <ResponseField name="kyc_submission_id" type="string">
+      KYC submission ID associated with the FaceAuth process
+    </ResponseField>
+    <ResponseField name="policy" type="string">
+      Threshold policies applied for authentication
+      <Expandable title="Properties">
+          <ResponseField name="faceSimilarity_threshold" type="string">
+           Face similarity threshold
+          </ResponseField>
+          <ResponseField name="faceCover_threshold" type="string">
+            Face occlusion detection threshold (e.g., goggles, masks, protective equipment)
+          </ResponseField>
+          <ResponseField name="headCover_threshold" type="string">
+            Head protection equipment detection threshold
+          </ResponseField>
+          <ResponseField name="occluded_threshold" type="boolean">
+            Whether the face is obscured by hands or other objects
+          </ResponseField>
+      </Expandable>
+    </ResponseField>
+    <ResponseField name="delete_check" type="string">
+      Indicates if the data has been deleted
+    </ResponseField>
+    <ResponseField name="delete_time" type="string">
+      Deletion date and time (UTC+0)
+    </ResponseField>
+   </Expandable>
+  </ResponseField>
+ </Expandable>
+</ResponseField>
+
+### 6. Error Codes
+If an error occurs, a 400 status code is returned along with details in the response body:
+```json error.json
+{
+    "errorCode": "required key is missing"
+}
+```
+| Error Code  | Description |
+|---------------------------|--------------------------------------------------|
+| `faceAuth_project not found` | The submitted API-Key does not match any valid project. Please check if your API-Key is correct. |

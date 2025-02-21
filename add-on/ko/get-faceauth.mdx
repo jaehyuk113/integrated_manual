@@ -1,0 +1,158 @@
+---
+title: 'GET/Faceauth'
+description: '특정 제출 건 또는 전체 제출 목록을 조회하는 API로, authId, startDate, endDate 등의 필터를 활용하여 필요한 데이터를 효과적으로 조회할 수 있습니다.'
+---
+
+## 1. Base URL
+
+```text GET/FaceAuth
+https://rest-api.argosidentity.com/v3/faceauth
+```
+## 2. 인증
+
+x-api-key 헤더에 API 키를 포함시켜야 합니다:
+
+```text x-api-key
+x-api-key: {yourAPIKey}
+```
+
+## 3. 요청 예시
+```curl GET/FaceAuth
+curl -X GET "https://rest-api.argosidentity.com/v3/faceauth" \
+-H "x-api-key: {yourAPIKey}" \
+```
+
+## 4. 요청 파라미터
+
+<ResponseField name="authId" type="string"> 
+특정 제출 건(단 건) 조회 시 사용. 해당 authId를 제출하면 단일 데이터를 조회하며, 미제출 시 전체 리스트가 조회됨
+</ResponseField>
+<ResponseField name="startDate" type="string"> 
+조회 시작 일자 (`yyyy-mm-dd` 형식) 특정 기간 내 데이터를 조회하려면 startDate와 endDate를 함께 제출해야 함
+</ResponseField>
+<ResponseField name="endDate" type="string"> 
+조회 종료 일자 (`yyyy-mm-dd` 형식).
+</ResponseField>
+<ResponseField name="nextKey_id" type="string"> 
+이전 요청의 Response에서 반환된 `nextPage_key` 객체의 `authId` 값.
+</ResponseField>
+<ResponseField name="nextKey_date" type="string"> 
+이전 요청의 Response에서 반환된 `nextPage_key` 객체의 `createTime` 값.
+</ResponseField>
+<ResponseField name="count" type="string"> 
+조회할 데이터 개수 지정 (최소 1 ~ 최대 2,000). 미제출 시 기본값은 2,000건.
+</ResponseField>
+
+<Note>
+- 최대 조회 가능 개수: 한 번의 요청에서 최대 2,000건을 조회할 수 있습니다.
+- 추가 데이터 조회: 조회할 데이터가 더 있는 경우, 응답(Response)에 `nextPage_key` 객체가 포함됩니다.
+이후 데이터를 조회할 때는 `nextPage_key` 객체의 `authId` 값을 `nextKey_id`로, `createTime` 값을 `nextKey_date`로 전달하여 요청해야 합니다.
+</Note>
+
+
+## 5. 응답
+
+### 5-1. Response (delete_check:false)
+```json result.json
+[
+  {
+    "auth_id" : "sampleId1", 
+		"aurh_status" : "approved",
+		"create_time" : "2023-08-18T15:00:00.000Z",
+		"submit_type" : "sampleType",
+		"kyc_submission_id" : "sampleKycId1",
+		"policy" : {
+			"faceSimilarity_threshold" : 70,
+			"occluded_threshold" : false, 
+			"faceCover_threshold" : 0,
+			"headCover_threshold" : 50
+		},
+    "delete_check": false
+    }]
+```
+### 5-2. Response (delete_check:true)
+```json result.json
+[     
+  { 
+    "auth_id" : "sampleId1", 
+		"aurh_status" : "approved",
+		"create_time" : "2023-08-18T15:00:00.000Z",
+		"submit_type" : "sampleType",
+		"kyc_submission_id" : "sampleKycId1",
+		"policy" : {
+			"faceSimilarity_threshold" : 70,
+			"occluded_threshold" : false, 
+			"faceCover_threshold" : 0,
+			"headCover_threshold" : 50
+		},
+    "delete_check": true,
+    "delete_time": "2023-09-04T02:19:01.399Z"
+  }
+]
+```
+
+### 5-2. 응답 예시
+<ResponseField name="faceAuth_projectId" type="string"> 
+faceAuth 프로젝트 ID
+</ResponseField>
+
+<ResponseField name="data" type="array"> 
+조회된 제출 건들의 배열
+ <Expandable title="Properties">
+  <ResponseField name="[i]" type="object" required="false">
+   개별 제출 건 객체
+   <Expandable title="Properties">
+    <ResponseField name="auth_id" type="string">
+      각 제출 건의 고유 인증 ID
+    </ResponseField>
+    <ResponseField name="auth_status" type="string">
+      인증 결과 (예: approved, rejected)
+    </ResponseField>
+    <ResponseField name="create_time" type="string">
+      제출된 날짜와 시간 (UTC+0)
+    </ResponseField>
+    <ResponseField name="submit_type" type="string">
+      제출 방식
+    </ResponseField>
+    <ResponseField name="kyc_submission_id" type="string">
+      faceAuth가 수행된 KYC 제출 건의 ID
+    </ResponseField>
+    <ResponseField name="policy" type="string">
+      인증에 적용된 임계값 정책 객체
+      <Expandable title="Properties">
+          <ResponseField name="faceSimilarity_threshold" type="string">
+           얼굴 유사도 임계값
+          </ResponseField>
+          <ResponseField name="faceCover_threshold" type="string">
+            얼굴 가림 감지 (고글, 마스크, 보호구 착용) 임계값
+          </ResponseField>
+          <ResponseField name="headCover_threshold" type="string">
+            머리 보호 장비 감지 임계값 
+          </ResponseField>
+          <ResponseField name="occluded_threshold" type="boolean">
+            손이나 특정 물체로 얼굴을 가렸는지 여부
+          </ResponseField>
+      </Expandable>
+    </ResponseField>
+    <ResponseField name="delete_check" type="string">
+      삭제된 데이터인지 여부
+    </ResponseField>
+    <ResponseField name="delete_time" type="string">
+     	삭제된 날짜와 시간 (UTC+0)
+    </ResponseField>
+   </Expandable>
+  </ResponseField>
+ </Expandable>
+</ResponseField>
+
+### 5-3. 에러 코드
+오류가 발생하면 400 상태 코드와 함께 응답 본문에 세부 정보가 포함됩니다:
+```json error.json
+{
+    "errorCode": "required key is missing"
+}
+
+```
+| 에러 코드  | 설명                                   |
+|---------------------------------------|-----------------------------------------------|
+| `faceAuth_project not found`           | 제출한 API-Key에 해당하는 유효한 프로젝트가 없을 경우 발생하는 오류입니다.입력한 API-Key가 올바른지 다시 확인해주세요.                  |

@@ -1,0 +1,61 @@
+---
+title: 'Faceauth'
+description: 'After FaceAuth verification is completed, the final result (`approved` or `rejected`) is automatically sent to the Webhook URL registered in the existing ID Check project, providing real-time notifications.'
+---
+
+<Note>
+- A Webhook is triggered when the AddOn FaceAuth is submitted and the final result (`auth_status`) is determined.
+- The Webhook is sent to the Webhook URL registered in the existing ID Check project. To register a Webhook, refer to [this guide](/webhooks/en/overview#2-register-webhook-events).
+- The Webhook trigger type is **"faceAuth"**.
+</Note>
+
+```json faceauth-webhook-sample.json
+{
+    "webhook_trigger": "faceAuth",
+    "auth_id": "string",
+    "data": {
+      "submission_id": "string",
+      "auth_status": "string",
+      "create_time": "string",
+      "user_id": "string",
+      "cf1": "string",
+      "cf2": "string",
+      "cf3": "string"
+    }
+}
+```
+
+<ResponseField name="webhook_trigger" type="string">
+  Webhook trigger type - `submit` indicates a pending status after submission.
+</ResponseField>
+
+<ResponseField name="auth_id" type="string">
+  Unique ID for each FaceAuth submission.
+</ResponseField>
+
+<ResponseField name="data" type="object">
+   Webhook payload data.
+  <Expandable title="Properties">
+    <ResponseField name="submission_id" type="string">
+      Unique ID of the specific submission.
+    </ResponseField>
+    <ResponseField name="auth_status" type="string">
+      The final result of FaceAuth, returning either `approved` (success) or `rejected` (failure).
+    </ResponseField>
+    <ResponseField name="create_time" type="string">
+      Submission date and time (UTC+0).
+    </ResponseField>
+    <ResponseField name="user_id" type="string">
+      An optional parameter included during submission.
+    </ResponseField>
+    <ResponseField name="cf1" type="string">
+      Custom field #1.
+    </ResponseField>
+    <ResponseField name="cf2" type="string">
+      Custom field #2.
+    </ResponseField>
+    <ResponseField name="cf3" type="string">
+      Custom field #3.
+    </ResponseField>
+  </Expandable>
+</ResponseField>

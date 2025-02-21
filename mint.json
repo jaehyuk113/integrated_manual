@@ -53,6 +53,11 @@
       "version": "English"
     },
     {
+      "name":"Add-on",
+      "url":"add-on/en",
+      "version":"English"
+    },
+    {
       "name":"Changelog",
       "url":"changelog/en",
       "version":"English"
@@ -75,6 +80,11 @@
     {
       "name":"웹훅 이벤트",
       "url":"webhooks/ko",
+      "version":"한국어"
+    },
+    {
+      "name":"애드온",
+      "url":"add-on/ko",
       "version":"한국어"
     },
     {
@@ -241,6 +251,30 @@
       "version": "English"
     },
     {
+      "group":"Add-on",
+      "pages":[
+        "add-on/en/overview",
+        "add-on/en/rate-limits"
+      ],
+      "version":"English"
+    },
+    {
+      "group" : "API Endpoints",
+      "pages": [
+        "add-on/en/post-faceauth",
+        "add-on/en/get-faceauth",
+        "add-on/en/delete-faceauth"
+      ],
+      "version": "English"
+    },
+    {
+      "group" : "Webhook",
+      "pages": [
+        "add-on/en/add-on-webhook"
+      ],
+      "version": "English"
+    },
+    {
       "group": "Changelog",
       "pages": [
         "changelog/en/idcheck/overview",
@@ -346,6 +380,30 @@
         "webhooks/ko/idcheck-submit",
         "webhooks/ko/idcheck-injection",
         "webhooks/ko/idcheck-aml-result"
+      ],
+      "version": "한국어"
+    },
+    {
+      "group":"애드온",
+      "pages":[
+        "add-on/ko/overview",
+        "add-on/ko/rate-limits"
+      ],
+      "version":"한국어"
+    },
+    {
+      "group" : "API 참조",
+      "pages": [
+        "add-on/ko/post-faceauth",
+        "add-on/ko/get-faceauth",
+        "add-on/ko/delete-faceauth"
+      ],
+      "version": "한국어"
+    },
+    {
+      "group" : "웹훅",
+      "pages": [
+        "add-on/ko/add-on-webhook"
       ],
       "version": "한국어"
     },

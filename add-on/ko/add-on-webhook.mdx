@@ -1,0 +1,61 @@
+---
+mode: 'default'
+title: Faceauth
+description:  faceAuth 인증이 완료된 후 최종 결과(approved 또는 rejected)를 기존 ID Check 프로젝트의 Webhook URL로 자동 전송하여 실시간 알림을 제공합니다.
+---
+
+<Note>
+- AddOn faceAuth가 제출되고 최종 결과(auth_status)가 도출되었을 때 Webhook이 발송됩니다.
+- Webhook은 기존 ID Check 프로젝트에 등록된 Webhook URL로 전송됩니다. 웹훅 등록 방법은 [여기서](/webhooks/ko/overview#2-register-webhook-events) 확인해주세요.
+- Webhook의 트리거는 "faceAuth" 입니다.
+</Note>
+```json faceauth-webhook-sample.json
+{
+    "webhook_trigger": "faceAuth",
+    "auth_id" : "string",
+    "data" : {
+      "submission_id": "string",
+      "auth_status": "string",
+      "create_time": "string",
+      "user_id": "string",
+      "cf1": "string",
+      "cf2": "string",
+      "cf3": "string"
+    }
+}
+```
+<ResponseField name="webhook_trigger" type="string">
+  Webhook trigger type - `submit` indicates a Pending status after submission.
+</ResponseField>
+
+<ResponseField name="authention_id" type="string">
+각 faceAuth 제출 건에 대한 고유 ID
+</ResponseField>
+
+
+<ResponseField name="data" type="object">
+  	Webhook 본문 데이터
+  <Expandable title="properties">
+    <ResponseField name="submission_id" type="string">
+      특정 제출 건의 고유 ID
+    </ResponseField>
+    <ResponseField name="auth_status" type="string">
+      faceAuth 최종 결과를 나타냅니다. approved(성공) 또는 rejected(실패)를 반환합니다
+    </ResponseField>
+    <ResponseField name="create_Time" type="string">
+      제출된 날짜와 시간 (UTC+0)
+    </ResponseField>
+    <ResponseField name="user_id" type="string">
+     	제출 생성 시 선택적으로 추가된 파라미터
+    </ResponseField>
+    <ResponseField name="cf1" type="string">
+      사용자 정의 필드 #1
+    </ResponseField>
+    <ResponseField name="cf2" type="string">
+      사용자 정의 필드 #2
+    </ResponseField>
+    <ResponseField name="cf3" type="string">
+      사용자 정의 필드 #3
+    </ResponseField>
+  </Expandable>
+</ResponseField>

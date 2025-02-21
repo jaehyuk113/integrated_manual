@@ -1,0 +1,76 @@
+---
+title: 'DELETE/Faceauth'
+description: '특정 제출 건의 얼굴 이미지 및 개인정보 데이터를 안전하게 삭제하는 API이며, auth_status와 create_time 등의 주요 메타데이터는 유지됩니다.'
+---
+
+<Note>
+- 한 번의 요청당 1건의 제출 건만 삭제 가능합니다.
+- 삭제되는 정보: 제출된 이미지 및 개인정보 데이터가 삭제됩니다.
+- 유지되는 정보 
+  - 제출 건의 고유 ID (auth_id)
+  - 인증 결과 (auth_status)
+  - 제출된 날짜와 시간 (createTime)
+</Note>
+
+## 1. Base URL
+
+```text DELETE/FaceAuth
+https://rest-api.argosidentity.com/v3/faceauth
+```
+## 2. 인증
+
+x-api-key 헤더에 API 키를 포함시켜야 합니다:
+
+```text x-api-key
+x-api-key: {yourAPIKey}
+```
+
+## 3. 요청 예시
+```curl DELETE/FaceAuth
+curl -X DELETE "https://rest-api.argosidentity.com/v3/faceauth" \
+-H "x-api-key: {yourAPIKey}" \
+```
+
+## 4. 요청 파라미터
+
+<ResponseField name="authId" type="string"> 
+특정 제출 건(단 건) 조회 시 사용. 
+</ResponseField>
+
+<Note>
+- 최대 조회 가능 개수: 한 번의 요청에서 최대 2,000건을 조회할 수 있습니다.
+- 추가 데이터 조회: 조회할 데이터가 더 있는 경우, 응답(Response)에 `nextPage_key` 객체가 포함됩니다.
+이후 데이터를 조회할 때는 `nextPage_key` 객체의 `authId` 값을 `nextKey_id`로, `createTime` 값을 `nextKey_date`로 전달하여 요청해야 합니다.
+</Note>
+
+
+## 5. 응답
+
+### 5-1. Response (delete_check:false)
+```json result.json
+{
+	message : "success"
+}
+```
+
+
+### 5-2. 응답 예시
+<ResponseField name="faceAuth_projectId" type="string"> 
+faceAuth 프로젝트 ID
+</ResponseField>
+
+
+### 5-3. Error Codes
+If an error occurs, a 400 status code is returned along with details in the response body:
+```json error.json
+{
+    "errorCode": "required key is missing"
+}
+
+```
+| Error Codes  | Description                                   |
+|---------------------------------------|-----------------------------------------------|
+| `required key is missing`           | 제출한 API-Key가 올바른지 다시 확인해주세요.                  |
+| `error in processing data`           | 제출 데이터 조회 중 오류가 발생한 경우입니다.              |
+| `Cannot find submission. Please check input data.`           | 해당하는 제출 건이 존재하지 않는 경우 발생입니다.          |
+| `error in delete submission`           | 데이터 삭제 중 오류가 발생한 경우입니다.                 |

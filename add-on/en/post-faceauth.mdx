@@ -1,0 +1,134 @@
+---
+title: 'POST/Faceauth'
+description: 'The submitted FaceAuth facial image is compared with the image obtained during the previous ID Check. If a selfie image was submitted during the ID Check, it is compared with the FaceAuth image. If no selfie image was submitted, the comparison is made against the ID card image.'
+---
+<Warning>
+**Notes**
+- The authentication result is determined based on option settings and threshold values, returning either `approved` or `rejected`.
+- Recommended faceImage specifications: `960 x 720`
+- How to check `submissionId`:
+Log in to the dashboard, go to `Settings` > `Liveform URL`, and complete the ID Check process. Once ID Check is approved, you can find the `submissionId` data in the `User Management` menu > `Submission List` in the dashboard.
+  - The final status of the ID Check **must be** `approved`.
+- **API Key Information**:
+  A separate API Key is required from the existing liveform API Key.
+  You can check your Add-on API Key under [Getting Started](/add-on/en/overview#api-3).
+</Warning>
+
+## 1. Base URL
+
+```text POST/faceauth
+https://rest-api.argosidentity.com/v3/faceauth
+```
+## 2. Authentication
+
+Include the API key in the x-api-key header:
+
+```text x-api-key
+x-api-key: {yourAPIKey}
+```
+## 3. Request Example
+
+```curl POST/faceauth
+curl --location --request POST 'https://rest-api.argosidentity.com/v3/faceauth' \
+--header 'x-api-key: {yourAPIKey}' \
+--form 'faceImage=@"/C:/Users/face.jpg"' \
+--form 'submissionId= "{submissionId}"' \
+```
+
+## 4. Request Body  
+The request body must be in JSON format. The following are the field descriptions:
+
+<ResponseField name="submissionId" type="string" required="true">
+  Unique identifier for each KYC submission.  
+  *FaceAuth can only proceed if the corresponding submission (`submissionId`) is `approved`.*
+</ResponseField>
+
+<ResponseField name="faceImage" type="file" required="true">
+  Upload the user's selfie image as a file. If PPE (head/face protective equipment) options are enabled, ensure that all safety equipment is clearly visible in the image for accurate recognition.
+</ResponseField>
+
+<ResponseField name="userId" type="string">
+  A unique identifier for the KYC submitter as defined by the customer.
+</ResponseField>
+
+<ResponseField name="cf1" type="string">
+  Custom field 1 value.
+</ResponseField>
+
+<ResponseField name="cf2" type="string">
+  Custom field 2 value.
+</ResponseField>
+
+<ResponseField name="cf3" type="string">
+  Custom field 3 value.
+</ResponseField>
+
+## 5. Response
+
+### 5-1. Success Response
+```json result.json
+{
+    "authentication_id": "{authentication_id}",
+    "auth_status": "approved",
+    "create_time": "2023-08-08T07:04:48.633Z",
+    "score": {
+        "face_similarity_score": 99.5,
+        "occluded_score": 99.9
+    }
+}
+```
+### 5-2. Rejection Response
+```json result.json
+{
+    "authentication_id": "{authentication_id}",
+    "auth_status": "rejected",
+    "create_time": "2023-08-08T07:04:48.633Z",
+    "score": {
+        "face_similarity_score": 83.6,
+        "occluded_score": 40,
+        "face_cover_score": 93.3,
+        "head_cover_score": 87
+    },
+    "fail_code": [
+        "Face_Occluded_fail"
+    ],
+    "rejected_comment": [
+        "Face is occluded and the confidence is higher than the threshold."
+    ]
+}
+```
+### 5-3. Response Data
+| Field Name | Data Type | Description |
+|------------------------|-----------|-----------------------------|
+| `authentication_id` | String | Unique ID for the `faceAuth` submission. |
+| `auth_status` | String | The final result of `faceAuth`, returning either `approved` (success) or `rejected` (failure). |
+| `score` | Object | Recognition scores based on the selected options. Properties may include `face_similarity_score`, `occluded_score`, `face_cover_score`, and `head_cover_score`. |
+| `create_time` | String | The date and time when `faceAuth` was submitted (UTC+0). |
+| `fail_code` | Array | If the status is `rejected`, a failure code is returned. |
+| `rejected_comment` | Array | If the status is `rejected`, a detailed reason for the failure is returned. |
+
+## 6. Error Codes
+
+### 6-1. Failure Codes
+
+| Failure Code | Rejection Comment | Description |
+|-------------------------|--------------------------------------------|----------------------------------|
+| `face_compare_underscore` | Face compare similarity score is lower than the threshold | Face similarity score is below the threshold. |
+| `Face_Occluded_fail` | Face is occluded | The face is obstructed. |
+| `Face_cover_fail` | Protection equipment is not found on Face | Face protective equipment is missing. |
+| `Head_cover_fail` | Protection equipment is not found on Head | Head protective equipment is missing. |
+
+### 6-2. Error Codes
+
+| Error Code | Message | Description |
+|-------------------------|--------------------------------------------------|--------------------------------------------------|
+| `invalid_data_format` | Data parsing error. Please check input data. | The provided data format is incorrect. Verify the data format. |
+| `required_field_missing` | Required field is missing | A required field is missing. Ensure `submissionId`, `faceImage`, and API Key are included. |
+| `Invalid_submissionId` | Fail to find the submission data | The KYC submission does not exist. |
+| `Invalid_projectId` | Fail to find the project data | The FaceAuth project does not exist. |
+| `invalid_submission_status` | The submission must be approved to process face authentication | The KYC submission status is not `approved`. |
+| `image_converting_error` | Image converting error | The image format is invalid. Submit the image as `form-data` (base64 format is not supported). |
+| `image_processing_error` | Image processing error | An error occurred while processing the image data. |
+| `detection_server_error` | Cannot finish process of detecting face | An error occurred in the face comparison verification module. |
+| `no_face` | Face is not detected | No face was detected in the submitted `faceImage`. |
+| `data_processing_error` | Data processing error | An error occurred while retrieving or storing data. |

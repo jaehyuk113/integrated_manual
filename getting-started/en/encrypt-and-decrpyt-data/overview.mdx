@@ -183,15 +183,17 @@ The `pid`, `lang` query strings and the `sid`, `action` query strings used on th
 
 ## 3. Secure Data Transfer Options
 
-Encrypt data for secure transmission in API methods (GET, POST, PATCH) and WEBHOOKs. API methods use the `AES-256-ECB` encryption method, while WEBHOOKs use `AES-256-CBC` encryption.
+Encrypt data for secure transmission in API methods (GET, POST, PATCH) and WEBHOOKs. API methods use the `AES-256-ECB` encryption method, while WEBHOOKs use `AES-256-CBC` encryption. Ensure that secure data transfer is enabled before using it to protect sensitive information.
 
+
+![Secure Data Transfer](/images/api-reference/secure-data-transfer.png)
 ### 3-1. Key Features
 - GET, POST, PATCH requests are encrypted using `AES-256-ECB`
 - WEBHOOK data is encrypted using `AES-256-CBC`
 - Ensures data integrity and authentication through PKI
 - Enhances data protection during transmission
 
-![Secure Data Transfer](./images/api-reference/secure-data-transfer.png)
+
 ### 3-2. API Request Data Encryption (AES-256-ECB)
 <CodeGroup>
 ```javascript  Node.js(crypto-js library)

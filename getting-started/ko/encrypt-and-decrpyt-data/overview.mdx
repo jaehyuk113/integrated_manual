@@ -191,67 +191,87 @@ API 메서드(GET, POST, PATCH)와 WEBHOOK에서 데이터를 암호화하여 �
 ### 3-2. API 요청 데이터 암호화 (AES-256-ECB)
 <CodeGroup>
 ```javascript Node.js(crypto-js library)
-      var crypto = require('crypto');import CryptoJS from 'crypto-js';
+import CryptoJS from 'crypto-js';
+const CryptoJS = require('crypto-js');
 
-      function generateKeyAndIV(apiKey) {
-          const hashedKey = CryptoJS.SHA256(apiKey);
-          const key = CryptoJS.lib.WordArray.create(hashedKey.words.slice(0, 8), 32);
-          const iv = CryptoJS.lib.WordArray.create(hashedKey.words.slice(8, 12), 16);
-          return { key, iv };
-      }
+function encryptECB(data, apiKey) {
+    const hashedKey = CryptoJS.SHA256(apiKey);
+    const key = CryptoJS.lib.WordArray.create(hashedKey.words.slice(0, 8), 32);
+    const encrypted = CryptoJS.AES.encrypt(JSON.stringify(data), key, {
+        mode: CryptoJS.mode.ECB
+    });
+    return encrypted.ciphertext.toString(CryptoJS.enc.Base64);
+}
+```
+```java AES-256-CBC.java
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.util.Base64;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
-      function encrypt(data, apiKey) {
-          const { key, iv } = generateKeyAndIV(apiKey);
-          const encrypted = CryptoJS.AES.encrypt(JSON.stringify(data), key, { iv: iv, mode: CryptoJS.mode.CBC });
-          return encrypted.ciphertext.toString(CryptoJS.enc.Base64);
-      }
-
-    ```
-    ```java AES-256-CBC.java
-    import javax.crypto.Cipher;
-    import javax.crypto.spec.SecretKeySpec;
-    import java.util.Base64;
-    import java.nio.charset.StandardCharsets;
-    import java.security.MessageDigest;
-
-    public class Encryptor {
-        public static String encryptECB(String data, String apiKey) throws Exception {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hashedKey = digest.digest(apiKey.getBytes(StandardCharsets.UTF_8));
-            
-            SecretKeySpec key = new SecretKeySpec(hashedKey, 0, 32, "AES");
-            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-            cipher.init(Cipher.ENCRYPT_MODE, key);
-            
-            byte[] encryptedBytes = cipher.doFinal(data.getBytes(StandardCharsets.UTF_8));
-            return Base64.getEncoder().encodeToString(encryptedBytes);
-        }
+public class Encryptor {
+    public static String encryptECB(JsonObject data, String apiKey) throws Exception {
+        Gson gson = new Gson();
+        String jsonData = gson.toJson(data);
+        
+        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+        byte[] rawKeyBytes = digest.digest(apiKey.getBytes(StandardCharsets.UTF_8));
+        byte[] hashedKey = new byte[32];
+        System.arraycopy(rawKeyBytes, 0, hashedKey, 0, 32);
+        SecretKeySpec key = new SecretKeySpec(hashedKey, "AES");
+        Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+        
+        byte[] encryptedBytes = cipher.doFinal(jsonData.getBytes(StandardCharsets.UTF_8));
+        return Base64.getEncoder().encodeToString(encryptedBytes);
     }
-
+}
 ```
 </CodeGroup>
 
 ### 3-3.  API 데이터 복호화 (AES-256-ECB)
 <CodeGroup>
 ```javascript Node.js(crypto-js library)
-  function decryptECB(encryptedData, apiKey) {
-      const key = CryptoJS.SHA256(apiKey).toString(CryptoJS.enc.Hex);
-      const decrypted = CryptoJS.AES.decrypt(encryptedData, key, { mode: CryptoJS.mode.ECB });
-      return JSON.parse(decrypted.toString(CryptoJS.enc.Utf8));
-  }
+const CryptoJS = require('crypto-js');
+
+function decryptECB(encryptedData, apiKey) {
+    const hashedKey = CryptoJS.SHA256(apiKey);
+    const key = CryptoJS.lib.WordArray.create(hashedKey.words.slice(0, 8), 32);
+    const cipherParams = CryptoJS.lib.CipherParams.create({
+        ciphertext: CryptoJS.enc.Base64.parse(encryptedData)
+    });
+    const decrypted = CryptoJS.AES.decrypt(cipherParams, key, {
+        mode: CryptoJS.mode.ECB
+    });
+    return JSON.parse(decrypted.toString(CryptoJS.enc.Utf8));
+}
 ```
 ```java AES-256-CBC.java
-public class Decryptor {
-    public static String decryptECB(String encryptedData, String apiKey) throws Exception {
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.util.Base64;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+
+public class Encryptor {
+    public static JsonObject decryptECB(String encryptedData, String apiKey) throws Exception {
+        Gson gson = new Gson();
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
         byte[] hashedKey = digest.digest(apiKey.getBytes(StandardCharsets.UTF_8));
-        
-        SecretKeySpec key = new SecretKeySpec(hashedKey, 0, 32, "AES");
+        byte[] aesCompatibleKey = new byte[32];
+        System.arraycopy(hashedKey, 0, aesCompatibleKey, 0, 32);
+        SecretKeySpec key = new SecretKeySpec(aesCompatibleKey, "AES");
         Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
         cipher.init(Cipher.DECRYPT_MODE, key);
         
         byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(encryptedData));
-        return new String(decryptedBytes, StandardCharsets.UTF_8);
+        String jsonData = new String(decryptedBytes, StandardCharsets.UTF_8);
+        return gson.fromJson(jsonData, JsonObject.class);
     }
 }
 ```
@@ -279,24 +299,33 @@ function encryptCBC(data, apiKey) {
 ```
 ```java AES-256-CBC.java
 import javax.crypto.Cipher;
-import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import javax.crypto.spec.IvParameterSpec;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.Base64;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import java.util.Arrays;
 
 public class Encryptor {
-    public static String encryptCBC(String data, String apiKey) throws Exception {
+    public static String encryptCBC(JsonObject data, String apiKey) throws Exception {
+        String jsonData = new Gson().toJson(data);
+        
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        byte[] hashedBytes = digest.digest(apiKey.getBytes(StandardCharsets.UTF_8));
-
-        SecretKeySpec key = new SecretKeySpec(hashedBytes, 0, 32, "AES");
-        IvParameterSpec iv = new IvParameterSpec(hashedBytes, 16, 16);
-
+        byte[] hash = digest.digest(apiKey.getBytes(StandardCharsets.UTF_8));
+        
+        byte[] keyBytes = Arrays.copyOf(hash, 32);
+        SecretKeySpec key = new SecretKeySpec(keyBytes, "AES");
+        
+        byte[] ivBytes = new byte[16];
+        Arrays.fill(ivBytes, (byte) 0);
+        IvParameterSpec iv = new IvParameterSpec(ivBytes);
+        
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
         cipher.init(Cipher.ENCRYPT_MODE, key, iv);
         
-        byte[] encryptedBytes = cipher.doFinal(data.getBytes(StandardCharsets.UTF_8));
+        byte[] encryptedBytes = cipher.doFinal(jsonData.getBytes(StandardCharsets.UTF_8));
         return Base64.getEncoder().encodeToString(encryptedBytes);
     }
 }
@@ -307,38 +336,64 @@ public class Encryptor {
 ### 3-5. WEBHOOK 데이터 복호화 (AES-256-CBC)
 <CodeGroup>
 ```javascript Node.js(crypto-js library)
-function decryptCBC(encryptedData, apiKey) {
-    const { key, iv } = generateKeyAndIV(apiKey);
-    const decrypted = CryptoJS.AES.decrypt(
-        CryptoJS.lib.CipherParams.create({ ciphertext: CryptoJS.enc.Base64.parse(encryptedData) }),
-        key, { iv: iv, mode: CryptoJS.mode.CBC }
-    );
-    return JSON.parse(decrypted.toString(CryptoJS.enc.Utf8));
+const CryptoJS = require('crypto-js');
+
+function generateKeyAndIV(apiKey) {
+    const hashedKey = CryptoJS.SHA256(apiKey);
+    const key = CryptoJS.lib.WordArray.create(hashedKey.words.slice(0, 8), 32);
+    const iv = CryptoJS.lib.WordArray.create(hashedKey.words.slice(8, 12), 16);
+    return { key, iv };
 }
 
+function decryptCBC(encryptedData, apiKey) {
+    const { key, iv } = generateKeyAndIV(apiKey);
+    
+    // Create cipher params for decryption
+    const cipherParams = CryptoJS.lib.CipherParams.create({
+        ciphertext: CryptoJS.enc.Base64.parse(encryptedData)
+    });
+    
+    // Decrypt the data
+    const decrypted = CryptoJS.AES.decrypt(cipherParams, key, {
+        iv: iv,
+        mode: CryptoJS.mode.CBC,
+        padding: CryptoJS.pad.Pkcs7
+    });
+    
+    return JSON.parse(decrypted.toString(CryptoJS.enc.Utf8));
+}
 
 ```
 ```java AES-256-CBC.java
 import javax.crypto.Cipher;
-import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import javax.crypto.spec.IvParameterSpec;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.util.Base64;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import java.util.Arrays;
 
 public class Encryptor {
-    public static String encryptCBC(String data, String apiKey) throws Exception {
+    public static JsonObject decryptCBC(String encryptedData, String apiKey) throws Exception {
         MessageDigest digest = MessageDigest.getInstance("SHA-256");
-        byte[] hashedBytes = digest.digest(apiKey.getBytes(StandardCharsets.UTF_8));
-
-        SecretKeySpec key = new SecretKeySpec(hashedBytes, 0, 32, "AES");
-        IvParameterSpec iv = new IvParameterSpec(hashedBytes, 16, 16);
-
-        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
-        cipher.init(Cipher.ENCRYPT_MODE, key, iv);
+        byte[] hash = digest.digest(apiKey.getBytes(StandardCharsets.UTF_8));
         
-        byte[] encryptedBytes = cipher.doFinal(data.getBytes(StandardCharsets.UTF_8));
-        return Base64.getEncoder().encodeToString(encryptedBytes);
+        byte[] keyBytes = Arrays.copyOf(hash, 32);
+        SecretKeySpec key = new SecretKeySpec(keyBytes, "AES");
+        
+        byte[] ivBytes = new byte[16];
+        Arrays.fill(ivBytes, (byte) 0);
+        IvParameterSpec iv = new IvParameterSpec(ivBytes);
+        
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+        cipher.init(Cipher.DECRYPT_MODE, key, iv);
+        
+        byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(encryptedData));
+        String jsonData = new String(decryptedBytes, StandardCharsets.UTF_8);
+        
+        return new Gson().fromJson(jsonData, JsonObject.class);
     }
 }
 ```

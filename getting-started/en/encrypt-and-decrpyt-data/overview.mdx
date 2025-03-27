@@ -1,10 +1,12 @@
 ---
-mode: 'default'
-title: Data Encryption and Decryption
-description: Comprehensive guide to secure customer data through robust encryption solutions. Learn about methods to minimize risks of unauthorized access and data breaches while complying with the latest security standards.
+mode: "default"
+title: "Data Encryption and Decryption"
+description: "Comprehensive guide to secure customer data through robust encryption solutions. Learn about methods to minimize risks of unauthorized access and data breaches while complying with the latest security standards."
 ---
+
 ## Encryption Options
-<CardGroup cols={2}>
+
+<CardGroup cols="2">
   <Card title="Query String Encryption" icon="square-1">
     Query String Encryption
   </Card>
@@ -23,7 +25,8 @@ Sensitive data sent via URL query strings is encrypted using the AES-256 encrypt
 <Steps>
   <Step title="Prepare Data in JSON Format">
     <CodeGroup>
-    ```javascript data.json
+
+    ```json id_document.json
     {
         "email": "email@email.com",
         "userid": "userid",
@@ -39,29 +42,52 @@ Sensitive data sent via URL query strings is encrypted using the AES-256 encrypt
         "allowedCountries": "USA, KOR"
     }
     ```
+
+    
+    ```json knowledge_based.json
+    {
+        "email": "email@email.com",
+        "userid": "userid",
+        "cf1": "value 1",
+        "cf2": "value 2",
+        "cf3": "value 3",
+        "knowledgeField": "birthDate,gender,nationality,name,SSN,name,address,phoneNumber",
+      "knowledgePrefill" : "gender=male,nationality=USA,SSN=123-34-0001,address=Washington D.C.,name=Brown James,birthDate=1980-01-01,phoneNumber=+15555551234",
+        "blacklistCountries": false,
+        "ageLimit": false,
+        "rejectDuplicateUser": true,
+        "allowedCountries": "USA"
+    }
+    ```
+
     </CodeGroup>
   </Step>
   <Step title="Perform AES-256 Encryption Using the Provided API Key">
-    <img height="200" src="/images/api-reference/api-key.png" />
+    <img
+      height="200"
+      src="/images/api-reference/api-key.png"
+    />
   </Step>
   <Step title="Add Encrypted Data to the URL as the 'encrypted' Query Parameter">
     <CodeGroup>
+
     ```text example.txt
     https://form.argosidentity.com/?pid={project_Id}&encrypted={encrypted_json_text}
     ```
+
     </CodeGroup>
   </Step>
 </Steps>
 
-<Warning>  
-**Caution**: The following query parameters are not encrypted: `pid`, `lang`, `sid`, `action`.  
-The `pid`, `lang` query strings and the `sid`, `action` query strings used on the "Additional Process (Injection)" page do not support encryption.
+<Warning>
+  **Caution**: The following query parameters are not encrypted: `pid`, `lang`, `sid`, `action`.\
+  The `pid`, `lang` query strings and the `sid`, `action` query strings used on the "Additional Process (Injection)" page do not support encryption.
 </Warning>
 
-
-##  2. Query String Encryption and Decryption Methods
+## 2. Query String Encryption and Decryption Methods
 
 ### 2-1. Key Generation Process
+
 ```mermaid
  graph LR
     A[API Key] -->|SHA-256 Hash| B[Hashed Key]
@@ -71,24 +97,30 @@ The `pid`, `lang` query strings and the `sid`, `action` query strings used on th
 <Steps>
   <Step title="Generate Hashed Key">
     <CodeGroup>
+
     ```javascript Node.js(crpyto module)
     var crypto = require('crypto');
     var hashedKey = crypto.createHash('sha256').update(APIKEY).digest();
-
+    
     ```
+
+    
     ```javascript Node.js(crypto-js library)
     import CryptoJS from 'crypto-js';
     const hashedKey = CryptoJS.SHA256(APIKEY);
-
+    
     ```
+
     </CodeGroup>
   </Step>
   <Step title="Encryption Example">
-   Below are examples of encrypting data using AES-256
-      <CodeGroup>
+    Below are examples of encrypting data using AES-256
+
+    <CodeGroup>
+
     ```javascript Node.js(crpyto module)
       var crypto = require('crypto');
-
+    
       /**
       * @param {string} data - Stringified JSON data
       * @param {string} apiKey - Project API key
@@ -100,9 +132,11 @@ The `pid`, `lang` query strings and the `sid`, `action` query strings used on th
         return cipher.update(data, 'utf8', 'base64') + cipher.final('base64');
       }
     ```
-    ```javascript Node.js(crypto-js library)
-   import CryptoJS from 'crypto-js';
 
+    
+    ```javascript Node.js(crypto-js library)
+    import CryptoJS from 'crypto-js';
+    
     const encrypt = (data, apiKey) => {
       const hashedKey = CryptoJS.SHA256(apiKey);
       const encrypted = CryptoJS.AES.encrypt(data, hashedKey, {
@@ -110,15 +144,17 @@ The `pid`, `lang` query strings and the `sid`, `action` query strings used on th
       });
       return encrypted.ciphertext.toString(CryptoJS.enc.Base64);
     };
-
+    
     ```
+
+    
     ```java java(crypto-js library)
       import javax.crypto.Cipher;
       import javax.crypto.spec.SecretKeySpec;
       import java.nio.charset.StandardCharsets;
       import java.security.MessageDigest;
       import java.util.Base64;
-
+    
       public class Encryption {
           public static String encrypt(String data, String apiKey) throws Exception {
               // Hash the API key using SHA-256
@@ -144,14 +180,17 @@ The `pid`, `lang` query strings and the `sid`, `action` query strings used on th
           }
       }
     ```
+
     </CodeGroup>
   </Step>
   <Step title="Decryption Example">
-  Below are examples of decrypting data encrypted with AES-256
+    Below are examples of decrypting data encrypted with AES-256
+
     <CodeGroup>
+
     ```javascript Node.js(crpyto module)
         var crypto = require('crypto');
-
+    
       /**
       * @param {string} encryptedData
       * @param {string} apiKey
@@ -162,11 +201,13 @@ The `pid`, `lang` query strings and the `sid`, `action` query strings used on th
         var decipher = crypto.createDecipheriv('aes-256-ecb', hashedKey, null);
         return decipher.update(encryptedData, 'base64', 'utf8') + decipher.final('utf8');
       }
-
+    
     ```
-    ```javascript Node.js(crypto-js library)
-   import CryptoJS from 'crypto-js';
 
+    
+    ```javascript Node.js(crypto-js library)
+    import CryptoJS from 'crypto-js';
+    
     const decrypt = (encryptedData, apiKey) => {
       const hashedKey = CryptoJS.SHA256(apiKey);
       const decrypted = CryptoJS.AES.decrypt(encryptedData, hashedKey, {
@@ -175,28 +216,29 @@ The `pid`, `lang` query strings and the `sid`, `action` query strings used on th
       return decrypted.toString(CryptoJS.enc.Utf8);
     };
     ```
+
     </CodeGroup>
   </Step>
 </Steps>
-
-
 
 ## 3. Secure Data Transfer Options
 
 Encrypt data for secure transmission in API methods (GET, POST, PATCH) and WEBHOOKs. API methods use the `AES-256-ECB` encryption method, while WEBHOOKs use `AES-256-CBC` encryption. Ensure that secure data transfer is enabled before using it to protect sensitive information.
 
-
 ![Secure Data Transfer](/images/api-reference/secure-data-transfer.png)
+
 ### 3-1. Key Features
+
 - GET, POST, PATCH requests are encrypted using `AES-256-ECB`
 - WEBHOOK data is encrypted using `AES-256-CBC`
 - Ensures data integrity and authentication through PKI
 - Enhances data protection during transmission
 
-
 ### 3-2. API Request Data Encryption (AES-256-ECB)
+
 <CodeGroup>
-```javascript  Node.js(crypto-js library)
+
+```javascript Node.js(crypto-js library)
 import CryptoJS from 'crypto-js';
 const CryptoJS = require('crypto-js');
 
@@ -209,6 +251,8 @@ function encryptECB(data, apiKey) {
     return encrypted.ciphertext.toString(CryptoJS.enc.Base64);
 }
 ```
+
+
 ```java AES-256-ECB.java
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -236,10 +280,14 @@ public class Encryptor {
     }
 }
 ```
+
 </CodeGroup>
+
 ### 3-3. API Data Decryption (AES-256-ECB)
+
 <CodeGroup>
-```javascript  Node.js(crypto-js library)
+
+```javascript Node.js(crypto-js library)
 const CryptoJS = require('crypto-js');
 
 function decryptECB(encryptedData, apiKey) {
@@ -254,6 +302,8 @@ function decryptECB(encryptedData, apiKey) {
     return JSON.parse(decrypted.toString(CryptoJS.enc.Utf8));
 }
 ```
+
+
 ```java AES-256-ECB.java
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -279,11 +329,14 @@ public class Encryptor {
         return gson.fromJson(jsonData, JsonObject.class);
     }
 }
-
 ```
+
 </CodeGroup>
+
 ### 3-4. WEBHOOK Data Encryption (AES-256-CBC)
+
 <CodeGroup>
+
 ```javascript Node.js (crypto-js library)
 import CryptoJS from 'crypto-js';
 
@@ -300,6 +353,8 @@ function encryptCBC(data, apiKey) {
     return encrypted.ciphertext.toString(CryptoJS.enc.Base64);
 }
 ```
+
+
 ```java AES-256-CBC.java
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -333,10 +388,13 @@ public class Encryptor {
     }
 }
 ```
+
 </CodeGroup>
 
 ### 3-5. WEBHOOK Data Decryption (AES-256-CBC)
+
 <CodeGroup>
+
 ```javascript Node.js (crypto-js library)
 const CryptoJS = require('crypto-js');
 
@@ -365,6 +423,8 @@ function decryptCBC(encryptedData, apiKey) {
     return JSON.parse(decrypted.toString(CryptoJS.enc.Utf8));
 }
 ```
+
+
 ```java AES-256-CBC.java
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -398,4 +458,5 @@ public class Encryptor {
     }
 }
 ```
+
 </CodeGroup>

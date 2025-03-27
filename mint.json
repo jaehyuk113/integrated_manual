@@ -176,7 +176,7 @@
     {
       "group": "Security",
       "pages": [
-          "getting-started/en/encrypt-and-decrpyt-data/overview"
+          "getting-started/en/encrypt-and-decrypt-data/overview"
       ],
       "version": "English"
     },
@@ -309,7 +309,7 @@
     {
       "group": "보안",
       "pages": [
-          "getting-started/ko/encrypt-and-decrpyt-data/overview"
+          "getting-started/ko/encrypt-and-decrypt-data/overview"
       ],
       "version": "한국어"
     },

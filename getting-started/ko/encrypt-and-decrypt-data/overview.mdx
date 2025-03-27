@@ -1,29 +1,27 @@
 ---
-mode: "default"
-title: "Data Encryption and Decryption"
-description: "Comprehensive guide to secure customer data through robust encryption solutions. Learn about methods to minimize risks of unauthorized access and data breaches while complying with the latest security standards."
+mode: 'default'
+title: 데이터 암호화 및 복호화
+description: 고객 데이터를 안전하게 보호하고 무단 접근과 데이터 유출 위험을 최소화하기 위한 강력한 암호화 솔루션을 제공합니다. 최신 보안 표준을 준수하며, 다양한 환경에서 쉽게 구현할 수 있는 방법을 상세히 설명합니다.
 ---
-
-## Encryption Options
-
-<CardGroup cols="2">
-  <Card title="Query String Encryption" icon="square-1">
-    Query String Encryption
+## 암호화 옵션
+<CardGroup cols={2}>
+  <Card title="쿼리 스트링 암호화" icon="square-1">
+    쿼리 스트링 암호화
   </Card>
-  <Card title="Secure Data Transmission Options" icon="square-2">
-    Secure Data Transmission Options
+  <Card title="안전한 데이터 전송 옵션" icon="square-2">
+    안전한 데이터 전송 옵션
   </Card>
-  <Card title="Encryption/Decryption Methods" icon="square-3">
-    Encryption/Decryption Methods
+  <Card title="암/복호화 방식" icon="square-3">
+      암/복호화 방식 
   </Card>
 </CardGroup>
 
-## 1. Query String Encryption
+## 1. 쿼리 스트링 암호화
 
-Sensitive data sent via URL query strings is encrypted using the AES-256 encryption method.
+URL의 쿼리 스트링으로 전송되는 민감한 데이터를 AES-256 방식으로 암호화합니다.
 
 <Steps>
-  <Step title="Prepare Data in JSON Format">
+  <Step title="암호화할 데이터를 JSON 형식으로 준비">
     <CodeGroup>
 
     ```json id_document.json
@@ -52,7 +50,7 @@ Sensitive data sent via URL query strings is encrypted using the AES-256 encrypt
         "cf2": "value 2",
         "cf3": "value 3",
         "knowledgeField": "birthDate,gender,nationality,name,SSN,name,address,phoneNumber",
-      "knowledgePrefill" : "gender=male,nationality=USA,SSN=123-34-0001,address=Washington D.C.,name=Brown James,birthDate=1980-01-01,phoneNumber=+15555551234",
+        "knowledgePrefill" : "gender=male,nationality=USA,SSN=123-34-0001,address=Washington D.C.,name=Brown James,birthDate=1980-01-01,phoneNumber=+15555551234",
         "blacklistCountries": false,
         "ageLimit": false,
         "rejectDuplicateUser": true,
@@ -62,65 +60,51 @@ Sensitive data sent via URL query strings is encrypted using the AES-256 encrypt
 
     </CodeGroup>
   </Step>
-  <Step title="Perform AES-256 Encryption Using the Provided API Key">
-    <img
-      height="200"
-      src="/images/api-reference/api-key.png"
-    />
+  <Step title="제공된 API 키로 AES-256 암호화 수행">
+    <img height="200" src="/images/api-reference/api-key.png" />
+    <Note>AES-256 암호화 수행 전에 쿼리 스트링 암호화 및 복호화 단계를 확인해주세요.</Note>
   </Step>
-  <Step title="Add Encrypted Data to the URL as the 'encrypted' Query Parameter">
-    <CodeGroup>
-
-    ```text example.txt
-    https://form.argosidentity.com/?pid={project_Id}&encrypted={encrypted_json_text}
-    ```
-
-    </CodeGroup>
+  <Step title="암호화된 데이터를 URL의 encrypted 쿼리 파라미터에 추가">
+      <CodeGroup>
+      ```text exmaple.txt
+      https://form.argosidentity.com/?pid={project_Id}&encrypted={encrypted_json_text}
+      ```
+      </CodeGroup>
   </Step>
 </Steps>
 
-<Warning>
-  **Caution**: The following query parameters are not encrypted: `pid`, `lang`, `sid`, `action`.\
-  The `pid`, `lang` query strings and the `sid`, `action` query strings used on the "Additional Process (Injection)" page do not support encryption.
-</Warning>
+<Warning> 주의: pid, lang 쿼리 스트링 및 ‘추가 프로세스 (Injection)’ 페이지에서 사용하는 sid, action 쿼리 스트링은 암호화를 지원하지 않습니다. </Warning>
 
-## 2. Query String Encryption and Decryption Methods
+## 2. 쿼리 스트링 암호화 및 복호화 방법
 
-### 2-1. Key Generation Process
-
+### 2-1. 키 생성 프로세스
 ```mermaid
  graph LR
-    A[API Key] -->|SHA-256 Hash| B[Hashed Key]
-    B -->|Used in AES-256 Encryption| C[Encryption/Decryption]
+    A[API Key] -->|SHA-256 해시| B[Hashed Key]
+    B -->|AES-256 암호화에 사용| C[암호화/복호화]
 ```
 
 <Steps>
-  <Step title="Generate Hashed Key">
+  <Step title="Hashed Key 생성">
     <CodeGroup>
-
     ```javascript Node.js(crpyto module)
     var crypto = require('crypto');
     var hashedKey = crypto.createHash('sha256').update(APIKEY).digest();
-    
-    ```
 
-    
+    ```
     ```javascript Node.js(crypto-js library)
     import CryptoJS from 'crypto-js';
     const hashedKey = CryptoJS.SHA256(APIKEY);
-    
-    ```
 
+    ```
     </CodeGroup>
   </Step>
-  <Step title="Encryption Example">
-    Below are examples of encrypting data using AES-256
-
-    <CodeGroup>
-
+  <Step title="암호화 예시">
+  아래 예시는 데이터를 AES-256 방식으로 암호화하는 방법을 보여줍니다.
+      <CodeGroup>
     ```javascript Node.js(crpyto module)
       var crypto = require('crypto');
-    
+
       /**
       * @param {string} data - Stringified JSON data
       * @param {string} apiKey - Project API key
@@ -132,11 +116,9 @@ Sensitive data sent via URL query strings is encrypted using the AES-256 encrypt
         return cipher.update(data, 'utf8', 'base64') + cipher.final('base64');
       }
     ```
-
-    
     ```javascript Node.js(crypto-js library)
-    import CryptoJS from 'crypto-js';
-    
+   import CryptoJS from 'crypto-js';
+
     const encrypt = (data, apiKey) => {
       const hashedKey = CryptoJS.SHA256(apiKey);
       const encrypted = CryptoJS.AES.encrypt(data, hashedKey, {
@@ -144,53 +126,48 @@ Sensitive data sent via URL query strings is encrypted using the AES-256 encrypt
       });
       return encrypted.ciphertext.toString(CryptoJS.enc.Base64);
     };
-    
-    ```
 
-    
+    ```
     ```java java(crypto-js library)
-      import javax.crypto.Cipher;
-      import javax.crypto.spec.SecretKeySpec;
-      import java.nio.charset.StandardCharsets;
-      import java.security.MessageDigest;
-      import java.util.Base64;
-    
-      public class Encryption {
-          public static String encrypt(String data, String apiKey) throws Exception {
-              // Hash the API key using SHA-256
-              MessageDigest digest = MessageDigest.getInstance("SHA-256");
-              byte[] hashedKey = digest.digest(apiKey.getBytes(StandardCharsets.UTF_8));
-              
-              // Ensure the key is 32 bytes long for AES-256 compatibility
-              byte[] aesCompatibleKey = new byte[32];
-              System.arraycopy(hashedKey, 0, aesCompatibleKey, 0, 32);
-              
-              // Create the AES key for encryption
-              SecretKeySpec secretKey = new SecretKeySpec(hashedKey, "AES");
-              
-              // Initialize the Cipher in AES/ECB/PKCS5Padding mode
-              Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-              cipher.init(Cipher.ENCRYPT_MODE, secretKey);
-              
-              // Encrypt the data
-              byte[] encryptedBytes = cipher.doFinal(data.getBytes(StandardCharsets.UTF_8));
-              
-              // Return the encrypted result encoded in Base64
-              return Base64.getEncoder().encodeToString(encryptedBytes);
-          }
-      }
-    ```
+    import javax.crypto.Cipher;
+    import javax.crypto.spec.SecretKeySpec;
+    import java.nio.charset.StandardCharsets;
+    import java.security.MessageDigest;
+    import java.util.Base64;
 
+    public class Encryption {
+        public static String encrypt(String data, String apiKey) throws Exception {
+            // API 키를 SHA-256으로 해시
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hashedKey = digest.digest(apiKey.getBytes(StandardCharsets.UTF_8));
+            
+            // AES-256 호환을 위한 32바이트 길이 보장
+            byte[] aesCompatibleKey = new byte[32];
+            System.arraycopy(hashedKey, 0, aesCompatibleKey, 0, 32);
+            
+            // AES 암호화를 위한 키 생성
+            SecretKeySpec secretKey = new SecretKeySpec(hashedKey, "AES");
+            
+            // AES/ECB/PKCS5Padding 모드로 Cipher 초기화
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+            
+            // 데이터 암호화
+            byte[] encryptedBytes = cipher.doFinal(data.getBytes(StandardCharsets.UTF_8));
+            
+            // Base64 인코딩하여 결과 반환
+            return Base64.getEncoder().encodeToString(encryptedBytes);
+        }
+    }
+    ```
     </CodeGroup>
   </Step>
-  <Step title="Decryption Example">
-    Below are examples of decrypting data encrypted with AES-256
-
+  <Step title="복호화 예시">
+  아래 예시는 AES-256 방식으로 암호화된 데이터를 복호화하는 방법을 보여줍니다.
     <CodeGroup>
-
     ```javascript Node.js(crpyto module)
         var crypto = require('crypto');
-    
+
       /**
       * @param {string} encryptedData
       * @param {string} apiKey
@@ -201,13 +178,11 @@ Sensitive data sent via URL query strings is encrypted using the AES-256 encrypt
         var decipher = crypto.createDecipheriv('aes-256-ecb', hashedKey, null);
         return decipher.update(encryptedData, 'base64', 'utf8') + decipher.final('utf8');
       }
-    
-    ```
 
-    
+    ```
     ```javascript Node.js(crypto-js library)
-    import CryptoJS from 'crypto-js';
-    
+   import CryptoJS from 'crypto-js';
+
     const decrypt = (encryptedData, apiKey) => {
       const hashedKey = CryptoJS.SHA256(apiKey);
       const decrypted = CryptoJS.AES.decrypt(encryptedData, hashedKey, {
@@ -216,28 +191,22 @@ Sensitive data sent via URL query strings is encrypted using the AES-256 encrypt
       return decrypted.toString(CryptoJS.enc.Utf8);
     };
     ```
-
     </CodeGroup>
   </Step>
 </Steps>
 
-## 3. Secure Data Transfer Options
+## 3. 안전한 데이터 전송 옵션
+API 메서드(GET, POST, PATCH)와 WEBHOOK에서 데이터를 암호화하여 안전하게 전송합니다. API 메서드는 AES-256-ECB 방식을, WEBHOOK은 AES-256-CBC 방식을 사용하여 암호화합니다. 데이터를 안전하게 보호하기 위해 사용 전에 반드시 안전한 데이터 전송 기능이 활성화되어 있는지 확인하세요.
 
-Encrypt data for secure transmission in API methods (GET, POST, PATCH) and WEBHOOKs. API methods use the `AES-256-ECB` encryption method, while WEBHOOKs use `AES-256-CBC` encryption. Ensure that secure data transfer is enabled before using it to protect sensitive information.
+### 3-1. 주요 특징
+- GET, POST, PATCH 요청은 `AES-256-ECB` 방식으로 암호화
+- WEBHOOK 데이터는 `AES-256-CBC` 방식으로 암호화
+- PKI를 통한 데이터 무결성 및 인증 보장
+- 전송 중 데이터 보호 강화
 
-![Secure Data Transfer](/images/api-reference/secure-data-transfer.png)
-
-### 3-1. Key Features
-
-- GET, POST, PATCH requests are encrypted using `AES-256-ECB`
-- WEBHOOK data is encrypted using `AES-256-CBC`
-- Ensures data integrity and authentication through PKI
-- Enhances data protection during transmission
-
-### 3-2. API Request Data Encryption (AES-256-ECB)
-
+<img height="200" src="/images/api-reference/secure-data-transfer.png" />
+### 3-2. API 요청 데이터 암호화 (AES-256-ECB)
 <CodeGroup>
-
 ```javascript Node.js(crypto-js library)
 import CryptoJS from 'crypto-js';
 const CryptoJS = require('crypto-js');
@@ -251,9 +220,7 @@ function encryptECB(data, apiKey) {
     return encrypted.ciphertext.toString(CryptoJS.enc.Base64);
 }
 ```
-
-
-```java AES-256-ECB.java
+```java AES-256-CBC.java
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
@@ -280,13 +247,10 @@ public class Encryptor {
     }
 }
 ```
-
 </CodeGroup>
 
-### 3-3. API Data Decryption (AES-256-ECB)
-
+### 3-3.  API 데이터 복호화 (AES-256-ECB)
 <CodeGroup>
-
 ```javascript Node.js(crypto-js library)
 const CryptoJS = require('crypto-js');
 
@@ -302,9 +266,7 @@ function decryptECB(encryptedData, apiKey) {
     return JSON.parse(decrypted.toString(CryptoJS.enc.Utf8));
 }
 ```
-
-
-```java AES-256-ECB.java
+```java AES-256-CBC.java
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
@@ -330,14 +292,12 @@ public class Encryptor {
     }
 }
 ```
-
 </CodeGroup>
 
-### 3-4. WEBHOOK Data Encryption (AES-256-CBC)
 
+### 3-4. WEBHOOK 데이터 암호화 (AES-256-CBC)
 <CodeGroup>
-
-```javascript Node.js (crypto-js library)
+```javascript Node.js(crypto-js library)
 import CryptoJS from 'crypto-js';
 
 function generateKeyAndIV(apiKey) {
@@ -352,9 +312,8 @@ function encryptCBC(data, apiKey) {
     const encrypted = CryptoJS.AES.encrypt(JSON.stringify(data), key, { iv: iv, mode: CryptoJS.mode.CBC });
     return encrypted.ciphertext.toString(CryptoJS.enc.Base64);
 }
+
 ```
-
-
 ```java AES-256-CBC.java
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -388,14 +347,12 @@ public class Encryptor {
     }
 }
 ```
-
 </CodeGroup>
 
-### 3-5. WEBHOOK Data Decryption (AES-256-CBC)
 
+### 3-5. WEBHOOK 데이터 복호화 (AES-256-CBC)
 <CodeGroup>
-
-```javascript Node.js (crypto-js library)
+```javascript Node.js(crypto-js library)
 const CryptoJS = require('crypto-js');
 
 function generateKeyAndIV(apiKey) {
@@ -422,9 +379,8 @@ function decryptCBC(encryptedData, apiKey) {
     
     return JSON.parse(decrypted.toString(CryptoJS.enc.Utf8));
 }
+
 ```
-
-
 ```java AES-256-CBC.java
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -458,5 +414,4 @@ public class Encryptor {
     }
 }
 ```
-
 </CodeGroup>

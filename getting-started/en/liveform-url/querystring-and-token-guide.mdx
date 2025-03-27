@@ -1,69 +1,78 @@
 ---
-mode: 'default'
-title: Query String and Token Guide
-description: A comprehensive guide to the Query String and Token ID options for Liveform. These options enable features such as transmitting additional information, preventing duplicate submissions, and identifying users. Explore essential tools to optimize your ID Check process.
+mode: "default"
+title: "Query String and Token Guide"
+description: "A comprehensive guide to the Query String and Token ID options for Liveform. These options enable features such as transmitting additional information, preventing duplicate submissions, and identifying users. Explore essential tools to optimize your ID Check process."
 ---
 
 ## 1. Customizable Query String Options
+
 The Query String options available in Liveform and API allow you to send additional information and customize the KYC process.
 
 ## 2. Basic URL Structure
 
-- **Base Form URL**: `https://form.argosidentity.com/?pid={project_Id}`  
+- **Base Form URL**: `https://form.argosidentity.com/?pid={project_Id}`
 - **URL with Query String**: `https://form.argosidentity.com/?pid={project_Id}&blacklistCountries=false`
 
 ### 2-1. Key Query String Parameters
 
-| Parameter               | Description                                                                                     |
-|-------------------------|-------------------------------------------------------------------------------------------------|
-| `blacklistCountries`    | Turns off blacklist country restrictions for the specific submission (`false` only).            |
-| `approvePeriod`         | Turns off the approved duplicate submission prevention period (`false` only).                   |
-| `rejectPeriod`          | Turns off the rejected duplicate submission prevention period (`false` only).                   |
-| `ageLimit`              | Turns off age restriction for the specific submission (`false` only).                          |
-| `rejectDuplicateUser`   | Enables/disables duplicate submission prevention (`true` or `false` accepted).                  |
-| `email`                 | User's email address.                                                                            |
-| `userid`                | Custom unique identifier for the user.                                                         |
-| `pid`                   | Unique identifier for each project.                                                            |
-| `sid`                   | Unique identifier for each submission.                                                         |
-| `cf1`                   | Custom option field #1.                                                                        |
-| `cf2`                   | Custom option field #2.                                                                        |
-| `cf3`                   | Custom option field #3.                                                                        |
-| `allowedCountries`      | `allowedCountries` can only be set using the encryption option and cannot be specified directly. e.g., If the encrypted value `{'allowedCountries': 'USA,KOR'}` is provided, only United States (USA) and South Korea (KOR) will be allowed.
+| Parameter                                                | ID Document | Knowledge-\ Based | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| -------------------------------------------------------- | ----------- | ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `blacklistCountries`                                     | O           | O                 | Turns off blacklist country restrictions for the specific submission (`false` only).                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| `approvePeriod`                                          | O           | X                 | Turns off the approved duplicate submission prevention period (`false` only).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `rejectPeriod`                                           | O           | X                 | Turns off the rejected duplicate submission prevention period (`false` only).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `ageLimit`                                               | O           | O                 | Turns off age restriction for the specific submission (`false` only).                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| `rejectDuplicateUser`                                    | O           | O                 | Enables/disables duplicate submission prevention (`true` or `false` accepted).  - In Knowledge-Based Submission, it works to contain Name, Gender, Birth Date, and Nationality information.                                                                                                                                                                                                                                                                                                                                                                      |
+| `email`                                                  | O           | O                 | User's email address.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| `userid`                                                 | O           | O                 | Custom unique identifier for the user.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| `pid`                                                    | O           | O                 | Unique identifier for each project.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| `sid`                                                    | O           | O                 | Unique identifier for each submission.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| `cf1`                                                    | O           | O                 | Custom option field #1.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| `cf2`                                                    | O           | O                 | Custom option field #2.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| `cf3`                                                    | O           | O                 | Custom option field #3.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| `allowedCountries`                                       | O           | O                 | `allowedCountries` can only be set using the encryption option and cannot be specified directly. e.g., If the encrypted value `{'allowedCountries': 'USA,KOR'}` is provided, only the United States (USA) and South Korea (KOR) will be allowed.  - In Knowledge-Based, if `allowedCountries` set one nationality, e.g. `{'allowedCountries': 'USA'}` The form skips to the select country page.                                                                                                                                                                 |
+| `knowledgeField`  - Available with encrypted parameter   | X           | O                 | Set visible fields from the supported fields.  - `name` - `gender` - `birthDate` - `nationality` - `SSN` (Only the USA supported) - `address` - `phoneNumber`  e.g. `{'knowledgeField': 'gender,nationality,name'}`  Every field name is case-sensitive.                                                                                                                                                                                                                                                                                                         |
+| `knowledgePrefill`  - Available with encrypted parameter | X           | O                 | Fill out the value in advance.  - `name` Input name - `birthDate` Require input YYYY-MM-DD - `gender` male or female - `birthDate` Require input YYYY-MM-DD  - `nationality` ISO Alpha-3 - `SSN` Require input number with hyphen(-) - `address` Input the keyword address in Google map - `phoneNumber` Country code with phone number without hyphen(-)  e.g. `{'knowledgePrefill': 'gender=male,birthdate=1990-01-01,SSN=123-12-0001,address=Washington D.C.,phoneNumber=+15555551234'}`  `address` is the keyword to put in the search field in Google Maps. |
 
 <Note>
-All Query String values must be URL-encoded.
+  All Query String values must be URL-encoded.
 </Note>
+
 Below is an example of ID Check with and without an email query parameter.
-  <img
-    src="/images/en_email_queryparameter.png"
-    alt="dashboard"/>
+
+![dashboard](/images/en_email_queryparameter.png)
 
 ### 2-2. Unique User ID and Custom Fields
+
 - Generate a unique user ID for KYC submitter identification during API calls.
 - Add up to three custom fields (`cf1`, `cf2`, `cf3`) to transmit additional information.
 
 ## 3. Token ID Options
+
 The `tokenId` is a string used for Liveform submissions in Private Mode.
 
 **Purpose**: Prevent shared or duplicate use of the same URL.
 
 ### 3-1. Token Validation
-Validation fails (error occurs) under the following conditions:  
-1. **Time Expiry**: More than 3 minutes have elapsed since the first use.  
-2. **Existing Valid Submission**: There is an existing submission with a determined KYC status (approved, rejected, pending).  
+
+Validation fails (error occurs) under the following conditions:
+
+1. **Time Expiry**: More than 3 minutes have elapsed since the first use.
+2. **Existing Valid Submission**: There is an existing submission with a determined KYC status (approved, rejected, pending).
 
 <Warning>
-**Caution**:  
-If the above conditions are not met, multiple users may proceed with the same Token ID simultaneously.
+  **Caution**:\
+  If the above conditions are not met, multiple users may proceed with the same Token ID simultaneously.
 </Warning>
 
 ### 3-2. Methods to Check Token ID
-- Webhook  
-- **GET Submission API** (single retrieval using `submission_id`)  
-- Download Submission CSV from the dashboard  
+
+- Webhook
+- **GET Submission API** (single retrieval using `submission_id`)
+- Download Submission CSV from the dashboard
 
 ### 3-3. URL Structure for Token ID
-- **Base Form URL**: `https://form.argosidentity.com/?pid={project_Id}`  
-- **URL with Token ID**: `https://form.argosidentity.com/?pid={project_Id}&token={tokenId}`  
+
+- **Base Form URL**: `https://form.argosidentity.com/?pid={project_Id}`
+- **URL with Token ID**: `https://form.argosidentity.com/?pid={project_Id}&token={tokenId}`
 
 By using this guide, you can effectively leverage Query String and Token ID options in ID Check to optimize your KYC process and enhance user experience.

@@ -1,11 +1,11 @@
 ---
-mode: 'default'
-title: 쿼리 스트링 및 토큰
-description: 라이브폼의 QueryString 및 Token ID 옵션에 대한 종합 가이드입니다. API 호출 시 추가 정보 전송, 중복 제출 방지, 사용자 식별 등 다양한 기능을 제공합니다. ID Check 프로세스 최적화를 위한 필수 정보를 확인하세요.
-
+mode: "default"
+title: "쿼리 스트링 및 토큰"
+description: "라이브폼의 QueryString 및 Token ID 옵션에 대한 종합 가이드입니다. API 호출 시 추가 정보 전송, 중복 제출 방지, 사용자 식별 등 다양한 기능을 제공합니다. ID Check 프로세스 최적화를 위한 필수 정보를 확인하세요."
 ---
 
 ## 1. QueryString 변경 가능 옵션
+
 라이브폼과 API에서 사용 가능한 QueryString 옵션을 통해 추가 정보를 전송하고 KYC 프로세스를 커스터마이즈할 수 있습니다.
 
 ## 2. 기본 URL 구조
@@ -14,56 +14,64 @@ description: 라이브폼의 QueryString 및 Token ID 옵션에 대한 종합 �
 - QueryString 포함 URL: `https://form.argosidentity.com/?pid={project_Id}&blacklistCountries=false`
 
 ### 2-1. 주요 QueryString 파라미터
-| 파라미터                   | 설명                                                                                     |
-|-----------------------|-------------------------------------------------------------------------------------------------|
-| `blacklistCountries`  | 블랙리스트 국가에 대한 옵션을 해당 submission에 대하여 OFF 함 (`false`만 가능)                         |
-| `approvePeriod`       | Approved 중복 제출 방지 기간에 대한 옵션을 해당 submission에 대하여 OFF 함 (`false`만 가능)             |
-| `rejectPeriod`        | Rejected 중복 제출 방지 기간에 대한 옵션을 해당 submission에 대하여 OFF 함 (`false`만 가능)             |
-| `ageLimit`            | 연령 제한에 대한 옵션을 해당 submission에 대하여 OFF 함 (`false`만 가능)                               |
-| `rejectDuplicateUser` | 중복 제출 방지에 대한 옵션을 해당 submission에 대하여 ON / OFF 함 (`true` 및 `false` 모두 가능)         |
-| `email`               | 사용자 이메일                                                                            |
-| `userid`              | 사용자의 사용자 지정 고유 식별자                                                                     |
-| `pid`                 | 각각의 project를 구분하는 고유의 구분자                                                              |
-| `sid`                 | 각각의 submission을 구분하는 고유의 구분자                                                          |
-| `cf1`                 | 사용자 정의 옵션 필드1                                                                              |
-| `cf2`                 | 사용자 정의 옵션 필드2                                                                              |
-| `cf3`                 | 사용자 정의 옵션 필드3                                                                              |
-| `allowedCountries`   | `allowedCountries`는 암호화 옵션을 통해서만 설정할 수 있으며, 직접 지정하는 것은 불가능합니다. 예시: `'allowedCountries': 'USA,KOR'}` 값을 암호화하여 전달하면 United States (USA) 및 South Korea (KOR)만 허용됩니다. |
+
+| 파라미터                                               | ID Document | Knowledge-Based | 설명                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| -------------------------------------------------- | :---------- | :-------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `blacklistCountries`                               | O           | O               | 블랙리스트 국가에 대한 옵션을 해당 submission에 대하여 OFF 함 (`false`만 가능)                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| `approvePeriod`                                    | O           | X               | Approved 중복 제출 방지 기간에 대한 옵션을 해당 submission에 대하여 OFF 함 (`false`만 가능)                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| `rejectPeriod`                                     | O           | X               | Rejected 중복 제출 방지 기간에 대한 옵션을 해당 submission에 대하여 OFF 함 (`false`만 가능)                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| `ageLimit`                                         | O           | O               | 연령 제한에 대한 옵션을 해당 submission에 대하여 OFF 함 (`false`만 가능)                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| `rejectDuplicateUser`                              | O           | O               | 중복 제출 방지에 대한 옵션을 해당 submission에 대하여 ON / OFF 함 (`true` 및 `false` 모두 가능)                                                                                                                                                                                                                                                                                                                                                                                                               |
+| `email`                                            | O           | O               | 사용자 이메일                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| `userid`                                           | O           | O               | 사용자의 사용자 지정 고유 식별자                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| `pid`                                              | O           | O               | 각각의 project를 구분하는 고유의 구분자                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| `sid`                                              | O           | O               | 각각의 submission을 구분하는 고유의 구분자                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| `cf1`                                              | O           | O               | 사용자 정의 옵션 필드1                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| `cf2`                                              | O           | O               | 사용자 정의 옵션 필드2                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| `cf3`                                              | O           | O               | 사용자 정의 옵션 필드3                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| `allowedCountries`                                 | O           | O               | `allowedCountries`는 암호화 옵션을 통해서만 설정할 수 있으며, 직접 지정하는 것은 불가능합니다. 예시: `'allowedCountries': 'USA,KOR'}` 값을 암호화하여 전달하면 United States (USA) 및 South Korea (KOR)만 허용됩니다.                                                                                                                                                                                                                                                                                                                     |
+| `knowledgeField`     - 반드시 encrypted 로 암호화 해서 사용필요 | X           | O               | Knowledge-based Form 에 노출시킬 필드를 정합니다.  - `name`  - `gender`  - `birthDate`  - `nationality`  - `SSN` (Only the USA supported) - `address` - `phoneNumber`  e.g. `{'knowledgeField': 'gender,nationality,name'}`  Every field name is case-sensitive.                                                                                                                                                                                                                                  |
+| `knowledgePrefill`   - 반드시 encrypted 로 암호화 해서 사용필요 | X           | O               | 필드에 값을 미리 입력할 수 있습니다.  `name` 이름 기입  `birthDate` YYYY-MM-DD 형식으로 기재  `gender` male 혹은 female 로 기재  `birthDate` YYYY-MM-DD 형식으로 기재  `nationality` ISO Alpha-3 형식으로 기재  `SSN` 숫자, 하이픈(-)을 사용하여 기재  `address` 구글맵 검색 필드에 입력할 값 기재  `phoneNumber` 국가코드(e.g. \+82)와 하이픈 없이 전화번호를 기재  e.g. `{'knowledgePrefill': 'gender=male,birthdate=1990-01-01,SSN=123-12-0001,address=Washington D.C.,phoneNumber=+15555551234'}`  `address` is the keyword to put in the search field in Google Maps. |
 
 <Note>
- 모든 쿼리 스트링 값은 URL에 인코딩되어야 합니다.
+  모든 쿼리 스트링 값은 URL에 인코딩되어야 합니다.
 </Note>
 
 다음은 이메일 쿼리 매개변수를 사용한 경우와 사용하지 않은 경우의 ID 확인 예시입니다.
-  <img
-    src="/images/ko_email_queryparameter.png"
-    alt="dashboard"/>
+
+![dashboard](/images/ko_email_queryparameter.png)
 
 ### 2-2. 고유 유저 ID 및 커스텀 필드
+
 - API 호출 시 KYC 제출자 식별을 위한 고유 유저 ID를 생성할 수 있습니다.
 - 최대 3개의 커스텀 필드(cf1, cf2, cf3)를 추가하여 추가 정보를 전송할 수 있습니다.
 
-
 ## 3. Token ID 옵션
+
 tokenId는 Private Mode에서 Liveform 제출 시 사용되는  String 데이터입니다.
 
 목적 : 동일한 URL의 공유 및 중복 사용 방지
 
 ### 3-1. Token 검증 방식
+
 다음 조건 중 하나라도 해당되면 검증 실패(에러) 발생:
 시간 만료: 최초 사용으로부터 3분 경과
 유효한 제출 건 존재: KYC Status가 결정된 제출건 존재 (approved, rejected, pending)
+
 <Warning>
-주의
--  위 조건에 해당하지 않으면 여러 사용자가 동시에 동일한 Token ID로 KYC를 진행할 수 있습니다.
+  주의
+
+  - 위 조건에 해당하지 않으면 여러 사용자가 동시에 동일한 Token ID로 KYC를 진행할 수 있습니다.
 </Warning>
 
 ### 3-2. Token ID 확인 방법
+
 - Webhook
 - GET Submission API (submission_id를 이용한 단건 조회)
 - 대시보드의 Submission CSV 다운로드
 
 ### 3-3. Token ID 사용 URL 구조
+
 - 기본 폼 URL: `https://form.argosidentity.com/?pid={project_Id}`
 - Token ID 포함 URL: `https://form.argosidentity.com/?pid={project_Id}&token={tokenId}`
 

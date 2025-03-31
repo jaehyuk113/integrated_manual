@@ -369,6 +369,7 @@ For enhanced security, the request body can be encrypted. When using encryption:
   "end_date": "2025-03-01"
 }
 ```
+
 Available options are below.
 
 ```json encrypt-available-params.json
@@ -386,7 +387,7 @@ Encrypt value with [AES-256-ECB](https://developers.argosidentity.com/getting-st
 N34SNtWaavEfgtg1g%2Bo%2B9JhQ9rp9dGUbyFNxAsHKKGH24aVQTRXYfNpFDHIGJU6Wo0RVpOupAubiDvFDuFyTkw%3D%3D
 ```
 
-And request with a query string option after the endpoint.
+And request with a query string, the name of which is `data`, after the endpoint.
 
 ```bash
 curl -X GET "https://rest-api.argosidentity.com/v3/submission?data=N34SNtWaavEfgtg1g%2Bo%2B9JhQ9rp9dGUbyFNxAsHKKGH24aVQTRXYfNpFDHIGJU6Wo0RVpOupAubiDvFDuFyTkw%3D%3D" \

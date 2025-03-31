@@ -1,11 +1,12 @@
 ---
-mode: 'default'
-title: Approved (승인)
-description: 이 이벤트는 KYC(Know Your Customer) 제출이 승인될 때 트리거됩니다. 승인은 자동화된 시스템 검증을 통과하거나 수동 검토 후 이루어질 수 있습니다. 이 이벤트는 KYC 프로세스가 성공적으로 완료되었음을 나타내며, 사용자 계정 활성화나 서비스 접근 권한 부여 등의 후속 조치를 시작할 수 있는 신호가 됩니다.
-
+mode: "default"
+title: "Approved (승인)"
+description: "이 이벤트는 KYC(Know Your Customer) 제출이 승인될 때 트리거됩니다. 승인은 자동화된 시스템 검증을 통과하거나 수동 검토 후 이루어질 수 있습니다. 이 이벤트는 KYC 프로세스가 성공적으로 완료되었음을 나타내며, 사용자 계정 활성화나 서비스 접근 권한 부여 등의 후속 조치를 시작할 수 있는 신호가 됩니다."
 ---
 
-```json approved-webhook-sample.json
+<CodeGroup>
+
+```json approved-webhook-id-document.json
 {
     "webhook_trigger": "approved",
     "kyc_result": {
@@ -45,71 +46,133 @@ description: 이 이벤트는 KYC(Know Your Customer) 제출이 승인될 때 �
         "blockType" : "string"
     },...]
   }
-
 ```
+
+
+```json approved-webhook-knowledge-based.json
+{
+  "submission_id": "string",
+  "email": "string",
+  "cf": {
+    "cf1": "string",
+    "cf2": "string",
+    "cf3": "string"
+  },
+  "applicant_id": "string",
+  "webhook_trigger": "approved",
+  "kyc_result": {
+    "status": "approved",
+    "updated_at": "string",
+    "created_at": "string",
+    "kyc_result_at": "string",
+    "reviewer": "string"
+  },
+  "age_group": "N/A",
+  "gender": "string",
+  "date_of_birth": "string",
+  "nationality": "string",
+  "duplicated_information": "string",
+  "fullName": "string",
+  "phoneNumber": "string",
+  "ssnNumber": "string",
+  "additional_list": [
+    {
+      "answer": "string",
+      "inputValue": "string",
+      "blockType": "string"
+    },...]
+}{
+  "submission_id": "string",
+  "email": "string",
+  "cf": {
+    "cf1": "string",
+    "cf2": "string",
+    "cf3": "string"
+  },
+  "applicant_id": "string",
+  "webhook_trigger": "approved",
+  "kyc_result": {
+    "status": "approved",
+    "updated_at": "string",
+    "created_at": "string",
+    "kyc_result_at": "string",
+    "reviewer": "string"
+  },
+  "age_group": "N/A",
+  "gender": "string",
+  "date_of_birth": "string",
+  "nationality": "string",
+  "duplicated_information": "string",
+  "fullName": "string",
+  "phoneNumber": "string",
+  "ssnNumber": "string",
+  "additional_list": [
+    {
+      "answer": "string",
+      "inputValue": "string",
+      "blockType": "string"
+    },...]
+}
+```
+
+</CodeGroup>
 
 <ResponseField name="webhook_trigger" type="string">
   웹훅 트리거 유형 - `approved`는 KYC가 자동 승인되거나 대기 상태에서 승인됨을 의미
 </ResponseField>
 
 <ResponseField name="kyc_result" type="object">
-KYC 제출 결과를 포함하는 객체
+  KYC 제출 결과를 포함하는 객체
+
   <Expandable title="properties">
     <ResponseField name="status" type="string">
       KYC 검토 결과. `approved` 또는 `rejected`
     </ResponseField>
-
     <ResponseField name="updated_at" type="string">
       KYC 상태가 최종 변경된 UTC 시간 (ISO 8601 형식)
     </ResponseField>
-
     <ResponseField name="created_at" type="string">
       KYC가 최초 제출된 UTC 시간 (ISO 8601 형식)
     </ResponseField>
-
     <ResponseField name="kyc_result_at" type="string">
       KYC 결과가 처음 결정된 UTC 시간. 승인/거부 시에만 제공 (ISO 8601 형식)
     </ResponseField>
-
     <ResponseField name="pending_at" type="string">
       KYC가 대기 상태로 제출된 UTC 시간 (ISO 8601 형식)
     </ResponseField>
-    
     <ResponseField name="reviewer" type="string">
-      	검토자 유형. `system`은 AI 시스템 검수, `agent`는 인간 검수
+      검토자 유형. `system`은 AI 시스템 검수, `agent`는 인간 검수
     </ResponseField>
   </Expandable>
 </ResponseField>
 
-
-<ResponseField name="applicant_id" type="string" >
+<ResponseField name="applicant_id" type="string">
   중복 제출을 확인하기 위해 부여되는 고유 식별 ID로, KYC 상태가 승인일 때만 전달 됩니다.
 </ResponseField>
 
-<ResponseField name="submission_id" type="string" >
+<ResponseField name="submission_id" type="string">
   KYC 제출 건별 고유 식별자
 </ResponseField>
 
-<ResponseField name="duplicated_information" type="string" >
-  이름, 생년월일, 성별, 국적을 기준으로 중복 확인용 식별자가 생성됩니다. (*네 가지 기준이 모두 제공되면 항상 생성됩니다.)
+<ResponseField name="duplicated_information" type="string">
+  이름, 생년월일, 성별, 국적을 기준으로 중복 확인용 식별자가 생성됩니다. (\*네 가지 기준이 모두 제공되면 항상 생성됩니다.)
 </ResponseField>
 
-<ResponseField name="email" type="string" >
+<ResponseField name="email" type="string">
   KYC 제출자 이메일 주소
 </ResponseField>
 
-<ResponseField name="tokenId" type="string" >
+<ResponseField name="tokenId" type="string">
   비공개 모드의 라이브 폼 제출 시 사용된 토큰 ID
 </ResponseField>
 
-
 <ResponseField name="cf" type="object">
-	사용자 정의 필드 (cf1, cf2, cf3) 데이터를 포함하는 객체
+  사용자 정의 필드 (cf1, cf2, cf3) 데이터를 포함하는 객체
+
   <Expandable title="properties">
     <ResponseField name="cf1" type="string">
       사용자 정의 필드 1의 값
     </ResponseField>
-
     <ResponseField name="cf2" type="string">
       사용자 정의 필드 2의 값
     </ResponseField>
@@ -119,87 +182,81 @@ KYC 제출 결과를 포함하는 객체
   </Expandable>
 </ResponseField>
 
-
-
-<ResponseField name="userid" type="string" >
+<ResponseField name="userid" type="string">
   고객사에서 정의한 KYC 제출자 고유 식별자
 </ResponseField>
 
-
-<ResponseField name="age_group" type="string" >
+<ResponseField name="age_group" type="string">
   제출자의 연령대 카테고리
-  `minor` : 13세 이하, 
-  `early-teen`: 14 ~ 15세, 
-  `teen`: 16 ~ 17세, 
-  `adult`: 18세 이상 
-
+  `minor` : 13세 이하,
+  `early-teen`: 14 ~ 15세,
+  `teen`: 16 ~ 17세,
+  `adult`: 18세 이상
 </ResponseField>
 
-
-<ResponseField name="gender" type="string" >
-  	제출자의 성별 (`male` 또는 `female`)
+<ResponseField name="gender" type="string">
+  제출자의 성별 (`male` 또는 `female`)
 </ResponseField>
 
-
-<ResponseField name="date_of_birth" type="string" >
+<ResponseField name="date_of_birth" type="string">
   제출자의 생년월일 (YYYY-MM-DD 형식)
 </ResponseField>
 
-<ResponseField name="nationality" type="string" >
+<ResponseField name="nationality" type="string">
   제출자의 국적 (ISO 3166-1 alpha-3 국가 코드)
 </ResponseField>
 
-<ResponseField name="ipAddress" type="string" >
+<ResponseField name="ipAddress" type="string">
   제출자의 IP 주소
 </ResponseField>
 
-
-<ResponseField name="fullName" type="string" >
+<ResponseField name="fullName" type="string">
   제출자의 전체 이름
 </ResponseField>
 
-
-<ResponseField name="idType" type="string" >
+<ResponseField name="idType" type="string">
   제출된 신분증 유형
 </ResponseField>
 
-
-<ResponseField name="issuingCountry" type="string" >
+<ResponseField name="issuingCountry" type="string">
   신분증 발급 국가
 </ResponseField>
 
-
-<ResponseField name="issueDate" type="string" >
+<ResponseField name="issueDate" type="string">
   신분증 발급일 (YYYY-MM-DD 형식)
 </ResponseField>
 
-
-<ResponseField name="expireDate" type="string" >
+<ResponseField name="expireDate" type="string">
   신분증 만료일 (YYYY-MM-DD 형식)
 </ResponseField>
 
-<ResponseField name="identityNumber" type="string" >
+<ResponseField name="identityNumber" type="string">
   주민등록번호 또는 이에 준하는 식별 번호
 </ResponseField>
 
-<ResponseField name="documentNumber" type="string" >
+<ResponseField name="documentNumber" type="string">
   신분증 고유 번호 (예: 여권번호, 운전면허번호)
 </ResponseField>
 
 <ResponseField name="additional_list" type="array">
   대시보드 설정에서 Additional Information을 설정한 경우, 추가 양식 데이터 배열. 특정 조건에서만 포함됨
-  <ResponseField name="additional_list_obj" type="object">
-  <Expandable title="properties">
-    <ResponseField name="answer" type="string">
-      추가 양식의 질문 또는 필드명
-    </ResponseField>
 
-    <ResponseField name="inputValue" type="string">
-      추가 양식 필드에 대한 사용자 입력값
-    </ResponseField>
-    <ResponseField name="blockType" type="string">
-      추가 양식 필드의 데이터 유형
-    </ResponseField>
-  </Expandable>
+  <ResponseField name="additional_list_obj" type="object">
+    <Expandable title="properties">
+      <ResponseField name="answer" type="string">
+        추가 양식의 질문 또는 필드명
+      </ResponseField>
+      <ResponseField name="inputValue" type="string">
+        추가 양식 필드에 대한 사용자 입력값
+      </ResponseField>
+      <ResponseField name="blockType" type="string">
+        추가 양식 필드의 데이터 유형
+      </ResponseField>
+    </Expandable>
   </ResponseField>
+</ResponseField>
+
+<ResponseField name="ssnNumber" type="string">
+  소셜 시큐리티 넘버 (Social Security Number)\
+  \* lowerCamelCase 컨벤션 적용을 위해 ssn 뒤에 Number 를 추가로 기입하였습니다.
 </ResponseField>

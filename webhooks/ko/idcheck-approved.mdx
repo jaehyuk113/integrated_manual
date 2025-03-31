@@ -5,7 +5,8 @@ description: 이 이벤트는 KYC(Know Your Customer) 제출이 승인될 때 �
 
 ---
 
-```json approved-webhook-sample.json
+<CodeGroup>
+```json approved-webhook-id-document.json
 {
     "webhook_trigger": "approved",
     "kyc_result": {
@@ -45,8 +46,43 @@ description: 이 이벤트는 KYC(Know Your Customer) 제출이 승인될 때 �
         "blockType" : "string"
     },...]
   }
-
 ```
+```json approved-webhook-knowledge-based.json
+{
+  "submission_id": "string",
+  "email": "string",
+  "cf": {
+    "cf1": "string",
+    "cf2": "string",
+    "cf3": "string"
+  },
+  "applicant_id": "string",
+  "webhook_trigger": "approved",
+  "kyc_result": {
+    "status": "approved",
+    "updated_at": "string",
+    "created_at": "string",
+    "kyc_result_at": "string",
+    "reviewer": "string"
+  },
+  "age_group": "N/A",
+  "gender": "string",
+  "date_of_birth": "string",
+  "nationality": "string",
+  "duplicated_information": "string",
+  "fullName": "string",
+  "phoneNumber": "string",
+  "ssnNumber": "string",
+  "additional_list": [
+    {
+      "answer": "string",
+      "inputValue": "string",
+      "blockType": "string"
+    },...]
+}
+```
+</CodeGroup>
+
 
 <ResponseField name="webhook_trigger" type="string">
   웹훅 트리거 유형 - `approved`는 KYC가 자동 승인되거나 대기 상태에서 승인됨을 의미
@@ -202,4 +238,9 @@ KYC 제출 결과를 포함하는 객체
     </ResponseField>
   </Expandable>
   </ResponseField>
+</ResponseField>
+
+<ResponseField name="ssnNumber" type="string">
+  소셜 시큐리티 넘버 (Social Security Number)\
+  \* lowerCamelCase 컨벤션 적용을 위해 ssn 뒤에 Number 를 추가로 기입하였습니다.
 </ResponseField>

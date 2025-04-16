@@ -272,15 +272,31 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
         "currentstatus": "Red Flag"
       },
       "kyc": {
-        "result": "approved",
+        "result": "rejected",
         "faceSimilarityScore": 0,
         "retryMsg": [
           "The face doesn’t match. Please retry with another face image."
         ],
         "livenessScore": 99,
         "selfieImage": "{selfieImage URL}",
-        "retryCode": [
-          "face_compare_underscore"
+        "comment": [
+          "Multiple invalid KYC attempts"
+        ],
+        "commentCode": [
+          "Multiple invalid KYC attempts"
+        ],
+        "attempts": [
+          {
+            "attemptCnt": 1,
+            "liveness": {
+              "error": "...",
+              "error_code": "..."
+            },
+            "retryMsg": [],
+            "retryCode": [
+              "liveness_error"
+            ]
+          }
         ]
       }
     }

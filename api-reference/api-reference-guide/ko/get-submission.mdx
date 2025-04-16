@@ -246,163 +246,45 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
 
 ```json result-knowledge-based.json
 {
-    "Items": [
-        {
-            "data": {
-                "age_group": "N/A",
-                "name": "{name}",
-                "gender": "male",
-                "nationality": "KOR",
-                "date_of_birth": "YYYY-MM-DD",
-                "address_formatted": "{fomatted address}",
-                "address_detail": "{detail address}",
-                "ssnNumber": "{***-**-****}",
-                "phoneNumber": "{phone number}"
-            },
-            "email": "{email}",
-            "submission_id": "{submission_id}",
-            "duplicated_information" : "{duplicated_information}", 
-            "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
-            "updated_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
-            "reviewer": "{reviewer}",
-      "aml" : {
-	      "raw_data": {...},
-	      "matches": [...],
-	      "risk_level_summary": "HIGH",
+  "Items": [
+    {
+      "data": {
+        "age_group": "N/A",
+        "name": "{name}",
+        "gender": "male",
+        "nationality": "KOR",
+        "date_of_birth": "YYYY-MM-DD",
+        "address_formatted": "{fomatted address}",
+        "address_detail": "{detail address}",
+        "ssnNumber": "{***-**-****}",
+        "phoneNumber": "{phone number}"
+      },
+      "email": "{email}",
+      "submission_id": "{submission_id}",
+      "duplicated_information": "{duplicated_information}",
+      "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
+      "updated_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
+      "reviewer": "{reviewer}",
+      "aml": {
+        "raw_data": {...},
+        "matches": [...],
+        "risk_level_summary": "HIGH",
         "currentstatus": "Red Flag"
       },
-            "kyc": {
-                "result": "rejected",
-                "comment": [
-                    "Multiple invalid KYC attempts "
-                ],
-                "commentCode": [
-                    "too_many_retry"
-                ],
-                "attempts": [
-                    {
-                        "attemptCnt": 1,
-                        "step1Time1st": "YYYY-MM-DD-HH-MM-SS-ZZZ",
-                        "ocrResult": "success",
-                        "verificationResult": "success",
-                        "verification": {
-                            "result": {
-                                "code": "CF-00000",
-                                "message": "성공",
-                                "transactionId": "{transactionId}",
-                                "extraMessage": ""
-                            },
-                            "data": {
-                                "resUserIdentiyNo": "*************",
-                                "resAuthenticity": "1",
-                                "resAuthenticityDesc": "입력하신 내용은 등록된 내용과 일치합니다.",
-                                "resUserNm": "{resUserNm}"
-                            }
-                        },
-                        "verificationParams": {
-                            "fullName": "{fullName}",
-                            "idType": "government_id",
-                            "issueDate": "{YYYY-MM-DD}",
-                            "identityNumber": "******-*******"
-                        },
-                        "step2Time1st": "YYYY-MM-DD-HH-MM-SS-ZZZ",
-                        "liveness": {
-                            "score": 8.097455,
-                            "probability": 0.9996958,
-                            "quality": 0.7537264
-                        },
-                        "faceSimilarityScore": 0,
-                        "retryMsg": [
-                            "The face doesn’t match. Please retry with another face image."
-                        ],
-                        "livenessScore": 99,
-                        "selfieImage": "{selfieImage URL}",
-                        "retryCode": [
-                            "face_compare_underscore"
-                        ]
-                    },
-                    {
-                        "attemptCnt": 2,
-                        "verificationResult": "success",
-                        "verification": {
-                            "result": {
-                                "code": "CF-00000",
-                                "message": "성공",
-                                "transactionId": "{transactionId}",
-                                "extraMessage": ""
-                            },
-                            "data": {
-                                "resUserIdentiyNo": "*************",
-                                "resAuthenticity": "1",
-                                "resAuthenticityDesc": "입력하신 내용은 등록된 내용과 일치합니다.",
-                                "resUserNm": "{resUserNm}"
-                            }
-                        },
-                        "verificationParams": {
-                            "fullName": "{fullName}",
-                            "idType": "government_id",
-                            "issueDate": "{YYYY-MM-DD}",
-                            "identityNumber": "******-*******"
-                        },
-                        "step2Time2nd": "YYYY-MM-DD-HH-MM-SS-ZZZ",
-                        "liveness": {
-                            "score": 8.097455,
-                            "probability": 0.9996958,
-                            "quality": 0.7537264
-                        },
-                        "faceSimilarityScore": 0,
-                        "retryMsg": [
-                            "The face doesn’t match. Please retry with another face image."
-                        ],
-                        "livenessScore": 99,
-                        "selfieImage": "{selfieImage URL}",
-                        "retryCode": [
-                            "face_compare_underscore"
-                        ]
-                    },
-                    {
-                        "attemptCnt": 3,
-                        "verificationResult": "success",
-                        "verification": {
-                            "result": {
-                                "code": "CF-00000",
-                                "message": "성공",
-                                "transactionId": "{selfieImage URL}",
-                                "extraMessage": ""
-                            },
-                            "data": {
-                                "resUserIdentiyNo": "*************",
-                                "resAuthenticity": "1",
-                                "resAuthenticityDesc": "입력하신 내용은 등록된 내용과 일치합니다.",
-                                "resUserNm": "{resUserNm}"
-                            }
-                        },
-                        "verificationParams": {
-                            "fullName": "{fullName}",
-                            "idType": "government_id",
-                            "issueDate": "{YYYY-MM-DD}",
-                            "identityNumber": "981112-1******"
-                        },
-                        "step2Time3rd": "YYYY-MM-DD-HH-MM-SS-ZZZ",
-                        "liveness": {
-                            "score": 8.097455,
-                            "probability": 0.9996958,
-                            "quality": 0.7537264
-                        },
-                        "faceSimilarityScore": 0,
-                        "retryMsg": [
-                            "The face doesn’t match. Please retry with another face image."
-                        ],
-                        "livenessScore": 99,
-                        "selfieImage": "{selfieImage URL}",
-                        "retryCode": [
-                            "face_compare_underscore"
-                        ]
-                    }
-                ]
-            }
-        }
-    ]
+      "kyc": {
+        "result": "approved",
+        "faceSimilarityScore": 0,
+        "retryMsg": [
+          "The face doesn’t match. Please retry with another face image."
+        ],
+        "livenessScore": 99,
+        "selfieImage": "{selfieImage URL}",
+        "retryCode": [
+          "face_compare_underscore"
+        ]
+      }
+    }
+  ]
 }
 ```
 
@@ -525,7 +407,6 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
 | `reviewer`                             | 검수 유형: `system`은 AI 시스템 검수, `agent`는 사람 검수를 나타냄                                                                          | Enum      | KYC 검수 정보          |
 | `submission_id`                        | 각 제출 건에 부여된 고유 식별자                                                                                                       | String    | 제출 정보              |
 | `duplicated_information`               | 이름, 생년월일, 성별, 국적을 기준으로 중복 확인용 식별자가 생성됩니다. (\*네 가지 기준이 모두 제공되면 항상 생성됩니다.)                                                 | String    | 제출 정보              |
-| `applicant_id`                         | 중복 제출된 사용자에 부여된 식별자                                                                                                      | String    | 제출 정보              |
 | `created_at`                           | 제출된 날짜와 시간 (UTC\+0)                                                                                                      | String    | 제출 정보              |
 | `kyc_result_at`                        | KYC 결과가 최종적으로 결정된 날짜와 시간                                                                                                 | String    | 제출 정보              |
 | `updated_at`                           | 마지막으로 제출 정보가 업데이트된 날짜와 시간                                                                                                | String    | 제출 정보              |
@@ -540,10 +421,6 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
 | `kyc.comment`                          | KYC 거절 사유 [거절 코드 및 사유](/api-reference/api-reference-guide/ko/reject-codes-and-comments)                                  | String    | KYC 결과 정보          |
 | `kyc.commentCode`                      | KYC 거절 사유를 나타내는 코드 [거절 코드 및 사유](/api-reference/api-reference-guide/ko/reject-codes-and-comments)                         | String    | KYC 결과 정보          |
 | `kyc.attempts[i].attemptCnt`           | 실패 후 재시도한 횟수                                                                                                             | Number    | KYC 시도 정보          |
-| `kyc.attempts[i].idBarcodeResult`      | 미국, 캐나다, 멕시코 신분증의 바코드 검증 결과                                                                                              | String    | KYC 시도 정보          |
-| `kyc.attempts[i].verificationResult`   | 신분증 진위 확인 결과 (`success`, `fail`)                                                                                         | Enum      | KYC 시도 정보          |
-| `kyc.attempts[i].verification`         | 신분증 진위 확인 결과의 상세 데이터                                                                                                     | Object    | KYC 시도 정보          |
-| `kyc.attempts[i].verificationParams`   | 신분증 진위 확인 실행 시 필요한 매개변수                                                                                                  | Object    | KYC 시도 정보          |
 | `kyc.attempts[i].errorCode`            | 얼굴 인식, 비교, 신분증 진위 확인 중 발생한 오류 코드                                                                                         | String    | KYC 시도 정보          |
 | `kyc.attempts[i].errorMsg`             | 얼굴 인식, 비교, 신분증 진위 확인 중 발생한 오류 메시지                                                                                        | String    | KYC 시도 정보          |
 | `kyc.attempts[i].step1Time1st`         | `step1` 첫 번째 호출 시간                                                                                                       | String    | KYC 시도 정보          |
@@ -574,10 +451,6 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
 | `nextpageKey`                          | 추가 페이지를 호출할 때 필요한 키                                                                                                      | Object    | 페이지 네비게이션 정보       |
 | `nextpageKey.id`                       | 마지막으로 조회된 제출 ID                                                                                                          | String    | 페이지 네비게이션 정보       |
 | `nextpageKey.created_at`               | 마지막으로 조회된 제출의 생성 시간                                                                                                      | String    | 페이지 네비게이션 정보       |
-| `id_LivenessScore`                     | ID 카드 생체 인증 점수 데이터를 포함하는 객체                                                                                              | Object    | 생체 인증 점수 정보        |
-| `id_LivenessScore.Screen_play`         | `Screen play` 파이프라인의 생체 인증 점수                                                                                            | Float     | 생체 인증 점수 정보        |
-| `id_LivenessScore.Paper_printed`       | `Paper printed` 파이프라인의 생체 인증 점수                                                                                          | Float     | 생체 인증 점수 정보        |
-| `id_LivenessScore.Replace_portraits`   | `Replace portraits` 파이프라인의 생체 인증 점수                                                                                      | Float     | 생체 인증 점수 정보        |
 | `tokenId`                              | Private mode에서 제출 시 사용된 Token ID                                                                                         | String    | 제출 정보              |
 
 ### 5-3. 오류 코드

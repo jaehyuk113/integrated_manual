@@ -15,28 +15,30 @@ The Query String options available in Liveform and API allow you to send additio
 
 ### 2-1. Key Query String Parameters
 
-| Parameter             | ID Document | Knowledge-Based | Description                                                                                                                                                                                                                                                          |
-| --------------------- | ----------- | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `blacklistCountries`  | Yes         | Yes             | Turns off blacklist country restrictions for the specific submission (`false` only).                                                                                                                                                                                 |
-| `approvePeriod`       | Yes         | No              | Turns off the approved duplicate submission prevention period (`false` only).                                                                                                                                                                                        |
-| `rejectPeriod`        | Yes         | No              | Turns off the rejected duplicate submission prevention period (`false` only).                                                                                                                                                                                        |
-| `ageLimit`            | Yes         | Yes             | Turns off age restriction for the specific submission (`false` only).                                                                                                                                                                                                |
-| `rejectDuplicateUser` | Yes         | Yes             | Enables/disables duplicate submission prevention (`true` or `false` accepted).  - In Knowledge-Based Submission, it works to contain Name, Gender, Birth Date, and Nationality information.                                                                          |
-| `email`               | Yes         | Yes             | User's email address.                                                                                                                                                                                                                                                |
-| `userid`              | Yes         | Yes             | Custom unique identifier for the user.                                                                                                                                                                                                                               |
-| `pid`                 | Yes         | Yes             | Unique identifier for each project.                                                                                                                                                                                                                                  |
-| `sid`                 | Yes         | Yes             | Unique identifier for each submission.                                                                                                                                                                                                                               |
-| `cf1`                 | Yes         | Yes             | Custom option field #1.                                                                                                                                                                                                                                              |
-| `cf2`                 | Yes         | Yes             | Custom option field #2.                                                                                                                                                                                                                                              |
-| `cf3`                 | Yes         | Yes             | Custom option field #3.                                                                                                                                                                                                                                              |
-| `allowedCountries`    | Yes         | Yes             | Must be encrypted.  `allowedCountries` can only be set using the encryption option and cannot be specified directly. e.g., If the encrypted value `{'allowedCountries': 'USA,KOR'}` is provided, only the United States (USA) and South Korea (KOR) will be allowed. |
-| `knowledgeField`      | No          | Yes             | Must be encrypted.  Set visible fields from the supported fields. Refer to the value below each parameter.                                                                                                                                                           |
-| `knowledgePrefill`    | No          | Yes             | Must be encrypted.  Fill out the value in advance. Refer to the value below each parameter.                                                                                                                                                                          |
+| Parameter               | ID Document | Knowledge-Based | Description                                                                                                                                                                                                                                                          |
+| ----------------------- | ----------- | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `blacklistCountries`    | Yes         | Yes             | Turns off blacklist country restrictions for the specific submission (`false` only).                                                                                                                                                                                 |
+| `approvePeriod`         | Yes         | No              | Turns off the approved duplicate submission prevention period (`false` only).                                                                                                                                                                                        |
+| `rejectPeriod`          | Yes         | No              | Turns off the rejected duplicate submission prevention period (`false` only).                                                                                                                                                                                        |
+| `ageLimit`              | Yes         | Yes             | Turns off age restriction for the specific submission (`false` only).                                                                                                                                                                                                |
+| `rejectDuplicateUser`   | Yes         | Yes             | Enables/disables duplicate submission prevention (`true` or `false` accepted).  - In Knowledge-Based Submission, it works to contain Name, Gender, Birth Date, and Nationality information.                                                                          |
+| `email`                 | Yes         | Yes             | User's email address.                                                                                                                                                                                                                                                |
+| `userid`                | Yes         | Yes             | Custom unique identifier for the user.                                                                                                                                                                                                                               |
+| `pid`                   | Yes         | Yes             | Unique identifier for each project.                                                                                                                                                                                                                                  |
+| `sid`                   | Yes         | Yes             | Unique identifier for each submission.                                                                                                                                                                                                                               |
+| `cf1`                   | Yes         | Yes             | Custom option field #1.                                                                                                                                                                                                                                              |
+| `cf2`                   | Yes         | Yes             | Custom option field #2.                                                                                                                                                                                                                                              |
+| `cf3`                   | Yes         | Yes             | Custom option field #3.                                                                                                                                                                                                                                              |
+| `allowedCountries`      | Yes         | Yes             | Must be encrypted.  `allowedCountries` can only be set using the encryption option and cannot be specified directly. e.g., If the encrypted value `{'allowedCountries': 'USA,KOR'}` is provided, only the United States (USA) and South Korea (KOR) will be allowed. |
+| `knowledgeField`        | No          | Yes             | Must be encrypted.  Set visible fields from the supported fields. Refer to the value below each parameter.                                                                                                                                                           |
+| `knowledgePrefill`      | No          | Yes             | Must be encrypted.  Fill out the value in advance. Refer to the value below each parameter.                                                                                                                                                                          |
+| `allowedIdTypes`        | Yes         | No              | Must be encrypted. Can set to show ID card type. Refer to the value below each parameter.                                                                                                                                                                            |
+| `allowedDocumentFields` | Yes         | No              | Must be encrypted. Can set to show available field. Refer to the value below each parameter.                                                                                                                                                                         |
 
-### 2-1-a. Knowledge-Based Parameter Values
+### 2-1-a. ID Types, Fields and Knowledge-Based Prefill Parameter Values
 
 <AccordionGroup>
-  <Accordion title="knowledgeField Parameter Values" icon="memo-pad">
+  <Accordion title="[Knowledge-Based] knowledgeField Parameter Values" icon="lightbulb">
     - `name`
     - `gender`
     - `birthDate`
@@ -46,10 +48,8 @@ The Query String options available in Liveform and API allow you to send additio
     - `phoneNumber`
 
       e.g. `{'knowledgeField': 'gender,nationality,name'}`
-
-      Every field name is case-sensitive.
   </Accordion>
-  <Accordion title="knowledgePrefill Parameter Values" icon="memo-pad">
+  <Accordion title="[Knowledge-Based] knowledgePrefill Parameter Values" icon="lightbulb">
     - `name` Input name
     - `birthDate` Require input YYYY-MM-DD
     - `gender` male or female
@@ -62,7 +62,46 @@ The Query String options available in Liveform and API allow you to send additio
 
       `address`is the keyword to put in the search field in Google Maps.
   </Accordion>
+  <Accordion title="[ID document] allowedIdTypes" icon="notebook">
+    - `passport`
+    - `government_id`
+    - `residence_permit`
+    - `vehicle_registration_certificate`
+    - `visa`
+    - `pancard`
+    - `aadhaar`
+    - `foreign_registrator`
+    - `drivers_license`
+    - `identification_card`
+    - `universal`
+
+      e.g. `{'allowedIdTypes': 'passport,government_id,drivers_license'}`
+  </Accordion>
+  <Accordion title="[ID document] allowedDocumentFields" icon="notebook">
+    - `gender`
+    - `nationality`
+    - `expiry_date`
+    - `number`
+    - `issue_date`
+    - `id_number`
+    - `ID_CARD_BACK`
+    - `serial_number`
+    - `name`
+    - `date_of_birth`
+    - `curp_number` Only available for Maxican ID card
+    - `version` Only available for New Zealand Driver's license
+    - `type_of_permit` Only available for Alien Registration Card in South Korea
+
+      e.g. `{'allowedDocumentFields': 'gender,name,date_of_birth,issue_date'}`
+  </Accordion>
 </AccordionGroup>
+
+Every field name is case-sensitive.\
+Every parameter value must not contain a space.
+
+❌ Non-compliant Example `{'knowledgeField': 'gender, nationality, name'}`
+
+In the example above, the query string exact option is`{'knowledgeField': 'gender,nationality,name'}`
 
 ### 2-1-b. Skip to Select Country in Knowledge-Based
 

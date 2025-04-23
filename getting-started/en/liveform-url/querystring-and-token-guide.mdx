@@ -62,7 +62,7 @@ The Query String options available in Liveform and API allow you to send additio
 
       `address`is the keyword to put in the search field in Google Maps.
   </Accordion>
-  <Accordion title="[ID document] allowedIdTypes" icon="notebook">
+  <Accordion title="[ID document] allowedIdTypes" icon="memo-pad">
     - `passport`
     - `drivers_license`
     - `government_id`
@@ -76,7 +76,7 @@ The Query String options available in Liveform and API allow you to send additio
 
       e.g. `{'allowedIdTypes': 'passport,government_id,drivers_license'}`
   </Accordion>
-  <Accordion title="[ID document] allowedDocumentFields" icon="notebook">
+  <Accordion title="[ID document] allowedDocumentFields" icon="memo-pad">
     - `gender`
     - `nationality`
     - `expiry_date`
@@ -99,7 +99,7 @@ Every parameter value must not contain a space.
 
 ❌ Non-compliant Example `{'knowledgeField': 'gender, nationality, name'}`
 
-In the example above, the query string exact option is`{'knowledgeField': 'gender,nationality,name'}`
+In the example above, the query string exact option does not contain a space after the comma, like`{'knowledgeField': 'gender,nationality,name'}`
 
 ### 2-1-b. Skip to Select Country in Knowledge-Based
 

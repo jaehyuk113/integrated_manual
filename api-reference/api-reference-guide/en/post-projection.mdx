@@ -104,12 +104,12 @@ curl --location 'https://test-api.argosidentity.com/v3/projection' \
 
 ### 5-3. Error Codes
 
-| Status Code | Error Message                              | Description                                   |
-| ----------- | ------------------------------------------ | --------------------------------------------- |
-| 400         | "Invalid request body: name, mode, fields" | 요청 본문에 필수 필드(name, mode, fields)가 누락된 경우      |
-| 400         | "Invalid mode: ${mode}"                    | 요청 본문의 mode가 유효하지 않은 경우. ( 현재는 ‘exclude’ 만 지원 |
-| 400         | Invalid fields detected: field1, field2    | 요청 본분의 fields내 요소가 유효하지 않은 경우                 |
-| 400         | "Invalid encrypted body"                   | 암호화 옵션이 활성화된 상태에서 잘못된 형식의 암호화된 요청이 전송된 경우     |
-| 400         | "Invalid JSON body"                        | 요청 본문이 유효한 JSON 형식이 아닌 경우                     |
-| 404         | "Projection not found"                     | 지정한 projectionId에 해당하는 프로젝션이 없을 때             |
-| 405         | "Method not allowed for /projections path" | GET, POST 이외의 HTTP 메서드(PUT, DELETE 등)로 요청한 경우 |
+| Status Code | Error Message                              | Description                                                                               |
+| ----------- | ------------------------------------------ | ----------------------------------------------------------------------------------------- |
+| 400         | "Invalid request body: name, mode, fields" | When required fields (name, mode, fields) are missing in the request body                 |
+| 400         | "Invalid mode: ${mode}"                    | When the mode in the request body is invalid. (Currently only `exclude` is supported)     |
+| 400         | Invalid fields detected: field1, field2    | When elements within the fields in the request body are invalid                           |
+| 400         | "Invalid encrypted body"                   | When an improperly formatted encrypted request is sent while encryption option is enabled |
+| 400         | "Invalid JSON body"                        | When the request body is not in valid JSON format                                         |
+| 404         | "Projection not found"                     | When there is no projection corresponding to the specified `projectionId`                 |
+| 405         | "Method not allowed for /projections path" | HTTP requests (PUT, DELETE, etc.) are not GET or POST.                                    |

@@ -87,7 +87,7 @@ Sensitive data sent via URL query strings is encrypted using the AES-256 encrypt
   <Step title="Add Encrypted Data to the URL as the 'encrypted' Query Parameter">
     <CodeGroup>
 
-    ```text example.txt
+    ```text example.url
     https://form.argosidentity.com/?pid={project_Id}&encrypted={encrypted_json_text}
     ```
 
@@ -242,6 +242,35 @@ Sensitive data sent via URL query strings is encrypted using the AES-256 encrypt
 Encrypt data for secure transmission in API methods (GET, POST, PATCH) and WEBHOOKs. API methods use the `AES-256-ECB` encryption method, while WEBHOOKs use `AES-256-CBC` encryption. Ensure that secure data transfer is enabled before using it to protect sensitive information.
 
 ![Secure Data Transfer](/images/api-reference/secure-data-transfer.png)
+
+If this option is enabled, the request body must be encrypted. Inquire about a body parameter that is encrypted data. It is necessary to encrypt AES-256-ECB and refer to the Key Features and instructions on how to encrypt.
+
+<CodeGroup>
+
+```json body
+body : encrypt({
+		email : 'string',
+		fullName : 'string',
+		issuingCountry : 'string',
+		birthDate: 'string'
+		...
+	})
+```
+
+</CodeGroup>
+
+Responses include encrypted data and the “isEncrypted” flag.
+
+<CodeGroup>
+
+```json response.json
+body : {
+    "data": "encrypted-string",
+    "isEncrypted": true
+}
+```
+
+</CodeGroup>
 
 ### 3-1. Key Features
 

@@ -1,5 +1,5 @@
 ---
-title: "POST/projection                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           "
+title: "POST/projection"
 description: "This API can set a policy to exclude a field item. There is a maximum of 10 projections."
 ---
 
@@ -107,7 +107,7 @@ curl --location 'https://test-api.argosidentity.com/v3/projection' \
 | Status Code | Error Message                              | Description                                                                               |
 | ----------- | ------------------------------------------ | ----------------------------------------------------------------------------------------- |
 | 400         | "Invalid request body: name, mode, fields" | When required fields (name, mode, fields) are missing in the request body                 |
-| 400         | "Invalid mode: ${mode}"                    | When the mode in the request body is invalid. (Currently only `exclude` is supported)     |
+| 400         | "Invalid mode: $mode"                      | When the mode in the request body is invalid. (Currently only `exclude` is supported)     |
 | 400         | Invalid fields detected: field1, field2    | When elements within the fields in the request body are invalid                           |
 | 400         | "Invalid encrypted body"                   | When an improperly formatted encrypted request is sent while encryption option is enabled |
 | 400         | "Invalid JSON body"                        | When the request body is not in valid JSON format                                         |

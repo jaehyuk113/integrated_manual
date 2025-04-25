@@ -246,61 +246,61 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
 
 ```json result-knowledge-based.json
 {
-  "Items": [
-    {
-      "data": {
-        "age_group": "N/A",
-        "name": "{name}",
-        "gender": "male",
-        "nationality": "KOR",
-        "date_of_birth": "YYYY-MM-DD",
-        "address_formatted": "{fomatted address}",
-        "address_detail": "{detail address}",
-        "ssnNumber": "{***-**-****}",
-        "phoneNumber": "{phone number}"
-      },
-      "email": "{email}",
-      "submission_id": "{submission_id}",
-      "duplicated_information": "{duplicated_information}",
-      "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
-      "updated_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
-      "reviewer": "{reviewer}",
-      "aml": {
-        "raw_data": {...},
-        "matches": [...],
-        "risk_level_summary": "HIGH",
-        "currentstatus": "Red Flag"
-      },
-      "kyc": {
-        "result": "rejected",
-        "faceSimilarityScore": 0,
-        "retryMsg": [
-          "The face doesn’t match. Please retry with another face image."
-        ],
-        "livenessScore": 99,
-        "selfieImage": "{selfieImage URL}",
-        "comment": [
-          "Multiple invalid KYC attempts"
-        ],
-        "commentCode": [
-          "Multiple invalid KYC attempts"
-        ],
-        "attempts": [
-          {
-            "attemptCnt": 1,
-            "liveness": {
-              "error": "...",
-              "error_code": "..."
+    "Items": [
+        {
+            "data": {
+                "age_group": "N/A",
+                "name": "{name}",
+                "gender": "male",
+                "nationality": "KOR",
+                "date_of_birth": "YYYY-MM-DD",
+                "address_formatted": "{fomatted address}",
+                "address_detail": "{detail address}",
+                "ssnNumber": "{***-**-****}",
+                "phoneNumber": "{phone number}"
             },
-            "retryMsg": [],
-            "retryCode": [
-              "liveness_error"
-            ]
-          }
-        ]
-      }
-    }
-  ]
+            "email": "{email}",
+            "submission_id": "{submission_id}",
+            "duplicated_information": "{duplicated_information}",
+            "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
+            "updated_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
+            "reviewer": "{reviewer}",
+            "aml": {
+                "raw_data": {...},
+                "matches": [...],
+                "risk_level_summary": "HIGH",
+                "currentstatus": "Red Flag"
+            },
+            "kyc": {
+                "result": "rejected",
+                "faceSimilarityScore": 0,
+                "retryMsg": [
+                    "The face doesn’t match. Please retry with another face image."
+                ],
+                "livenessScore": 99,
+                "selfieImage": "{selfieImage URL}",
+                "comment": [
+                    "Multiple invalid KYC attempts"
+                ],
+                "commentCode": [
+                    "Multiple invalid KYC attempts"
+                ],
+                "attempts": [
+                    {
+                        "attemptCnt": 1,
+                        "liveness": {
+                            "error": "...",
+                            "error_code": "..."
+                        },
+                        "retryMsg": [],
+                        "retryCode": [
+                            "liveness_error"
+                        ]
+                    }
+                ]
+            }
+        }
+    ]
 }
 ```
 

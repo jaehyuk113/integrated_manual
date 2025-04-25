@@ -1,17 +1,17 @@
 ---
-title: "POST/projection                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           "
+title: "GET/projection                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           "
 description: "This API allows you to retrieve ID Check submission data. You can fetch detailed information for a specific submission or filter and retrieve a list of multiple submissions."
 ---
 
 ## 1. Endpoint
 
-```text GET/Submission
-GET https://rest-api.argosidentity.com/v3/submission
+```text POST/projection
+POST https://rest-api.argosidentity.com/v3/projection
 ```
 
 ## 2. Authentication
 
-Include the API key in the x-api-key header:
+Include the API key in the `x-api-key` header:
 
 ```text x-api-key
 x-api-key: {yourAPIKey}
@@ -19,54 +19,66 @@ x-api-key: {yourAPIKey}
 
 ## 3. Request Body
 
-The request parameters should be sent as URL query parameters. Below are the parameter descriptions:
+The request body must be in JSON format. Below are the field descriptions:
 
-<ResponseField name="submission_id" type="string">
-  Unique ID of a specific submission.
+<ResponseField name="name" type="string" required>
+  Set a projection name. Underscores (\_), numbers, and lowercase characters are permitted.
 </ResponseField>
 
-<ResponseField name="userid" type="string">
-  Retrieve a list of submissions matching the user ID.
+<ResponseField name="mode" type="string" required>
+  Set the projection mode. Currently, there is only the `exclude` option.
 </ResponseField>
 
-<ResponseField name="email" type="string">
+<ResponseField name="fields" type="array" required>
   Retrieve a list of submissions matching the email address.
-</ResponseField>
 
-<ResponseField name="count" type="string">
-  Number of results to return (default: 50).
-</ResponseField>
+  e.g., `["nationality","identityNumber"]`
 
-<ResponseField name="nextpage_id" type="string">
-  ID for fetching the next page of results.
-</ResponseField>
+  - `name` The name that was submitted
+  - `gender`: male or female
+  - `nationality`: Country code, ISO alpha-3
+  - `date_of_birth`: The submitted date of birth
+  - `ip_address`: the address type of IPv4
+  - `idType`: The type of ID (e.g., driver’s license, passport)
+  - `idcard_issuingCountry`: Issuing country code, ISO alpha-3
+  - `idcard_issueDate`: Issue Date of ID (YYYY-MM-DD)
+  - `idcard_expireDate`: Expiry Date of ID (YYYY-MM-DD)
+  - `identityNumber`
+  - `documentNumber`
+  - `address_city`
+  - `address_country`
+  - `address_state`
+  - `address_street`
+  - `address_street2`
+  - `address_zipcode`
+  - `address_globalCode`: Global address code (e.g., 8Q98HXPG\+MP)
+  - `address_compoundCode`: Compound address code (e.g., HXPG\+MP, Seoul, South Korea)
+  - `address_formatted`: Formatted detail address
+  - `address_input`: Inputted address
+  - `address_detail`: Inputted detail address
+  - `cf1`: Custom field 1
+  - `cf2`: Custom field 2
+  - `cf3`: Custom field 3
 
-<ResponseField name="nextpage_date" type="string">
-  Date for fetching the next page of results.
-</ResponseField>
+  Knowledge-Based supported fields
 
-<ResponseField name="start_date" type="string">
-  Start date for filtering results (format: `YYYY-MM-DD`).
-</ResponseField>
-
-<ResponseField name="end_date" type="string">
-  End date for filtering results (format: `YYYY-MM-DD`).
-</ResponseField>
-
-<ResponseField name="request_type" type="string">
-  Use the `request_type` parameter to selectively retrieve specific types of data. Choose one of the following options:
-
-  - `kyc`: Returns KYC-related data and `submission_id`.
-  - `aml`: Returns AML-related data and `submission_id`.
-  - `data`: Returns personal information data and `submission_id`.
-  - `others`: Returns all data items excluding KYC, AML, and personal information.
+  - `age_group`
+  - `ssnNumber`: Social Security Number.\
+    \* For applying the lowerCamelCase convention to the written Number once more.
+  - `phoneNumber`
 </ResponseField>
 
 ## 4. Request Example
 
 ```curl POST/Submission
-curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id={submission_id}' \
+curl --location 'https://test-api.argosidentity.com/v3/projection' \
+--header 'Content-Type: application/json' \
 --header 'x-api-key: {yourAPIKey}'
+--data-raw '{
+	"name": "{name}",
+	"mode": "{mode}",
+	"fields": ["{field1}","{field2}"]
+}'
 ```
 
 ## 5. Response
@@ -77,464 +89,27 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
 
 ```json result-id-document.json
 {
-    "Items": [
-        {
-            "data": {
-                "name": "{name}",
-                "gender": "male",
-                "nationality": "KOR",
-                "date_of_birth": "YYYY-MM-DD",
-                "address_city": "{city}",
-                "address_country": "KOR",
-                "address_state": "{state}",
-                "address_street": "{street}",
-                "address_street2": "{street2}",
-                "address_zipcode": "{zipcode}",
-                "ip_address": "{ip_address}",
-                "idcard_issuingCountry": "KOR",
-                "idcard_issueDate": "YYYY-MM-DD",
-                "idType": "government_id",
-                "identityNumber": "{******-*******}"
-            },
-            "email": "{email}",
-            "submission_id": "{submission_id}",
-            "duplicated_information" : "{duplicated_information}", 
-            "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
-            "updated_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
-            "reviewer": "{reviewer}",
-      "aml" : {
-	      "raw_data": {...},
-	      "matches": [...],
-	      "risk_level_summary": "HIGH",
-        "currentstatus": "Red Flag"
-      },
-            "kyc": {
-                "result": "rejected",
-                "comment": [
-                    "Multiple invalid KYC attempts "
-                ],
-                "commentCode": [
-                    "too_many_retry"
-                ],
-                "attempts": [
-                    {
-                        "attemptCnt": 1,
-                        "step1Time1st": "YYYY-MM-DD-HH-MM-SS-ZZZ",
-                        "ocrResult": "success",
-                        "verificationResult": "success",
-                        "verification": {
-                            "result": {
-                                "code": "CF-00000",
-                                "message": "성공",
-                                "transactionId": "{transactionId}",
-                                "extraMessage": ""
-                            },
-                            "data": {
-                                "resUserIdentiyNo": "*************",
-                                "resAuthenticity": "1",
-                                "resAuthenticityDesc": "입력하신 내용은 등록된 내용과 일치합니다.",
-                                "resUserNm": "{resUserNm}"
-                            }
-                        },
-                        "verificationParams": {
-                            "fullName": "{fullName}",
-                            "idType": "government_id",
-                            "issueDate": "{YYYY-MM-DD}",
-                            "identityNumber": "******-*******"
-                        },
-                        "step2Time1st": "YYYY-MM-DD-HH-MM-SS-ZZZ",
-                        "liveness": {
-                            "score": 8.097455,
-                            "probability": 0.9996958,
-                            "quality": 0.7537264
-                        },
-                        "faceSimilarityScore": 0,
-                        "retryMsg": [
-                            "The face doesn’t match. Please retry with another face image."
-                        ],
-                        "livenessScore": 99,
-                        "selfieImage": "{selfieImage URL}",
-                        "retryCode": [
-                            "face_compare_underscore"
-                        ]
-                    },
-                    {
-                        "attemptCnt": 2,
-                        "verificationResult": "success",
-                        "verification": {
-                            "result": {
-                                "code": "CF-00000",
-                                "message": "성공",
-                                "transactionId": "{transactionId}",
-                                "extraMessage": ""
-                            },
-                            "data": {
-                                "resUserIdentiyNo": "*************",
-                                "resAuthenticity": "1",
-                                "resAuthenticityDesc": "입력하신 내용은 등록된 내용과 일치합니다.",
-                                "resUserNm": "{resUserNm}"
-                            }
-                        },
-                        "verificationParams": {
-                            "fullName": "{fullName}",
-                            "idType": "government_id",
-                            "issueDate": "{YYYY-MM-DD}",
-                            "identityNumber": "******-*******"
-                        },
-                        "step2Time2nd": "YYYY-MM-DD-HH-MM-SS-ZZZ",
-                        "liveness": {
-                            "score": 8.097455,
-                            "probability": 0.9996958,
-                            "quality": 0.7537264
-                        },
-                        "faceSimilarityScore": 0,
-                        "retryMsg": [
-                            "The face doesn’t match. Please retry with another face image."
-                        ],
-                        "livenessScore": 99,
-                        "selfieImage": "{selfieImage URL}",
-                        "retryCode": [
-                            "face_compare_underscore"
-                        ]
-                    },
-                    {
-                        "attemptCnt": 3,
-                        "verificationResult": "success",
-                        "verification": {
-                            "result": {
-                                "code": "CF-00000",
-                                "message": "성공",
-                                "transactionId": "{selfieImage URL}",
-                                "extraMessage": ""
-                            },
-                            "data": {
-                                "resUserIdentiyNo": "*************",
-                                "resAuthenticity": "1",
-                                "resAuthenticityDesc": "입력하신 내용은 등록된 내용과 일치합니다.",
-                                "resUserNm": "{resUserNm}"
-                            }
-                        },
-                        "verificationParams": {
-                            "fullName": "{fullName}",
-                            "idType": "government_id",
-                            "issueDate": "{YYYY-MM-DD}",
-                            "identityNumber": "981112-1******"
-                        },
-                        "step2Time3rd": "YYYY-MM-DD-HH-MM-SS-ZZZ",
-                        "liveness": {
-                            "score": 8.097455,
-                            "probability": 0.9996958,
-                            "quality": 0.7537264
-                        },
-                        "faceSimilarityScore": 0,
-                        "retryMsg": [
-                            "The face doesn’t match. Please retry with another face image."
-                        ],
-                        "livenessScore": 99,
-                        "selfieImage": "{selfieImage URL}",
-                        "retryCode": [
-                            "face_compare_underscore"
-                        ]
-                    }
-                ]
-            }
-        }
-    ]
-}
-```
-
-
-```json result-knowledge-based.json
-{
-  "Items": [
-    {
-      "data": {
-        "age_group": "N/A",
-        "name": "{name}",
-        "gender": "male",
-        "nationality": "KOR",
-        "date_of_birth": "YYYY-MM-DD",
-        "address_formatted": "{fomatted address}",
-        "address_detail": "{detail address}",
-        "ssnNumber": "{***-**-****}",
-        "phoneNumber": "{phone number}"
-      },
-      "email": "{email}",
-      "submission_id": "{submission_id}",
-      "duplicated_information": "{duplicated_information}",
-      "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
-      "updated_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
-      "reviewer": "{reviewer}",
-      "aml": {
-        "raw_data": {...},
-        "matches": [...],
-        "risk_level_summary": "HIGH",
-        "currentstatus": "Red Flag"
-      },
-      "kyc": {
-        "result": "rejected",
-        "faceSimilarityScore": 0,
-        "retryMsg": [
-          "The face doesn’t match. Please retry with another face image."
-        ],
-        "livenessScore": 99,
-        "selfieImage": "{selfieImage URL}",
-        "comment": [
-          "Multiple invalid KYC attempts"
-        ],
-        "commentCode": [
-          "Multiple invalid KYC attempts"
-        ],
-        "attempts": [
-          {
-            "attemptCnt": 1,
-            "liveness": {
-              "error": "...",
-              "error_code": "..."
-            },
-            "retryMsg": [],
-            "retryCode": [
-              "liveness_error"
-            ]
-          }
-        ]
-      }
-    }
-  ]
+    "message": "Create projection success",
+    "projection_id": "3zo1598m9mkrion"
 }
 ```
 
 </CodeGroup>
 
-### 5-2-a. Response Field (ID Document)
+### 5-2. Response Field
 
-| Field Name                             | Description                                                                                                                                                     | Data Type | Category               |
-| -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ---------------------- |
-| `data`                                 | KYC applicant data                                                                                                                                              | Object    | KYC Applicant Info     |
-| `data.name`                            | Name of the applicant                                                                                                                                           | String    | KYC Applicant Info     |
-| `data.gender`                          | Gender of the applicant (`male` or `female`)                                                                                                                    | Enum      | KYC Applicant Info     |
-| `data.nationality`                     | Country code in ISO alpha-3 format                                                                                                                              | String    | KYC Applicant Info     |
-| `data.date_of_birth`                   | Date of birth in `YYYY-MM-DD` format                                                                                                                            | Date      | KYC Applicant Info     |
-| `data.ip_address`                      | IPv4 format IP address                                                                                                                                          | String    | KYC Applicant Info     |
-| `data.idType`                          | Type of ID used                                                                                                                                                 | Enum      | KYC Applicant Info     |
-| `data.idcard_issuingCountry`           | ISO alpha-3 format code of the ID issuing country  [ISO Alpha-3 Country Codes](/api-reference/api-reference-guide/en/iso-alpha-3-country-codes)                 | String    | KYC Applicant Info     |
-| `data.idcard_issueDate`                | ID issuance date in `YYYY-MM-DD` format                                                                                                                         | String    | KYC Applicant Info     |
-| `data.idcard_expireDate`               | ID expiration date in `YYYY-MM-DD` format                                                                                                                       | String    | KYC Applicant Info     |
-| `data.identityNumber`                  | Identification number                                                                                                                                           | String    | KYC Applicant Info     |
-| `data.documentNumber`                  | Document number of the ID                                                                                                                                       | String    | KYC Applicant Info     |
-| `data.address_city`                    | City                                                                                                                                                            | String    | KYC Applicant Info     |
-| `data.address_country`                 | Country                                                                                                                                                         | String    | KYC Applicant Info     |
-| `data.address_state`                   | State                                                                                                                                                           | String    | KYC Applicant Info     |
-| `data.address_street`                  | Street                                                                                                                                                          | String    | KYC Applicant Info     |
-| `data.address_zipcode`                 | Zip code                                                                                                                                                        | String    | KYC Applicant Info     |
-| `data.address_globalCode`              | Global address code (e.g., 8Q98HXPG\+MP)                                                                                                                        | String    | KYC Applicant Info     |
-| `data.address_compoundCode`            | Compound address code (e.g., HXPG\+MP Seoul, South Korea)                                                                                                       | String    | KYC Applicant Info     |
-| `data.address_formatted`               | Converted detailed address                                                                                                                                      | String    | KYC Applicant Info     |
-| `data.address_input`                   | User-inputted address                                                                                                                                           | String    | KYC Applicant Info     |
-| `data.address_detail`                  | Detailed user-inputted address                                                                                                                                  | String    | KYC Applicant Info     |
-| `data.cf1`                             | Custom field 1 optionally added during submission                                                                                                               | String    | KYC Applicant Info     |
-| `data.cf2`                             | Custom field 2 optionally added during submission                                                                                                               | String    | KYC Applicant Info     |
-| `data.cf3`                             | Custom field 3 optionally added during submission                                                                                                               | String    | KYC Applicant Info     |
-| `email`                                | Email address associated with the submission                                                                                                                    | String    | KYC Applicant Info     |
-| `reviewer`                             | Reviewer Type `system` indicates AI system review, `agent` indicates human review                                                                               | Enum      | KYC Review Info        |
-| `submission_id`                        | Unique identifier assigned to each submission                                                                                                                   | String    | Submission Info        |
-| `duplicated_information`               | A unique ID is generated based on name, date of birth, gender, and nationality for duplicate checks. (\*Always generated when all four criteria are provided.)  | String    | Submission Info        |
-| `applicant_id`                         | Identifier for users with duplicate submissions                                                                                                                 | String    | Submission Info        |
-| `created_at`                           | Date and time of submission (UTC\+0)                                                                                                                            | String    | Submission Info        |
-| `kyc_result_at`                        | Date and time when the KYC result was finalized                                                                                                                 | String    | Submission Info        |
-| `updated_at`                           | Date and time when the submission was last updated                                                                                                              | String    | Submission Info        |
-| `pending_at`                           | Date and time when the KYC submission was marked pending                                                                                                        | String    | Submission Info        |
-| `userid`                               | Optional parameter added when creating a submission                                                                                                             | String    | Submission Info        |
-| `additional_list`                      | User-inputted data for additional forms configured in the dashboard                                                                                             | Array     | Additional Form Info   |
-| `additional_list.answer`               | Name of each additional form field                                                                                                                              | String    | Additional Form Info   |
-| `additional_list.inputValue`           | User-inputted value for each field                                                                                                                              | String    | Additional Form Info   |
-| `additional_list.blockType`            | Data type for each additional form field                                                                                                                        | String    | Additional Form Info   |
-| `kyc`                                  | Object containing KYC results [KYC Status](/api-reference/api-reference-guide/en/kyc-status)                                                                    | Object    | KYC Result Info        |
-| `kyc.result`                           | Status of the KYC process                                                                                                                                       | Enum      | KYC Result Info        |
-| `kyc.comment`                          | Reason for KYC rejection   [Reject Codes and Comments](/api-reference/api-reference-guide/en/reject-codes-and-comments)                                         | String    | KYC Result Info        |
-| `kyc.commentCode`                      | Code representing the reason for KYC rejection  [Reject Codes and Comments](/api-reference/api-reference-guide/en/reject-codes-and-comments)                    | String    | KYC Result Info        |
-| `kyc.attempts[i].attemptCnt`           | Number of retries after failed submissions                                                                                                                      | Number    | KYC Attempt Info       |
-| `kyc.attempts[i].idBarcodeResult`      | Barcode verification result for IDs from USA, CAN, and MEX                                                                                                      | String    | KYC Attempt Info       |
-| `kyc.attempts[i].verificationResult`   | Result of ID verification (`success`, `fail`)                                                                                                                   | Enum      | KYC Attempt Info       |
-| `kyc.attempts[i].verification`         | Detailed data of ID verification results                                                                                                                        | Object    | KYC Attempt Info       |
-| `kyc.attempts[i].verificationParams`   | Parameters required for the ID verification execution                                                                                                           | Object    | KYC Attempt Info       |
-| `kyc.attempts[i].errorCode`            | Error code generated during liveness, face detection, face comparison, or ID verification                                                                       | String    | KYC Attempt Info       |
-| `kyc.attempts[i].errorMsg`             | Error message generated during liveness, face detection, face comparison, or ID verification                                                                    | String    | KYC Attempt Info       |
-| `kyc.attempts[i].step1Time1st`         | Timestamp of the first call to `step1`                                                                                                                          | String    | KYC Attempt Info       |
-| `kyc.attempts[i].step1Time2nd`         | Timestamp of the second call to `step1`                                                                                                                         | String    | KYC Attempt Info       |
-| `kyc.attempts[i].step1Time3rd`         | Timestamp of the third call to `step1`                                                                                                                          | String    | KYC Attempt Info       |
-| `kyc.attempts[i].step2Time1st`         | Timestamp of the first call to `step2`                                                                                                                          | String    | KYC Attempt Info       |
-| `kyc.attempts[i].step2Time2nd`         | Timestamp of the second call to `step2`                                                                                                                         | String    | KYC Attempt Info       |
-| `kyc.attempts[i].step2Time3rd`         | Timestamp of the third call to `step2`                                                                                                                          | String    | KYC Attempt Info       |
-| `kyc.attempts[i].retryMsg`             | Failure reason messages generated during liveness, face detection, face comparison, or ID verification                                                          | String    | KYC Attempt Info       |
-| `kyc.attempts[i].retryCode`            | Failure reason codes generated during liveness, face detection, face comparison, or ID verification                                                             | String    | KYC Attempt Info       |
-| `kyc.attempts[i].faceSimilarityScore`  | Face comparison similarity score                                                                                                                                | Float     | KYC Attempt Info       |
-| `kyc.attempts[i].selfieImage`          | URL of the submitted selfie image                                                                                                                               | String    | KYC Attempt Info       |
-| `kyc.attempts[i].livenessScore`        | Liveness score for the attempt                                                                                                                                  | Float     | KYC Attempt Info       |
-| `kyc.attempts[i].liveness`             | Detailed liveness metrics including `score`, `probability`, and `quality`                                                                                       | Object    | KYC Attempt Info       |
-| `kyc.attempts[i].liveness.score`       | Overall liveness score                                                                                                                                          | Float     | KYC Attempt Info       |
-| `kyc.attempts[i].liveness.probability` | Probability value for liveness                                                                                                                                  | Float     | KYC Attempt Info       |
-| `kyc.attempts[i].liveness.quality`     | Quality score for liveness                                                                                                                                      | Float     | KYC Attempt Info       |
-| `aml`                                  | Object containing AML screening result data                                                                                                                     | Object    | AML Screening Info     |
-| `aml.raw_data`                         | Object containing raw AML screening results                                                                                                                     | Object    | AML Screening Info     |
-| `aml.risk_level_summary`               | Summary of the risk level (`Not Screened`, `High`, `Medium`, `Low`)[Risk Level](/api-reference/api-reference-guide/en/aml-codes#)                               | Enum      | AML Screening Info     |
-| `aml.currentstatus`                    | Current AML screening status (`Not Screened`, `Red Flag`)[AML Screening Status](/api-reference/api-reference-guide/en/aml-codes#aml)                            | Enum      | AML Screening Info     |
-| `aml.matches`                          | Detailed AML screening results (only available when `aml.currentstatus` is `Red Flag`)[AML Screening Info](/api-reference/api-reference-guide/en/aml-codes#aml) | Array     | AML Screening Info     |
-| `aml.matches[i].risk_level`            | Risk level of the Red Flag (`HIGH`, `MEDIUM`, `LOW`) [Risk Level](/api-reference/api-reference-guide/en/aml-codes#)                                             | Enum      | AML Screening Info     |
-| `aml.matches[i].argos_number`          | Unique ID for retrieving the AML report                                                                                                                         | String    | AML Screening Info     |
-| `aml.matches[i].resource_id`           | Unique resource ID for retrieving the AML report                                                                                                                | String    | AML Screening Info     |
-| `aml.matches[i].score`                 | AML screening match score                                                                                                                                       | Float     | AML Screening Info     |
-| `aml.matches[i].risk_icons`            | Risk icons for the AML screening                                                                                                                                | Array     | AML Screening Info     |
-| `nextpageKey`                          | Key object provided when additional pages of results are available                                                                                              | Object    | Pagination Info        |
-| `nextpageKey.id`                       | ID of the last submission retrieved, required for fetching the next page                                                                                        | String    | Pagination Info        |
-| `nextpageKey.created_at`               | Timestamp of the last submission retrieved, required for fetching the next page                                                                                 | String    | Pagination Info        |
-| `bank_verification`                    | Object containing bank account verification results (for Korean users)                                                                                          | Object    | Bank Verification Info |
-| `bank_verification.result`             | Bank verification result (`success`, `fail`)                                                                                                                    | Enum      | Bank Verification Info |
-| `bank_verification.type`               | Type of bank verification (`occupancy` (1 KRW verification), `nameCheck`)                                                                                       | Enum      | Bank Verification Info |
-| `bank_verification.bank_code`          | Bank code used for verification                                                                                                                                 | String    | Bank Verification Info |
-| `bank_verification.account_number`     | Account number used for verification                                                                                                                            | String    | Bank Verification Info |
-| `bank_verification.retry_count`        | Number of failures during code transmission (pre-step2)                                                                                                         | Number    | Bank Verification Info |
-| `id_LivenessScore`                     | Object containing ID Card Liveness Score data                                                                                                                   | Object    | Liveness Score Info    |
-| `id_LivenessScore.Screen_play`         | Liveness score for the `Screen play` pipeline                                                                                                                   | Float     | Liveness Score Info    |
-| `id_LivenessScore.Paper_printed`       | Liveness score for the `Paper printed` pipeline                                                                                                                 | Float     | Liveness Score Info    |
-| `id_LivenessScore.Replace_portraits`   | Liveness score for the `Replace portraits` pipeline                                                                                                             | Float     | Liveness Score Info    |
-| `Injection_action`                     | Object containing injection process execution history                                                                                                           | Object    | Injection Process Info |
-| `Injection_action.type`                | Type of the injection process                                                                                                                                   | String    | Injection Process Info |
-| `Injection_action.time`                | Most recent execution time of the specified injection process type                                                                                              | String    | Injection Process Info |
-| `tokenId`                              | Token ID used for live-form submissions in private mode                                                                                                         | String    | Submission Info        |
-
-### 5-2-b. Response Field (Knowledge-based)
-
-| Field Name                             | Description                                                                                                                                                     | Data Type | Category             |
-| -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | -------------------- |
-| `data`                                 | KYC applicant data                                                                                                                                              | Object    | KYC Applicant Info   |
-| `data.name`                            | Name of the applicant                                                                                                                                           | String    | KYC Applicant Info   |
-| `data.gender`                          | Gender of the applicant (`male` or `female`)                                                                                                                    | Enum      | KYC Applicant Info   |
-| `data.nationality`                     | Country code in ISO alpha-3 format                                                                                                                              | String    | KYC Applicant Info   |
-| `data.date_of_birth`                   | Date of birth in `YYYY-MM-DD` format                                                                                                                            | Date      | KYC Applicant Info   |
-| `data.address_formatted`               | Converted detailed address                                                                                                                                      | String    | KYC Applicant Info   |
-| `data.address_detail`                  | Detailed user-inputted address                                                                                                                                  | String    | KYC Applicant Info   |
-| `data.ssnNumber`                       | Social Security Number  \* for applying the lowerCamelCase convention to the written Number once more.                                                          | String    | KYC Applicant Info   |
-| `data.phoneNumber`                     | Phone Number                                                                                                                                                    | String    | KYC Applicant Info   |
-| `data.cf1`                             | Custom field 1 optionally added during submission                                                                                                               | String    | KYC Applicant Info   |
-| `data.cf2`                             | Custom field 2 optionally added during submission                                                                                                               | String    | KYC Applicant Info   |
-| `data.cf3`                             | Custom field 3 optionally added during submission                                                                                                               | String    | KYC Applicant Info   |
-| `email`                                | Email address associated with the submission                                                                                                                    | String    | KYC Applicant Info   |
-| `reviewer`                             | Reviewer Type `system` indicates AI system review, `agent` indicates human review                                                                               | Enum      | KYC Review Info      |
-| `submission_id`                        | Unique identifier assigned to each submission                                                                                                                   | String    | Submission Info      |
-| `duplicated_information`               | A unique ID is generated based on name, date of birth, gender, and nationality for duplicate checks. (\*Always generated when all four criteria are provided.)  | String    | Submission Info      |
-| `created_at`                           | Date and time of submission (UTC\+0)                                                                                                                            | String    | Submission Info      |
-| `kyc_result_at`                        | Date and time when the KYC result was finalized                                                                                                                 | String    | Submission Info      |
-| `updated_at`                           | Date and time when the submission was last updated                                                                                                              | String    | Submission Info      |
-| `pending_at`                           | Date and time when the KYC submission was marked pending                                                                                                        | String    | Submission Info      |
-| `userid`                               | Optional parameter added when creating a submission                                                                                                             | String    | Submission Info      |
-| `additional_list`                      | User-inputted data for additional forms configured in the dashboard                                                                                             | Array     | Additional Form Info |
-| `additional_list.answer`               | Name of each additional form field                                                                                                                              | String    | Additional Form Info |
-| `additional_list.inputValue`           | User-inputted value for each field                                                                                                                              | String    | Additional Form Info |
-| `additional_list.blockType`            | Data type for each additional form field                                                                                                                        | String    | Additional Form Info |
-| `kyc`                                  | Object containing KYC results [KYC Status](/api-reference/api-reference-guide/en/kyc-status)                                                                    | Object    | KYC Result Info      |
-| `kyc.result`                           | Status of the KYC process                                                                                                                                       | Enum      | KYC Result Info      |
-| `kyc.comment`                          | Reason for KYC rejection   [Reject Codes and Comments](/api-reference/api-reference-guide/en/reject-codes-and-comments)                                         | String    | KYC Result Info      |
-| `kyc.commentCode`                      | Code representing the reason for KYC rejection  [Reject Codes and Comments](/api-reference/api-reference-guide/en/reject-codes-and-comments)                    | String    | KYC Result Info      |
-| `kyc.attempts[i].attemptCnt`           | Number of retries after failed submissions                                                                                                                      | Number    | KYC Attempt Info     |
-| `kyc.attempts[i].errorCode`            | Error code generated during liveness, face detection, face comparison, or ID verification                                                                       | String    | KYC Attempt Info     |
-| `kyc.attempts[i].errorMsg`             | Error message generated during liveness, face detection, face comparison, or ID verification                                                                    | String    | KYC Attempt Info     |
-| `kyc.attempts[i].step1Time1st`         | Timestamp of the first call to `step1`                                                                                                                          | String    | KYC Attempt Info     |
-| `kyc.attempts[i].step1Time2nd`         | Timestamp of the second call to `step1`                                                                                                                         | String    | KYC Attempt Info     |
-| `kyc.attempts[i].step1Time3rd`         | Timestamp of the third call to `step1`                                                                                                                          | String    | KYC Attempt Info     |
-| `kyc.attempts[i].step2Time1st`         | Timestamp of the first call to `step2`                                                                                                                          | String    | KYC Attempt Info     |
-| `kyc.attempts[i].step2Time2nd`         | Timestamp of the second call to `step2`                                                                                                                         | String    | KYC Attempt Info     |
-| `kyc.attempts[i].step2Time3rd`         | Timestamp of the third call to `step2`                                                                                                                          | String    | KYC Attempt Info     |
-| `kyc.attempts[i].retryMsg`             | Failure reason messages generated during liveness, face detection, face comparison, or ID verification                                                          | String    | KYC Attempt Info     |
-| `kyc.attempts[i].retryCode`            | Failure reason codes generated during liveness, face detection, face comparison, or ID verification                                                             | String    | KYC Attempt Info     |
-| `kyc.attempts[i].faceSimilarityScore`  | Face comparison similarity score                                                                                                                                | Float     | KYC Attempt Info     |
-| `kyc.attempts[i].selfieImage`          | URL of the submitted selfie image                                                                                                                               | String    | KYC Attempt Info     |
-| `kyc.attempts[i].livenessScore`        | Liveness score for the attempt                                                                                                                                  | Float     | KYC Attempt Info     |
-| `kyc.attempts[i].liveness`             | Detailed liveness metrics including `score`, `probability`, and `quality`                                                                                       | Object    | KYC Attempt Info     |
-| `kyc.attempts[i].liveness.score`       | Overall liveness score                                                                                                                                          | Float     | KYC Attempt Info     |
-| `kyc.attempts[i].liveness.probability` | Probability value for liveness                                                                                                                                  | Float     | KYC Attempt Info     |
-| `kyc.attempts[i].liveness.quality`     | Quality score for liveness                                                                                                                                      | Float     | KYC Attempt Info     |
-| `aml`                                  | Object containing AML screening result data                                                                                                                     | Object    | AML Screening Info   |
-| `aml.raw_data`                         | Object containing raw AML screening results                                                                                                                     | Object    | AML Screening Info   |
-| `aml.risk_level_summary`               | Summary of the risk level (`Not Screened`, `High`, `Medium`, `Low`)[Risk Level](/api-reference/api-reference-guide/en/aml-codes#)                               | Enum      | AML Screening Info   |
-| `aml.currentstatus`                    | Current AML screening status (`Not Screened`, `Red Flag`)[AML Screening Status](/api-reference/api-reference-guide/en/aml-codes#aml)                            | Enum      | AML Screening Info   |
-| `aml.matches`                          | Detailed AML screening results (only available when `aml.currentstatus` is `Red Flag`)[AML Screening Info](/api-reference/api-reference-guide/en/aml-codes#aml) | Array     | AML Screening Info   |
-| `aml.matches[i].risk_level`            | Risk level of the Red Flag (`HIGH`, `MEDIUM`, `LOW`) [Risk Level](/api-reference/api-reference-guide/en/aml-codes#)                                             | Enum      | AML Screening Info   |
-| `aml.matches[i].argos_number`          | Unique ID for retrieving the AML report                                                                                                                         | String    | AML Screening Info   |
-| `aml.matches[i].resource_id`           | Unique resource ID for retrieving the AML report                                                                                                                | String    | AML Screening Info   |
-| `aml.matches[i].score`                 | AML screening match score                                                                                                                                       | Float     | AML Screening Info   |
-| `aml.matches[i].risk_icons`            | Risk icons for the AML screening                                                                                                                                | Array     | AML Screening Info   |
-| `nextpageKey`                          | Key object provided when additional pages of results are available                                                                                              | Object    | Pagination Info      |
-| `nextpageKey.id`                       | ID of the last submission retrieved, required for fetching the next page                                                                                        | String    | Pagination Info      |
-| `nextpageKey.created_at`               | Timestamp of the last submission retrieved, required for fetching the next page                                                                                 | String    | Pagination Info      |
-| `tokenId`                              | Token ID used for live-form submissions in private mode                                                                                                         | String    | Submission Info      |
+| Field Name      | Description                               | Data Type | Category        |
+| --------------- | ----------------------------------------- | --------- | --------------- |
+| `projection_id` | The unique ID of the generated projection | String    | Projection Info |
 
 ### 5-3. Error Codes
 
-| Error Code          | Message                          | Description                                                  |
-| ------------------- | -------------------------------- | ------------------------------------------------------------ |
-| `invalid_payload`   | Invalid payload                  | Unable to parse the request body.                            |
-| `missing_data`      | Required input data is missing   | One or more required fields are missing.                     |
-| `invalid_project`   | Invalid project                  | The provided project ID is not valid.                        |
-| `invalid_admin`     | Invalid admin                    | The admin account does not have permission for this project. |
-| `invalid_parameter` | Invalid parameter: `{parameter}` | An unexpected parameter was submitted.                       |
-| `invalid_format`    | Invalid format: `${parameter}`   | A parameter does not match the expected format.              |
-| `processing_error`  | Failed to complete migration     | An unknown error occurred during processing.                 |
-
-## 6. Encryption Options
-
-<Note>
-  Pre-requisite: You must enable the secure encryption option. Before applying encryption, please review the [guide](/getting-started/en/encrypt-and-decrpyt-data/overview#3-secure-data-transmission-options) first.
-</Note>
-
-For enhanced security, the request body can be encrypted. When using encryption:
-
-- Encrypt the entire request body object.
-- Send the encrypted string as the `body` parameter.
-
-### 6-1. Encrypted Request Example
-
-```json
-{
-  "start_date": "2025-01-01",
-  "end_date": "2025-03-01"
-}
-```
-
-Available options are below.
-
-```json encrypt-available-params.json
-body : encrypt({
-		email : 'string',
-		start_date : 'string',
-		end_date : 'string',
-		submission_id: 'string'
-	})
-```
-
-Encrypt value with [AES-256-ECB](https://developers.argosidentity.com/getting-started/en/encrypt-and-decrypt-data/overview#3-2-api-request-data-encryption-aes-256-ecb) and encoded URI.
-
-```
-N34SNtWaavEfgtg1g%2Bo%2B9JhQ9rp9dGUbyFNxAsHKKGH24aVQTRXYfNpFDHIGJU6Wo0RVpOupAubiDvFDuFyTkw%3D%3D
-```
-
-And request with a query string, the name of which is `data`, after the endpoint.
-
-```bash
-curl -X GET "https://rest-api.argosidentity.com/v3/submission?data=N34SNtWaavEfgtg1g%2Bo%2B9JhQ9rp9dGUbyFNxAsHKKGH24aVQTRXYfNpFDHIGJU6Wo0RVpOupAubiDvFDuFyTkw%3D%3D" \
---header 'Content-Type: application/json' \
---header 'x-api-key: change_your_api_key'
-```
-
-### 6-2. Encrypted Response
-
-The response will include the `isEncrypted` flag and encrypted data:
-
-```json encrypted-response.json
-response : {
-   body : {
-    "data": "encrypted-string",
-    "isEncrypted": true
-   }
-}
-```
+| Status Code | Error Message                              | Description                                                                               |
+| ----------- | ------------------------------------------ | ----------------------------------------------------------------------------------------- |
+| 400         | "Invalid request body: name, mode, fields" | When required fields (name, mode, fields) are missing in the request body                 |
+| 400         | "Invalid mode: $mode"                      | When the mode in the request body is invalid. (Currently only `exclude` is supported)     |
+| 400         | Invalid fields detected: field1, field2    | When elements within the fields in the request body are invalid                           |
+| 400         | "Invalid encrypted body"                   | When an improperly formatted encrypted request is sent while encryption option is enabled |
+| 400         | "Invalid JSON body"                        | When the request body is not in valid JSON format                                         |
+| 404         | "Projection not found"                     | When there is no projection corresponding to the specified `projectionId`                 |
+| 405         | "Method not allowed for /projections path" | HTTP requests (PUT, DELETE, etc.) are not GET or POST.                                    |

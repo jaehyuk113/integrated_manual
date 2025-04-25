@@ -1,5 +1,5 @@
 ---
-title: "POST/projection                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           "
+title: "POST/Projection                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           "
 description: "This API can set a policy to exclude a field item. There is a maximum of 10 projections."
 ---
 
@@ -30,7 +30,7 @@ The request body must be in JSON format. Below are the field descriptions:
 </ResponseField>
 
 <ResponseField name="fields" type="array" required>
-  Retrieve a list of submissions matching the email address.
+  Set the list to exclude specific fields.
 
   e.g., `["nationality","identityNumber"]`
 
@@ -70,7 +70,7 @@ The request body must be in JSON format. Below are the field descriptions:
 
 ## 4. Request Example
 
-```curl POST/Submission
+```curl POST/Projection
 curl --location 'https://test-api.argosidentity.com/v3/projection' \
 --header 'Content-Type: application/json' \
 --header 'x-api-key: {yourAPIKey}'
@@ -87,7 +87,7 @@ curl --location 'https://test-api.argosidentity.com/v3/projection' \
 
 <CodeGroup>
 
-```json result-id-document.json
+```json result-post-projection.json
 {
     "message": "Create projection success",
     "projection_id": "3zo1598m9mkrion"

@@ -1,6 +1,6 @@
 ---
-title: "GET/projection                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           "
-description: "This API allows you to retrieve ID Check submission data. You can fetch detailed information for a specific submission or filter and retrieve a list of multiple submissions."
+title: "GET/Projection                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           "
+description: "This API gets all projection policies set for the project that are accessible."
 ---
 
 ## 1. Endpoint
@@ -19,66 +19,13 @@ x-api-key: {yourAPIKey}
 
 ## 3. Request Body
 
-The request body must be in JSON format. Below are the field descriptions:
-
-<ResponseField name="name" type="string" required>
-  Set a projection name. Underscores (\_), numbers, and lowercase characters are permitted.
-</ResponseField>
-
-<ResponseField name="mode" type="string" required>
-  Set the projection mode. Currently, there is only the `exclude` option.
-</ResponseField>
-
-<ResponseField name="fields" type="array" required>
-  Retrieve a list of submissions matching the email address.
-
-  e.g., `["nationality","identityNumber"]`
-
-  - `name` The name that was submitted
-  - `gender`: male or female
-  - `nationality`: Country code, ISO alpha-3
-  - `date_of_birth`: The submitted date of birth
-  - `ip_address`: the address type of IPv4
-  - `idType`: The type of ID (e.g., driver’s license, passport)
-  - `idcard_issuingCountry`: Issuing country code, ISO alpha-3
-  - `idcard_issueDate`: Issue Date of ID (YYYY-MM-DD)
-  - `idcard_expireDate`: Expiry Date of ID (YYYY-MM-DD)
-  - `identityNumber`
-  - `documentNumber`
-  - `address_city`
-  - `address_country`
-  - `address_state`
-  - `address_street`
-  - `address_street2`
-  - `address_zipcode`
-  - `address_globalCode`: Global address code (e.g., 8Q98HXPG\+MP)
-  - `address_compoundCode`: Compound address code (e.g., HXPG\+MP, Seoul, South Korea)
-  - `address_formatted`: Formatted detail address
-  - `address_input`: Inputted address
-  - `address_detail`: Inputted detail address
-  - `cf1`: Custom field 1
-  - `cf2`: Custom field 2
-  - `cf3`: Custom field 3
-
-  Knowledge-Based supported fields
-
-  - `age_group`
-  - `ssnNumber`: Social Security Number.\
-    \* For applying the lowerCamelCase convention to the written Number once more.
-  - `phoneNumber`
-</ResponseField>
+There is no requirement for the request body.
 
 ## 4. Request Example
 
-```curl POST/Submission
+```curl GET/projection
 curl --location 'https://test-api.argosidentity.com/v3/projection' \
---header 'Content-Type: application/json' \
 --header 'x-api-key: {yourAPIKey}'
---data-raw '{
-	"name": "{name}",
-	"mode": "{mode}",
-	"fields": ["{field1}","{field2}"]
-}'
 ```
 
 ## 5. Response
@@ -87,10 +34,25 @@ curl --location 'https://test-api.argosidentity.com/v3/projection' \
 
 <CodeGroup>
 
-```json result-id-document.json
+```json get-projection.json
 {
-    "message": "Create projection success",
-    "projection_id": "3zo1598m9mkrion"
+  "items": [
+    {
+      "projection_id": "{projection_id}",
+      "name": "{name}",
+      "mode": "{mode}",
+      "fields": ["gender", "nationality"],
+      "created_at": "2023-12-01T12:34:56.789Z"
+    },
+    {
+      "projection_id": "{projection_id}",
+      "name": "{name}",
+      "mode": "{mode}",
+      "fields": ["gender", "nationality"],
+      "created_at": "2023-12-01T12:34:56.789Z"
+    },
+  ],
+  "message": "Get projection list success"
 }
 ```
 
@@ -98,18 +60,18 @@ curl --location 'https://test-api.argosidentity.com/v3/projection' \
 
 ### 5-2. Response Field
 
-| Field Name      | Description                               | Data Type | Category        |
-| --------------- | ----------------------------------------- | --------- | --------------- |
-| `projection_id` | The unique ID of the generated projection | String    | Projection Info |
+| Field Name      | Description                                                         | Data Type       | Category        |
+| --------------- | ------------------------------------------------------------------- | --------------- | --------------- |
+| `projection_id` | The unique ID of the generated projection                           | String          | Projection Info |
+| `name`          | The projection name                                                 | String          | Projection Info |
+| `mode`          | The projection mode. Currently, there is only the `exclude` option. | String          | Projection Info |
+| `fields`        | The list to exclude specific fields.                                | Array\<String\> | Projection Info |
+| `created_at`    | Created Time (Type of ISO 8601)                                     | String          | Projection Info |
 
 ### 5-3. Error Codes
 
-| Status Code | Error Message                              | Description                                                                               |
-| ----------- | ------------------------------------------ | ----------------------------------------------------------------------------------------- |
-| 400         | "Invalid request body: name, mode, fields" | When required fields (name, mode, fields) are missing in the request body                 |
-| 400         | "Invalid mode: $mode"                      | When the mode in the request body is invalid. (Currently only `exclude` is supported)     |
-| 400         | Invalid fields detected: field1, field2    | When elements within the fields in the request body are invalid                           |
-| 400         | "Invalid encrypted body"                   | When an improperly formatted encrypted request is sent while encryption option is enabled |
-| 400         | "Invalid JSON body"                        | When the request body is not in valid JSON format                                         |
-| 404         | "Projection not found"                     | When there is no projection corresponding to the specified `projectionId`                 |
-| 405         | "Method not allowed for /projections path" | HTTP requests (PUT, DELETE, etc.) are not GET or POST.                                    |
+| Status Code | Error Message                                             | Description                                                                           |
+| ----------- | --------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| 404         | "Projection not found"                                    | When required fields (name, mode, fields) are missing in the request body             |
+| 405         | "Method not allowed for /projections/{projectionId} path" | When the mode in the request body is invalid. (Currently only `exclude` is supported) |
+| 500         | "Internal server error"                                   | When the server encounters an unexpected exception error                              |

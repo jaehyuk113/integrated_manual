@@ -17,7 +17,7 @@ Include the API key in the x-api-key header:
 x-api-key: {yourAPIKey}
 ```
 
-## 3. Request Body
+## 3. Request parameters
 
 The request parameters should be sent as URL query parameters. Below are the parameter descriptions:
 
@@ -103,15 +103,17 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
             "updated_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
             "reviewer": "{reviewer}",
             "aml": {
-                "raw_data": {...},
-                "matches": [...],
+                "raw_data": {...
+                },
+                "matches": [...
+                ],
                 "risk_level_summary": "HIGH",
                 "currentstatus": "Red Flag"
             },
             "kyc": {
                 "result": "rejected",
                 "comment": [
-                    "Multiple invalid KYC attempts "
+                    "Multiple invalid KYC attempts"
                 ],
                 "commentCode": [
                     "too_many_retry"
@@ -237,6 +239,10 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
                         ]
                     }
                 ]
+            },
+            "projection": {
+                "projectionId": "5y7f8asd9qm8u71",
+                "projectionName": "age_projection"
             }
         }
     ]
@@ -266,8 +272,10 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
             "updated_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
             "reviewer": "{reviewer}",
             "aml": {
-                "raw_data": {...},
-                "matches": [...],
+                "raw_data": {...
+                },
+                "matches": [...
+                ],
                 "risk_level_summary": "HIGH",
                 "currentstatus": "Red Flag"
             },
@@ -298,6 +306,10 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
                         ]
                     }
                 ]
+            },
+            "projection": {
+                "projectionId": "5y7f8asd9qm8u71",
+                "projectionName": "age_projection"
             }
         }
     ]
@@ -401,6 +413,9 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
 | `Injection_action`                     | Object containing injection process execution history                                                                                                           | Object    | Injection Process Info |
 | `Injection_action.type`                | Type of the injection process                                                                                                                                   | String    | Injection Process Info |
 | `Injection_action.time`                | Most recent execution time of the specified injection process type                                                                                              | String    | Injection Process Info |
+| `projection`                           | The object contains submission projection data                                                                                                                  | Object    | Projection Info        |
+| `projection.projectionId`              | The projection ID into applied submission                                                                                                                       | String    | Projection Info        |
+| `projection.projectionName`            | Applied submission projection ID                                                                                                                                | String    | Projection Info        |
 | `tokenId`                              | Token ID used for live-form submissions in private mode                                                                                                         | String    | Submission Info        |
 
 ### 5-2-b. Response Field (Knowledge-based)
@@ -467,6 +482,9 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
 | `nextpageKey`                          | Key object provided when additional pages of results are available                                                                                              | Object    | Pagination Info      |
 | `nextpageKey.id`                       | ID of the last submission retrieved, required for fetching the next page                                                                                        | String    | Pagination Info      |
 | `nextpageKey.created_at`               | Timestamp of the last submission retrieved, required for fetching the next page                                                                                 | String    | Pagination Info      |
+| `projection`                           | The object contains submission projection data                                                                                                                  | Object    | Projection Info      |
+| `projection.projectionId`              | The projection ID into applied submission                                                                                                                       | String    | Projection Info      |
+| `projection.projectionName`            | Applied submission projection ID                                                                                                                                | String    | Projection Info      |
 | `tokenId`                              | Token ID used for live-form submissions in private mode                                                                                                         | String    | Submission Info      |
 
 ### 5-3. Error Codes

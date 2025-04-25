@@ -17,9 +17,9 @@ x-api-key 헤더에 API 키를 포함시켜야 합니다:
 x-api-key: {yourAPIKey}
 ```
 
-## 3. 요청 본문
+## 3. 요청 파라미터
 
-요청 본문은 URL query 파라미터 형식이어야 합니다. 각 파라미터에 대한 설명은 다음과 같습니다.
+요청 파라미터는 URL query 형식이어야 합니다. 각 파라미터에 대한 설명은 다음과 같습니다.
 
 <ResponseField name="submission_id" type="string">
   특정 제출 건의 고유 ID
@@ -103,15 +103,17 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
             "updated_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
             "reviewer": "{reviewer}",
             "aml": {
-                "raw_data": {...},
-                "matches": [...],
+                "raw_data": {...
+                },
+                "matches": [...
+                ],
                 "risk_level_summary": "HIGH",
                 "currentstatus": "Red Flag"
             },
             "kyc": {
                 "result": "rejected",
                 "comment": [
-                    "Multiple invalid KYC attempts "
+                    "Multiple invalid KYC attempts"
                 ],
                 "commentCode": [
                     "too_many_retry"
@@ -237,6 +239,10 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
                         ]
                     }
                 ]
+            },
+            "projection": {
+                "projectionId": "5y7f8asd9qm8u71",
+                "projectionName": "age_projection"
             }
         }
     ]
@@ -266,8 +272,10 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
             "updated_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
             "reviewer": "{reviewer}",
             "aml": {
-                "raw_data": {...},
-                "matches": [...],
+                "raw_data": {...
+                },
+                "matches": [...
+                ],
                 "risk_level_summary": "HIGH",
                 "currentstatus": "Red Flag"
             },
@@ -298,6 +306,10 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
                         ]
                     }
                 ]
+            },
+            "projection": {
+                "projectionId": "5y7f8asd9qm8u71",
+                "projectionName": "age_projection"
             }
         }
     ]
@@ -401,6 +413,9 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
 | `Injection_action`                     | Injection 프로세스 실행 내역을 포함하는 객체                                                                                            | Object | Injection 프로세스 정보 |
 | `Injection_action.type`                | Injection 프로세스 유형                                                                                                        | String | Injection 프로세스 정보 |
 | `Injection_action.time`                | Injection 프로세스 유형별 최근 실행 시간                                                                                              | String | Injection 프로세스 정보 |
+| `projection`                           | 해당 서브미션에 적용된 Projection 정보를 포함하는 객체                                                                                      | Object | Projection Info   |
+| `projection.projectionId`              | 해당 제출건에 적용된 Projection의 ID                                                                                               | String | Projection Info   |
+| `projection.projectionName`            | 해당 제출건에 적용된 Projection의 이름                                                                                               | String | Projection Info   |
 | `tokenId`                              | Private mode에서 제출 시 사용된 Token ID                                                                                         | String | 제출 정보             |
 
 ### 5-2-b. 응답 데이터 (Knowledge-based)
@@ -467,6 +482,9 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
 | `nextpageKey`                          | 추가 페이지를 호출할 때 필요한 키                                                                                                      | Object    | 페이지 네비게이션 정보       |
 | `nextpageKey.id`                       | 마지막으로 조회된 제출 ID                                                                                                          | String    | 페이지 네비게이션 정보       |
 | `nextpageKey.created_at`               | 마지막으로 조회된 제출의 생성 시간                                                                                                      | String    | 페이지 네비게이션 정보       |
+| `projection`                           | 해당 서브미션에 적용된 Projection 정보를 포함하는 객체                                                                                      | Object    | Projection Info    |
+| `projection.projectionId`              | 해당 제출건에 적용된 Projection의 ID                                                                                               | String    | Projection Info    |
+| `projection.projectionName`            | 해당 제출건에 적용된 Projection의 이름                                                                                               | String    | Projection Info    |
 | `tokenId`                              | Private mode에서 제출 시 사용된 Token ID                                                                                         | String    | 제출 정보              |
 
 ### 5-3. 오류 코드

@@ -1,12 +1,12 @@
 ---
-title: "POST/Projection                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           "
-description: "This API can set a policy to exclude a field item. There is a maximum of 10 projections."
+title: "DELETE/Projection"
+description: "This API can delete a field-item-excluding policy projection."
 ---
 
 ## 1. Endpoint
 
-```text POST/projection
-POST https://rest-api.argosidentity.com/v3/projection
+```text DELETE/projection
+DELETE https://rest-api.argosidentity.com/v3/projection
 ```
 
 ## 2. Authentication
@@ -21,64 +21,15 @@ x-api-key: {yourAPIKey}
 
 The request body must be in JSON format. Below are the field descriptions:
 
-<ResponseField name="name" type="string" required>
-  Set a projection name. Underscores (\_), numbers, and lowercase characters are permitted.
-</ResponseField>
-
-<ResponseField name="mode" type="string" required>
-  Set the projection mode. Currently, there is only the `exclude` option.
-</ResponseField>
-
-<ResponseField name="fields" type="array" required>
-  Set the list to exclude specific fields.
-
-  e.g., `["nationality","identityNumber"]`
-
-  - `name` The name that was submitted
-  - `gender`: male or female
-  - `nationality`: Country code, ISO alpha-3
-  - `date_of_birth`: The submitted date of birth
-  - `ip_address`: the address type of IPv4
-  - `idType`: The type of ID (e.g., driver’s license, passport)
-  - `idcard_issuingCountry`: Issuing country code, ISO alpha-3
-  - `idcard_issueDate`: Issue Date of ID (YYYY-MM-DD)
-  - `idcard_expireDate`: Expiry Date of ID (YYYY-MM-DD)
-  - `identityNumber`
-  - `documentNumber`
-  - `address_city`
-  - `address_country`
-  - `address_state`
-  - `address_street`
-  - `address_street2`
-  - `address_zipcode`
-  - `address_globalCode`: Global address code (e.g., 8Q98HXPG\+MP)
-  - `address_compoundCode`: Compound address code (e.g., HXPG\+MP, Seoul, South Korea)
-  - `address_formatted`: Formatted detail address
-  - `address_input`: Inputted address
-  - `address_detail`: Inputted detail address
-  - `cf1`: Custom field 1
-  - `cf2`: Custom field 2
-  - `cf3`: Custom field 3
-
-  Knowledge-Based supported fields
-
-  - `age_group`
-  - `ssnNumber`: Social Security Number.\
-    \* For applying the lowerCamelCase convention to the written Number once more.
-  - `phoneNumber`
+<ResponseField name="projectionId" type="string" required>
+  The unique ID of a projection
 </ResponseField>
 
 ## 4. Request Example
 
-```curl POST/Projection
-curl --location 'https://test-api.argosidentity.com/v3/projection' \
---header 'Content-Type: application/json' \
+```curl DELETE/Projection
+curl --location --request DELETE 'https://test-api.argosidentity.com/v3/projection/{projectrionId}' \
 --header 'x-api-key: {yourAPIKey}'
---data-raw '{
-	"name": "{name}",
-	"mode": "{mode}",
-	"fields": ["{field1}","{field2}"]
-}'
 ```
 
 ## 5. Response
@@ -87,10 +38,9 @@ curl --location 'https://test-api.argosidentity.com/v3/projection' \
 
 <CodeGroup>
 
-```json result-post-projection.json
+```json result-delete-projection.json
 {
-    "message": "Create projection success",
-    "projection_id": "3zo1598m9mkrion"
+    "message": "Delete projection success"
 }
 ```
 
@@ -107,7 +57,7 @@ curl --location 'https://test-api.argosidentity.com/v3/projection' \
 | Status Code | Error Message                              | Description                                                                               |
 | ----------- | ------------------------------------------ | ----------------------------------------------------------------------------------------- |
 | 400         | "Invalid request body: name, mode, fields" | When required fields (name, mode, fields) are missing in the request body                 |
-| 400         | "Invalid mode: $mode"                      | When the mode in the request body is invalid. (Currently only `exclude` is supported)     |
+| 400         | "Invalid mode: \$mode"                     | When the mode in the request body is invalid. (Currently only `exclude` is supported)     |
 | 400         | Invalid fields detected: field1, field2    | When elements within the fields in the request body are invalid                           |
 | 400         | "Invalid encrypted body"                   | When an improperly formatted encrypted request is sent while encryption option is enabled |
 | 400         | "Invalid JSON body"                        | When the request body is not in valid JSON format                                         |

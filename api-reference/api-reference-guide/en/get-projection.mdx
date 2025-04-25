@@ -5,8 +5,8 @@ description: "This API gets all projection policies set for the project that are
 
 ## 1. Endpoint
 
-```text POST/projection
-POST https://rest-api.argosidentity.com/v3/projection
+```text GET/Projection
+GET https://rest-api.argosidentity.com/v3/projection
 ```
 
 ## 2. Authentication
@@ -23,7 +23,7 @@ There is no requirement for the request body.
 
 ## 4. Request Example
 
-```curl GET/projection
+```curl GET/Projection
 curl --location 'https://test-api.argosidentity.com/v3/projection' \
 --header 'x-api-key: {yourAPIKey}'
 ```
@@ -34,25 +34,31 @@ curl --location 'https://test-api.argosidentity.com/v3/projection' \
 
 <CodeGroup>
 
-```json get-projection.json
+```json result-get-projection.json
 {
-  "items": [
-    {
-      "projection_id": "{projection_id}",
-      "name": "{name}",
-      "mode": "{mode}",
-      "fields": ["gender", "nationality"],
-      "created_at": "2023-12-01T12:34:56.789Z"
-    },
-    {
-      "projection_id": "{projection_id}",
-      "name": "{name}",
-      "mode": "{mode}",
-      "fields": ["gender", "nationality"],
-      "created_at": "2023-12-01T12:34:56.789Z"
-    },
-  ],
-  "message": "Get projection list success"
+    "items": [
+        {
+            "projection_id": "{projection_id}",
+            "name": "{name}",
+            "mode": "{mode}",
+            "fields": [
+                "gender",
+                "nationality"
+            ],
+            "created_at": "2023-12-01T12:34:56.789Z"
+        },
+        {
+            "projection_id": "{projection_id}",
+            "name": "{name}",
+            "mode": "{mode}",
+            "fields": [
+                "gender",
+                "nationality"
+            ],
+            "created_at": "2023-12-01T12:34:56.789Z"
+        }
+    ],
+    "message": "Get projection list success"
 }
 ```
 
@@ -70,8 +76,8 @@ curl --location 'https://test-api.argosidentity.com/v3/projection' \
 
 ### 5-3. Error Codes
 
-| Status Code | Error Message                                             | Description                                                                           |
-| ----------- | --------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| 404         | "Projection not found"                                    | When required fields (name, mode, fields) are missing in the request body             |
-| 405         | "Method not allowed for /projections/{projectionId} path" | When the mode in the request body is invalid. (Currently only `exclude` is supported) |
-| 500         | "Internal server error"                                   | When the server encounters an unexpected exception error                              |
+| Status Code | Error Message                                           | Description                                                                           |
+| ----------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| 404         | "Projection not found"                                  | When required fields (name, mode, fields) are missing in the request body             |
+| 405         | "Method not allowed for /projections/projectionId path" | When the mode in the request body is invalid. (Currently only `exclude` is supported) |
+| 500         | "Internal server error"                                 | When the server encounters an unexpected exception error                              |

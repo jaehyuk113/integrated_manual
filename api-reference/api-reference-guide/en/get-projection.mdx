@@ -76,8 +76,8 @@ curl --location 'https://test-api.argosidentity.com/v3/projection' \
 
 ### 5-3. Error Codes
 
-| Status Code | Error Message                                           | Description                                                                           |
-| ----------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| 404         | "Projection not found"                                  | When required fields (name, mode, fields) are missing in the request body             |
-| 405         | "Method not allowed for /projections/projectionId path" | When the mode in the request body is invalid. (Currently only `exclude` is supported) |
-| 500         | "Internal server error"                                 | When the server encounters an unexpected exception error                              |
+| Status Code | Error Message                                         | Description                                                                           |
+| ----------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| 404         | Projection not found                                  | When required fields (name, mode, fields) are missing in the request body             |
+| 405         | Method not allowed for /projections/projectionId path | When the mode in the request body is invalid. (Currently only `exclude` is supported) |
+| 500         | Internal server error                                 | When the server encounters an unexpected exception error                              |

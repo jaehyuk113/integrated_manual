@@ -1,6 +1,6 @@
 ---
 title: "GET/Projection/projectionId                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  "
-description: "This API gets all projection policies set for the project that are accessible."
+description: "This API gets a specific set of projection policies for the project that are accessible."
 ---
 
 ## 1. Endpoint
@@ -19,12 +19,16 @@ x-api-key: {yourAPIKey}
 
 ## 3. Request Body
 
-There is no requirement for the request body.
+The request body must be in JSON format. Below are the field descriptions:
+
+<ResponseField name="projectionId" type="string" required>
+  The unique ID of a projection
+</ResponseField>
 
 ## 4. Request Example
 
 ```curl GET/Projection
-curl --location 'https://test-api.argosidentity.com/v3/projection' \
+curl --location 'https://rest-api.argosidentity.com/v3/projection/{projectrionId}' \
 --header 'x-api-key: {yourAPIKey}'
 ```
 
@@ -36,29 +40,17 @@ curl --location 'https://test-api.argosidentity.com/v3/projection' \
 
 ```json result-get-projection.json
 {
-    "items": [
-        {
-            "projection_id": "{projection_id}",
-            "name": "{name}",
-            "mode": "{mode}",
-            "fields": [
-                "gender",
-                "nationality"
-            ],
-            "created_at": "2023-12-01T12:34:56.789Z"
-        },
-        {
-            "projection_id": "{projection_id}",
-            "name": "{name}",
-            "mode": "{mode}",
-            "fields": [
-                "gender",
-                "nationality"
-            ],
-            "created_at": "2023-12-01T12:34:56.789Z"
-        }
-    ],
-    "message": "Get projection list success"
+    "item": {
+        "projection_id": "{projection_id}",
+        "name": "{name}",
+        "mode": "{mode}",
+        "fields": [
+            "gender",
+            "nationality"
+        ],
+        "created_at": "2023-12-01T12:34:56.789Z"
+    },
+    "message": "Get projection success"
 }
 ```
 

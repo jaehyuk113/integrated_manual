@@ -1,12 +1,13 @@
 ---
-title: 'GET/Submission/list'
-description: '이 API를 사용하여 모든 KYC 제출 데이터(submissions)를 조회할 수 있습니다. KYC 신원 정보 데이터, KYC 결과, AML 결과, 거절 사유 및 코드, 재시도 사유 및 코드 등의 정보를 확인할 수 있습니다.'
+title: "GET/Submission/list"
+description: "이 API를 사용하여 모든 KYC 제출 데이터(submissions)를 조회할 수 있습니다. KYC 신원 정보 데이터, KYC 결과, AML 결과, 거절 사유 및 코드, 재시도 사유 및 코드 등의 정보를 확인할 수 있습니다."
 ---
 
 <Warning>
-주의사항
-1. 이 API 호출은 모든 제출 건을 반환하므로 대량의 데이터가 포함될 수 있습니다.
-2. 성능 최적화를 위해 페이지네이션 파라미터를 사용하는 것이 좋습니다.
+  주의사항
+
+  1. 이 API 호출은 모든 제출 건을 반환하므로 대량의 데이터가 포함될 수 있습니다.
+  2. 성능 최적화를 위해 페이지네이션 파라미터를 사용하는 것이 좋습니다.
 </Warning>
 
 ## 1. 엔드포인트
@@ -14,15 +15,14 @@ description: '이 API를 사용하여 모든 KYC 제출 데이터(submissions)�
 ```text GET/Submission/list
 GET https://rest-api.argosidentity.com/v3/submission
 ```
+
 ## 2. 인증
 
-x-api-key 헤더에 API 키를 포함시켜야 합니다:
+`x-api-key` 헤더에 API 키를 포함시켜야 합니다:
 
 ```text x-api-key
 x-api-key: {yourAPIKey}
 ```
-
-
 
 ## 3. 요청 예시
 
@@ -34,6 +34,7 @@ curl --location --request GET 'https://rest-api.argosidentity.com/v3/submission'
 ## 4. 응답
 
 ### 4-1. 성공 응답
+
 ```json result.json
 {
   "Items": [
@@ -84,4 +85,5 @@ curl --location --request GET 'https://rest-api.argosidentity.com/v3/submission'
   ]
 }
 ```
+
 이 API를 통해 모든 KYC 제출 데이터를 효율적으로 조회하고 관리할 수 있습니다.

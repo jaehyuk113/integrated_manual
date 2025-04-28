@@ -1,30 +1,33 @@
 ---
-title: 'DELETE/Submission'
-description: '이 API를 사용하면 단일 제출 데이터(Submission)와 관련된 모든 정보를 완전히 삭제할 수 있습니다. 삭제된 데이터는 복원이 불가능하며, 삭제된 제출 건도 과금 대상에 포함됩니다.'
+title: "DELETE/Submission"
+description: "이 API를 사용하면 단일 제출 데이터(Submission)와 관련된 모든 정보를 완전히 삭제할 수 있습니다. 삭제된 데이터는 복원이 불가능하며, 삭제된 제출 건도 과금 대상에 포함됩니다."
 ---
 
 <Warning>
-주의사항
-- 삭제된 제출 건은 복원할 수 없습니다.
-- 삭제된 제출 건도 과금 대상에 포함됩니다.
-- 삭제된 제출 건은 대시보드 및 `GET/API` Response에 '삭제된 제출건'으로 표시됩니다.
-- 이 API를 사용할 때는 신중을 기해야 합니다. 실수로 중요한 데이터를 삭제하지 않도록 주의하세요.
+  주의사항
+
+  - 삭제된 제출 건은 복원할 수 없습니다.
+  - 삭제된 제출 건도 과금 대상에 포함됩니다.
+  - 삭제된 제출 건은 대시보드 및 `GET/API` Response에 '삭제된 제출건'으로 표시됩니다.
+  - 이 API를 사용할 때는 신중을 기해야 합니다. 실수로 중요한 데이터를 삭제하지 않도록 주의하세요.
 </Warning>
+
 ## 1. 엔드포인트
 
 ```text DELETE/Submission
 DELETE https://rest-api.argosidentity.com/v3/submission
 ```
+
 ## 2. 인증
 
-x-api-key 헤더에 API 키를 포함시켜야 합니다:
+`x-api-key` 헤더에 API 키를 포함시켜야 합니다:
 
 ```text x-api-key
 x-api-key: {yourAPIKey}
 ```
 
-
 ## 3. 요청 파라미터
+
 <ResponseField name="submissionId" type="string" required="true">
   삭제할 제출 건의 고유 ID
 </ResponseField>
@@ -37,6 +40,7 @@ x-api-key: {yourAPIKey}
 - AML 정보(AML 옵션 사용 시 저장된 데이터)
 
 ### 3-2. 유지되는 데이터
+
 - 제출 건 고유 ID(Submission ID), 제출일자, 신분증 유형, ID Check 승인 여부 등 개인을 특정할 수 없는 기본 데이터만 유지됩니다.
 
 ## 4. 요청 예시
@@ -50,6 +54,7 @@ curl --location --request DELETE 'https://rest-api.argosidentity.com/v3/submissi
 ## 5. 응답
 
 ### 5-1. 성공 응답
+
 ```json result.json
 {
 	"message": "success",
@@ -57,22 +62,22 @@ curl --location --request DELETE 'https://rest-api.argosidentity.com/v3/submissi
 }
 ```
 
-
 ### 5-2. 오류 응답
+
 오류가 발생하면 400 상태 코드와 함께 응답 본문에 세부 정보가 포함됩니다:
+
 ```json error.json
 {
     "errorCode": "not Exist Submission ID"
 }
-
 ```
 
 ### 5-3. 오류 코드
 
-| 에러 코드  | 설명                                   |
-|---------------------------------------|-----------------------------------------------|
-| `not Exist Submission ID`           | `submission_id`가 누락됨                     |
+| 에러 코드                               | 설명                               |
+| ----------------------------------- | -------------------------------- |
+| `not Exist Submission ID`           | `submission_id`가 누락됨             |
 | `not Exist Submission Data`         | 해당 `submission_id`의 데이터가 존재하지 않음 |
-| `not Exist Project Data`            | 프로젝트 정보가 존재하지 않음                |
-| `delete Process FAIL`               | 삭제 프로세스 실패 (메타 페이스 ID 삭제 실패 등) |
-| `adminName and comment is required` | 대시보드에서 삭제 시 관리자 이름과 코멘트 누락 |
+| `not Exist Project Data`            | 프로젝트 정보가 존재하지 않음                 |
+| `delete Process FAIL`               | 삭제 프로세스 실패 (메타 페이스 ID 삭제 실패 등)   |
+| `adminName and comment is required` | 대시보드에서 삭제 시 관리자 이름과 코멘트 누락       |

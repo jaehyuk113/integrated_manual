@@ -19,7 +19,7 @@ x-api-key: {yourAPIKey}
 
 ## 3. Request Body
 
-The request body must be in JSON format. Below are the field descriptions:
+The request parameters should be sent as URL query parameters. Below are the parameter descriptions:
 
 <ResponseField name="projectionId" type="string" required>
   The unique ID of a projection
@@ -68,8 +68,8 @@ curl --location 'https://rest-api.argosidentity.com/v3/projection/{projectrionId
 
 ### 5-3. Error Codes
 
-| Status Code | Error Message                                         | Description                                                                           |
-| ----------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| 404         | Projection not found                                  | When required fields (name, mode, fields) are missing in the request body             |
-| 405         | Method not allowed for /projections/projectionId path | When the mode in the request body is invalid. (Currently only `exclude` is supported) |
-| 500         | Internal server error                                 | When the server encounters an unexpected exception error                              |
+| Status Code | Error Message                                         | Description                                                               |
+| ----------- | ----------------------------------------------------- | ------------------------------------------------------------------------- |
+| 404         | Projection not found                                  | When required fields (name, mode, fields) are missing in the request body |
+| 405         | Method not allowed for /projections/projectionId path | HTTP requests (PUT, DELETE, etc.) are not GET or POST.                    |
+| 500         | Internal server error                                 | When the server encounters an unexpected exception error                  |

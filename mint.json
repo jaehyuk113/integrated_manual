@@ -208,6 +208,21 @@
       ],
       "version": "English"
     },
+        {
+      "group": "Projection",
+      "pages":[
+        "api-reference/api-reference-guide/en/post-projection",
+        {
+          "group":"GET/Projection",
+          "pages":[
+            "api-reference/api-reference-guide/en/get-projection",
+            "api-reference/api-reference-guide/en/get-projection/projectionId"
+          ]
+        },
+        "api-reference/api-reference-guide/en/delete-projection"
+      ],
+      "version": "English"
+    },
     {
       "group" : "Image",
       "pages": [
@@ -338,6 +353,21 @@
           ]
         },
         "api-reference/api-reference-guide/ko/delete-submission"
+      ],
+      "version": "한국어"
+    },
+        {
+      "group": "Projection (프로젝션)",
+      "pages":[
+        "api-reference/api-reference-guide/ko/post-projection",
+        {
+          "group":"GET/Projection",
+          "pages":[
+            "api-reference/api-reference-guide/ko/get-projection",
+            "api-reference/api-reference-guide/ko/get-projection/projectionId"
+          ]
+        },
+        "api-reference/api-reference-guide/ko/delete-projection"
       ],
       "version": "한국어"
     },

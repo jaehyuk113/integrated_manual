@@ -19,22 +19,22 @@ x-api-key: {yourAPIKey}
 
 ## 3. 요청 파라미터
 
-요청 파라미터는 URL query 형식이어야 합니다. 
+요청 파라미터는 URL query 형식이어야 합니다.
 
 <ResponseField name="projectionId" type="string" required>
   The unique ID of a projection
 </ResponseField>
 
-## 4. Request Example
+## 4. 요청 예시
 
 ```curl DELETE/Projection
 curl --location --request DELETE 'https://rest-api.argosidentity.com/v3/projection/{projectrionId}' \
 --header 'x-api-key: {yourAPIKey}'
 ```
 
-## 5. Response
+## 5. 응답
 
-### 5-1. Success Response
+### 5-1. 성공 응답
 
 <CodeGroup>
 
@@ -46,10 +46,10 @@ curl --location --request DELETE 'https://rest-api.argosidentity.com/v3/projecti
 
 </CodeGroup>
 
-### 5-2. Error Codes
+### 5-2. 오류 코드
 
-| Status Code | Error Message                                         | Description                                              |
-| ----------- | ----------------------------------------------------- | -------------------------------------------------------- |
-| 404         | Projection not found                                  | Delete projection id not found.                          |
-| 405         | Method not allowed for /projections/projectionId path | HTTP requests (PUT, DELETE, etc.) are not GET or POST.   |
-| 500         | Internal server error                                 | When the server encounters an unexpected exception error |
+| 상태 코드 | 오류 메시지                                                | 설명                                            |
+| ----- | ----------------------------------------------------- | --------------------------------------------- |
+| 404   | Projection not found                                  | 삭제하려는 Projection ID 를 찾을 수 없음                 |
+| 405   | Method not allowed for /projections/projectionId path | GET, DELETE 이외의 HTTP 메서드(POST, PUT 등)로 요청한 경우 |
+| 500   | Internal server error                                 | 서버 내부에서 처리되지 않은 예외가 발생한 경우                    |

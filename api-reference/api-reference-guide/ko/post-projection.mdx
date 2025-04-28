@@ -3,13 +3,13 @@ title: "POST/Projection                                                         
 description: "This API can set a policy to exclude a field item. There is a maximum of 10 projections."
 ---
 
-## 1. Endpoint
+## 1. 엔드포인트
 
 ```text POST/Projection
 POST https://rest-api.argosidentity.com/v3/projection
 ```
 
-## 2. Authentication
+## 2. 인증
 
 Include the API key in the `x-api-key` header:
 
@@ -17,33 +17,33 @@ Include the API key in the `x-api-key` header:
 x-api-key: {yourAPIKey}
 ```
 
-## 3. Request Body
+## 3. 요청 본문
 
-The request body must be in JSON format. Below are the field descriptions:
+요청 본문은 JSON 형식이어야 합니다. 다음은 필드 설명입니다:
 
 <ResponseField name="name" type="string" required>
-  Set a projection name. Underscores (\_), numbers, and lowercase characters are permitted.
+  Projection 이름. 이름은 소문자, 숫자, 언더스코어(\_)만 허용함
 </ResponseField>
 
 <ResponseField name="mode" type="string" required>
-  Set the projection mode. Currently, there is only the `exclude` option.
+  Projection 모드 현재는 `exclude` 만 지원함
 </ResponseField>
 
 <ResponseField name="fields" type="array" required>
-  Set the list to exclude specific fields.
+  제외할 필드 목록을 배열 형태로 지정 가능
 
-  - `first_name`The first name that was submitted
-  - `mid_name` The middle name that was submitted
-  - `last_name`The last name that was submitted
-  - `full_name`The full name that was submitted
-  - `gender`: male or female
-  - `nationality`: Country code, ISO alpha-3
-  - `date_of_birth`: The submitted date of birth
-  - `ip_address`: the address type of IPv4
-  - `idType`: The type of ID (e.g., driver’s license, passport)
-  - `idcard_issuingCountry`: Issuing country code, ISO alpha-3
-  - `idcard_issueDate`: Issue Date of ID (YYYY-MM-DD)
-  - `idcard_expireDate`: Expiry Date of ID (YYYY-MM-DD)
+  - `first_name`제출자의 First name
+  - `mid_name` 제출자의 Middle name
+  - `last_name`제출자의 Last name
+  - `full_name`제출자의 Full name
+  - `gender`: male 혹은 female
+  - `nationality`: ISO alpha-3 국가 코드
+  - `date_of_birth`: 제출자의 생년월일
+  - `ip_address`: IPv4 타입의 IP 주소
+  - `idType`: 신분증 타입 (e.g., driver’s license, passport)
+  - `idcard_issuingCountry`: 신분증 발급국가의 ISO alpha-3 코드
+  - `idcard_issueDate`: ID의 발급일자 YYYY-MM-DD 형식.
+  - `idcard_expireDate`: ID의 만료일자 YYYY-MM-DD 형식.
   - `identityNumber`
   - `documentNumber`
   - `address_city`
@@ -52,20 +52,20 @@ The request body must be in JSON format. Below are the field descriptions:
   - `address_street`
   - `address_street2`
   - `address_zipcode`
-  - `address_globalCode`: Global address code (e.g., 8Q98HXPG\+MP)
-  - `address_compoundCode`: Compound address code (e.g., HXPG\+MP, Seoul, South Korea)
-  - `address_formatted`: Formatted detail address
-  - `address_input`: Inputted address
-  - `address_detail`: Inputted detail address
-  - `cf1`: Custom field 1
-  - `cf2`: Custom field 2
-  - `cf3`: Custom field 3
+  - `address_globalCode`: 글로벌 주소 코드 (e.g., 8Q98HXPG\+MP)
+  - `address_compoundCode`: 복합 주소 코드 (e.g., HXPG\+MP, Seoul, South Korea)
+  - `address_formatted`: 변환된 상세 주소
+  - `address_input`: 제출자가 입력한 주소
+  - `address_detail`: 제출자가 입력한 상세 주소
+  - `cf1`: 커스템 필드 1
+  - `cf2`: 커스템 필드 2
+  - `cf3`: 커스템 필드 3
 
-  Knowledge-Based supported fields
+  Knowledge-Based 전용 필드
 
   - `age_group`
-  - `ssnNumber`: Social Security Number.\
-    \* For applying the lowerCamelCase convention to the written Number once more.
+  - `ssnNumber`: 소셜 시크리트 넘버.\
+    \* 소문자 CamelCase 적용으로 파라미터 관리상 필드명에 Number 가 한번더 기재되어 있습니다.
   - `phoneNumber`
 
   e.g.
@@ -74,7 +74,7 @@ The request body must be in JSON format. Below are the field descriptions:
   - `["date_of_birth","address_formatted","address_detail"]`
 </ResponseField>
 
-## 4. Request Example
+## 4. 요청 예시
 
 ```curl POST/Projection
 curl --location 'https://rest-api.argosidentity.com/v3/projection' \
@@ -87,9 +87,9 @@ curl --location 'https://rest-api.argosidentity.com/v3/projection' \
 }'
 ```
 
-## 5. Response
+## 5. 응답
 
-### 5-1. Success Response
+### 5-1. 성공 응답
 
 <CodeGroup>
 
@@ -102,20 +102,22 @@ curl --location 'https://rest-api.argosidentity.com/v3/projection' \
 
 </CodeGroup>
 
-### 5-2. Response Field
+### 5-2. 응답 필드
 
-| Field Name      | Description                               | Data Type | Category        |
-| --------------- | ----------------------------------------- | --------- | --------------- |
-| `projection_id` | The unique ID of the generated projection | String    | Projection Info |
+| 필드명             | 설명                | 데이터 타입 | 카테고리          |
+| --------------- | ----------------- | ------ | ------------- |
+| `projection_id` | 고유한 Projection ID | String | Projection 정보 |
 
-### 5-3. Error Codes
+### 5-3. 오류 응답
 
-| Status Code | Error Message                            | Description                                                                               |
-| ----------- | ---------------------------------------- | ----------------------------------------------------------------------------------------- |
-| 400         | Invalid request body: name, mode, fields | When required fields (name, mode, fields) are missing in the request body                 |
-| 400         | Invalid mode: \$mode                     | When the mode in the request body is invalid. (Currently only `exclude` is supported)     |
-| 400         | Invalid fields detected: field1, field2  | When elements within the fields in the request body are invalid                           |
-| 400         | Invalid encrypted body                   | When an improperly formatted encrypted request is sent while encryption option is enabled |
-| 400         | Invalid JSON body                        | When the request body is not in valid JSON format                                         |
-| 404         | Projection not found                     | When there is no projection corresponding to the specified `projectionId`                 |
-| 405         | Method not allowed for /projections path | HTTP requests (PUT, DELETE, etc.) are not GET or POST.                                    |
+| 응답 코드 | 오류 메시지                                   | 설명                                              |
+| ----- | ---------------------------------------- | ----------------------------------------------- |
+| 400   | Invalid request body: name, mode, fields | 요청 파라미터에 필수 값인 name, mode, fields 중 하나라도 누락된 경우 |
+| 400   | Invalid mode: \$mode                     | 지원하지 않는 mode 로 설정한 경우 현재는 `exclude` 만 지원함       |
+| 400   | Invalid fields detected: field1, field2  | 유효하지 않은 필드가 기입된 경우                              |
+| 400   | Invalid encrypted body                   | 안전한 데이터 전송 옵션이 활성화 된 상태에서 수신된 암호화가 잘못된 경우       |
+| 400   | Invalid JSON body                        | 유효하지 않은 JSON 포멧으로 요청된 경우                        |
+| 405   | Method not allowed for /projections path | GET, DELETE 이외의 HTTP 메서드(POST, PUT 등)로 요청한 경우   |
+| 409   | Projection name already exists           | 이미 프로젝트내에 존재하는 프로젝션 이름으로 새 프로젝션을 생성하려고 할 때      |
+| 409   | Projection count limit exceeded          | 프로젝트당 최대 프로젝션 수(10개)를 초과했을 때                    |
+| 500   | Internal server error                    | 서버 내부에서 처리되지 않은 예외가 발생한 경우                      |

@@ -118,4 +118,7 @@ curl --location 'https://rest-api.argosidentity.com/v3/projection' \
 | 400         | Invalid encrypted body                   | When an improperly formatted encrypted request is sent while encryption option is enabled |
 | 400         | Invalid JSON body                        | When the request body is not in valid JSON format                                         |
 | 404         | Projection not found                     | When there is no projection corresponding to the specified `projectionId`                 |
-| 405         | Method not allowed for /projections path | HTTP requests (PUT, DELETE, etc.) are not GET or POST.                                    |
+| 405         | Method not allowed for /projections path | HTTP requests (PUT, DELETE, etc.) are not GET or POST                                     |
+| 409         | Projection name already exists           | The same projection name has already been set                                             |
+| 409         | Projection count limit exceeded          | If the number of projections exceeds the limit of 10 projections                          |
+| 500         | Internal server error                    | When the server encounters an unexpected exception error                                  |

@@ -32,9 +32,10 @@ The request body must be in JSON format. Below are the field descriptions:
 <ResponseField name="fields" type="array" required>
   Set the list to exclude specific fields.
 
-  e.g., `["nationality","identityNumber"]`
-
-  - `name` The name that was submitted
+  - `first_name`The first name that was submitted
+  - `mid_name` The middle name that was submitted
+  - `last_name`The last name that was submitted
+  - `full_name`The full name that was submitted
   - `gender`: male or female
   - `nationality`: Country code, ISO alpha-3
   - `date_of_birth`: The submitted date of birth
@@ -66,6 +67,11 @@ The request body must be in JSON format. Below are the field descriptions:
   - `ssnNumber`: Social Security Number.\
     \* For applying the lowerCamelCase convention to the written Number once more.
   - `phoneNumber`
+
+  e.g.
+
+  - `["first_name","mid_name","last_name","full_name","idtype"]`
+  - `["date_of_birth","address_formatted","address_detail"]`
 </ResponseField>
 
 ## 4. Request Example

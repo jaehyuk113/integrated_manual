@@ -1,0 +1,83 @@
+---
+title: "GET/Projection                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           "
+description: "This API gets all projection policies set for the project that are accessible."
+---
+
+## 1. Endpoint
+
+```text GET/Projection
+GET https://rest-api.argosidentity.com/v3/projection
+```
+
+## 2. Authentication
+
+Include the API key in the `x-api-key` header:
+
+```text x-api-key
+x-api-key: {yourAPIKey}
+```
+
+## 3. Request Body
+
+There is no requirement for the request body.
+
+## 4. Request Example
+
+```curl GET/Projection
+curl --location 'https://rest-api.argosidentity.com/v3/projection' \
+--header 'x-api-key: {yourAPIKey}'
+```
+
+## 5. Response
+
+### 5-1. Success Response
+
+<CodeGroup>
+
+```json result-get-projection.json
+{
+    "items": [
+        {
+            "projection_id": "{projection_id}",
+            "name": "{name}",
+            "mode": "{mode}",
+            "fields": [
+                "gender",
+                "nationality"
+            ],
+            "created_at": "2023-12-01T12:34:56.789Z"
+        },
+        {
+            "projection_id": "{projection_id}",
+            "name": "{name}",
+            "mode": "{mode}",
+            "fields": [
+                "gender",
+                "nationality"
+            ],
+            "created_at": "2023-12-01T12:34:56.789Z"
+        }
+    ],
+    "message": "Get projection list success"
+}
+```
+
+</CodeGroup>
+
+### 5-2. Response Field
+
+| Field Name      | Description                                                         | Data Type       | Category        |
+| --------------- | ------------------------------------------------------------------- | --------------- | --------------- |
+| `projection_id` | The unique ID of the generated projection                           | String          | Projection Info |
+| `name`          | The projection name                                                 | String          | Projection Info |
+| `mode`          | The projection mode. Currently, there is only the `exclude` option. | String          | Projection Info |
+| `fields`        | The list to exclude specific fields.                                | Array\<String\> | Projection Info |
+| `created_at`    | Created Time (Type of ISO 8601)                                     | String          | Projection Info |
+
+### 5-3. Error Codes
+
+| Status Code | Error Message                                         | Description                                                                           |
+| ----------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| 404         | Projection not found                                  | When required fields (name, mode, fields) are missing in the request body             |
+| 405         | Method not allowed for /projections/projectionId path | When the mode in the request body is invalid. (Currently only `exclude` is supported) |
+| 500         | Internal server error                                 | When the server encounters an unexpected exception error                              |

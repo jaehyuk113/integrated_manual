@@ -27,6 +27,13 @@ URL 쿼리 스트링 형태로 추가하여야 합니다.
 
 ## 4. 요청 예시
 
+<Warning>
+  파라메터 기재시 projectionId 값만 기재하셔야 합니다. projectionId= 형식으로 기재하시면 동작하지 않습니다.
+
+  - https://rest-api.argosidentity.com/v3/projection/**55sqp8ma0jvwh** (O)
+  - https://rest-api.argosidentity.com/v3/projection/projectionId=55sqp8ma0jvwh (X)
+</Warning>
+
 ```curl GET/Projection
 curl --location 'https://rest-api.argosidentity.com/v3/projection/{projectrionId}' \
 --header 'x-api-key: {yourAPIKey}'

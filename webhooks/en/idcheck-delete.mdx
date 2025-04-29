@@ -1,16 +1,17 @@
 ---
-mode: 'default'
-title: Delete
-description: This event is triggered when a KYC submission is deleted from the system. Deletion can occur due to manual action by an administrator, automated deletion based on policies, or a user request. This event allows you to detect the deletion of KYC data in real-time and take necessary follow-up actions.
+mode: "default"
+title: "Delete"
+description: "This event is triggered when a KYC submission is deleted from the system. Deletion can occur due to manual action by an administrator, automated deletion based on policies, or a user request. This event allows you to detect the deletion of KYC data in real-time and take necessary follow-up actions."
 ---
+
 ```json delete-webhook-sample.json
 {
-	"webhook_trigger":"delete",
-	"submission_id":"string",
-  "duplicated_information" : "string",
-	"account_email":"string",
-	"delete_time":"string",
-	"comment":"string"
+    "webhook_trigger": "delete",
+    "submission_id": "string",
+    "duplicated_information": "string",
+    "account_email": "string",
+    "delete_time": "string",
+    "comment": "string"
 }
 ```
 
@@ -22,8 +23,8 @@ description: This event is triggered when a KYC submission is deleted from the s
   Unique identifier of the deleted KYC submission.
 </ResponseField>
 
-<ResponseField name="duplicated_information" type="string" >
-  A unique ID is generated based on name, date of birth, gender, and nationality for duplicate checks. (*Always generated when all four criteria are provided.)
+<ResponseField name="duplicated_information" type="string">
+  A unique ID is generated based on name, date of birth, gender, and nationality for duplicate checks. (\*Always generated when all four criteria are provided.)
 </ResponseField>
 
 <ResponseField name="account_email" type="string">
@@ -31,7 +32,7 @@ description: This event is triggered when a KYC submission is deleted from the s
 </ResponseField>
 
 <ResponseField name="delete_time" type="string">
-  Timestamp when the KYC submission was deleted (UTC+0, ISO 8601 format).
+  Timestamp when the KYC submission was deleted (UTC\+0, ISO 8601 format).
 </ResponseField>
 
 <ResponseField name="comment" type="string">

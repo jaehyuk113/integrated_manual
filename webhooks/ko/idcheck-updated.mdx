@@ -1,79 +1,83 @@
 ---
-mode: 'default'
-title: Updated (업데이트)
-description: 이 이벤트는 기존에 제출된 KYC 정보가 업데이트될 때 트리거됩니다. 업데이트는 관리자의 수동 변경이나 시스템에 의해 발생할 수 있습니다. 이 웹훅을 통해 KYC 데이터의 변경 사항을 실시간으로 추적하고 필요한 조치를 즉시 취할 수 있습니다.
-
+mode: "default"
+title: "Updated (업데이트)"
+description: "이 이벤트는 기존에 제출된 KYC 정보가 업데이트될 때 트리거됩니다. 업데이트는 관리자의 수동 변경이나 시스템에 의해 발생할 수 있습니다. 이 웹훅을 통해 KYC 데이터의 변경 사항을 실시간으로 추적하고 필요한 조치를 즉시 취할 수 있습니다."
 ---
 
 <CodeGroup>
 
 ```json updated-webhook-id-document.json
 {
-  "webhook_trigger": "updated",
-  "submission_id": "string",
-  "duplicated_information": "string",
-  "email": "string",
-  "data": {
-    "update": [
-      "idType",
-      "issuingCountry",
-      "fullName",
-      "gender",
-      "birthDate",
-      "nationality",
-      "kycStatus",
-      "issueDate",
-      "identityNumber"
-    ],
-    "kyc_result": "string",
-    "pending_at": "string",
-    "reviewer": "string"
-  },
-  "admin": "string",
-  "update_time": "string",
-  "age_group": "string",
-  "gender": "string",
-  "date_of_birth": "string",
-  "nationality": "string",
-  "userid": "string",
-  "tokenId": "string"
+    "webhook_trigger": "updated",
+    "submission_id": "string",
+    "duplicated_information": "string",
+    "email": "string",
+    "data": {
+        "update": [
+            "kycStatus",
+            "idType",
+            "issuingCountry",
+            "fullName",
+            "gender",
+            "nationality",
+            "birthDate",
+            "identityNumber",
+            "issueDate",
+            "expireDate",
+            "documentNumber",
+            "serialNumber",
+            "privacyShield",
+            "curpNumber",
+            "version",
+            "typeOfPermit"
+        ],
+        "kyc_result": "string",
+        "pending_at": "string",
+        "reviewer": "string"
+    },
+    "admin": "string",
+    "update_time": "string",
+    "age_group": "string",
+    "gender": "string",
+    "date_of_birth": "string",
+    "nationality": "string",
+    "userid": "string",
+    "tokenId": "string"
 }
 ```
 
 
 ```json updated-webhook-knowledge-based.json
 {
-  "webhook_trigger": "updated",
-  "submission_id": "string",
-  "duplicated_information": "string",
-  "email": "string",
-  "data": {
-    "update": [
-      "idType",
-      "issuingCountry",
-      "fullName",
-      "gender",
-      "birthDate",
-      "nationality",
-      "kycStatus",
-      "issueDate",
-      "identityNumber"
-    ],
-    "kyc_result": "string",
-    "pending_at": "string",
-    "reviewer": "string"
-  },
-  "admin": "string",
-  "update_time": "string",
-  "gender": "string",
-  "date_of_birth": "string",
-  "nationality": "string",
-  "userid": "string",
-  "tokenId": "string"
-  "age_group": "N/A",
-  "fullName": "string",
-  "phoneNumber": "string",
-  "ssnNumber": "string"
+    "webhook_trigger": "updated",
+    "submission_id": "string",
+    "duplicated_information": "string",
+    "email": "string",
+    "data": {
+        "update": [
+            "fullName",
+            "gender",
+            "birthDate",
+            "nationality",
+            "kycStatus",
+            "issueDate",
+            "identityNumber"
+        ],
+        "kyc_result": "string",
+        "pending_at": "string",
+        "reviewer": "string"
+    },
+    "admin": "string",
+    "update_time": "string",
+    "gender": "string",
+    "date_of_birth": "string",
+    "nationality": "string",
+    "userid": "string",
+    "tokenId": "string",
+    "age_group": "N/A",
+    "full_name": "string",
+    "phoneNumber": "string",
+    "ssnNumber": "string"
 }
 ```
 
@@ -83,75 +87,73 @@ description: 이 이벤트는 기존에 제출된 KYC 정보가 업데이트될 
   웹훅 이벤트 유형 - `updated`는 사용자 정보가 업데이트되었음을 의미
 </ResponseField>
 
-<ResponseField name="submission_id" type="string" >
+<ResponseField name="submission_id" type="string">
   KYC 제출 건별 고유 식별자
 </ResponseField>
 
-<ResponseField name="duplicated_information" type="string" >
-  이름, 생년월일, 성별, 국적을 기준으로 중복 확인용 식별자가 생성됩니다. (*네 가지 기준이 모두 제공되면 항상 생성됩니다.)
+<ResponseField name="duplicated_information" type="string">
+  이름, 생년월일, 성별, 국적을 기준으로 중복 확인용 식별자가 생성됩니다. (\*네 가지 기준이 모두 제공되면 항상 생성됩니다.)
 </ResponseField>
 
-<ResponseField name="email" type="string" >
+<ResponseField name="email" type="string">
   KYC 제출자 이메일 주소
 </ResponseField>
 
-
-
 <ResponseField name="data" type="object">
-	업데이트된 사용자 데이터를 포함하는 객체
-    <Expandable title="update" type="array">
-      <ResponseField name="update" type="array">
-        업데이트된 필드 목록
-      </ResponseField>
+  업데이트된 사용자 데이터를 포함하는 객체
 
-      <ResponseField name="kyc_result" type="string">
-        KYC 검토 결과
-      </ResponseField>
-	  <ResponseField name="pending_at" type="string">
-        KYC가 pending 상태로 설정된 시간 (UTC+0, ISO 8601 형식)
-      </ResponseField>
-	  <ResponseField name="reviewer" type="string">
-  		검토자 유형. `system`은 AI 시스템 검수, `agent`는 인간 검수
-      </ResponseField>
-	  <ResponseField name="kyc_result" type="string">
-     	KYC 결과가 처음 결정된 UTC 시간. 승인/거부 시에만 제공 (ISO 8601 형식)
-      </ResponseField>
-    </Expandable>
+  <Expandable title="update">
+    <ResponseField name="update" type="array">
+      업데이트된 필드 목록
+    </ResponseField>
+    <ResponseField name="kyc_result" type="string">
+      KYC 검토 결과
+    </ResponseField>
+    <ResponseField name="pending_at" type="string">
+      KYC가 pending 상태로 설정된 시간 (UTC\+0, ISO 8601 형식)
+    </ResponseField>
+    <ResponseField name="reviewer" type="string">
+      검토자 유형. `system`은 AI 시스템 검수, `agent`는 인간 검수
+    </ResponseField>
+    <ResponseField name="kyc_result" type="string">
+      KYC 결과가 처음 결정된 UTC 시간. 승인/거부 시에만 제공 (ISO 8601 형식)
+    </ResponseField>
+  </Expandable>
 </ResponseField>
 
-
-
-<ResponseField name="admin" type="string" >
+<ResponseField name="admin" type="string">
   대시보드에서 업데이트를 수행한 관리자 이메일
 </ResponseField>
 
-<ResponseField name="update_time" type="string" >
- 업데이트가 발생한 시간 (UTC+0, ISO 8601 형식)
+<ResponseField name="update_time" type="string">
+  업데이트가 발생한 시간 (UTC\+0, ISO 8601 형식)
 </ResponseField>
-<ResponseField name="age_group" type="string" >
+
+<ResponseField name="age_group" type="string">
   제출자의 연령대 카테고리
-  `minor` : 13세 이하, 
-  `early-teen`: 14 ~ 15세, 
-  `teen`: 16 ~ 17세, 
-  `adult`: 18세 이상 
-</ResponseField>
-<ResponseField name="gender" type="string" >
-	제출자 성별 ("male" 또는 "female")
-</ResponseField>
-<ResponseField name="date_of_birth" type="string" >
-제출자 생년월일 (YYYY-MM-DD 형식)
-</ResponseField>
-<ResponseField name="nationality" type="string" >
-제출자 국적 (ISO 3166-1 alpha-3 국가 코드)
+  `minor` : 13세 이하,
+  `early-teen`: 14 ~ 15세,
+  `teen`: 16 ~ 17세,
+  `adult`: 18세 이상
 </ResponseField>
 
+<ResponseField name="gender" type="string">
+  제출자 성별 ("male" 또는 "female")
+</ResponseField>
 
+<ResponseField name="date_of_birth" type="string">
+  제출자 생년월일 (YYYY-MM-DD 형식)
+</ResponseField>
 
-<ResponseField name="userid" type="string" >
+<ResponseField name="nationality" type="string">
+  제출자 국적 (ISO 3166-1 alpha-3 국가 코드)
+</ResponseField>
+
+<ResponseField name="userid" type="string">
   고객사에서 정의한 KYC 제출자 고유 식별자
 </ResponseField>
 
-<ResponseField name="tokenId" type="string" >
+<ResponseField name="tokenId" type="string">
   비공개 모드의 라이브 폼 제출 시 사용된 토큰 ID
 </ResponseField>
 
@@ -159,4 +161,3 @@ description: 이 이벤트는 기존에 제출된 KYC 정보가 업데이트될 
   소셜 시큐리티 넘버 (Social Security Number)\
   \* lowerCamelCase 컨벤션 적용을 위해 ssn 뒤에 Number 를 추가로 기입하였습니다.
 </ResponseField>
-

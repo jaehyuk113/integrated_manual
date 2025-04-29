@@ -5,84 +5,113 @@ description: "이 이벤트는 KYC(Know Your Customer) 제출이 승인될 때 �
 ---
 
 <CodeGroup>
+
 ```json approved-webhook-id-document.json
 {
-    "webhook_trigger": "approved",
-    "kyc_result": {
-      "status": "string",
-      "updated_at": "string",
-      "created_at": "string",
-      "kyc_result_at": "string",
-      "pending_at" : "string",
-      "reviewer": "string"
+    "submission_id": "string",
+    "email": "string",
+    "cf": {
+        "cf1": "string",
+        "cf2": "string",
+        "cf3": "string"
     },
     "applicant_id": "string",
-    "submission_id": "string",
-    "duplicated_information" : "string",
-    "email": "string",
-    "tokenId" : "string",
-    "cf": {
-      "cf1": "string",
-      "cf2": "string",
-      "cf3": "string"
+    "webhook_trigger": "approved",
+    "kyc_result": {
+        "status": "approved",
+        "updated_at": "string",
+        "created_at": "string",
+        "kyc_result_at": "string",
+        "reviewer": "string"
     },
-    "userid": "string",
-    "age_group" : "string",
+    "age_group": "N/A",
     "gender": "string",
     "date_of_birth": "string",
     "nationality": "string",
-    "ipAddress": "string",
+    "duplicated_information": "string",
+    "full_name": "string",
+    "phoneNumber": "string",
+    "ssnNumber": "string",
+    "additional_list": [
+        {
+            "answer": "string",
+            "inputValue": "string",
+            "blockType": "string"
+        },...
+    ]
+}{
+    "submission_id": "string",
+    "email": "string",
+    "cf": {
+        "cf1": "string",
+        "cf2": "string",
+        "cf3": "string"
+    },
+    "applicant_id": "string",
+    "webhook_trigger": "approved",
+    "kyc_result": {
+        "status": "approved",
+        "updated_at": "string",
+        "created_at": "string",
+        "kyc_result_at": "string",
+        "reviewer": "string"
+    },
+    "age_group": "N/A",
+    "gender": "string",
+    "date_of_birth": "string",
+    "nationality": "string",
+    "duplicated_information": "string",
     "fullName": "string",
-    "idType": "string",
-    "issuingCountry": "string",
-    "issueDate": "string",
-    "expireDate": "string",
-    "identityNumber" : "string",
-    "documentNumber" : "string",
-    "additional_list" : [{
-        "answer" : "string",
-        "inputValue" : "string",
-        "blockType" : "string"
-    },...]
-  }
-```
-```json approved-webhook-knowledge-based.json
-{
-  "submission_id": "string",
-  "email": "string",
-  "cf": {
-    "cf1": "string",
-    "cf2": "string",
-    "cf3": "string"
-  },
-  "applicant_id": "string",
-  "webhook_trigger": "approved",
-  "kyc_result": {
-    "status": "approved",
-    "updated_at": "string",
-    "created_at": "string",
-    "kyc_result_at": "string",
-    "reviewer": "string"
-  },
-  "age_group": "N/A",
-  "gender": "string",
-  "date_of_birth": "string",
-  "nationality": "string",
-  "duplicated_information": "string",
-  "fullName": "string",
-  "phoneNumber": "string",
-  "ssnNumber": "string",
-  "additional_list": [
-    {
-      "answer": "string",
-      "inputValue": "string",
-      "blockType": "string"
-    },...]
+    "phoneNumber": "string",
+    "ssnNumber": "string",
+    "additional_list": [
+        {
+            "answer": "string",
+            "inputValue": "string",
+            "blockType": "string"
+        },...
+    ]
 }
 ```
+
+
+```json approved-webhook-knowledge-based.json
+{
+    "submission_id": "string",
+    "email": "string",
+    "cf": {
+        "cf1": "string",
+        "cf2": "string",
+        "cf3": "string"
+    },
+    "applicant_id": "string",
+    "webhook_trigger": "approved",
+    "kyc_result": {
+        "status": "approved",
+        "updated_at": "string",
+        "created_at": "string",
+        "kyc_result_at": "string",
+        "reviewer": "string"
+    },
+    "age_group": "N/A",
+    "gender": "string",
+    "date_of_birth": "string",
+    "nationality": "string",
+    "duplicated_information": "string",
+    "full_name": "string",
+    "phoneNumber": "string",
+    "ssnNumber": "string",
+    "additional_list": [
+        {
+            "answer": "string",
+            "inputValue": "string",
+            "blockType": "string"
+        },...
+    ]
+}
+```
+
 </CodeGroup>
-
-
 
 <ResponseField name="webhook_trigger" type="string">
   웹훅 트리거 유형 - `approved`는 KYC가 자동 승인되거나 대기 상태에서 승인됨을 의미

@@ -1,7 +1,7 @@
 ---
-mode: 'default'
-title: Submit
-description: This event is triggered when new KYC information is submitted to the system. Submissions occur when a user completes and submits a KYC form or when KYC data is transmitted via an API. This event enables you to immediately recognize new KYC submissions and initiate the verification process or perform any necessary initial actions.
+mode: "default"
+title: "Submit"
+description: "This event is triggered when new KYC information is submitted to the system. Submissions occur when a user completes and submits a KYC form or when KYC data is transmitted via an API. This event enables you to immediately recognize new KYC submissions and initiate the verification process or perform any necessary initial actions."
 ---
 
 ```json submit-webhook-sample.json
@@ -9,18 +9,19 @@ description: This event is triggered when new KYC information is submitted to th
     "webhook_trigger": "submit",
     "created_at": "string",
     "submission_id": "string",
-    "duplicated_information" : "string",
+    "duplicated_information": "string",
     "email": "string",
     "cf": {
-      "cf1": "string",
-      "cf2": "string",
-      "cf3": "string"
+        "cf1": "string",
+        "cf2": "string",
+        "cf3": "string"
     },
     "userid": "string",
     "tokenid": "string",
     "ipAddress": "string"
-  }
+}
 ```
+
 <ResponseField name="webhook_trigger" type="string">
   Webhook trigger type - `submit` indicates a Pending status after submission.
 </ResponseField>
@@ -33,13 +34,13 @@ description: This event is triggered when new KYC information is submitted to th
   Unique identifier for each KYC submission.
 </ResponseField>
 
-<ResponseField name="duplicated_information" type="string" >
-  A unique ID is generated based on name, date of birth, gender, and nationality for duplicate checks. (*Always generated when all four criteria are provided.)
+<ResponseField name="duplicated_information" type="string">
+  A unique ID is generated based on name, date of birth, gender, and nationality for duplicate checks. (\*Always generated when all four criteria are provided.)
 </ResponseField>
-
 
 <ResponseField name="cf" type="object">
   An object containing user-defined fields (cf1, cf2, cf3).
+
   <Expandable title="properties">
     <ResponseField name="cf1" type="string">
       Value of custom field 1.

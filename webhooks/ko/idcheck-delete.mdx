@@ -1,17 +1,17 @@
 ---
-mode: 'default'
-title: Delete (삭제)
-description: 이 이벤트는 KYC 제출 건이 시스템에서 삭제될 때 트리거됩니다. 삭제는 관리자의 수동 조작, 정책에 따른 자동 삭제, 또는 사용자의 요청에 의해 발생할 수 있습니다. 이 이벤트를 통해 KYC 데이터의 삭제를 실시간으로 감지하고 필요한 후속 조치를 취할 수 있습니다
-
+mode: "default"
+title: "Delete (삭제)"
+description: "이 이벤트는 KYC 제출 건이 시스템에서 삭제될 때 트리거됩니다. 삭제는 관리자의 수동 조작, 정책에 따른 자동 삭제, 또는 사용자의 요청에 의해 발생할 수 있습니다. 이 이벤트를 통해 KYC 데이터의 삭제를 실시간으로 감지하고 필요한 후속 조치를 취할 수 있습니다"
 ---
+
 ```json delete-webhook-sample.json
 {
-	"webhook_trigger":"delete",
-	"submission_id":"string",
-    "duplicated_information" : "string",
-	"account_email":"string",
-	"delete_time":"string",
-	"comment":"string"
+    "webhook_trigger": "delete",
+    "submission_id": "string",
+    "duplicated_information": "string",
+    "account_email": "string",
+    "delete_time": "string",
+    "comment": "string"
 }
 ```
 
@@ -20,21 +20,21 @@ description: 이 이벤트는 KYC 제출 건이 시스템에서 삭제될 때 �
 </ResponseField>
 
 <ResponseField name="submission_id" type="string">
- 삭제된 KYC 제출 건의 고유 식별자
+  삭제된 KYC 제출 건의 고유 식별자
 </ResponseField>
 
-<ResponseField name="duplicated_information" type="string" >
-  이름, 생년월일, 성별, 국적을 기준으로 중복 확인용 식별자가 생성됩니다. (*네 가지 기준이 모두 제공되면 항상 생성됩니다.)
+<ResponseField name="duplicated_information" type="string">
+  이름, 생년월일, 성별, 국적을 기준으로 중복 확인용 식별자가 생성됩니다. (\*네 가지 기준이 모두 제공되면 항상 생성됩니다.)
 </ResponseField>
 
 <ResponseField name="account_email" type="string">
- KYC 제출건 삭제를 수행한 관리자 계정의 이메일 주소
+  KYC 제출건 삭제를 수행한 관리자 계정의 이메일 주소
 </ResponseField>
 
 <ResponseField name="delete_time" type="string">
- KYC 제출건이 삭제된 시간 (UTC+0, ISO 8601 형식)
+  KYC 제출건이 삭제된 시간 (UTC\+0, ISO 8601 형식)
 </ResponseField>
 
 <ResponseField name="comment" type="string">
- 제출건 삭제 시 관리자가 남긴 코멘트 (선택적)
+  제출건 삭제 시 관리자가 남긴 코멘트 (선택적)
 </ResponseField>

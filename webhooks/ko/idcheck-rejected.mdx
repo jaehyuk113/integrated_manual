@@ -1,29 +1,29 @@
 ---
-mode: 'default'
-title: Rejected (거절)
-description: 이 이벤트는 KYC 제출이 거부될 때 트리거됩니다. 거부는 자동화된 검증 실패, 수동 검토 결과, 또는 기타 정책적 이유로 발생할 수 있습니다. 이 이벤트를 통해 KYC 거부 사유를 즉시 파악하고, 사용자에게 피드백을 제공하거나 추가 정보 요청 등의 필요한 조치를 취할 수 있습니다.
+mode: "default"
+title: "Rejected (거절)"
+description: "이 이벤트는 KYC 제출이 거부될 때 트리거됩니다. 거부는 자동화된 검증 실패, 수동 검토 결과, 또는 기타 정책적 이유로 발생할 수 있습니다. 이 이벤트를 통해 KYC 거부 사유를 즉시 파악하고, 사용자에게 피드백을 제공하거나 추가 정보 요청 등의 필요한 조치를 취할 수 있습니다."
 ---
 
 ```json rejected-webhook-sample.json
 {
     "webhook_trigger": "rejected",
     "kyc_result": {
-      "status": "string",
-      "comment": "string",
-      "updated_at": "string",
-      "commentCode": "string"
+        "status": "string",
+        "comment": "string",
+        "updated_at": "string",
+        "commentCode": "string"
     },
     "submission_id": "string",
-    "duplicated_information" : "string",
-    "applicant_id" : "string",
+    "duplicated_information": "string",
+    "applicant_id": "string",
     "email": "string",
     "cf": {
-      "cf1": "string",
-      "cf2": "string",
-      "cf3" : "string"
+        "cf1": "string",
+        "cf2": "string",
+        "cf3": "string"
     },
     "userid": "string",
-    "tokenId" : "string",
+    "tokenId": "string",
     "ipAddress": "string"
 }
 ```
@@ -33,52 +33,47 @@ description: 이 이벤트는 KYC 제출이 거부될 때 트리거됩니다. �
 </ResponseField>
 
 <ResponseField name="kyc_result" type="object">
-KYC 제출 결과를 포함하는 객체
+  KYC 제출 결과를 포함하는 객체
+
   <Expandable title="properties">
     <ResponseField name="status" type="string">
       KYC 검토 결과. `approved` 또는 `rejected`
     </ResponseField>
-
     <ResponseField name="comment" type="string">
       거절 사유 설명
     </ResponseField>
-
     <ResponseField name="updated_at" type="string">
       KYC 상태가 최종 변경된 UTC 시간 (ISO 8601 형식)
     </ResponseField>
-
     <ResponseField name="commentCode" type="string">
       거절 사유에 대한 고유 코드
     </ResponseField>
   </Expandable>
 </ResponseField>
 
-<ResponseField name="submission_id" type="string" >
+<ResponseField name="submission_id" type="string">
   KYC 제출 건별 고유 식별자
 </ResponseField>
 
-<ResponseField name="duplicated_information" type="string" >
-  이름, 생년월일, 성별, 국적을 기준으로 중복 확인용 식별자가 생성됩니다. (*네 가지 기준이 모두 제공되면 항상 생성됩니다.)
+<ResponseField name="duplicated_information" type="string">
+  이름, 생년월일, 성별, 국적을 기준으로 중복 확인용 식별자가 생성됩니다. (\*네 가지 기준이 모두 제공되면 항상 생성됩니다.)
 </ResponseField>
 
-<ResponseField name="applicant_id" type="string" >
+<ResponseField name="applicant_id" type="string">
   중복 제출을 확인하기 위해 부여되는 고유 식별 ID로, KYC 상태가 승인일 때만 전달 됩니다.
 </ResponseField>
 
-
-
-<ResponseField name="email" type="string" >
+<ResponseField name="email" type="string">
   KYC 제출자 이메일 주소
 </ResponseField>
 
-
 <ResponseField name="cf" type="object">
-	사용자 정의 필드 (cf1, cf2, cf3) 데이터를 포함하는 객체
+  사용자 정의 필드 (cf1, cf2, cf3) 데이터를 포함하는 객체
+
   <Expandable title="properties">
     <ResponseField name="cf1" type="string">
       사용자 정의 필드 1의 값
     </ResponseField>
-
     <ResponseField name="cf2" type="string">
       사용자 정의 필드 2의 값
     </ResponseField>
@@ -88,18 +83,14 @@ KYC 제출 결과를 포함하는 객체
   </Expandable>
 </ResponseField>
 
-
-
-<ResponseField name="userid" type="string" >
+<ResponseField name="userid" type="string">
   고객사에서 정의한 KYC 제출자 고유 식별자
 </ResponseField>
 
-<ResponseField name="tokenId" type="string" >
+<ResponseField name="tokenId" type="string">
   비공개 모드의 라이브 폼 제출 시 사용된 토큰 ID
 </ResponseField>
 
-
-<ResponseField name="ipAddress" type="string" >
+<ResponseField name="ipAddress" type="string">
   제출자의 IP 주소
 </ResponseField>
-

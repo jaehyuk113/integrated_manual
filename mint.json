@@ -15,6 +15,9 @@
       "to": "#0064FF"
     }
   },
+  "components": {
+    "autoImport": true
+  },
   "font": {
     "headings": {
       "family": "Montserrat"

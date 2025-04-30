@@ -1,22 +1,22 @@
 ---
-title: 'Getting Started'
-description: |
-  Add-on feature enables additional authentication for approved submissions in customer projects. 
-  Currently, FaceAuth (facial authentication) is supported, and future updates will introduce additional verification methods such as identity documents, official papers, and certificates.
-  FaceAuth enhances identity verification by comparing the facial image extracted from the submitted ID during the ID Check process with the user's submitted facial image.
+title: "Getting Started"
+description: "Add-on feature enables additional authentication for approved submissions in customer projects. 
+Currently, FaceAuth (facial authentication) is supported, and future updates will introduce additional verification methods such as identity documents, official papers, and certificates.
+FaceAuth enhances identity verification by comparing the facial image extracted from the submitted ID during the ID Check process with the user's submitted facial image.
+"
 ---
 
 ## Add-on API Endpoints
 
 <CardGroup cols={3}>
   <Card title="POST/FaceAuth" icon="person-circle-plus" href="/add-on/en/post-faceauth">
-  Submit FaceAuth
+    Submit FaceAuth
   </Card>
   <Card title="GET/FaceAuth" icon="person-circle-check" href="/add-on/en/get-faceauth">
-  Retrieve FaceAuth
+    Retrieve FaceAuth
   </Card>
   <Card title="DELETE/FaceAuth" icon="person-circle-xmark" href="/add-on/en/delete-faceauth">
-  Delete FaceAuth
+    Delete FaceAuth
   </Card>
 </CardGroup>
 
@@ -24,11 +24,12 @@ description: |
 
 <CardGroup cols={1}>
   <Card title="FaceAuth" icon="person-circle-plus" href="/add-on/en/add-on-web">
-  KYC Data Submission
+    KYC Data Submission
   </Card>
-</CardGroup> 
+</CardGroup>
 
 ## API Key
+
 The Add-on API key is used to authenticate and verify client and server requests. It ensures that the requestor is authorized, allowing Argos Identity to return the appropriate response.
 
 ## How to Retrieve Add-on API Key
@@ -41,12 +42,20 @@ The Add-on API key is used to authenticate and verify client and server requests
     Click on the `Add-on` menu in the top navigation bar of the dashboard.
   </Step>
   <Step title="Create a Project">
-     Click the `Create Project` button on the Add-on page to create a new project.
-    <img height="200" src="/images/add-ons/create-project.png" />
+    Click the `Create Project` button on the Add-on page to create a new project.
+
+    <img
+      height="200"
+      src="/images/add-ons/create-project.png"
+    />
   </Step>
   <Step title="Retrieve API Key">
     After creating the project, click the `Edit` button on the Add-on page, then locate the `API Key` section. Click the icon on the right to copy the API key and use it.
-    <img height="200" src="/images/add-ons/api-key.png" />
+
+    <img
+      height="200"
+      src="/images/add-ons/api-key.png"
+    />
   </Step>
 </Steps>
 
@@ -58,12 +67,12 @@ HTTP response codes indicate the status of requests. Each response code follows 
 - `4xx`  Client errors
 - `5xx`  Server errors
 
-| HTTP Status Code | Message | Description |
-| :---: | :----: | :----: |
-| `200` | OK | The request was successfully processed. |
-| `400` | Invalid Query String parameters | The request could not be processed due to missing or incorrect parameters. Please check the request parameters and try again. |
-| `403` | User is not authorized to access this resource with an explicit deny | Access denied. The request was made from an IP that is not whitelisted. |
-| `403` | Forbidden | Access denied. An incorrect API key may have been used. |
-| `413` | Request Entity Too Large | The request is too large. The data exceeds the server's processing limits. Reduce the request size and try again. |
-| `500` | Internal Server Error | A server error occurred. There may be an issue with the Argos server. Please contact the Argos team. |
-| `502` | Bad Gateway | The server received an invalid response from the upstream server. Try again later or contact the Argos team. |
+| HTTP Status Code | Message                                                              | Description                                                                                                                   |
+| :--------------: | :------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------: |
+| `200`            | OK                                                                   | The request was successfully processed.                                                                                       |
+| `400`            | Invalid Query String parameters                                      | The request could not be processed due to missing or incorrect parameters. Please check the request parameters and try again. |
+| `403`            | User is not authorized to access this resource with an explicit deny | Access denied. The request was made from an IP that is not whitelisted.                                                       |
+| `403`            | Forbidden                                                            | Access denied. An incorrect API key may have been used.                                                                       |
+| `413`            | Request Entity Too Large                                             | The request is too large. The data exceeds the server's processing limits. Reduce the request size and try again.             |
+| `500`            | Internal Server Error                                                | A server error occurred. There may be an issue with the Argos server. Please contact the Argos team.                          |
+| `502`            | Bad Gateway                                                          | The server received an invalid response from the upstream server. Try again later or contact the Argos team.                  |

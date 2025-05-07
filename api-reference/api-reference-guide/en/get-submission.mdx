@@ -80,12 +80,11 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
     "Items": [
         {
             "data": {
-                "first_name": "{first_name}",
-                "mid_name": "{mid_name}",
-                "last_name": "{last_name}",
-                "full_name": "{full_name}",
+                "first_name": "{first name}",
+                "last_name": "{last name}",
+                "full_name": "{full name}",
                 "gender": "male",
-                "nationality": "KOR",
+                "nationality": "USA",
                 "date_of_birth": "YYYY-MM-DD",
                 "address_city": "{city}",
                 "address_country": "KOR",
@@ -94,10 +93,10 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
                 "address_street2": "{street2}",
                 "address_zipcode": "{zipcode}",
                 "ip_address": "{ip_address}",
-                "idcard_issuingCountry": "KOR",
+                "idcard_issuingCountry": "USA",
                 "idcard_issueDate": "YYYY-MM-DD",
-                "idType": "government_id",
-                "identityNumber": "{******-*******}"
+                "idType": "drivers_license",
+                "documentNumber": "{********}"
             },
             "email": "{email}",
             "submission_id": "{submission_id}",
@@ -106,10 +105,8 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
             "updated_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
             "reviewer": "{reviewer}",
             "aml": {
-                "raw_data": {...
-                },
-                "matches": [...
-                ],
+                "raw_data": {...},
+                "matches": [...],
                 "risk_level_summary": "HIGH",
                 "currentstatus": "Red Flag"
             },
@@ -126,128 +123,51 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
                         "attemptCnt": 1,
                         "step1Time1st": "YYYY-MM-DD-HH-MM-SS-ZZZ",
                         "ocrResult": "success",
-                        "verificationResult": "success",
-                        "verification": {
-                            "result": {
-                                "code": "CF-00000",
-                                "message": "성공",
-                                "transactionId": "{transactionId}",
-                                "extraMessage": ""
-                            },
-                            "data": {
-                                "resUserIdentiyNo": "*************",
-                                "resAuthenticity": "1",
-                                "resAuthenticityDesc": "입력하신 내용은 등록된 내용과 일치합니다.",
-                                "resUserNm": "{resUserNm}"
-                            }
-                        },
-                        "verificationParams": {
-                            "fullName": "{fullName}",
-                            "idType": "government_id",
-                            "issueDate": "{YYYY-MM-DD}",
-                            "identityNumber": "******-*******"
-                        },
-                        "step2Time1st": "YYYY-MM-DD-HH-MM-SS-ZZZ",
-                        "liveness": {
-                            "score": 8.097455,
-                            "probability": 0.9996958,
-                            "quality": 0.7537264
-                        },
-                        "faceSimilarityScore": 0,
                         "retryMsg": [
-                            "The face doesn’t match. Please retry with another face image."
+                            "Failed to read PDF417 Barcode."
                         ],
-                        "livenessScore": 99,
-                        "selfieImage": "{selfieImage URL}",
+                        "idBarcodeResult": "fail",
                         "retryCode": [
-                            "face_compare_underscore"
+                            "barcode_protocol_fail"
                         ]
                     },
                     {
                         "attemptCnt": 2,
-                        "verificationResult": "success",
-                        "verification": {
-                            "result": {
-                                "code": "CF-00000",
-                                "message": "성공",
-                                "transactionId": "{transactionId}",
-                                "extraMessage": ""
-                            },
-                            "data": {
-                                "resUserIdentiyNo": "*************",
-                                "resAuthenticity": "1",
-                                "resAuthenticityDesc": "입력하신 내용은 등록된 내용과 일치합니다.",
-                                "resUserNm": "{resUserNm}"
-                            }
-                        },
-                        "verificationParams": {
-                            "fullName": "{fullName}",
-                            "idType": "government_id",
-                            "issueDate": "{YYYY-MM-DD}",
-                            "identityNumber": "******-*******"
-                        },
-                        "step2Time2nd": "YYYY-MM-DD-HH-MM-SS-ZZZ",
                         "liveness": {
-                            "score": 8.097455,
-                            "probability": 0.9996958,
-                            "quality": 0.7537264
+                            "score": 1.1610267,
+                            "probability": 0.76151925,
+                            "quality": 0.5903906
                         },
-                        "faceSimilarityScore": 0,
+                        "faceSimilarityScore": 84,
                         "retryMsg": [
                             "The face doesn’t match. Please retry with another face image."
                         ],
-                        "livenessScore": 99,
                         "selfieImage": "{selfieImage URL}",
+                        "livenessScore": 76,
+                        "step2Time2nd": "YYYY-MM-DD-HH-MM-SS-ZZZ",
                         "retryCode": [
                             "face_compare_underscore"
                         ]
                     },
                     {
                         "attemptCnt": 3,
-                        "verificationResult": "success",
-                        "verification": {
-                            "result": {
-                                "code": "CF-00000",
-                                "message": "성공",
-                                "transactionId": "{selfieImage URL}",
-                                "extraMessage": ""
-                            },
-                            "data": {
-                                "resUserIdentiyNo": "*************",
-                                "resAuthenticity": "1",
-                                "resAuthenticityDesc": "입력하신 내용은 등록된 내용과 일치합니다.",
-                                "resUserNm": "{resUserNm}"
-                            }
-                        },
-                        "verificationParams": {
-                            "fullName": "{fullName}",
-                            "idType": "government_id",
-                            "issueDate": "{YYYY-MM-DD}",
-                            "identityNumber": "981112-1******"
-                        },
-                        "step2Time3rd": "YYYY-MM-DD-HH-MM-SS-ZZZ",
                         "liveness": {
-                            "score": 8.097455,
-                            "probability": 0.9996958,
-                            "quality": 0.7537264
+                            "error": "Failed to detect face",
+                            "error_code": "FACE_NOT_FOUND"
                         },
-                        "faceSimilarityScore": 0,
                         "retryMsg": [
-                            "The face doesn’t match. Please retry with another face image."
+                            "Liveness fail: Failed to detect face."
                         ],
-                        "livenessScore": 99,
                         "selfieImage": "{selfieImage URL}",
+                        "step2Time3rd": "YYYY-MM-DD-HH-MM-SS-ZZZ",
                         "retryCode": [
-                            "face_compare_underscore"
+                            "liveness_error"
                         ]
-                    }
-                ]
-            },
-            "projection": {
-                "projectionId": "5y7f8asd9qm8u71"
-            }
+                    },
+                }
+            ]
         }
-    ]
+    }
 }
 ```
 

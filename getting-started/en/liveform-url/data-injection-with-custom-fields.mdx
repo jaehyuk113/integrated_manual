@@ -1,67 +1,89 @@
 ---
-mode: 'default'
-title: Data Injection
-description: Data Injection is a method to update information for an existing submission via a separate path. This process replaces existing category data with new information.
+mode: "default"
+title: "Data Injection"
+description: "Data Injection is a method to update information for an existing submission via a separate path. This process replaces existing category data with new information."
 ---
 
 ## 1. Prerequisites
+
 <Note>
-To perform an Injection, a submission must first be created via Liveform.
+  To perform an Injection, a submission must first be created via Liveform.
 </Note>
 
 ## 2. Query String Options (Injection)
+
 Additional information sent via Query Strings is included in the response data when calling the API. This enables the following functionalities:
+
 - Generation of a unique user ID for KYC submitter identification.
 - Addition of up to three custom fields.
 
 ## 3. Implementation Method
+
 Query String options can be applied using the ARGOS ID Check Liveform. All Query String values must be URL-encoded.
 
 ## 4. URL Structure
+
 - Basic Form URL: `https://form.argosidentity.com/?pid={project_Id}`
-- URL with Injection: `https://form.argosidentity.com/?pid={project_id}&action=addveri&sid={submission_id}`
+- Injection URL: `https://form.argosidentity.com/?pid={project_id}&action=addveri&sid={submission_id}`
+- Injection URL with encryption: `https://form.argosidentity.com/?pid={project_id}&encrypted={encrypted_values}`
+
+<Warning>
+  **The Injection URL with encryption** method are required to encrypt the sid and action parameters. 
+
+  https://form.argosidentity.com/?pid={project_id}&encrypted={encrypted_values} (O)
+
+  https://form.argosidentity.com/?pid={project_id}&action=addveri&sid={submission_id}&encrypted={encrytped_values} (X)
+</Warning>
 
 ### 4-1. Key Parameters
 
 <ResponseField name="pid" type="string" required="true">
   Unique project identifier.
 </ResponseField>
+
 <ResponseField name="sid" type="string" required="true">
   Unique submission identifier.
 </ResponseField>
+
 <ResponseField name="action" type="string" required="true">
   Injection option action, use `addveri`.
 </ResponseField>
+
 <ResponseField name="cf1" type="string">
   Custom option field #1.
 </ResponseField>
+
 <ResponseField name="cf2" type="string">
   Custom option field #2.
 </ResponseField>
+
 <ResponseField name="cf3" type="string">
   Custom option field #3.
 </ResponseField>
+
 <ResponseField name="userid" type="string">
   Custom unique user identifier.
 </ResponseField>
 
 ## 4-2. Error Responses
 
-| Error Code                   | Description                                                                                  |
-|------------------------------|----------------------------------------------------------------------------------------------|
-| `Invalid required`           | Missing required parameter.                                                                 |
-| `Required field is missing`  | Missing one or more of the following: sid, pid, or address data.                             |
-| `Invalid submissionId`       | The provided `sid` does not exist.                                                          |
-| `Invalid projectId`          | The provided `pid` does not exist.                                                          |
-| `Error in injecting address` | Undefined, unspecified error occurred during address injection.                             |
+| Error Code                   | Description                                                      |
+| ---------------------------- | ---------------------------------------------------------------- |
+| `Invalid required`           | Missing required parameter.                                      |
+| `Required field is missing`  | Missing one or more of the following: sid, pid, or address data. |
+| `Invalid submissionId`       | The provided `sid` does not exist.                               |
+| `Invalid projectId`          | The provided `pid` does not exist.                               |
+| `Error in injecting address` | Undefined, unspecified error occurred during address injection.  |
 
 ## 5. Address Update Results
 
 ### 5-1. On Success
+
 - Redirects to the results page.
 - Displays the message: "Address verification completed."
 
 ### 5-2. On Failure
+
 - Redirects to an error page.
 - Displays the message: "An error occurred while processing the address information. Please try again." The user can then proceed with re-verification.
 

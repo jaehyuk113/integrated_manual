@@ -1,19 +1,19 @@
 ---
-mode: 'default'
-title: 추가 프로세스 (Injection) 가이드
-description: 추가 프로세스(Injection)는 기존 submission에 대해 별도 경로를 통해 정보를 업데이트하는 프로세스입니다. 이 프로세스를 통해 기존 카테고리의 정보가 새로운 정보로 대체됩니다.
-
+mode: "default"
+title: "추가 프로세스 (Injection) 가이드"
+description: "추가 프로세스(Injection)는 기존 submission에 대해 별도 경로를 통해 정보를 업데이트하는 프로세스입니다. 이 프로세스를 통해 기존 카테고리의 정보가 새로운 정보로 대체됩니다."
 ---
 
 ## 1. 전제조건
-<Note>
-Injection 진행을 위해서는 사전에 라이브폼 또는 API를 통해 submission이 생성되어 있어야 합니다.
-</Note>
 
+<Note>
+  Injection 진행을 위해서는 사전에 라이브폼 또는 API를 통해 submission이 생성되어 있어야 합니다.
+</Note>
 
 ## 2. Query String 옵션 (Injection)
 
 Query String으로 전송한 추가 정보는 API 호출 시 응답 데이터 값에 포함됩니다. 이를 통해 다음과 같은 기능을 활용할 수 있습니다:
+
 - KYC 제출자 식별을 위한 고유 유저 ID 생성
 - 최대 3개까지의 커스텀 필드 추가
 
@@ -22,51 +22,68 @@ Query String으로 전송한 추가 정보는 API 호출 시 응답 데이터 �
 Query String 옵션은 ARGOS ID check 라이브폼을 이용하여 적용할 수 있습니다. 모든 쿼리 스트링 값은 URL에 인코딩되어야 합니다.
 
 ## 4.URL 구조
+
 - 기본 폼 URL: `https://form.argosidentity.com/?pid={project_Id}`
 - Injection 포함 URL: `https://form.argosidentity.com/?pid={project_id}&action=addveri&sid={submission_id}`
+- 암호화가 적용된 Injection 포함 URL: https://form.argosidentity.com/?pid={project_id}&encrypted={encrypted_values}
 
+<Warning>
+  **암호화가 적용된 Injection 포함 URL** 로 사용할 시에는 sid 와 action 값도 암호화가 필요합니다.
+
+  https://form.argosidentity.com/?pid={project_id}&encrypted={encrypted_values} (O)
+
+  https://form.argosidentity.com/?pid={project_id}&action=addveri&sid={submission_id}&encrypted={encrytped_values} (X)
+</Warning>
 
 ### 4-1. 주요 파라미터
 
 <ResponseField name="pid" type="string" required="true">
   프로젝트 고유 구분자
 </ResponseField>
+
 <ResponseField name="sid" type="string" required="true">
   submission 고유 구분자
 </ResponseField>
+
 <ResponseField name="action" type="string" required="true">
   Injection 옵션 실행 `addveri`
 </ResponseField>
-<ResponseField name="cf1" type="string" >
+
+<ResponseField name="cf1" type="string">
   사용자 정의 옵션 필드 #1
 </ResponseField>
+
 <ResponseField name="cf2" type="string">
   사용자 정의 옵션 필드 #2
 </ResponseField>
-<ResponseField name="cf3" type="string" >
+
+<ResponseField name="cf3" type="string">
   사용자 정의 옵션 필드 #3
 </ResponseField>
-<ResponseField name="userid" type="string" >
+
+<ResponseField name="userid" type="string">
   사용자 지정 고유 식별자
 </ResponseField>
 
 ## 4-2. 응답 오류
 
-| 오류 코드                   | 설명                                                                                     |
-|-----------------------|-------------------------------------------------------------------------------------------------|
-| `Invalid required`  | 필수 파라미터 누락                        |
-| `Required field is missing`       | sid, pid, 주소데이터 중 1개 이상 누락            |
-| `Invalid submissionId`        | 존재하지 않는 sid             |
-| `Invalid projectId`            |	존재하지 않는 pid                               |
-| `Error in injecting address` | 정의되지 않은 불특정 에러         |
+| 오류 코드                        | 설명                         |
+| ---------------------------- | -------------------------- |
+| `Invalid required`           | 필수 파라미터 누락                 |
+| `Required field is missing`  | sid, pid, 주소데이터 중 1개 이상 누락 |
+| `Invalid submissionId`       | 존재하지 않는 sid                |
+| `Invalid projectId`          | 존재하지 않는 pid                |
+| `Error in injecting address` | 정의되지 않은 불특정 에러             |
 
 ## 5. 주소 업데이트 결과
 
-### 5-1. 성공 시 
+### 5-1. 성공 시
+
 - 결과 페이지로 이동
 - `주소지 인증이 완료되었습니다.` 메시지 표시
 
 ### 5-2. 실패 시
+
 - 오류 페이지 호출
 - `주소지 정보를 처리하는 중 오류가 발생하였습니다. 다시 시도해주세요.` 메시지 표시 후 재인증 진행
 

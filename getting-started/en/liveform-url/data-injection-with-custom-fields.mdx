@@ -69,6 +69,22 @@ Query String options can be applied using the ARGOS ID Check Liveform. All Query
   **Must be encrypted.** Custom unique user identifier.
 </ResponseField>
 
+<ResponseField name="iprisk_category" type="string">
+  **Must be encrypted.** Set the risk for IP-based routing services. As of now, `vpn` and `proxy` parameters are supported. There is no space between the comma and the option name in each option. This option is paired with the `iprisk_duration_hours` option.
+</ResponseField>
+
+<ResponseField name="iprisk_duration_hours" type="int">
+  **Must be encrypted.** If the system detects risk, set the hour and how many hours to restrict. It must be used with `iprisk_category`.
+</ResponseField>
+
+<ResponseField name="distance_checks_source" type="string">
+  **Must be encrypted.** The option to prevent users from continuing if their address is distant from their IP. Currently, `ipgeo` is only avaiable. This option is paired with the `distance_max_distance_km`.
+</ResponseField>
+
+<ResponseField name="distance_max_distance_km" type="int">
+  **Must be encrypted.** Can set a distance between the entered address and the IP-based address. It must be used with `distance_checks_source`.
+</ResponseField>
+
 ## 4-2. Error Responses
 
 | Error Code                   | Description                                                      |

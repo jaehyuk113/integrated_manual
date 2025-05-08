@@ -1,0 +1,130 @@
+---
+title: "POST/Projection                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           "
+description: "This API can set a policy to exclude a field item. There is a maximum of 10 projections. "
+---
+
+<Note>
+  For applying a projection, need to apply a query string parameter.
+
+  For details, refer to [key query string parameters](https://developers.argosidentity.com/getting-started/en/liveform-url/querystring-and-token-guide#2-1-key-query-string-parameters) sections
+</Note>
+
+## 1. Endpoint
+
+```text POST/Projection
+POST https://rest-api.argosidentity.com/v3/projection
+```
+
+## 2. Authentication
+
+Include the API key in the `x-api-key` header:
+
+```text x-api-key
+x-api-key: {yourAPIKey}
+```
+
+## 3. Request Body
+
+The request body must be in JSON format. Below are the field descriptions:
+
+<ResponseField name="name" type="string" required>
+  Set a projection name. Underscores (\_), numbers, and lowercase characters are permitted.
+</ResponseField>
+
+<ResponseField name="mode" type="string" required>
+  Set the projection mode. Currently, there is only the `exclude` option.
+</ResponseField>
+
+<ResponseField name="fields" type="array" required>
+  Set the list to exclude specific fields.
+
+  - `first_name`The first name that was submitted
+  - `mid_name` The middle name that was submitted
+  - `last_name`The last name that was submitted
+  - `full_name`The full name that was submitted
+  - `gender`: male or female
+  - `nationality`: Country code, ISO alpha-3
+  - `date_of_birth`: The submitted date of birth
+  - `ip_address`: the address type of IPv4
+  - `idType`: The type of ID (e.g., driver’s license, passport)
+  - `idcard_issuingCountry`: Issuing country code, ISO alpha-3
+  - `idcard_issueDate`: Issue Date of ID (YYYY-MM-DD)
+  - `idcard_expireDate`: Expiry Date of ID (YYYY-MM-DD)
+  - `identityNumber`
+  - `documentNumber`
+  - `address_city`
+  - `address_country`
+  - `address_state`
+  - `address_street`
+  - `address_street2`
+  - `address_zipcode`
+  - `address_globalCode`: Global address code (e.g., 8Q98HXPG\+MP)
+  - `address_compoundCode`: Compound address code (e.g., HXPG\+MP, Seoul, South Korea)
+  - `address_formatted`: Formatted detail address
+  - `address_input`: Inputted address
+  - `address_detail`: Inputted detail address
+  - `cf1`: Custom field 1
+  - `cf2`: Custom field 2
+  - `cf3`: Custom field 3
+
+  Knowledge-Based supported fields
+
+  - `age_group`
+  - `ssnNumber`: Social Security Number.\
+    \* For applying the lowerCamelCase convention to the written Number once more.
+  - `phoneNumber`
+
+  e.g.
+
+  - `["first_name","mid_name","last_name","full_name","idtype"]`
+  - `["date_of_birth","address_formatted","address_detail"]`
+</ResponseField>
+
+## 4. Request Example
+
+```curl POST/Projection
+curl --location 'https://rest-api.argosidentity.com/v3/projection' \
+--header 'Content-Type: application/json' \
+--header 'x-api-key: {yourAPIKey}'
+--data-raw '{
+	"name": "{name}",
+	"mode": "{mode}",
+	"fields": ["{field1}","{field2}"]
+}'
+```
+
+## 5. Response
+
+### 5-1. Success Response
+
+<CodeGroup>
+
+```json result-post-projection.json
+{
+    "message": "Create projection success",
+    "projection_id": "3zo1598m9mkrion"
+}
+```
+
+</CodeGroup>
+
+### 5-2. Response Field
+
+| Field Name      | Description                               | Data Type | Category        |
+| --------------- | ----------------------------------------- | --------- | --------------- |
+| `projection_id` | The unique ID of the generated projection | String    | Projection Info |
+
+### 5-3. Error Codes
+
+| Status Code | Error Message                            | Description                                                                               |
+| ----------- | ---------------------------------------- | ----------------------------------------------------------------------------------------- |
+| 400         | Invalid request body: name, mode, fields | When required fields (name, mode, fields) are missing in the request body                 |
+| 400         | Invalid mode: \$mode                     | When the mode in the request body is invalid. (Currently only `exclude` is supported)     |
+| 400         | Invalid fields detected: field1, field2  | When elements within the fields in the request body are invalid                           |
+| 400         | Invalid encrypted body                   | When an improperly formatted encrypted request is sent while encryption option is enabled |
+| 400         | Invalid JSON body                        | When the request body is not in valid JSON format                                         |
+| 404         | Projection not found                     | When there is no projection corresponding to the specified `projectionId`                 |
+| 405         | Method not allowed for /projections path | HTTP requests (PUT, DELETE, etc.) are not GET or POST                                     |
+| 409         | Projection name already exists           | The same projection name has already been set                                             |
+| 409         | Projection count limit exceeded          | If the number of projections exceeds the limit of 10 projections                          |
+| 500         | Internal server error                    | When the server encounters an unexpected exception error                                  |

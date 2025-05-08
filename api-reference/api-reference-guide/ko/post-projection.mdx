@@ -1,0 +1,129 @@
+---
+title: "POST/Projection                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           "
+description: "This API can set a policy to exclude a field item. There is a maximum of 10 projections."
+---
+
+<Note>
+  Projection 을 적용하기 위해서는, URL QueryString 에 파라미터 옵션을 적용해야 합니다.
+
+  자세한 사항은 [주요 QueryString 파라미터](https://developers.argosidentity.com/getting-started/ko/liveform-url/querystring-and-token-guide#2-1-%EC%A3%BC%EC%9A%94-querystring-%ED%8C%8C%EB%9D%BC%EB%AF%B8%ED%84%B0) 를 참조하세요.
+</Note>
+
+## 1. 엔드포인트
+
+```text POST/Projection
+POST https://rest-api.argosidentity.com/v3/projection
+```
+
+## 2. 인증
+
+Include the API key in the `x-api-key` header:
+
+```text x-api-key
+x-api-key: {yourAPIKey}
+```
+
+## 3. 요청 본문
+
+요청 본문은 JSON 형식이어야 합니다. 다음은 필드 설명입니다:
+
+<ResponseField name="name" type="string" required>
+  Projection 이름. 이름은 소문자, 숫자, 언더스코어(\_)만 허용함
+</ResponseField>
+
+<ResponseField name="mode" type="string" required>
+  Projection 모드 현재는 `exclude` 만 지원함
+</ResponseField>
+
+<ResponseField name="fields" type="array" required>
+  제외할 필드 목록을 배열 형태로 지정 가능
+
+  - `first_name`제출자의 First name
+  - `mid_name` 제출자의 Middle name
+  - `last_name`제출자의 Last name
+  - `full_name`제출자의 Full name
+  - `gender`: male 혹은 female
+  - `nationality`: ISO alpha-3 국가 코드
+  - `date_of_birth`: 제출자의 생년월일
+  - `ip_address`: IPv4 타입의 IP 주소
+  - `idType`: 신분증 타입 (e.g., driver’s license, passport)
+  - `idcard_issuingCountry`: 신분증 발급국가의 ISO alpha-3 코드
+  - `idcard_issueDate`: ID의 발급일자 YYYY-MM-DD 형식.
+  - `idcard_expireDate`: ID의 만료일자 YYYY-MM-DD 형식.
+  - `identityNumber`
+  - `documentNumber`
+  - `address_city`
+  - `address_country`
+  - `address_state`
+  - `address_street`
+  - `address_street2`
+  - `address_zipcode`
+  - `address_globalCode`: 글로벌 주소 코드 (e.g., 8Q98HXPG\+MP)
+  - `address_compoundCode`: 복합 주소 코드 (e.g., HXPG\+MP, Seoul, South Korea)
+  - `address_formatted`: 변환된 상세 주소
+  - `address_input`: 제출자가 입력한 주소
+  - `address_detail`: 제출자가 입력한 상세 주소
+  - `cf1`: 커스템 필드 1
+  - `cf2`: 커스템 필드 2
+  - `cf3`: 커스템 필드 3
+
+  Knowledge-Based 전용 필드
+
+  - `age_group`
+  - `ssnNumber`: 소셜 시크리트 넘버.\
+    \* 소문자 CamelCase 적용으로 파라미터 관리상 필드명에 Number 가 한번더 기재되어 있습니다.
+  - `phoneNumber`
+
+  e.g.
+
+  - `["first_name","mid_name","last_name","full_name","idtype"]`
+  - `["date_of_birth","address_formatted","address_detail"]`
+</ResponseField>
+
+## 4. 요청 예시
+
+```curl POST/Projection
+curl --location 'https://rest-api.argosidentity.com/v3/projection' \
+--header 'Content-Type: application/json' \
+--header 'x-api-key: {yourAPIKey}'
+--data-raw '{
+	"name": "{name}",
+	"mode": "{mode}",
+	"fields": ["{field1}","{field2}"]
+}'
+```
+
+## 5. 응답
+
+### 5-1. 성공 응답
+
+<CodeGroup>
+
+```json result-post-projection.json
+{
+    "message": "Create projection success",
+    "projection_id": "3zo1598m9mkrion"
+}
+```
+
+</CodeGroup>
+
+### 5-2. 응답 필드
+
+| 필드명             | 설명                | 데이터 타입 | 카테고리          |
+| --------------- | ----------------- | ------ | ------------- |
+| `projection_id` | 고유한 Projection ID | String | Projection 정보 |
+
+### 5-3. 오류 응답
+
+| 응답 코드 | 오류 메시지                                   | 설명                                              |
+| ----- | ---------------------------------------- | ----------------------------------------------- |
+| 400   | Invalid request body: name, mode, fields | 요청 파라미터에 필수 값인 name, mode, fields 중 하나라도 누락된 경우 |
+| 400   | Invalid mode: \$mode                     | 지원하지 않는 mode 로 설정한 경우 현재는 `exclude` 만 지원함       |
+| 400   | Invalid fields detected: field1, field2  | 유효하지 않은 필드가 기입된 경우                              |
+| 400   | Invalid encrypted body                   | 안전한 데이터 전송 옵션이 활성화 된 상태에서 수신된 암호화가 잘못된 경우       |
+| 400   | Invalid JSON body                        | 유효하지 않은 JSON 포멧으로 요청된 경우                        |
+| 405   | Method not allowed for /projections path | GET, DELETE 이외의 HTTP 메서드(POST, PUT 등)로 요청한 경우   |
+| 409   | Projection name already exists           | 이미 프로젝트내에 존재하는 프로젝션 이름으로 새 프로젝션을 생성하려고 할 때      |
+| 409   | Projection count limit exceeded          | 프로젝트당 최대 프로젝션 수(10개)를 초과했을 때                    |
+| 500   | Internal server error                    | 서버 내부에서 처리되지 않은 예외가 발생한 경우                      |

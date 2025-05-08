@@ -1,0 +1,55 @@
+---
+title: "DELETE/Projection"
+description: "This API can delete a field-item-excluding policy projection."
+---
+
+## 1. Endpoint
+
+```text DELETE/projection
+DELETE https://rest-api.argosidentity.com/v3/projection/{projectionId}
+```
+
+## 2. Authentication
+
+Include the API key in the `x-api-key` header:
+
+```text x-api-key
+x-api-key: {yourAPIKey}
+```
+
+## 3. Request Body
+
+The request body must be in JSON format. Below are the field descriptions:
+
+<ResponseField name="projectionId" type="string" required>
+  The unique ID of a projection
+</ResponseField>
+
+## 4. Request Example
+
+```curl DELETE/Projection
+curl --location --request DELETE 'https://rest-api.argosidentity.com/v3/projection/{projectrionId}' \
+--header 'x-api-key: {yourAPIKey}'
+```
+
+## 5. Response
+
+### 5-1. Success Response
+
+<CodeGroup>
+
+```json result-delete-projection.json
+{
+    "message": "Delete projection success"
+}
+```
+
+</CodeGroup>
+
+### 5-2. Error Codes
+
+| Status Code | Error Message                                         | Description                                              |
+| ----------- | ----------------------------------------------------- | -------------------------------------------------------- |
+| 404         | Projection not found                                  | Delete projection id not found.                          |
+| 405         | Method not allowed for /projections/projectionId path | HTTP requests (PUT, DELETE, etc.) are not GET or POST.   |
+| 500         | Internal server error                                 | When the server encounters an unexpected exception error |

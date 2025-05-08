@@ -8,71 +8,76 @@ description: "This event is triggered when previously submitted KYC information 
 
 ```json updated-webhook-id-document.json
 {
-  "webhook_trigger": "updated",
-  "submission_id": "string",
-  "duplicated_information": "string",
-  "email": "string",
-  "data": {
-    "update": [
-      "idType",
-      "issuingCountry",
-      "fullName",
-      "gender",
-      "birthDate",
-      "nationality",
-      "kycStatus",
-      "issueDate",
-      "identityNumber"
-    ],
-    "kyc_result": "string",
-    "pending_at": "string",
-    "reviewer": "string"
-  },
-  "admin": "string",
-  "update_time": "string",
-  "age_group": "string",
-  "gender": "string",
-  "date_of_birth": "string",
-  "nationality": "string",
-  "userid": "string",
-  "tokenId": "string"
+    "webhook_trigger": "updated",
+    "submission_id": "string",
+    "duplicated_information": "string",
+    "email": "string",
+    "data": {
+        "update": [
+            "kycStatus",
+            "idType",
+            "issuingCountry",
+            "fullName",
+            "gender",
+            "nationality",
+            "birthDate",
+            "identityNumber",
+            "issueDate",
+            "expireDate",
+            "documentNumber",
+            "serialNumber",
+            "privacyShield",
+            "curpNumber",
+            "version",
+            "typeOfPermit"
+        ],
+        "kyc_result": "string",
+        "pending_at": "string",
+        "reviewer": "string"
+    },
+    "admin": "string",
+    "update_time": "string",
+    "age_group": "string",
+    "gender": "string",
+    "date_of_birth": "string",
+    "nationality": "string",
+    "userid": "string",
+    "tokenId": "string"
 }
 ```
 
 
 ```json updated-webhook-knowledge-based.json
 {
-  "webhook_trigger": "updated",
-  "submission_id": "string",
-  "duplicated_information": "string",
-  "email": "string",
-  "data": {
-    "update": [
-      "idType",
-      "issuingCountry",
-      "fullName",
-      "gender",
-      "birthDate",
-      "nationality",
-      "kycStatus",
-      "issueDate",
-      "identityNumber"
-    ],
-    "kyc_result": "string",
-    "pending_at": "string",
-    "reviewer": "string"
-  },
-  "admin": "string",
-  "update_time": "string",
-  "gender": "string",
-  "date_of_birth": "string",
-  "nationality": "string",
-  "userid": "string",
-  "tokenId": "string"
-  "age_group": "N/A",
-  "fullName": "string",
-  "phoneNumber": "string",
-  "ssnNumber": "string"
+    "webhook_trigger": "updated",
+    "submission_id": "string",
+    "duplicated_information": "string",
+    "email": "string",
+    "data": {
+        "update": [
+            "fullName",
+            "gender",
+            "birthDate",
+            "nationality",
+            "kycStatus",
+            "issueDate",
+            "identityNumber"
+        ],
+        "kyc_result": "string",
+        "pending_at": "string",
+        "reviewer": "string"
+    },
+    "admin": "string",
+    "update_time": "string",
+    "gender": "string",
+    "date_of_birth": "string",
+    "nationality": "string",
+    "userid": "string",
+    "tokenId": "string",
+    "age_group": "N/A",
+    "full_name": "string",
+    "phoneNumber": "string",
+    "ssnNumber": "string"
 }
 ```
 

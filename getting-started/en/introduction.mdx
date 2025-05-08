@@ -1,19 +1,23 @@
 ---
-mode: 'default'
-title: Getting Started with ID Check
+mode: "default"
+title: "Getting Started with ID check"
 ---
 
 <img
   width="800px"
-  src="/images/liveform.png"
+  src="/liveform_new.png"
   alt="Hero Light"
+  title=""
 />
+
 Get started with ARGOS Identity's powerful identity verification solution. Build a secure and efficient ID Check process in just a few simple steps.
 
 ## 1. What is Liveform?
+
 Liveform is the identity verification form provided by ARGOS Identity's ID Check. It is designed to effectively counter various types of fraud and comply with KYC (Know Your Customer) regulations.
 
 ### 1-1. Key Features of Liveform
+
 - **Flexible Identity Verification Layers**: Adjust security levels by adding various authentication steps based on your needs.
 - **Dynamic Risk Assessment**: Enable additional verification steps based on risk levels for more precise identity validation.
 - **Regulatory Compliance**: Designed to meet various industry standards and regulatory requirements.
@@ -24,10 +28,9 @@ Liveform is the identity verification form provided by ARGOS Identity's ID Check
 ID Check can be used in two ways.
 
 ### 2-1. Starting on a PC
-<img
-  src="/images/liveform-mobile.png"
-  alt="liveform-pc"
-/>
+
+![liveform-pc](/images/liveform-mobile.png)
+
 <Steps>
   <Step title="Open the ID Check URL">
     Open the ID Check URL on your computer.
@@ -41,10 +44,9 @@ ID Check can be used in two ways.
 </Steps>
 
 ### 2-2. Starting Directly on a Mobile Device
-<img
-  src="/images/liveform-app.png"
-  alt="liveform-app"
-/>
+
+![liveform-app](/images/liveform-app.png)
+
 <Steps>
   <Step title="Direct Connection via App">
     Link the Liveform URL to in-app events requiring user ID verification, allowing users to open the ID Check Liveform page directly.
@@ -57,60 +59,64 @@ ID Check can be used in two ways.
 ## 3. Checking the Liveform URL
 
 <Note>
-Submissions are only available on mobile devices equipped with a camera.
+  Submissions are only available on mobile devices equipped with a camera.
 </Note>
 
 <Steps>
   <Step title="Log in to the Dashboard">
     <Card title="Access the Dashboard" icon="link" href="https://idcheck.argosidentity.com">
+      
     </Card>
   </Step>
   <Step title="Find the Liveform URL">
-    <img
-      src="/images/liveform-url.png"
-      alt="liveform-url"
-    />
-    Navigate to **Settings** -> **Access Management**, locate the Liveform URL section, and click the **LINK** icon to start the Liveform.
+    ![liveform-url](/images/liveform-url.png)
+
+    Navigate to **Settings** -\> **Access Management**, locate the Liveform URL section, and click the **LINK** icon to start the Liveform.
   </Step>
 </Steps>
 
 ## 4. Utilizing the Liveform Link
+
 ARGOS ID Check Liveform is a web-based KYC submission system. You can find the customer account information and ID Check submission URL required for the service in the dashboard.
-<img
-  src="/images/dashboard.png"
-  alt="dashboard"
-/>
+
+![dashboard](/images/dashboard.png)
 
 ## 5. Submitting the Liveform
+
 ARGOS ID Check Liveform allows KYC submissions through a webpage. Customer account information and the ID Check submission URL required for this service can be found in the dashboard.
 
 ### 5-1. Setting up the Liveform Link
-<Warning> URL Guidelines: Do not alter the submission form URL. Modifications may prevent successful submissions. </Warning>
+
+<Warning>
+  URL Guidelines: Do not alter the submission form URL. Modifications may prevent successful submissions.
+</Warning>
 
 #### 5-1-1. Methods to Integrate the Liveform
+
 1. Embed the Liveform directly in an HTML iFrame.
 2. Open the Liveform as a separate webpage.
-
 3. Additional Features:
+
 - [Query Strings and Tokens](/getting-started/en/liveform-url/querystring-and-token-guide)
 - [Data Encryption and Decryption](/getting-started/en/encrypt-and-decrypt-data/overview)
 - [Data Injection](/getting-started/en/liveform-url/data-injection-with-custom-fields)
 
 <Note>
-Notes:
-1. If the URL parameter includes the email address, the submitter will not need to enter the email separately.  
-   Example: Using a link with `&email={email_address}` skips the email input step.
+  Notes:
 
-2. Email Notification: To notify submitters about the KYC process and results via email, include their email address in the URL parameter.
+  1. If the URL parameter includes the email address, the submitter will not need to enter the email separately.\
+     Example: Using a link with `&email={email_address}` skips the email input step.
+  2. Email Notification: To notify submitters about the KYC process and results via email, include their email address in the URL parameter.
 </Note>
 
 ### 5-2. Structure of the Liveform URL
+
 - **Base Form URL**: `https://form.argosidentity.com/?pid={project_Id}`
 - **URL with Email**: `https://form.argosidentity.com/?pid={project_Id}&email={email}`
 
 Example: `https://form.argosidentity.com/?pid=argos5202&email=demo@argosidentity.com`
 
 <Info>
-- **pid**: The `pid` in the Liveform URL is the unique ID of the client.  
-- If you need to verify the `pid (project Id)`, please contact ARGOS Helpdesk.
+  - **pid**: The `pid` in the Liveform URL is the unique ID of the client.
+  - If you need to verify the `pid (project Id)`, please contact ARGOS Helpdesk.
 </Info>

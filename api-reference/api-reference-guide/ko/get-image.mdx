@@ -1,12 +1,13 @@
 ---
-title: 'GET/Image'
-description: '이 API를 사용하여 특정 Submission ID에 연결된 이미지를 다운로드할 수 있습니다. 신분증 이미지(앞면/뒷면), 셀피 이미지, 주소지 문서 등을 조회할 수 있습니다.'
+title: "GET/Image"
+description: "이 API를 사용하여 특정 Submission ID에 연결된 이미지를 다운로드할 수 있습니다. 신분증 이미지(앞면/뒷면), 셀피 이미지, 주소지 문서 등을 조회할 수 있습니다."
 ---
 
 <Warning>
-주의사항
-- 한 번의 API 호출로 하나의 이미지만 다운로드할 수 있습니다.
-- 요청한 이미지 유형이 해당 제출 건에 존재하지 않을 경우 오류가 반환될 수 있습니다.
+  주의사항
+
+  - 한 번의 API 호출로 하나의 이미지만 다운로드할 수 있습니다.
+  - 요청한 이미지 유형이 해당 제출 건에 존재하지 않을 경우 오류가 반환될 수 있습니다.
 </Warning>
 
 ## 1. 엔드포인트
@@ -14,28 +15,29 @@ description: '이 API를 사용하여 특정 Submission ID에 연결된 이미�
 ```text GET/Image
 GET https://rest-api.argosidentity.com/v3/image
 ```
+
 ## 2. 인증
 
-x-api-key 헤더에 API 키를 포함시켜야 합니다:
+`x-api-key` 헤더에 API 키를 포함시켜야 합니다:
 
 ```text x-api-key
 x-api-key: {yourAPIKey}
 ```
 
-
 ## 3. 요청 파라미터
 
 <ResponseField name="submissionId" type="string" required="true">
-제출 건의 고유 ID
-</ResponseField>
-<ResponseField name="type" type="string" required="true">
-다운로드할 이미지 유형
-- `idImage`: 신분증 앞면 사진
-- `idBackImage`: 신분증 뒷면 사진
-- `selfieImage`: 셀피 이미지
-- `addressImage`: 주소 문서 이미지
+  제출 건의 고유 ID
 </ResponseField>
 
+<ResponseField name="type" type="string" required="true">
+  다운로드할 이미지 유형
+
+  - `idImage`: 신분증 앞면 사진
+  - `idBackImage`: 신분증 뒷면 사진
+  - `selfieImage`: 셀피 이미지
+  - `addressImage`: 주소 문서 이미지
+</ResponseField>
 
 ## 4. 요청 예시
 
@@ -48,10 +50,6 @@ curl --location --request GET 'https://rest-api.argosidentity.com/v3/image?submi
 
 ### 5-1. 성공 응답
 
-성공적인 요청 시, API는 요청한 이미지 파일을 직접 반환합니다. 
-
-
-
-
+성공적인 요청 시, API는 요청한 이미지 파일을 직접 반환합니다.
 
 이 API를 사용하여 ID Check 제출 과정에서 업로드된 다양한 이미지를 효율적으로 조회하고 다운로드할 수 있습니다.

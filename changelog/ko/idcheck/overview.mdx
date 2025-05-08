@@ -1,7 +1,21 @@
 ---
-title: "ID Check"
-description: "ID Check 최신 업데이트 및 변경 사항"
+title: "ID check"
+description: "ID check 최신 업데이트 및 변경 사항"
 ---
+
+<Update label="2025-05-08">
+  # Custom DI 제공
+
+  관리자는 Custom DI 를 Submission 에서 제공되는 정보를 기반으로 설정할 수 있습니다. 설정된 Custom DI 로 관리자는 중복 관리를 할 수 있습니다. API 으로는 GET/SUBMISSION 을 통해 custom DI 를 조회할 수 있습니다.
+
+  # URL Query 암호화 옵션 allowedIdTypes, allowedDocumentFields 추가
+    신분증 기반의 KYC 인 ID document 프로세스가 진행되는 경우, 허용할 신분증 타입과, 허용할 필드를 설정할 수 있습니다. URL Query 에 encrypted 파라미터로 암호화하여야 설정이 가능합니다.
+
+  # Projection
+
+  GET/SUBMISSION 시 노출되는 개인의 민감한 정보들은 Projection 을 설정하여 노출되지 않게 설정하실 수 있습니다. Projection 목록은 GET/Projection, POST/Projection, and DELETE/Projection로 관리하실 수 있으며, Projection 적용은 사용자가 KYC 진행시 입력하는 URL 의 Query String 옵션을(Encrypted 필수) 사용하여 적용하실 수 있습니다.
+
+</Update>
 
 <Update label="2025-03-27">
   # Knowledge-based 추가
@@ -49,14 +63,10 @@ description: "ID Check 최신 업데이트 및 변경 사항"
   추가로 개선할 점이나 의견이 있다면 CS 팀을 통해 언제든지 전달해주시면 감사하겠습니다.
 
   > 더 나은 개발 환경을 위해 항상 고민하고 개선하겠습니다.
-  > 앞으로도 여러분의 목소리에 귀 기울이는 ARGOS Identity 팀이 되겠습니다. 
+  > 앞으로도 여러분의 목소리에 귀 기울이는 ARGOS Identity 팀이 되겠습니다.
   >
-  >  
+  > 감사합니다.
   >
-  > 
-  > 감사합니다. 
-  >
-  > 
   > ARGOS Identity 드림
 
   이전 버전의 개발 문서를 보시려면 [여기](https://argos-kyc.gitbook.io/client-guide-1/kr)를 클릭하세요

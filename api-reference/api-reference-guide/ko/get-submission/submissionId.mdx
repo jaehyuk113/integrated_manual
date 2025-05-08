@@ -1,6 +1,6 @@
 ---
-title: 'GET/Submission/submissionId'
-description: '이 API를 사용하여 특정 Submission ID의 상세 정보를 조회할 수 있습니다. KYC 신원 정보 데이터, KYC 결과, AML 결과, 거절 사유 및 코드, 재시도 사유 및 코드 등의 정보를 확인할 수 있습니다.'
+title: "GET/Submission/submissionId"
+description: "이 API를 사용하여 특정 Submission ID의 상세 정보를 조회할 수 있습니다. KYC 신원 정보 데이터, KYC 결과, AML 결과, 거절 사유 및 코드, 재시도 사유 및 코드 등의 정보를 확인할 수 있습니다."
 ---
 
 ## 1. 엔드포인트
@@ -8,19 +8,19 @@ description: '이 API를 사용하여 특정 Submission ID의 상세 정보를 �
 ```text GET/Submission/submissionId
 GET https://rest-api.argosidentity.com/v3/submission
 ```
+
 ## 2. 인증
 
-x-api-key 헤더에 API 키를 포함시켜야 합니다:
+`x-api-key` 헤더에 API 키를 포함시켜야 합니다:
 
 ```text x-api-key
 x-api-key: {yourAPIKey}
 ```
 
-
 ## 3. 요청 파라미터
 
-<ResponseField name="submission_id" type="string" required="true"> 
-특정 제출 건의 고유 ID
+<ResponseField name="submission_id" type="string" required="true">
+  특정 제출 건의 고유 ID
 </ResponseField>
 
 ## 4. 요청 예시
@@ -33,12 +33,15 @@ curl --location --request GET 'https://rest-api.argosidentity.com/v3/submission?
 ## 5. 응답
 
 ### 5-1. 성공 응답
+
 ```json result.json
 {
     "Items": [
         {
             "data": {
-                "name": "Ji Sung Park",
+                "first_name": "Ji Sung",
+                "last_name": "Park",
+                "full_name": "Ji Sung Park",
                 "gender": "male",
                 "nationality": "KOR",
                 "date_of_birth": "YYYY-MM-DD",
@@ -96,4 +99,5 @@ curl --location --request GET 'https://rest-api.argosidentity.com/v3/submission?
     ]
 }
 ```
+
 이 API를 통해 특정 Submission ID에 대한 상세 정보를 효율적으로 조회할 수 있습니다. 응답에는 사용자의 개인 정보, KYC 결과, 그리고 각 시도에 대한 상세 정보가 포함됩니다.

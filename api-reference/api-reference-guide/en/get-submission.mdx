@@ -17,9 +17,9 @@ Include the API key in the x-api-key header:
 x-api-key: {yourAPIKey}
 ```
 
-## 3. Request Body
+## 3. Request parameters
 
-The request body must be in JSON format. Below are the field descriptions:
+The request parameters should be sent as URL query parameters. Below are the parameter descriptions:
 
 <ResponseField name="submission_id" type="string">
   Unique ID of a specific submission.
@@ -80,9 +80,11 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
     "Items": [
         {
             "data": {
-                "name": "{name}",
+                "first_name": "{first name}",
+                "last_name": "{last name}",
+                "full_name": "{full name}",
                 "gender": "male",
-                "nationality": "KOR",
+                "nationality": "USA",
                 "date_of_birth": "YYYY-MM-DD",
                 "address_city": "{city}",
                 "address_country": "KOR",
@@ -91,27 +93,28 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
                 "address_street2": "{street2}",
                 "address_zipcode": "{zipcode}",
                 "ip_address": "{ip_address}",
-                "idcard_issuingCountry": "KOR",
+                "idcard_issuingCountry": "USA",
                 "idcard_issueDate": "YYYY-MM-DD",
-                "idType": "government_id",
-                "identityNumber": "{******-*******}"
+                "idType": "drivers_license",
+                "documentNumber": "{********}"
             },
             "email": "{email}",
             "submission_id": "{submission_id}",
-            "duplicated_information" : "{duplicated_information}", 
+            "duplicated_information": "{duplicated_information}",
+            "custom_duplicated_information": "{custom_duplication_information}",
             "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
             "updated_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
             "reviewer": "{reviewer}",
-      "aml" : {
-	      "raw_data": {...},
-	      "matches": [...],
-	      "risk_level_summary": "HIGH",
-        "currentstatus": "Red Flag"
-      },
+            "aml": {
+                "raw_data": {...},
+                "matches": [...],
+                "risk_level_summary": "HIGH",
+                "currentstatus": "Red Flag"
+            },
             "kyc": {
                 "result": "rejected",
                 "comment": [
-                    "Multiple invalid KYC attempts "
+                    "Multiple invalid KYC attempts"
                 ],
                 "commentCode": [
                     "too_many_retry"
@@ -121,186 +124,117 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
                         "attemptCnt": 1,
                         "step1Time1st": "YYYY-MM-DD-HH-MM-SS-ZZZ",
                         "ocrResult": "success",
-                        "verificationResult": "success",
-                        "verification": {
-                            "result": {
-                                "code": "CF-00000",
-                                "message": "성공",
-                                "transactionId": "{transactionId}",
-                                "extraMessage": ""
-                            },
-                            "data": {
-                                "resUserIdentiyNo": "*************",
-                                "resAuthenticity": "1",
-                                "resAuthenticityDesc": "입력하신 내용은 등록된 내용과 일치합니다.",
-                                "resUserNm": "{resUserNm}"
-                            }
-                        },
-                        "verificationParams": {
-                            "fullName": "{fullName}",
-                            "idType": "government_id",
-                            "issueDate": "{YYYY-MM-DD}",
-                            "identityNumber": "******-*******"
-                        },
-                        "step2Time1st": "YYYY-MM-DD-HH-MM-SS-ZZZ",
-                        "liveness": {
-                            "score": 8.097455,
-                            "probability": 0.9996958,
-                            "quality": 0.7537264
-                        },
-                        "faceSimilarityScore": 0,
                         "retryMsg": [
-                            "The face doesn’t match. Please retry with another face image."
+                            "Failed to read PDF417 Barcode."
                         ],
-                        "livenessScore": 99,
-                        "selfieImage": "{selfieImage URL}",
+                        "idBarcodeResult": "fail",
                         "retryCode": [
-                            "face_compare_underscore"
+                            "barcode_protocol_fail"
                         ]
                     },
                     {
                         "attemptCnt": 2,
-                        "verificationResult": "success",
-                        "verification": {
-                            "result": {
-                                "code": "CF-00000",
-                                "message": "성공",
-                                "transactionId": "{transactionId}",
-                                "extraMessage": ""
-                            },
-                            "data": {
-                                "resUserIdentiyNo": "*************",
-                                "resAuthenticity": "1",
-                                "resAuthenticityDesc": "입력하신 내용은 등록된 내용과 일치합니다.",
-                                "resUserNm": "{resUserNm}"
-                            }
-                        },
-                        "verificationParams": {
-                            "fullName": "{fullName}",
-                            "idType": "government_id",
-                            "issueDate": "{YYYY-MM-DD}",
-                            "identityNumber": "******-*******"
-                        },
-                        "step2Time2nd": "YYYY-MM-DD-HH-MM-SS-ZZZ",
                         "liveness": {
-                            "score": 8.097455,
-                            "probability": 0.9996958,
-                            "quality": 0.7537264
+                            "score": 1.1610267,
+                            "probability": 0.76151925,
+                            "quality": 0.5903906
                         },
-                        "faceSimilarityScore": 0,
+                        "faceSimilarityScore": 84,
                         "retryMsg": [
                             "The face doesn’t match. Please retry with another face image."
                         ],
-                        "livenessScore": 99,
                         "selfieImage": "{selfieImage URL}",
+                        "livenessScore": 76,
+                        "step2Time2nd": "YYYY-MM-DD-HH-MM-SS-ZZZ",
                         "retryCode": [
                             "face_compare_underscore"
                         ]
                     },
                     {
                         "attemptCnt": 3,
-                        "verificationResult": "success",
-                        "verification": {
-                            "result": {
-                                "code": "CF-00000",
-                                "message": "성공",
-                                "transactionId": "{selfieImage URL}",
-                                "extraMessage": ""
-                            },
-                            "data": {
-                                "resUserIdentiyNo": "*************",
-                                "resAuthenticity": "1",
-                                "resAuthenticityDesc": "입력하신 내용은 등록된 내용과 일치합니다.",
-                                "resUserNm": "{resUserNm}"
-                            }
-                        },
-                        "verificationParams": {
-                            "fullName": "{fullName}",
-                            "idType": "government_id",
-                            "issueDate": "{YYYY-MM-DD}",
-                            "identityNumber": "981112-1******"
-                        },
-                        "step2Time3rd": "YYYY-MM-DD-HH-MM-SS-ZZZ",
                         "liveness": {
-                            "score": 8.097455,
-                            "probability": 0.9996958,
-                            "quality": 0.7537264
+                            "error": "Failed to detect face",
+                            "error_code": "FACE_NOT_FOUND"
                         },
-                        "faceSimilarityScore": 0,
                         "retryMsg": [
-                            "The face doesn’t match. Please retry with another face image."
+                            "Liveness fail: Failed to detect face."
                         ],
-                        "livenessScore": 99,
                         "selfieImage": "{selfieImage URL}",
+                        "step2Time3rd": "YYYY-MM-DD-HH-MM-SS-ZZZ",
                         "retryCode": [
-                            "face_compare_underscore"
+                            "liveness_error"
                         ]
-                    }
-                ]
-            }
+                    },
+                }
+            ]
         }
-    ]
+    }
 }
 ```
 
 
 ```json result-knowledge-based.json
 {
-  "Items": [
-    {
-      "data": {
-        "age_group": "N/A",
-        "name": "{name}",
-        "gender": "male",
-        "nationality": "KOR",
-        "date_of_birth": "YYYY-MM-DD",
-        "address_formatted": "{fomatted address}",
-        "address_detail": "{detail address}",
-        "ssnNumber": "{***-**-****}",
-        "phoneNumber": "{phone number}"
-      },
-      "email": "{email}",
-      "submission_id": "{submission_id}",
-      "duplicated_information": "{duplicated_information}",
-      "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
-      "updated_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
-      "reviewer": "{reviewer}",
-      "aml": {
-        "raw_data": {...},
-        "matches": [...],
-        "risk_level_summary": "HIGH",
-        "currentstatus": "Red Flag"
-      },
-      "kyc": {
-        "result": "rejected",
-        "faceSimilarityScore": 0,
-        "retryMsg": [
-          "The face doesn’t match. Please retry with another face image."
-        ],
-        "livenessScore": 99,
-        "selfieImage": "{selfieImage URL}",
-        "comment": [
-          "Multiple invalid KYC attempts"
-        ],
-        "commentCode": [
-          "Multiple invalid KYC attempts"
-        ],
-        "attempts": [
-          {
-            "attemptCnt": 1,
-            "liveness": {
-              "error": "...",
-              "error_code": "..."
+    "Items": [
+        {
+            "data": {
+                "age_group": "N/A",
+                "name": "{name}",
+                "gender": "female",
+                "nationality": "KOR",
+                "date_of_birth": "YYYY-MM-DD",
+                "address_formatted": "{fomatted address}",
+                "address_detail": "{detail address}",
+                "ssnNumber": "{***-**-****}",
+                "phoneNumber": "{phone number}"
             },
-            "retryMsg": [],
-            "retryCode": [
-              "liveness_error"
-            ]
-          }
-        ]
-      }
-    }
-  ]
+            "email": "{email}",
+            "submission_id": "{submission_id}",
+            "duplicated_information": "{duplicated_information}",
+            "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
+            "updated_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
+            "reviewer": "{reviewer}",
+            "aml": {
+                "raw_data": {...
+                },
+                "matches": [...
+                ],
+                "risk_level_summary": "HIGH",
+                "currentstatus": "Red Flag"
+            },
+            "kyc": {
+                "result": "rejected",
+                "faceSimilarityScore": 0,
+                "retryMsg": [
+                    "The face doesn’t match. Please retry with another face image."
+                ],
+                "livenessScore": 99,
+                "selfieImage": "{selfieImage URL}",
+                "comment": [
+                    "Multiple invalid KYC attempts"
+                ],
+                "commentCode": [
+                    "Multiple invalid KYC attempts"
+                ],
+                "attempts": [
+                    {
+                        "attemptCnt": 1,
+                        "liveness": {
+                            "error": "...",
+                            "error_code": "..."
+                        },
+                        "retryMsg": [],
+                        "retryCode": [
+                            "liveness_error"
+                        ]
+                    }
+                ]
+            },
+            "projection": {
+                "projectionName": "age_projection"
+            }
+        }
+    ]
 }
 ```
 
@@ -311,7 +245,10 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
 | Field Name                             | Description                                                                                                                                                     | Data Type | Category               |
 | -------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ---------------------- |
 | `data`                                 | KYC applicant data                                                                                                                                              | Object    | KYC Applicant Info     |
-| `data.name`                            | Name of the applicant                                                                                                                                           | String    | KYC Applicant Info     |
+| `data.first_name`                      | First name of the applicant                                                                                                                                     | String    | KYC Applicant Info     |
+| `data.mid_name`                        | Middle name of the applicant                                                                                                                                    | String    | KYC Applicant Info     |
+| `data.last_name`                       | Last name of the applicant                                                                                                                                      | String    | KYC Applicant Info     |
+| `data.full_name`                       | Full name of the applicant                                                                                                                                      | String    | KYC Applicant Info     |
 | `data.gender`                          | Gender of the applicant (`male` or `female`)                                                                                                                    | Enum      | KYC Applicant Info     |
 | `data.nationality`                     | Country code in ISO alpha-3 format                                                                                                                              | String    | KYC Applicant Info     |
 | `data.date_of_birth`                   | Date of birth in `YYYY-MM-DD` format                                                                                                                            | Date      | KYC Applicant Info     |
@@ -401,6 +338,9 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
 | `Injection_action`                     | Object containing injection process execution history                                                                                                           | Object    | Injection Process Info |
 | `Injection_action.type`                | Type of the injection process                                                                                                                                   | String    | Injection Process Info |
 | `Injection_action.time`                | Most recent execution time of the specified injection process type                                                                                              | String    | Injection Process Info |
+| `projection`                           | The object contains submission projection data                                                                                                                  | Object    | Projection Info        |
+| `projection.projectionId`              | The projection ID into applied submission \* If the submission created a projection ID, only the ID is shown.                                                   | String    | Projection Info        |
+| `projection.projectionName`            | Applied submission projection name \* If the submission created a projection name, only the name is shown.                                                      | String    | Projection Info        |
 | `tokenId`                              | Token ID used for live-form submissions in private mode                                                                                                         | String    | Submission Info        |
 
 ### 5-2-b. Response Field (Knowledge-based)
@@ -467,6 +407,9 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
 | `nextpageKey`                          | Key object provided when additional pages of results are available                                                                                              | Object    | Pagination Info      |
 | `nextpageKey.id`                       | ID of the last submission retrieved, required for fetching the next page                                                                                        | String    | Pagination Info      |
 | `nextpageKey.created_at`               | Timestamp of the last submission retrieved, required for fetching the next page                                                                                 | String    | Pagination Info      |
+| `projection`                           | The object contains submission projection data                                                                                                                  | Object    | Projection Info      |
+| `projection.projectionId`              | The projection ID into applied submission \* If the submission created a projection ID, only the ID is shown.                                                   | String    | Projection Info      |
+| `projection.projectionName`            | Applied submission projection name \* If the submission created a projection name, only the name is shown.                                                      | String    | Projection Info      |
 | `tokenId`                              | Token ID used for live-form submissions in private mode                                                                                                         | String    | Submission Info      |
 
 ### 5-3. Error Codes

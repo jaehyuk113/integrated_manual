@@ -11,15 +11,15 @@ GET https://rest-api.argosidentity.com/v3/submission
 
 ## 2. 인증
 
-x-api-key 헤더에 API 키를 포함시켜야 합니다:
+`x-api-key` 헤더에 API 키를 포함시켜야 합니다:
 
 ```text x-api-key
 x-api-key: {yourAPIKey}
 ```
 
-## 3. 요청 본문
+## 3. 요청 파라미터
 
-요청 본문은 JSON 형식이어야 합니다. 다음은 필드 설명입니다:
+요청 파라미터는 URL query 형식이어야 합니다. 각 파라미터에 대한 설명은 다음과 같습니다.
 
 <ResponseField name="submission_id" type="string">
   특정 제출 건의 고유 ID
@@ -80,7 +80,10 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
     "Items": [
         {
             "data": {
-                "name": "{name}",
+                "first_name": "{first_name}",
+                "mid_name": "{mid_name}",
+                "last_name": "{last_name}",
+                "full_name": "{full_name}",
                 "gender": "male",
                 "nationality": "KOR",
                 "date_of_birth": "YYYY-MM-DD",
@@ -98,20 +101,21 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
             },
             "email": "{email}",
             "submission_id": "{submission_id}",
-            "duplicated_information" : "{duplicated_information}", 
+            "duplicated_information": "{duplicated_information}",
+            "custom_duplicated_information": "{custom_duplication_information}",
             "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
             "updated_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
             "reviewer": "{reviewer}",
-      "aml" : {
-	      "raw_data": {...},
-	      "matches": [...],
-	      "risk_level_summary": "HIGH",
-        "currentstatus": "Red Flag"
-      },
+            "aml": {
+                "raw_data": {...},
+                "matches": [...],
+                "risk_level_summary": "HIGH",
+                "currentstatus": "Red Flag"
+            },
             "kyc": {
                 "result": "rejected",
                 "comment": [
-                    "Multiple invalid KYC attempts "
+                    "Multiple invalid KYC attempts"
                 ],
                 "commentCode": [
                     "too_many_retry"
@@ -237,6 +241,10 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
                         ]
                     }
                 ]
+            },
+            "projection": {
+                "projectionId": "5y7f8asd9qm8u71",
+                "projectionName": "age_projection"
             }
         }
     ]
@@ -246,61 +254,67 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
 
 ```json result-knowledge-based.json
 {
-  "Items": [
-    {
-      "data": {
-        "age_group": "N/A",
-        "name": "{name}",
-        "gender": "male",
-        "nationality": "KOR",
-        "date_of_birth": "YYYY-MM-DD",
-        "address_formatted": "{fomatted address}",
-        "address_detail": "{detail address}",
-        "ssnNumber": "{***-**-****}",
-        "phoneNumber": "{phone number}"
-      },
-      "email": "{email}",
-      "submission_id": "{submission_id}",
-      "duplicated_information": "{duplicated_information}",
-      "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
-      "updated_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
-      "reviewer": "{reviewer}",
-      "aml": {
-        "raw_data": {...},
-        "matches": [...],
-        "risk_level_summary": "HIGH",
-        "currentstatus": "Red Flag"
-      },
-      "kyc": {
-        "result": "rejected",
-        "faceSimilarityScore": 0,
-        "retryMsg": [
-          "The face doesn’t match. Please retry with another face image."
-        ],
-        "livenessScore": 99,
-        "selfieImage": "{selfieImage URL}",
-        "comment": [
-          "Multiple invalid KYC attempts"
-        ],
-        "commentCode": [
-          "Multiple invalid KYC attempts"
-        ],
-        "attempts": [
-          {
-            "attemptCnt": 1,
-            "liveness": {
-              "error": "...",
-              "error_code": "..."
+    "Items": [
+        {
+            "data": {
+                "age_group": "N/A",
+                "name": "{name}",
+                "gender": "male",
+                "nationality": "KOR",
+                "date_of_birth": "YYYY-MM-DD",
+                "address_formatted": "{fomatted address}",
+                "address_detail": "{detail address}",
+                "ssnNumber": "{***-**-****}",
+                "phoneNumber": "{phone number}"
             },
-            "retryMsg": [],
-            "retryCode": [
-              "liveness_error"
-            ]
-          }
-        ]
-      }
-    }
-  ]
+            "email": "{email}",
+            "submission_id": "{submission_id}",
+            "duplicated_information": "{duplicated_information}",
+            "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
+            "updated_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
+            "reviewer": "{reviewer}",
+            "aml": {
+                "raw_data": {...
+                },
+                "matches": [...
+                ],
+                "risk_level_summary": "HIGH",
+                "currentstatus": "Red Flag"
+            },
+            "kyc": {
+                "result": "rejected",
+                "faceSimilarityScore": 0,
+                "retryMsg": [
+                    "The face doesn’t match. Please retry with another face image."
+                ],
+                "livenessScore": 99,
+                "selfieImage": "{selfieImage URL}",
+                "comment": [
+                    "Multiple invalid KYC attempts"
+                ],
+                "commentCode": [
+                    "Multiple invalid KYC attempts"
+                ],
+                "attempts": [
+                    {
+                        "attemptCnt": 1,
+                        "liveness": {
+                            "error": "...",
+                            "error_code": "..."
+                        },
+                        "retryMsg": [],
+                        "retryCode": [
+                            "liveness_error"
+                        ]
+                    }
+                ]
+            },
+            "projection": {
+                "projectionId": "5y7f8asd9qm8u71",
+                "projectionName": "age_projection"
+            }
+        }
+    ]
 }
 ```
 
@@ -311,7 +325,10 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
 | 필드명                                    | 설명                                                                                                                       | 데이터 타입 | 카테고리              |
 | -------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ------ | ----------------- |
 | `data`                                 | KYC 제출자 데이터                                                                                                              | Object | KYC 제출자 정보        |
-| `data.name`                            | 제출자의 이름                                                                                                                  | String | KYC 제출자 정보        |
+| `data.first_name`                      | 제출자의 First Name                                                                                                          | String | KYC 제출자 정보        |
+| `data.mid_name`                        | 제출자의 Middle Name                                                                                                         | String | KYC 제출자 정보        |
+| `data.last_name`                       | 제출자의 Last Name                                                                                                           | String | KYC 제출자 정보        |
+| `data.full_name`                       | 제출자의 Full Name                                                                                                           | String | KYC 제출자 정보        |
 | `data.gender`                          | 제출자의 성별 (`male` 또는 `female`)                                                                                             | Enum   | KYC 제출자 정보        |
 | `data.nationality`                     | ISO alpha-3 형식의 국가 코드                                                                                                    | String | KYC 제출자 정보        |
 | `data.date_of_birth`                   | 제출자의 생년월일 (`YYYY-MM-DD` 형식)                                                                                              | Date   | KYC 제출자 정보        |
@@ -401,6 +418,9 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
 | `Injection_action`                     | Injection 프로세스 실행 내역을 포함하는 객체                                                                                            | Object | Injection 프로세스 정보 |
 | `Injection_action.type`                | Injection 프로세스 유형                                                                                                        | String | Injection 프로세스 정보 |
 | `Injection_action.time`                | Injection 프로세스 유형별 최근 실행 시간                                                                                              | String | Injection 프로세스 정보 |
+| `projection`                           | 해당 서브미션에 적용된 Projection 정보를 포함하는 객체                                                                                      | Object | Projection Info   |
+| `projection.projectionId`              | 해당 제출건에 적용된 Projection의 ID                                                                                               | String | Projection Info   |
+| `projection.projectionName`            | 해당 제출건에 적용된 Projection의 이름                                                                                               | String | Projection Info   |
 | `tokenId`                              | Private mode에서 제출 시 사용된 Token ID                                                                                         | String | 제출 정보             |
 
 ### 5-2-b. 응답 데이터 (Knowledge-based)
@@ -467,6 +487,9 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
 | `nextpageKey`                          | 추가 페이지를 호출할 때 필요한 키                                                                                                      | Object    | 페이지 네비게이션 정보       |
 | `nextpageKey.id`                       | 마지막으로 조회된 제출 ID                                                                                                          | String    | 페이지 네비게이션 정보       |
 | `nextpageKey.created_at`               | 마지막으로 조회된 제출의 생성 시간                                                                                                      | String    | 페이지 네비게이션 정보       |
+| `projection`                           | 해당 서브미션에 적용된 Projection 정보를 포함하는 객체                                                                                      | Object    | Projection Info    |
+| `projection.projectionId`              | 해당 제출건에 적용된 Projection의 ID                                                                                               | String    | Projection Info    |
+| `projection.projectionName`            | 해당 제출건에 적용된 Projection의 이름                                                                                               | String    | Projection Info    |
 | `tokenId`                              | Private mode에서 제출 시 사용된 Token ID                                                                                         | String    | 제출 정보              |
 
 ### 5-3. 오류 코드

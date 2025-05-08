@@ -1,25 +1,26 @@
 ---
-title: 'PATCH/Submission'
-description: '이 API를 사용하면 기존 제출 건(Submission)의 KYC 데이터를 수정할 수 있습니다. 수정된 데이터는 재수정이 가능하지만, 원래 상태로 복원할 수 없으므로 주의가 필요합니다.'
+title: "PATCH/Submission"
+description: "이 API를 사용하면 기존 제출 건(Submission)의 KYC 데이터를 수정할 수 있습니다. 수정된 데이터는 재수정이 가능하지만, 원래 상태로 복원할 수 없으므로 주의가 필요합니다."
 ---
-
 
 ## 1. 엔드포인트
 
 ```text PATCH/Submission
 PATCH https://rest-api.argosidentity.com/v3/submission
 ```
+
 ## 2. 인증
 
-x-api-key 헤더에 API 키를 포함시켜야 합니다:
+`x-api-key` 헤더에 API 키를 포함시켜야 합니다:
 
 ```text x-api-key
 x-api-key: {yourAPIKey}
 ```
 
-
 ## 3. 요청 본문
+
 요청 본문은 JSON 형식이어야 합니다. 다음은 필드 설명입니다:
+
 <ResponseField name="submissionId" type="string" required="true">
   수정할 제출 건의 고유 ID
 </ResponseField>
@@ -29,63 +30,47 @@ x-api-key: {yourAPIKey}
 </ResponseField>
 
 <ResponseField name="data" type="object" required="true">
-	수정할 데이터 항목을 포함하는 객체
+  수정할 데이터 항목을 포함하는 객체
+
   <Expandable title="properties">
     <ResponseField name="kycStatus" type="string">
-    KYC 결과: `approved` 또는 `rejected`
+      KYC 결과: `approved` 또는 `rejected`
     </ResponseField>
-
     <ResponseField name="idType" type="string">
-    ID 유형  [ID 카드 코드](/api-reference-guide/ko/id-card-types)
+      ID 유형  [ID 카드 코드](/api-reference-guide/ko/id-card-types)
     </ResponseField>
-
-    <ResponseField name="issuingCountry" type="string" >
-    ID 발급 국가 [국가 코드](/api-reference/api-reference-guide/ko/iso-alpha-3-country-codes)
+    <ResponseField name="issuingCountry" type="string">
+      ID 발급 국가 [국가 코드](/api-reference/api-reference-guide/ko/iso-alpha-3-country-codes)
     </ResponseField>
-
-    <ResponseField name="fullName" type="string" >
-    KYC 제출자의 전체 이름
+    <ResponseField name="fullName" type="string">
+      KYC 제출자의 전체 이름
     </ResponseField>
-
     <ResponseField name="gender" type="string">
-    `female` 또는 `male`
+      `female` 또는 `male`
     </ResponseField>
-
     <ResponseField name="birthDate" type="string">
-    KYC 제출자의 생년월일
+      KYC 제출자의 생년월일
     </ResponseField>
-
-
     <ResponseField name="nationality" type="string">
-    KYC 제출자의 국적 [국가 코드](/api-reference/api-reference-guide/ko/iso-alpha-3-country-codes)
+      KYC 제출자의 국적 [국가 코드](/api-reference/api-reference-guide/ko/iso-alpha-3-country-codes)
     </ResponseField>
-
     <ResponseField name="issueDate" type="string">
-    ID 발급일 `YYY-MM-DD` 형식
+      ID 발급일 `YYY-MM-DD` 형식
     </ResponseField>
-
     <ResponseField name="expireDate" type="string">
-    ID 만료일 `YYY-MM-DD` 형식
+      ID 만료일 `YYY-MM-DD` 형식
     </ResponseField>
-
     <ResponseField name="documentNumber" type="string">
-    KYC 제출자의 문서 번호
+      KYC 제출자의 문서 번호
     </ResponseField>
-
     <ResponseField name="identityNumber" type="string">
-    KYC 제출자의 신분증 번호
+      KYC 제출자의 신분증 번호
     </ResponseField>
-
-    
     <ResponseField name="serialNumber" type="string">
-    KYC 제출자의 운전면허번호
+      KYC 제출자의 운전면허번호
     </ResponseField>
   </Expandable>
 </ResponseField>
-
-
-
-
 
 ## 4. 요청 예시
 
@@ -112,12 +97,12 @@ curl --location --request PATCH 'https://rest-api.argosidentity.com/v3/submissio
   }
 }'
 
-
 ```
 
 ## 5. 응답
 
 ### 5-1. 성공 응답
+
 ```json result.json
 {
   "message": "success to edit.",
@@ -126,38 +111,39 @@ curl --location --request PATCH 'https://rest-api.argosidentity.com/v3/submissio
 ```
 
 ### 5-2. 오류 응답
+
 오류가 발생하면 400 상태 코드와 함께 응답 본문에 세부 정보가 포함됩니다:
+
 ```json error.json
 {
     "errorCode": "invalid_payload",
 }
 ```
+
 ### 5-3. 오류 코드
-| 에러 코드                                  | 설명                                   |
-|------------------------------------------------|-----------------------------------------------|
-| `API-Key is required.`                         | API 키가 누락됨                               |
-| `The project is not found.`                    | 프로젝트를 찾을 수 없음                       |
-| `Decryption is Failed. Please check the api-key.` | 데이터 복호화 실패                          |
-| `Data Processing Error.`                       | 데이터 암호화 실패                            |
-| `data parsing error. please check input data.` | 데이터 파싱 오류                              |
-| `submissionId is required.`                   | submissionId 누락                             |
-| `projectId or x-api-key is required.`          | projectId 또는 x-api-key 누락                 |
-| `admin is required.`                           | admin 정보 누락                               |
-| `At least one property to modify is required.` | 수정할 속성 누락                              |
-| `Invalid idType. Please check the idType.`     | 잘못된 신분증 유형                           |
-| `Invalid kyc status. Please check the kycStatus.` | 잘못된 KYC 상태                             |
-| `Invalid gender. Please check the gender.`     | 잘못된 성별 값                               |
-| `Invalid issuingCountry. Please enter a valid ISO 3166-1 alpha-3.` | 잘못된 발급국가 코드                    |
-| `Invalid nationality. Please enter a valid ISO 3166-1 alpha-3.`    | 잘못된 국적 코드                          |
-| `Invalid birthDate. Please enter the date as YYYY-MM-DD`            | 잘못된 생년월일 형식                      |
-| `Invalid issueDate. Please enter the date as YYYY-MM-DD`            | 잘못된 발급일자 형식                      |
-| `Invalid expireDate. Please enter the date as YYYY-MM-DD`           | 잘못된 만료일자 형식                      |
 
-
-
-
+| 에러 코드                                                              | 설명                        |
+| ------------------------------------------------------------------ | ------------------------- |
+| `API-Key is required.`                                             | API 키가 누락됨                |
+| `The project is not found.`                                        | 프로젝트를 찾을 수 없음             |
+| `Decryption is Failed. Please check the api-key.`                  | 데이터 복호화 실패                |
+| `Data Processing Error.`                                           | 데이터 암호화 실패                |
+| `data parsing error. please check input data.`                     | 데이터 파싱 오류                 |
+| `submissionId is required.`                                        | submissionId 누락           |
+| `projectId or x-api-key is required.`                              | projectId 또는 x-api-key 누락 |
+| `admin is required.`                                               | admin 정보 누락               |
+| `At least one property to modify is required.`                     | 수정할 속성 누락                 |
+| `Invalid idType. Please check the idType.`                         | 잘못된 신분증 유형                |
+| `Invalid kyc status. Please check the kycStatus.`                  | 잘못된 KYC 상태                |
+| `Invalid gender. Please check the gender.`                         | 잘못된 성별 값                  |
+| `Invalid issuingCountry. Please enter a valid ISO 3166-1 alpha-3.` | 잘못된 발급국가 코드               |
+| `Invalid nationality. Please enter a valid ISO 3166-1 alpha-3.`    | 잘못된 국적 코드                 |
+| `Invalid birthDate. Please enter the date as YYYY-MM-DD`           | 잘못된 생년월일 형식               |
+| `Invalid issueDate. Please enter the date as YYYY-MM-DD`           | 잘못된 발급일자 형식               |
+| `Invalid expireDate. Please enter the date as YYYY-MM-DD`          | 잘못된 만료일자 형식               |
 
 ## 6. 암호화 옵션
+
 보안 강화를 위해 요청 본문을 암호화할 수 있습니다. 암호화를 사용할 때:
 전체 요청 본문 객체를 암호화합니다.
 암호화된 문자열을 `body` 매개변수로 전송합니다.
@@ -173,7 +159,9 @@ body : encrypt({
         }
 	})
 ```
+
 ### 6-2. 암호화된 응답
+
 응답에는 isEncrypted 플래그와 암호화된 데이터가 포함됩니다:
 
 ```json result.json

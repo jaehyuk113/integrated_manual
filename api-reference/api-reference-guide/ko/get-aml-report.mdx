@@ -1,37 +1,35 @@
 ---
-title: 'GET/AML/Report'
-description: '이 API는 특정 AML 스크리닝 결과에 대한 상세 보고서를 PDF 형식으로 제공합니다. 각 보고서는 고유한 `아르고스 번호(resourceId)`로 식별됩니다.'
+title: "GET/AML/Report"
+description: "이 API는 특정 AML 스크리닝 결과에 대한 상세 보고서를 PDF 형식으로 제공합니다. 각 보고서는 고유한 `아르고스 번호(resourceId)`로 식별됩니다."
 ---
 
 <Warning>
-주의사항
-- `resourceId`는 `GET/submission` API를 통해 확인할 수 있습니다.
-- 하나의 제출 건에 대해 여러 개의 `resourceId`가 존재할 수 있습니다 (여러 일치 항목이 있는 경우).
-- `resourceId`는 AML 스크리닝 결과가 `'Red Flag'` 일 때만 생성됩니다.
-</Warning>
+  주의사항
 
+  - `resourceId`는 `GET/submission` API를 통해 확인할 수 있습니다.
+  - 하나의 제출 건에 대해 여러 개의 `resourceId`가 존재할 수 있습니다 (여러 일치 항목이 있는 경우).
+  - `resourceId`는 AML 스크리닝 결과가 `'Red Flag'` 일 때만 생성됩니다.
+</Warning>
 
 ## 1. 엔드포인트
 
 ```text GET/Report/AML
 GET https://rest-api.argosidentity.com/v3/report/aml
 ```
+
 ## 2. 인증
 
-x-api-key 헤더에 API 키를 포함시켜야 합니다:
+`x-api-key` 헤더에 API 키를 포함시켜야 합니다:
 
 ```text x-api-key
 x-api-key: {yourAPIKey}
 ```
 
-
 ## 3. 요청 파라미터
 
 <ResponseField name="resourceId" type="string" required="true">
-AML 검사 결과로 선별된 항목의 고유 식별자
+  AML 검사 결과로 선별된 항목의 고유 식별자
 </ResponseField>
-
-
 
 ## 4. 요청 예시
 
@@ -41,9 +39,10 @@ curl --location --request GET 'https://rest-api.argosidentity.com/v3/report/aml?
 ```
 
 ## 5. 응답
+
 성공적인 요청 시, API는 PDF 형식의 AML 보고서 파일을 직접 반환합니다.
+
 - 초기 파일명: `report.pdf`
 - 콘텐츠 타입: `application/pdf`
-
 
 이 API를 사용하여 AML 스크리닝 결과에 대한 상세 보고서를 효율적으로 조회하고 다운로드할 수 있습니다.

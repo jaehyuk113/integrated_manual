@@ -1,21 +1,22 @@
 ---
-mode: 'default'
-title: ID Check 시작하기
-
+mode: "default"
+title: "ID check 시작하기"
 ---
+
 <img
   width="800px"
   src="/images/liveform.png"
   alt="Hero Light"
 />
+
 ARGOS Identity의 강력한 신원 확인 솔루션을 시작해보세요. 몇 가지 간단한 단계만으로 안전하고 효율적인 ID Check 프로세스를 구축할 수 있습니다.
 
-
-
 ## 1. 라이브폼이란?
+
 라이브폼은 ARGOS Identity ID Check가 제공하는 신원확인 폼입니다. 다양한 유형의 사기와 KYC(Know Your Customer) 규제에 효과적으로 대응하도록 설계되었습니다.
 
 ### 1-1. 라이브폼의 주요 특징
+
 - 유연한 신원 확인 레이어: 사용자의 필요에 따라 다양한 인증 단계를 추가하여 보안 수준을 조절할 수 있습니다.
 - 동적 위험 평가: 위험 수준에 따라 추가 확인 단계를 요구하여 더욱 정밀한 신원 검증이 가능합니다.
 - 규제 준수: 다양한 산업 표준과 규제 요구사항을 충족하도록 설계되어 있습니다.
@@ -25,102 +26,96 @@ ARGOS Identity의 강력한 신원 확인 솔루션을 시작해보세요. 몇 �
 
 ID Check는 두 가지 방식으로 사용할 수 있습니다.
 
-
 ### 2-1. PC에서 시작하기
-  <img
-    src="/images/liveform-mobile.png"
-    alt="liveform-pc"/>
+
+![liveform-pc](/images/liveform-mobile.png)
+
 <Steps>
   <Step title="ID 체크 URL 열기">
-   컴퓨터에서 ID 체크 URL을 엽니다. 
+    컴퓨터에서 ID 체크 URL을 엽니다.
   </Step>
-  
   <Step title="QR 코드 스캔">
     화면에 표시된 QR 코드를 모바일 기기로 스캔합니다.
   </Step>
-  
   <Step title="모바일에서 인증 진행">
     스캔 후 열린 모바일 웹 브라우저에서 ID 체크 과정을 완료합니다.
   </Step>
 </Steps>
 
 ### 2-2. 모바일 기기에서 직접 시작하기
-<img
-    src="/images/liveform-app.png"
-    alt="liveform-app"/>
+
+![liveform-app](/images/liveform-app.png)
+
 <Steps>
   <Step title="앱에서 직접 연결">
-  사용자 ID 확인이 필요한 앱 내 이벤트에 라이브폼 URL을 연결하여 사용자가 직접 ID Check 라이브폼 페이지를 열 수 있도록 합니다
+    사용자 ID 확인이 필요한 앱 내 이벤트에 라이브폼 URL을 연결하여 사용자가 직접 ID Check 라이브폼 페이지를 열 수 있도록 합니다
   </Step>
   <Step title="모바일에서 인증 진행">
     스캔 후 웹뷰에서 ID 체크 과정을 완료합니다.
   </Step>
 </Steps>
 
-
-
 ## 3. 라이브폼 URL 확인
 
 <Note>
- 카메라가 부착된 모바일 기기에서만 제출 가능합니다
+  카메라가 부착된 모바일 기기에서만 제출 가능합니다
 </Note>
 
 <Steps>
   <Step title="대시보드 로그인">
-      <Card title="대시보드 접속하기" icon="link" href="https://idcheck.argosidentity.com">
-  </Card>
-
+    <Card title="대시보드 접속하기" icon="link" href="https://idcheck.argosidentity.com">
+      
+    </Card>
   </Step>
   <Step title="Liveform URL 확인">
-  <img
-    src="/images/liveform-url.png"
-    alt="liveform-url"/>
-    Settings(설정) -> Access Management(액세스 관리) 로 이동하여 Liveform URL 섹션을 찾아 LINK 아이콘을 클릭하여 Liveform을 시작하세요.
+    ![liveform-url](/images/liveform-url.png)
+
+    Settings(설정) -\> Access Management(액세스 관리) 로 이동하여 Liveform URL 섹션을 찾아 LINK 아이콘을 클릭하여 Liveform을 시작하세요.
   </Step>
 </Steps>
 
 ## 4. Liveform 링크 활용하기
+
 ARGOS ID Check 라이브폼은 웹 기반 KYC 제출 시스템입니다. 서비스 이용에 필요한 고객 계정 정보와 ID Check 제출 URL은 대시보드에서 확인할 수 있습니다.
-  <img
-    src="/images/dashboard.png"
-    alt="dashboard"/>
 
-
+![dashboard](/images/dashboard.png)
 
 ## 5. 라이브폼 제출
+
 ARGOS ID Check 라이브폼은 웹페이지를 통해 KYC를 제출하는 시스템입니다. 이 서비스 이용에 필요한 고객 계정 정보와 ID Check 제출 URL은 대시보드에서 확인할 수 있습니다.
 
 ### 5-1.  Liveform 링크 설정
-<Warning> URL 주의사항: 제출 폼 URL을 임의로 변경하지 마세요. 변경 시 정상 제출이 불가능할 수 있습니다. </Warning>
+
+<Warning>
+   URL 주의사항: 제출 폼 URL을 임의로 변경하지 마세요. 변경 시 정상 제출이 불가능할 수 있습니다. 
+</Warning>
 
 #### 5-1-1. 라이브폼 연동 방법
+
 1. HTML iFrame에 라이브폼 직접 게시
 2. 별도 웹페이지로 라이브폼 열기
-
-
 3. 추가 기능:
+
 - [쿼리 스트링 및 토큰](/getting-started/ko/liveform-url/querystring-and-token-guide)
 - [데이터 암호화 및 복호화](/getting-started/ko/encrypt-and-decrypt-data/overview)
 - [데이터 주입](/getting-started/ko/liveform-url/data-injection-with-custom-fields)
 
-
-
 <Note>
-노트
-1. URL 파라미터로 이메일 주소를 포함하여 호출하면 제출자가 별도로 이메일을 입력할 필요 없이 KYC 제출이 가능합니다.
-예: '&email={email_address}'가 추가된 링크 사용 시 이메일 입력 과정 생략
+  노트
 
-2. 이메일 안내: KYC 처리 과정과 결과를 이메일로 안내하려면 제출자의 이메일 주소를 URL 파라미터에 포함해야 합니다.
+  1. URL 파라미터로 이메일 주소를 포함하여 호출하면 제출자가 별도로 이메일을 입력할 필요 없이 KYC 제출이 가능합니다.
+     예: '&email=email_address'가 추가된 링크 사용 시 이메일 입력 과정 생략
+  2. 이메일 안내: KYC 처리 과정과 결과를 이메일로 안내하려면 제출자의 이메일 주소를 URL 파라미터에 포함해야 합니다.
 </Note>
 
 ### 5-2. 라이브폼 URL 구조
+
 - 기본 폼 URL: https://form.argosidentity.com/?pid={project_Id}
 - 이메일 포함 URL: https://form.argosidentity.com/?pid={project_Id}&email={email}
 
 예시: `https://form.argosidentity.com/?pid=argos5202&email=demo@argosidentity.com`
 
-
 <Info>
-- pid: 라이브폼 URL의 `pid`는 고객사의 고유 ID입니다. 
-- pid(project Id) 확인이 필요한 경우 ARGOS의 헬프데스크로 문의해주세요.
+  - pid: 라이브폼 URL의 `pid`는 고객사의 고유 ID입니다.
+  - pid(project Id) 확인이 필요한 경우 ARGOS의 헬프데스크로 문의해주세요.
 </Info>

@@ -1,6 +1,6 @@
 ---
-title: 'GET/Submission/submissionId'
-description: 'This API allows you to retrieve detailed information for a specific Submission ID. It includes KYC identity information, KYC results, AML results, rejection comments and codes, retry reasons and codes, and more.'
+title: "GET/Submission/submissionId"
+description: "This API allows you to retrieve detailed information for a specific Submission ID. It includes KYC identity information, KYC results, AML results, rejection comments and codes, retry reasons and codes, and more."
 ---
 
 ## 1. Endpoint
@@ -8,6 +8,7 @@ description: 'This API allows you to retrieve detailed information for a specifi
 ```text GET/Submission/submissionId
 GET https://rest-api.argosidentity.com/v3/submission
 ```
+
 ## 2. Authentication
 
 Include the API key in the x-api-key header:
@@ -17,12 +18,12 @@ x-api-key: {yourAPIKey}
 ```
 
 ## 3. Request Parameters
+
 The request should be in JSON format. Below is a description of the fields:
 
-<ResponseField name="submission_id" type="string" required="true"> 
-Unique ID of a specific submission.
+<ResponseField name="submission_id" type="string" required="true">
+  Unique ID of a specific submission.
 </ResponseField>
-
 
 ## 4. Request Example
 
@@ -33,13 +34,16 @@ curl --location --request GET 'https://rest-api.argosidentity.com/v3/submission?
 
 ## 5. Response
 
-### 5-1. Success Response  
+### 5-1. Success Response
+
 ```json result.json
 {
     "Items": [
         {
             "data": {
-                "name": "Ji Sung Park",
+                "first_name": "Ji Sung",
+                "last_name": "Park",
+                "full_name": "Ji Sung Park",
                 "gender": "male",
                 "nationality": "KOR",
                 "date_of_birth": "YYYY-MM-DD",
@@ -96,6 +100,6 @@ curl --location --request GET 'https://rest-api.argosidentity.com/v3/submission?
         }
     ]
 }
-
 ```
+
 This API efficiently retrieves detailed information for a specific Submission ID. The response includes the applicant's personal details, KYC results, and comprehensive information about each attempt.

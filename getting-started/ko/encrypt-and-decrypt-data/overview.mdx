@@ -244,6 +244,35 @@ URL의 쿼리 스트링으로 전송되는 민감한 데이터를 AES-256 방식
 
 API 메서드(GET, POST, PATCH)와 WEBHOOK에서 데이터를 암호화하여 안전하게 전송합니다. API 메서드는 AES-256-ECB 방식을, WEBHOOK은 AES-256-CBC 방식을 사용하여 암호화합니다. 데이터를 안전하게 보호하기 위해 사용 전에 반드시 안전한 데이터 전송 기능이 활성화되어 있는지 확인하세요.
 
+안전한 데이터 전송 기능이 활성화 되어 있을 경우, Request body 는 반드시 암호화하여 전송하여야 합니다. 암호화를 사용할 때: 전체 요청 본문 객체를 암호화합니다. 암호화된 문자열을 body 매개변수로 전송합니다. AES-256-ECB 형태로 암호화가 필요하며, 암호화 방법은 하기 주요 특징과 설명을 참조하세요.
+
+<CodeGroup>
+
+```json body
+body : encrypt({
+		email : 'string',
+		fullName : 'string',
+		issuingCountry : 'string',
+		birthDate: 'string'
+		...
+	})
+```
+
+</CodeGroup>
+
+응답에는 isEncrypted 플래그와 암호화된 데이터가 포함됩니다.
+
+<CodeGroup>
+
+```json response.json
+body : {
+    "data": "encrypted-string",
+    "isEncrypted": true
+}
+```
+
+</CodeGroup>
+
 ### 3-1. 주요 특징
 
 - GET, POST, PATCH 요청은 `AES-256-ECB` 방식으로 암호화

@@ -15,28 +15,32 @@ description: "라이브폼의 QueryString 및 Token ID 옵션에 대한 종합 �
 
 ### 2-1. 주요 QueryString 파라미터
 
-| 파라미터                  | ID Document | Knowledge-Based | 설명                                                                                                                                  |
-| --------------------- | :---------- | :-------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| `blacklistCountries`  | Yes         | Yes             | 블랙리스트 국가에 대한 옵션을 해당 submission에 대하여 OFF 함 (`false`만 가능)                                                                             |
-| `approvePeriod`       | Yes         | No              | Approved 중복 제출 방지 기간에 대한 옵션을 해당 submission에 대하여 OFF 함 (`false`만 가능)                                                                 |
-| `rejectPeriod`        | Yes         | No              | Rejected 중복 제출 방지 기간에 대한 옵션을 해당 submission에 대하여 OFF 함 (`false`만 가능)                                                                 |
-| `ageLimit`            | Yes         | Yes             | 연령 제한에 대한 옵션을 해당 submission에 대하여 OFF 함 (`false`만 가능)                                                                                |
-| `rejectDuplicateUser` | Yes         | Yes             | 중복 제출 방지에 대한 옵션을 해당 submission에 대하여 ON / OFF 함 (`true` 및 `false` 모두 가능)                                                             |
-| `email`               | Yes         | Yes             | 사용자 이메일                                                                                                                             |
-| `userid`              | Yes         | Yes             | 사용자의 사용자 지정 고유 식별자                                                                                                                  |
-| `pid`                 | Yes         | Yes             | 각각의 project를 구분하는 고유의 구분자                                                                                                           |
-| `sid`                 | Yes         | Yes             | 각각의 submission을 구분하는 고유의 구분자                                                                                                        |
-| `cf1`                 | Yes         | Yes             | 사용자 정의 옵션 필드1                                                                                                                       |
-| `cf2`                 | Yes         | Yes             | 사용자 정의 옵션 필드2                                                                                                                       |
-| `cf3`                 | Yes         | Yes             | 사용자 정의 옵션 필드3                                                                                                                       |
-| `allowedCountries`    | Yes         | Yes             | 반드시 encrypted 로 암호화해서 사용해야 됩니다.  예시로 `'allowedCountries': 'USA,KOR'}` 값을 암호화하여 전달하면 United States (USA) 및 South Korea (KOR)만 허용됩니다. |
-| `knowledgeField`      | No          | Yes             | 반드시 encrypted 로 암호화해서 사용해야 됩니다.  Knowledge-based Form 에 노출시킬 필드를 정합니다. 지원하는 필드는 하단 매개변수 값 설정을 참조하세요.                                |
-| `knowledgePrefill`    | No          | Yes             | 반드시 encrypted 로 암호화해서 사용해야 됩니다.  필드에 값을 미리 입력할 수 있습니다. 각 필드 별 입력이 가능한 값은 하단 매개변수 값 설정을 참조하세요.                                       |
+| 파라미터                    | ID Document | Knowledge-Based | 설명                                                                                                                                  |
+| ----------------------- | :---------- | :-------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `blacklistCountries`    | Yes         | Yes             | 블랙리스트 국가에 대한 옵션을 해당 submission에 대하여 OFF 함 (`false`만 가능)                                                                             |
+| `approvePeriod`         | Yes         | No              | Approved 중복 제출 방지 기간에 대한 옵션을 해당 submission에 대하여 OFF 함 (`false`만 가능)                                                                 |
+| `rejectPeriod`          | Yes         | No              | Rejected 중복 제출 방지 기간에 대한 옵션을 해당 submission에 대하여 OFF 함 (`false`만 가능)                                                                 |
+| `ageLimit`              | Yes         | Yes             | 연령 제한에 대한 옵션을 해당 submission에 대하여 OFF 함 (`false`만 가능)                                                                                |
+| `rejectDuplicateUser`   | Yes         | Yes             | 중복 제출 방지에 대한 옵션을 해당 submission에 대하여 ON / OFF 함 (`true` 및 `false` 모두 가능)                                                             |
+| `email`                 | Yes         | Yes             | 사용자 이메일                                                                                                                             |
+| `userid`                | Yes         | Yes             | 사용자의 사용자 지정 고유 식별자                                                                                                                  |
+| `pid`                   | Yes         | Yes             | 각각의 project를 구분하는 고유의 구분자                                                                                                           |
+| `sid`                   | Yes         | Yes             | 각각의 submission을 구분하는 고유의 구분자                                                                                                        |
+| `cf1`                   | Yes         | Yes             | 사용자 정의 옵션 필드1                                                                                                                       |
+| `cf2`                   | Yes         | Yes             | 사용자 정의 옵션 필드2                                                                                                                       |
+| `cf3`                   | Yes         | Yes             | 사용자 정의 옵션 필드3                                                                                                                       |
+| `allowedCountries`      | Yes         | Yes             | 반드시 encrypted 로 암호화해서 사용해야 됩니다.  예시로 `'allowedCountries': 'USA,KOR'}` 값을 암호화하여 전달하면 United States (USA) 및 South Korea (KOR)만 허용됩니다. |
+| `knowledgeField`        | No          | Yes             | 반드시 encrypted 로 암호화해서 사용해야 됩니다.  Knowledge-based Form 에 노출시킬 필드를 정합니다. 지원하는 필드는 하단 매개변수 값 설정을 참조하세요.                                |
+| `knowledgePrefill`      | No          | Yes             | 반드시 encrypted 로 암호화해서 사용해야 됩니다.  필드에 값을 미리 입력할 수 있습니다. 각 필드 별 입력이 가능한 값은 하단 매개변수 값 설정을 참조하세요.                                       |
+| `allowedIdTypes`        | Yes         | No              | 반드시 encrypted 로 암호화해서 사용해야 됩니다.  신분증 ID 타입 선택지를 정할 수 있습니다. 각 필드 별 입력이 가능한 값은 하단 매개변수 값 설정을 참조하세요.                                   |
+| `allowedDocumentFields` | Yes         | No              | 반드시 encrypted 로 암호화해서 사용해야 됩니다.  신분증 리뷰 단계에서 보여줄 필드를 정할 수 있습니다. 각 필드 별 입력이 가능한 값은 하단 매개변수 값 설정을 참조하세요.                              |
+| `projectionId`          | Yes         | Yes             | 반드시 encrypted 로 암호화해서 사용해야 됩니다. projectionId 로 projection을 적용할 수 있습니다. Id 가 지정되었으므로, ProjectionName와 함께 사용될 수 없습니다.                 |
+| `projectionName`        | Yes         | Yes             | 반드시 encrypted 로 암호화해서 사용해야 됩니다.  projectionName 로 projection을 적용할 수 있습니다. 이름으로 Projection이 지정되었으므로, ProjectionId와 함께 사용될 수 없습니다.    |
 
-### 2-1-a. Knowledge-Based 매개변수 값 설정
+### 2-1-a. ID Type, Field 및 Knowledge-Based 관련 매개변수 값 설정
 
 <AccordionGroup>
-  <Accordion title="knowledgeField 매개변수 값 설정" icon="memo-pad">
+  <Accordion title="[Knowledge-Based] knowledgeField 매개변수 값 설정" icon="lightbulb">
     - `name`
     - `gender`
     - `birthDate`
@@ -49,7 +53,7 @@ description: "라이브폼의 QueryString 및 Token ID 옵션에 대한 종합 �
 
       상기의 매개변수 값은 대소문자를 동일하게 기재해야 동작합니다. 예를들면 birthdate 로 기재시 동작하지 않습니다. 위의 값과 동일하게 birthDate 로 기재하셔야 됩니다.
   </Accordion>
-  <Accordion title="knowledgePrefill 매개변수 값 설정" icon="memo-pad">
+  <Accordion title="[Knowledge-Based] knowledgePrefill 매개변수 값 설정" icon="lightbulb">
     - `name` 미리 입력할 이름 기입
     - `birthDate` YYYY-MM-DD 형식으로 기재
     - `gender` male 혹은 female 로 기재
@@ -62,11 +66,48 @@ description: "라이브폼의 QueryString 및 Token ID 옵션에 대한 종합 �
 
       `address`에는 Google Maps 에서 검색이 되는 키워드로 기재해주시면 됩니다. 미리 기입한 값은 주소 검색화면 필드에서 보여집니다.
   </Accordion>
+  <Accordion title="[ID document] allowedIdTypes 매개변수 값 설정" icon="memo-pad">
+    - `passport`
+    - `drivers_license`
+    - `government_id`
+    - `residence_permit`
+    - `vehicle_registration_certificate`
+    - `visa`
+    - `pancard`
+    - `aadhaar`
+    - `foreign_registrator`
+    - `identification_card`
+
+      e.g. `{'allowedIdTypes': 'passport,government_id,drivers_license'}`
+  </Accordion>
+  <Accordion title="[ID document] allowedDocumentFields 매개변수 값 설정" icon="memo-pad">
+    - `gender`
+    - `nationality`
+    - `expiry_date`
+    - `number`
+    - `issue_date`
+    - `id_number`
+    - `serial_number`
+    - `name`
+    - `date_of_birth`
+    - `curp_number` Only available for Maxican ID card
+    - `version` Only available for New Zealand Driver's license
+    - `type_of_permit` Only available for Alien Registration Card in South Korea
+
+      e.g. `{'allowedDocumentFields': 'gender,name,date_of_birth,issue_date'}`
+  </Accordion>
 </AccordionGroup>
+
+모든 필드의 이름은 대소문자를 구분합니다.\
+각 파라메터 간에 공백이 있으면 안됩니다.
+
+❌ 잘못된 예시`{'knowledgeField': 'gender, nationality, name'}`
+
+정확한 옵션은 다음과 같이 쉼표 다음에 공백이 없어야 합니다.`{'knowledgeField': 'gender,nationality,name'}`
 
 ### 2-1-b. Knowledge-Based 에서 국가 선택화면 건너뛰기
 
- `allowedCountries` 에 국가를 하나만 기입시 국가 선택화면을 건너뛸수 있습니다.\
+`allowedCountries` 에 국가를 하나만 기입시 국가 선택화면을 건너뛸수 있습니다.\
 e.g. `{'allowedCountries': 'USA'}`
 
 <Note>
@@ -111,4 +152,4 @@ tokenId는 Private Mode에서 Liveform 제출 시 사용되는  String 데이터
 - 기본 폼 URL: `https://form.argosidentity.com/?pid={project_Id}`
 - Token ID 포함 URL: `https://form.argosidentity.com/?pid={project_Id}&token={tokenId}`
 
-이 가이드를 통해 ID Check의 QueryString 및 Token ID 옵션을 효과적으로 활용하여 KYC 프로세스를 최적화하고 사용자 경험을 개선할 수 있습니다
+이 가이드를 통해 ID check의 QueryString 및 Token ID 옵션을 효과적으로 활용하여 KYC 프로세스를 최적화하고 사용자 경험을 개선할 수 있습니다

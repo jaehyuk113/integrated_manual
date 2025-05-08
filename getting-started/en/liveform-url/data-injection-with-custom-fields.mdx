@@ -25,19 +25,6 @@ Query String options can be applied using the ARGOS ID Check Liveform. All Query
 
 - Basic Form URL: `https://form.argosidentity.com/?pid={project_Id}`
 - Injection URL: `https://form.argosidentity.com/?pid={project_id}&action=addveri&sid={submission_id}`
-- Injection URL with encryption: `https://form.argosidentity.com/?pid={project_id}&encrypted={encrypted_values}`
-
-<Warning>
-  **The Injection URL with encryption** method are required to encrypt the sid and action parameters. 
-
-  https://form.argosidentity.com/?pid={project_id}&encrypted={encrypted_values} (O)
-
-  https://form.argosidentity.com/?pid={project_id}&action=addveri&sid={submission_id}&encrypted={encrytped_values} (X)
-</Warning>
-
-<Note>
-  Please refer to this [link](https://developers.argosidentity.com/getting-started/en/encrypt-and-decrypt-data/overview) for encryption methods.
-</Note>
 
 ### 4-1. Key Parameters
 
@@ -54,35 +41,19 @@ Query String options can be applied using the ARGOS ID Check Liveform. All Query
 </ResponseField>
 
 <ResponseField name="cf1" type="string">
-  **Must be encrypted.** Custom option field #1.
+  Custom option field #1.
 </ResponseField>
 
 <ResponseField name="cf2" type="string">
-  **Must be encrypted.** Custom option field #2.
+  Custom option field #2.
 </ResponseField>
 
 <ResponseField name="cf3" type="string">
-  **Must be encrypted.** Custom option field #3.
+  Custom option field #3.
 </ResponseField>
 
 <ResponseField name="userid" type="string">
-  **Must be encrypted.** Custom unique user identifier.
-</ResponseField>
-
-<ResponseField name="iprisk_category" type="string">
-  **Must be encrypted.** Set the risk for IP-based routing services. As of now, `vpn` and `proxy` parameters are supported. There is no space between the comma and the option name in each option. This option is paired with the `iprisk_duration_hours` option.
-</ResponseField>
-
-<ResponseField name="iprisk_duration_hours" type="int">
-  **Must be encrypted.** If the system detects risk, set the hour and how many hours to restrict. It must be used with `iprisk_category`.
-</ResponseField>
-
-<ResponseField name="distance_checks_source" type="string">
-  **Must be encrypted.** The option to prevent users from continuing if their address is distant from their IP. Currently, `ipgeo` is only avaiable. This option is paired with the `distance_max_distance_km`.
-</ResponseField>
-
-<ResponseField name="distance_max_distance_km" type="int">
-  **Must be encrypted.** Can set a distance between the entered address and the IP-based address. It must be used with `distance_checks_source`.
+  Custom unique user identifier.
 </ResponseField>
 
 ## 4-2. Error Responses
@@ -107,4 +78,4 @@ Query String options can be applied using the ARGOS ID Check Liveform. All Query
 - Redirects to an error page.
 - Displays the message: "An error occurred while processing the address information. Please try again." The user can then proceed with re-verification.
 
-This guide helps you effectively utilize the Data Injection feature and Query String options in ID check to flexibly manage and customize the ID Check process.
+This guide helps you effectively utilize the Data Injection feature and Query String options in ID check to flexibly manage and customize the ID check process.

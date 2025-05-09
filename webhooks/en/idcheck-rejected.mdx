@@ -3,6 +3,12 @@ mode: "default"
 title: "Rejected"
 description: "This event is triggered when a KYC submission is rejected. Rejection can occur due to automated verification failures, manual review results, or other policy-related reasons. This event allows you to immediately identify the reasons for the KYC rejection and take necessary actions, such as providing feedback to the user or requesting additional information."
 ---
+<Note>
+  The projection API can exclude full_name, gender, etc.
+
+  For details, refer to this [link](https://developers.argosidentity.com/api-reference/api-reference-guide/en/post-projection#param-fields).
+</Note>
+
 
 ```json rejected-webhook-sample.json
 {

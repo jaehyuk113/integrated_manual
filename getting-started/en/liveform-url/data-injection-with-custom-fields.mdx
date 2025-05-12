@@ -105,6 +105,8 @@ Query String options can be applied using the ARGOS ID Check Liveform. All Query
 ### 5-2. On Failure
 
 - Redirects to an error page.
-- Displays the message: "An error occurred while processing the address information. Please try again." The user can then proceed with re-verification.
+- `ipRiskCategory` that was applied and the risk that was detected, displays the message: "VPN/Proxy Detection, Please disable VPN or proxy and try again with a regular network connection."
+- The applied `distanceCheckSource` and the distance is over than the specified distance in km, Displays the message: "Address Verification Failed, Please verify your address or try again on a network near your residence."
+- If the process was unsuccessful, Displays the message: "An error occurred while processing the address information. Please try again." The user can then proceed with re-verification.
 
 This guide helps you effectively utilize the Data Injection feature and Query String options in ID check to flexibly manage and customize the ID check process.

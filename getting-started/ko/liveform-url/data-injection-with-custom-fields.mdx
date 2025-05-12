@@ -85,6 +85,10 @@ Query String 옵션은 ARGOS ID check 라이브폼을 이용하여 적용할 수
   **암호화가 적용된 Injection 포함 URL에서만 지원.** 접속한 IP 와 입력한 주소 거리를 km 단위로 설정할 수 있습니다. `distanceCheckSource` 만 설정했을 시에는 기본 값으로 5km 이 설정됩니다.
 </ResponseField>
 
+<ResponseField name="blacklistCountries" type="bool">
+  **암호화가 적용된 Injection 포함 URL에서만 지원.** Dashboard 에서 설정한 블랙리스트 국가를 금지하기 위해서는 `blacklistCountries` 값이 true 로 설정되어야 합니다. 기본 설정 값은 false 입니다.
+</ResponseField>
+
 ## 4-2. 응답 오류
 
 | 오류 코드                        | 설명                         |

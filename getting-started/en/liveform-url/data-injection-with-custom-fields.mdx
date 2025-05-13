@@ -115,20 +115,61 @@ Query String options can be applied using the ARGOS ID Check Liveform. All Query
     "webhook_trigger": "injection",
     "action": {
         "type": "address",
-        "created_at": "2025-05-13T04:01:20.944Z"
+        "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ"
     },
-    "submission_id": "19g6im9gk9e7l",
-    "email": "webhook041413@test.com",
+    "submission_id": "{submission_id}",
+    "email": "email@email.com",
     "kyc_status": "approved",
-    "applicant_id": "mgm8m8mjicls"
+    "applicant_id": "{applicant_id}"
 }
 ```
 
-### 5-2. On Failure
+### 5-2-a. On Failure
 
 - Redirects to an error page.
 - `ipRiskCategory` that was applied and the risk that was detected, displays the message: "VPN/Proxy Detection, Please disable VPN or proxy and try again with a regular network connection."
 - The applied `distanceCheckSource` and the distance is over than the specified distance in km, Displays the message: "Address Verification Failed, Please verify your address or try again on a network near your residence."
 - If the process was unsuccessful, Displays the message: "An error occurred while processing the address information. Please try again." The user can then proceed with re-verification.
+
+### 5-2-b. On Failure (Webhook)
+
+There is no webhook for IP risk detection. However, if the distance check fails or a blacklist country is detected, a webhook will be generated. Reference the responses.
+
+<CodeGroup>
+
+```json fail_distance_check.json
+{
+    "webhook_trigger": "injectionFail",
+    "action": {
+        "type": "address",
+        "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
+        "failCode": "distanceChecks_ipGeo"
+    },
+    "submission_id": "{submission_id}",
+    "email": "email@email.com",
+    "kyc_status": "approved",
+    "applicant_id": "{applicant_id}",
+    "duplicated_information": "{encrypted_duplicated_information}"
+}
+```
+
+
+```json fail_blacklist_counturies.json
+{
+    "webhook_trigger": "injectionFail",
+    "action": {
+        "type": "address",
+        "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
+        "failCode": "blackliskCountries"
+    },
+    "submission_id": "{submission_id}",
+    "email": "email@email.com",
+    "kyc_status": "approved",
+    "applicant_id": "{applicant_id}",
+    "duplicated_information": "{encrypted_duplicated_information}"
+}
+```
+
+</CodeGroup>
 
 This guide helps you effectively utilize the Data Injection feature and Query String options in ID check to flexibly manage and customize the ID check process.

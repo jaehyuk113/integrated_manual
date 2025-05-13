@@ -33,6 +33,8 @@ Query String options can be applied using the ARGOS ID Check Liveform. All Query
   https://form.argosidentity.com/?pid={project_id}&encrypted={encrypted_values} (O)
 
   https://form.argosidentity.com/?pid={project_id}&action=addveri&sid={submission_id}&encrypted={encrytped_values} (X)
+
+  (X) example functions similarly to an unencrypted addveri (Address Verification) action URL, ignore encrypted parameter options.
 </Warning>
 
 <Note>
@@ -74,21 +76,20 @@ Query String options can be applied using the ARGOS ID Check Liveform. All Query
 </ResponseField>
 
 <ResponseField name="ipRiskDurationHours" type="int">
-  **Must be encrypted.** If the system detects risk, set the hour and how many hours to restrict. If `ipRiskCategory` is set without `ipRiskDurationHours`, the default value (48 hours) will be set.
+  **Must be encrypted.** If the system detects risk, set the hour and how many hours to restrict. If `ipRiskCategory` is set without `ipRiskDurationHours`, It must be used with `ipRiskCategory`.
 </ResponseField>
 
 <ResponseField name="distanceCheckSource" type="string">
-  **Must be encrypted.** The option to prevent users from continuing if their address is distant from their IP. Currently, `ipgeo` is only avaiable. This option is paired with the `distanceMaxDistanceKm`.
+  **Must be encrypted.** The option to prevent users from continuing if their address is distant from their IP. Currently, `ipGeo` is only available. This option is paired with the `distanceMaxDistanceKm`.
 </ResponseField>
 
 <ResponseField name="distanceMaxDistanceKm" type="int">
-  **Must be encrypted.** Can set a distance between the entered address and the IP-based address. If `distanceCheckSource` is set without `distanceMaxDistanceKm`, the default value (5 km) will be set.
+  **Must be encrypted.** Can set a distance between the entered address and the IP-based address. If `distanceCheckSource` is set without `distanceMaxDistanceKm`, It must be used with `distanceCheckSource`.
 </ResponseField>
 
 <ResponseField name="blacklistCountries" type="bool">
   **Must be encrypted.** In order to forbid a country from being blacklisted in the dashboard, it must be set to true. The default value is false.
 </ResponseField>
-
 
 ## 4-2. Error Responses
 
@@ -102,10 +103,26 @@ Query String options can be applied using the ARGOS ID Check Liveform. All Query
 
 ## 5. Address Update Results
 
-### 5-1. On Success
+### 5-1-a. On Success
 
 - Redirects to the results page.
 - Displays the message: "Address verification completed."
+
+### 5-1-b. On Success (Webhook)
+
+```json result.json
+{
+    "webhook_trigger": "injection",
+    "action": {
+        "type": "address",
+        "created_at": "2025-05-13T04:01:20.944Z"
+    },
+    "submission_id": "19g6im9gk9e7l",
+    "email": "webhook041413@test.com",
+    "kyc_status": "approved",
+    "applicant_id": "mgm8m8mjicls"
+}
+```
 
 ### 5-2. On Failure
 

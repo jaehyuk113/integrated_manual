@@ -3,6 +3,11 @@ title: "ID check"
 description: "Latest updates and changes for ID check"
 ---
 
+<Update label="2025-05-14">
+  # Address Injection
+  After submission approval, it can inject address information with validation. The injection process can be restricted if the user has an unusual connection, like a proxy or VPN. Also restrict injection if the user’s IP address is far from the inputted address.
+</Update>
+
 <Update label="2025-05-08">
   # Added the custom DI (duplicated information)
 
@@ -15,6 +20,7 @@ description: "Latest updates and changes for ID check"
   # Projection
 
   When the user submits KYC, a projection can be applied to exclude sensitive information from the GET/SUBMISSION API, such as sensitive fields like name and birthdate. The projection list can be managed through the use of GET/Projection, POST/Projection, and DELETE/Projection. Additionally, the projection can be applied when the user completes the KYC process by using the URL query string.
+=======
 </Update>
 
 <Update label="2025-03-27">

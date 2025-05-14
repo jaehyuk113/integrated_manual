@@ -8,7 +8,7 @@ description: "고객 데이터를 안전하게 보호하고 무단 접근과 데
 
 <Tip>
   개발 목적을 위해 암복호화 도구를 제공합니다.\
-  필요시 [링크](https://argos-logo.s3.ap-northeast-2.amazonaws.com/developer_guide/encryption_tool.zip)에서 다운로드 하셔서 사용하시기 바랍니다.
+  필요시 [링크](https://argos-logo.s3.ap-northeast-2.amazonaws.com/developer_guide/EncryptionTool_0514.zip)에서 다운로드 하셔서 사용하시기 바랍니다.
 
   맥OS에서 사용시, 첫 실행때 "개인정보 보호 및 보안" 설정에서 허용을 해주셔야 사용이 가능합니다.
 </Tip>
@@ -144,7 +144,18 @@ URL의 쿼리 스트링으로 전송되는 민감한 데이터를 AES-256 방식
       * @param {string} data - Stringified JSON data
       * @param {string} apiKey - Project API key
       * @returns {string} Encrypted data
+      *
+      * 정확한 암호화를 위해선 formatJSON 으로 사용해주세요. 예시는 다음과 같습니다.
+      * const data = {
+          userid: "10912301",
+          email: "email@email.com"
+      * };
+      *
+      * 다음과 같이 직접 string 으로 입력을 피해주세요.
+      * 기대한 암호화 결과가 달라질 수 있습니다.
+      * `{"userid":"10912301","email":"email@email.com"}`
       */
+    
       function encrypt(data, apiKey) {
         var hashedKey = crypto.createHash('sha256').update(apiKey).digest();
         var cipher = crypto.createCipheriv('aes-256-ecb', hashedKey, null);

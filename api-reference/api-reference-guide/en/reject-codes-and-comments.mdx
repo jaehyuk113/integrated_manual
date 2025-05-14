@@ -1,25 +1,29 @@
 ---
-title: 'Rejected Codes and Comments'
-description: 'Provides a list of rejection codes and comments generated during the KYC process.'
+title: "Rejected Codes and Comments"
+description: "Provides a list of rejection codes and comments generated during the KYC process."
 ---
 
-| Code                      | Description                                                                                   |
-|---------------------------|-----------------------------------------------------------------------------------------------|
-| `id_image_invalidImage`   | ID document not detected. Please take a clear picture of your ID document.                   |
-| `id_image_invalidId`      | Invalid ID document. Please resubmit with a valid ID document.                                |
-| `id_image_error`          | Failed to upload the ID image. Please retry the KYC process.                                  |
-| `id_image_badImage`       | Unable to read the ID image. Please ensure the image is clear and resubmit.                   |
-| `id_info_dataMismatch`    | Entered information does not match the ID document.                                           |
-| `id_info_blacklist`       | KYC is not accepted from {country} as per policy.                                             |
-| `id_info_notOfAge`        | KYC is not accepted for individuals under {13} years old.                                     |
-| `too_many_retry`          | Multiple invalid KYC attempts detected.                                                      |
-| `blacklistCountry`        | KYC is not accepted from {country} as per policy.                                             |
-| `under_ageLimit`          | KYC is not accepted for individuals under {13} years old.                                     |
-| `invalid_acceptedID`      | Invalid ID type. Please resubmit with a valid ID document. Refer to the submission page for accepted IDs. |
-| `address_image_invalidImage` | Invalid proof of address. It must include your full name and address. Examples: utility bill, bank statement, residency certificate. |
-| `address_image_error`     | Failed to upload the proof of address image. Please retry.                                    |
-| `address_image_badImage`  | Unable to read the proof of address image. Please ensure the image is clear and resubmit.     |
-| `address_info_expiredDocument` | Proof of address is expired. It must be issued within the last 6 months.                  |
-| `address_info_dataMismatch` | Entered information does not match the proof of address.                                    |
-| `timeout`                 | KYC rejected due to timeout.                                                                 |
-| `other`                   | Comments added manually by the reviewer during manual review.                                |
+| Code                           | Description                                                                                                                          |
+| ------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `id_image_invalidImage`        | ID document not detected. Please take a clear picture of your ID document.                                                           |
+| `id_image_invalidId`           | Invalid ID document. Please resubmit with a valid ID document.                                                                       |
+| `id_image_error`               | Failed to upload the ID image. Please retry the KYC process.                                                                         |
+| `id_image_badImage`            | Unable to read the ID image. Please ensure the image is clear and resubmit.                                                          |
+| `id_info_dataMismatch`         | Entered information does not match the ID document.                                                                                  |
+| `id_info_blacklist`            | KYC is not accepted from country as per policy.                                                                                      |
+| `id_info_notOfAge`             | KYC is not accepted for individuals under 13 years old.                                                                              |
+| `duplicate_user`               | A user has been duplicated as a result of identification.                                                                            |
+| `duplicated_face`              | A duplicate user has been identified through face matching.                                                                          |
+| `too_many_retry`               | Multiple invalid KYC attempts detected.                                                                                              |
+| `blacklistCountry`             | KYC is not accepted from country as per policy.                                                                                      |
+| `under_ageLimit`               | KYC is not accepted for individuals under 13 years old.                                                                              |
+| `invalid_acceptedID`           | Invalid ID type. Please resubmit with a valid ID document. Refer to the submission page for accepted IDs.                            |
+| `no-date-of-birth`             | There is no date of birth information on the ID.                                                                                     |
+| `expired_id`                   | ID cards have already expired.                                                                                                       |
+| `address_image_invalidImage`   | Invalid proof of address. It must include your full name and address. Examples: utility bill, bank statement, residency certificate. |
+| `address_image_error`          | Failed to upload the proof of address image. Please retry.                                                                           |
+| `address_image_badImage`       | Unable to read the proof of address image. Please ensure the image is clear and resubmit.                                            |
+| `address_info_expiredDocument` | Proof of address is expired. It must be issued within the last 6 months.                                                             |
+| `address_info_dataMismatch`    | Entered information does not match the proof of address.                                                                             |
+| `timeout`                      | KYC rejected due to timeout.                                                                                                         |
+| `other`                        | Comments added manually by the reviewer during manual review.                                                                        |

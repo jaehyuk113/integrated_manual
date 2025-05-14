@@ -8,7 +8,7 @@ description: "Comprehensive guide to secure customer data through robust encrypt
 
 <Tip>
   For development purposes, provide the Encryption and Decryption Tool.\
-  You may download it via this [link](https://argos-logo.s3.ap-northeast-2.amazonaws.com/developer_guide/encryption_tool.zip) and verify the results are accurate.
+  You may download it via this [link](https://argos-logo.s3.ap-northeast-2.amazonaws.com/developer_guide/EncryptionTool_0514.zip) and verify the results are accurate.
 
   cf\> In macOS, it requires allowing launching this app in the "Privacy & Security" settings menu.
 </Tip>
@@ -141,7 +141,19 @@ Sensitive data sent via URL query strings is encrypted using the `AES-256-ECB` e
       * @param {string} data - Stringified JSON data
       * @param {string} apiKey - Project API key
       * @returns {string} Encrypted data
+      *
+      * for exact encryption, use formatJSON.
+      * example below,
+      * const data = {
+          userid: "10912301",
+          email: "email@email.com"
+      * };
+      *
+      * do not use string direct way, like
+      * `{"userid":"10912301","email":"email@email.com"}`
+      * which is not same as expected encryption.
       */
+    
       function encrypt(data, apiKey) {
         var hashedKey = crypto.createHash('sha256').update(apiKey).digest();
         var cipher = crypto.createCipheriv('aes-256-ecb', hashedKey, null);

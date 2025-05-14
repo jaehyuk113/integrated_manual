@@ -3,6 +3,10 @@ title: "DELETE/Projection"
 description: "This API can delete a field-item-excluding policy projection."
 ---
 
+<Note>
+  If the submission applies the projection and shows again excluded information, employ DELETE/Projection with the projectionId.
+</Note>
+
 ## 1. Endpoint
 
 ```text DELETE/projection
@@ -26,7 +30,12 @@ The request body must be in JSON format. Below are the field descriptions:
 </ResponseField>
 
 ## 4. Request Example
+<Warning>
+  There is no requirement for a parameter name; projectionId only requires a value.
 
+  - https://rest-api.argosidentity.com/v3/projection/55sqp8ma0jvwh (O)
+  - https://rest-api.argosidentity.com/v3/projection/projectionId=55sqp8ma0jvwh (X)
+</Warning>
 ```curl DELETE/Projection
 curl --location --request DELETE 'https://rest-api.argosidentity.com/v3/projection/{projectrionId}' \
 --header 'x-api-key: {yourAPIKey}'

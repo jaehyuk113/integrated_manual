@@ -76,7 +76,7 @@ Query String options can be applied using the ARGOS ID Check Liveform. All Query
 </ResponseField>
 
 <ResponseField name="ipRiskDurationHours" type="int">
-  **Must be encrypted.** If the system detects risk, set the hour and how many hours to restrict. If `ipRiskCategory` is set without `ipRiskDurationHours`, It must be used with `ipRiskCategory`.
+  **Must be encrypted.** Access can be directly restricted within a specified hour if the system determines that an IP address poses a risk. Risky IP addresses will be immediately blocked in set hours. It must be used with `ipRiskCategory`.
 </ResponseField>
 
 <ResponseField name="distanceCheckSource" type="string">

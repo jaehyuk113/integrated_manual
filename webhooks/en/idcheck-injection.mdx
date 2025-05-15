@@ -37,6 +37,23 @@ description: "This event is triggered when additional data is injected into the 
 }
 ```
 
+
+```json injection-fail-blacklist.json
+{
+    "webhook_trigger": "injectionFail",
+    "action": {
+        "type": "address",
+        "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
+        "failCode": "blackliskCountries"
+    },
+    "submission_id": "{submission_id}",
+    "email": "email@email.com",
+    "kyc_status": "approved",
+    "applicant_id": "{applicant_id}",
+    "duplicated_information": "{encrypted_duplicated_information}"
+}
+```
+
 </CodeGroup>
 
 <ResponseField name="webhook_trigger" type="string">

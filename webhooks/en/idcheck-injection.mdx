@@ -6,7 +6,7 @@ description: "This event is triggered when additional data is injected into the 
 
 <CodeGroup>
 
-```json injection-webhook-sample.json
+```json injection-pass.json
 {
     "webhook_trigger": "injection",
     "action": {
@@ -21,7 +21,20 @@ description: "This event is triggered when additional data is injected into the 
 ```
 
 
-``` File 2
+```json injection-fail-distance.json
+{
+    "webhook_trigger": "injectionFail",
+    "action": {
+        "type": "address",
+        "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
+        "failCode": "distanceChecks_ipGeo"
+    },
+    "submission_id": "{submission_id}",
+    "email": "email@email.com",
+    "kyc_status": "approved",
+    "applicant_id": "{applicant_id}",
+    "duplicated_information": "{encrypted_duplicated_information}"
+}
 ```
 
 </CodeGroup>

@@ -4,25 +4,61 @@ title: "Data Injection (데이터 주입)"
 description: "이 이벤트는 KYC 시스템에 추가 데이터가 주입될 때 트리거됩니다. 주로 주소 정보와 같은 특정 데이터 타입의 추가나 갱신을 위해 사용됩니다. 이 이벤트를 통해 KYC 프로필의 데이터 보강 과정을 추적하고, 관련 시스템을 업데이트할 수 있습니다."
 ---
 
-```json injection-webhook-sample.json
+<CodeGroup>
+
+```json injection-pass.json
 {
     "webhook_trigger": "injection",
     "action": {
         "type": "address",
-        "created_at": "2024-06-21T03:24:57.565Z"
+        "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ"
     },
-    "submission_id": "string",
-    "duplicated_information": "string",
-    "email": "sample@test.com",
+    "submission_id": "{submission_id}",
+    "email": "email@email.com",
     "kyc_status": "approved",
-    "applicant_id": "string",
-    "cf1": "cf1",
-    "cf2": "cf2",
-    "cf3": "cf3",
-    "userid": "test",
-    "tokenId": "test"
+    "applicant_id": "{applicant_id}",
+    "userid": "{userid}",
+    "tokenId": "{token_id}"
 }
 ```
+
+
+```json injection-fail-distance.json
+{
+    "webhook_trigger": "injectionFail",
+    "action": {
+        "type": "address",
+        "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
+        "failCode": "distanceChecks_ipGeo"
+    },
+    "submission_id": "{submission_id}",
+    "email": "email@email.com",
+    "kyc_status": "approved",
+    "applicant_id": "{applicant_id}",
+    "userid": "{user_id}",
+    "duplicated_information": "{encrypted_duplicated_information}"
+}
+```
+
+
+```json injection-fail-blacklist.json
+{
+    "webhook_trigger": "injectionFail",
+    "action": {
+        "type": "address",
+        "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
+        "failCode": "blackliskCountries"
+    },
+    "submission_id": "{submission_id}",
+    "email": "email@email.com",
+    "kyc_status": "approved",
+    "applicant_id": "{applicant_id}",
+    "userid": "{user_id}",
+    "duplicated_information": "{encrypted_duplicated_information}"
+}
+```
+
+</CodeGroup>
 
 <ResponseField name="webhook_trigger" type="string">
   웹훅 이벤트 유형 - `injection`은 데이터 주입 이벤트를 나타냄
@@ -38,11 +74,18 @@ description: "이 이벤트는 KYC 시스템에 추가 데이터가 주입될 �
     <ResponseField name="created_at" type="string">
       데이터 주입 작업이 실행된 UTC 시간 (ISO 8601 형식)
     </ResponseField>
+    <ResponseField name="failCode" type="string">
+      실패가 발생된 경우 원인이 되는 코드가 표기
+    </ResponseField>
   </Expandable>
 </ResponseField>
 
 <ResponseField name="submission_id" type="string">
   KYC 제출 건별 고유 식별자
+</ResponseField>
+
+<ResponseField name="kyc_result" type="string">
+  KYC 결과
 </ResponseField>
 
 <ResponseField name="duplicated_information" type="string">
@@ -55,18 +98,6 @@ description: "이 이벤트는 KYC 시스템에 추가 데이터가 주입될 �
 
 <ResponseField name="applicant_id" type="string">
   중복 제출을 확인하기 위해 부여되는 고유 식별 ID로, KYC 상태가 승인일 때만 전달 됩니다.
-</ResponseField>
-
-<ResponseField name="cf1" type="string">
-  사용자 정의 필드 1의 값
-</ResponseField>
-
-<ResponseField name="cf2" type="string">
-  사용자 정의 필드 2의 값
-</ResponseField>
-
-<ResponseField name="cf3" type="string">
-  사용자 정의 필드 3의 값
 </ResponseField>
 
 <ResponseField name="userid" type="string">

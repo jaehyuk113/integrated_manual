@@ -93,13 +93,15 @@ Query String options can be applied using the ARGOS ID Check Liveform. All Query
 
 ## 4-2. Error Responses
 
-| Error Code                   | Description                                                      |
-| ---------------------------- | ---------------------------------------------------------------- |
-| `Invalid required`           | Missing required parameter.                                      |
-| `Required field is missing`  | Missing one or more of the following: sid, pid, or address data. |
-| `Invalid submissionId`       | The provided `sid` does not exist.                               |
-| `Invalid projectId`          | The provided `pid` does not exist.                               |
-| `Error in injecting address` | Undefined, unspecified error occurred during address injection.  |
+| Error Code                   | Description                                                            |
+| ---------------------------- | ---------------------------------------------------------------------- |
+| `Invalid required`           | Missing required parameter.                                            |
+| `Required field is missing`  | Missing one or more of the following: sid, pid, or address data.       |
+| `Invalid submissionId`       | The provided `sid` does not exist.                                     |
+| `Invalid projectId`          | The provided `pid` does not exist.                                     |
+| `Error in injecting address` | Undefined, unspecified error occurred during address injection.        |
+| `distanceChecks_ipGeo`       | The distance exceeds the set killomiter, as indicated by ipGeo.        |
+| `blackliskCountries`         | Unable to perform injection due to the presence of blacklistCountries. |
 
 ## 5. Address Update Results
 
@@ -110,19 +112,7 @@ Query String options can be applied using the ARGOS ID Check Liveform. All Query
 
 ### 5-1-b. On Success (Webhook)
 
-```json result.json
-{
-    "webhook_trigger": "injection",
-    "action": {
-        "type": "address",
-        "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ"
-    },
-    "submission_id": "{submission_id}",
-    "email": "email@email.com",
-    "kyc_status": "approved",
-    "applicant_id": "{applicant_id}"
-}
-```
+Refer to [Data Injection of Webhook](https://developers.argosidentity.com/webhooks/en/idcheck-injection) section.
 
 ### 5-2-a. On Failure
 
@@ -133,43 +123,6 @@ Query String options can be applied using the ARGOS ID Check Liveform. All Query
 
 ### 5-2-b. On Failure (Webhook)
 
-There is no webhook for IP risk detection. However, if the distance check fails or a blacklist country is detected, a webhook will be generated. Reference the responses.
-
-<CodeGroup>
-
-```json fail_distance_check.json
-{
-    "webhook_trigger": "injectionFail",
-    "action": {
-        "type": "address",
-        "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
-        "failCode": "distanceChecks_ipGeo"
-    },
-    "submission_id": "{submission_id}",
-    "email": "email@email.com",
-    "kyc_status": "approved",
-    "applicant_id": "{applicant_id}",
-    "duplicated_information": "{encrypted_duplicated_information}"
-}
-```
-
-
-```json fail_blacklist_counturies.json
-{
-    "webhook_trigger": "injectionFail",
-    "action": {
-        "type": "address",
-        "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
-        "failCode": "blackliskCountries"
-    },
-    "submission_id": "{submission_id}",
-    "email": "email@email.com",
-    "kyc_status": "approved",
-    "applicant_id": "{applicant_id}",
-    "duplicated_information": "{encrypted_duplicated_information}"
-}
-```
-
-</CodeGroup>
+There is no webhook for IP risk detection. However, if the distance check fails or a blacklist country is detected, a webhook will be generated. Reference the responses. Refer to [Data Injection of Webhook](https://developers.argosidentity.com/webhooks/en/idcheck-injection) section.
 
 This guide helps you effectively utilize the Data Injection feature and Query String options in ID check to flexibly manage and customize the ID check process.

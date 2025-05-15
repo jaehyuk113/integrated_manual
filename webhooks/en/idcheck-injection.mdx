@@ -4,25 +4,61 @@ title: "Data Injection"
 description: "This event is triggered when additional data is injected into the KYC system. It is primarily used for adding or updating specific data types, such as address information. Through this event, you can track the data enrichment process of KYC profiles and update related systems accordingly."
 ---
 
-```json injection-webhook-sample.json
+<CodeGroup>
+
+```json injection-pass.json
 {
     "webhook_trigger": "injection",
     "action": {
         "type": "address",
-        "created_at": "2024-06-21T03:24:57.565Z"
+        "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ"
     },
-    "submission_id": "string",
-    "duplicated_information": "string",
-    "email": "sample@test.com",
+    "submission_id": "{submission_id}",
+    "email": "email@email.com",
     "kyc_status": "approved",
-    "applicant_id": "string",
-    "cf1": "cf1",
-    "cf2": "cf2",
-    "cf3": "cf3",
-    "userid": "test",
-    "tokenId": "test"
+    "applicant_id": "{applicant_id}",
+    "userid": "{userid}",
+    "tokenId": "{token_id}"
 }
 ```
+
+
+```json injection-fail-distance.json
+{
+    "webhook_trigger": "injectionFail",
+    "action": {
+        "type": "address",
+        "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
+        "failCode": "distanceChecks_ipGeo"
+    },
+    "submission_id": "{submission_id}",
+    "email": "email@email.com",
+    "kyc_status": "approved",
+    "applicant_id": "{applicant_id}",
+    "userid": "{user_id}",
+    "duplicated_information": "{encrypted_duplicated_information}"
+}
+```
+
+
+```json injection-fail-blacklist.json
+{
+    "webhook_trigger": "injectionFail",
+    "action": {
+        "type": "address",
+        "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
+        "failCode": "blackliskCountries"
+    },
+    "submission_id": "{submission_id}",
+    "email": "email@email.com",
+    "kyc_status": "approved",
+    "applicant_id": "{applicant_id}",
+    "userid": "{user_id}",
+    "duplicated_information": "{encrypted_duplicated_information}"
+}
+```
+
+</CodeGroup>
 
 <ResponseField name="webhook_trigger" type="string">
   Webhook event type - `injection` indicates a data injection event.
@@ -38,11 +74,18 @@ description: "This event is triggered when additional data is injected into the 
     <ResponseField name="created_at" type="string">
       The UTC timestamp when the data injection operation was executed (ISO 8601 format).
     </ResponseField>
+    <ResponseField name="failCode" type="string">
+      Show the failure cause as a code if the injection was unsuccessful.
+    </ResponseField>
   </Expandable>
 </ResponseField>
 
 <ResponseField name="submission_id" type="string">
   Unique identifier for each KYC submission.
+</ResponseField>
+
+<ResponseField name="kyc_status" type="string">
+  Result of the KYC.
 </ResponseField>
 
 <ResponseField name="duplicated_information" type="string">
@@ -55,18 +98,6 @@ description: "This event is triggered when additional data is injected into the 
 
 <ResponseField name="applicant_id" type="string">
   A unique identifier assigned to detect duplicate submissions, provided only when the KYC status is approved.
-</ResponseField>
-
-<ResponseField name="cf1" type="string">
-  Value of custom field 1.
-</ResponseField>
-
-<ResponseField name="cf2" type="string">
-  Value of custom field 2.
-</ResponseField>
-
-<ResponseField name="cf3" type="string">
-  Value of custom field 3.
 </ResponseField>
 
 <ResponseField name="userid" type="string">

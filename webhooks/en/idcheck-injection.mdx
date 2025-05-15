@@ -16,7 +16,9 @@ description: "This event is triggered when additional data is injected into the 
     "submission_id": "{submission_id}",
     "email": "email@email.com",
     "kyc_status": "approved",
-    "applicant_id": "{applicant_id}"
+    "applicant_id": "{applicant_id}",
+    "userid": "{userid}",
+    "tokenId": "{token_id}"
 }
 ```
 
@@ -33,6 +35,7 @@ description: "This event is triggered when additional data is injected into the 
     "email": "email@email.com",
     "kyc_status": "approved",
     "applicant_id": "{applicant_id}",
+    "userid": "{user_id}",
     "duplicated_information": "{encrypted_duplicated_information}"
 }
 ```
@@ -50,6 +53,7 @@ description: "This event is triggered when additional data is injected into the 
     "email": "email@email.com",
     "kyc_status": "approved",
     "applicant_id": "{applicant_id}",
+    "userid": "{user_id}",
     "duplicated_information": "{encrypted_duplicated_information}"
 }
 ```
@@ -94,18 +98,6 @@ description: "This event is triggered when additional data is injected into the 
 
 <ResponseField name="applicant_id" type="string">
   A unique identifier assigned to detect duplicate submissions, provided only when the KYC status is approved.
-</ResponseField>
-
-<ResponseField name="cf1" type="string">
-  Value of custom field 1.
-</ResponseField>
-
-<ResponseField name="cf2" type="string">
-  Value of custom field 2.
-</ResponseField>
-
-<ResponseField name="cf3" type="string">
-  Value of custom field 3.
 </ResponseField>
 
 <ResponseField name="userid" type="string">

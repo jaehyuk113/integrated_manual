@@ -4,6 +4,8 @@ title: "Data Injection"
 description: "This event is triggered when additional data is injected into the KYC system. It is primarily used for adding or updating specific data types, such as address information. Through this event, you can track the data enrichment process of KYC profiles and update related systems accordingly."
 ---
 
+<CodeGroup>
+
 ```json injection-webhook-sample.json
 {
     "webhook_trigger": "injection",
@@ -23,6 +25,8 @@ description: "This event is triggered when additional data is injected into the 
     "tokenId": "test"
 }
 ```
+
+</CodeGroup>
 
 <ResponseField name="webhook_trigger" type="string">
   Webhook event type - `injection` indicates a data injection event.

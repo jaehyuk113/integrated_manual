@@ -70,11 +70,18 @@ description: "This event is triggered when additional data is injected into the 
     <ResponseField name="created_at" type="string">
       The UTC timestamp when the data injection operation was executed (ISO 8601 format).
     </ResponseField>
+    <ResponseField name="failCode" type="string">
+      Show the failure cause as a code if the injection was unsuccessful.
+    </ResponseField>
   </Expandable>
 </ResponseField>
 
 <ResponseField name="submission_id" type="string">
   Unique identifier for each KYC submission.
+</ResponseField>
+
+<ResponseField name="kyc_status" type="string">
+  Result of the KYC.
 </ResponseField>
 
 <ResponseField name="duplicated_information" type="string">

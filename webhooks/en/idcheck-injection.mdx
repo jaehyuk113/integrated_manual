@@ -4,6 +4,10 @@ title: "Data Injection"
 description: "This event is triggered when additional data is injected into the KYC system. It is primarily used for adding or updating specific data types, such as address information. Through this event, you can track the data enrichment process of KYC profiles and update related systems accordingly."
 ---
 
+<Note>
+  If the injection contains cf1 ~ cf3, the webhook will respond with cf1 ~ cf3. However, the injection webhook response does not include the cf1 ~ cf3 information, as it has already been included in the submission.
+</Note>
+
 <CodeGroup>
 
 ```json injection-pass.json

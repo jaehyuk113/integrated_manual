@@ -3,6 +3,10 @@ mode: "default"
 title: "Data Injection (데이터 주입)"
 description: "이 이벤트는 KYC 시스템에 추가 데이터가 주입될 때 트리거됩니다. 주로 주소 정보와 같은 특정 데이터 타입의 추가나 갱신을 위해 사용됩니다. 이 이벤트를 통해 KYC 프로필의 데이터 보강 과정을 추적하고, 관련 시스템을 업데이트할 수 있습니다."
 ---
+<Note>
+  Injection 시 cf1 ~ cf3 값이 있었다면 Injection webhook 응답에 cf1 ~ cf3 이 포함되어 옵니다. 다만 이미 cf1 ~ cf3 정보가 있는 Submission 의 경우, Injection webhook 응답에선 cf1 ~ cf3 의 정보를 다시 보여주지 않습니다.
+</Note>
+
 
 <CodeGroup>
 

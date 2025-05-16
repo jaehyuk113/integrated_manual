@@ -18,6 +18,9 @@ description: "이 이벤트는 KYC 시스템에 추가 데이터가 주입될 �
     "kyc_status": "approved",
     "applicant_id": "{applicant_id}",
     "userid": "{userid}",
+    "cf1": "{custom_field1}",
+    "cf2": "{custom_field2}",
+    "cf3": "{custom_field3}",
     "tokenId": "{token_id}"
 }
 ```
@@ -102,6 +105,18 @@ description: "이 이벤트는 KYC 시스템에 추가 데이터가 주입될 �
 
 <ResponseField name="userid" type="string">
   고객사에서 정의한 KYC 제출자 고유 식별자
+</ResponseField>
+
+<ResponseField name="cf1" type="string">
+  사용자 정의 필드 1의 값
+</ResponseField>
+
+<ResponseField name="cf2" type="string">
+  사용자 정의 필드 2의 값
+</ResponseField>
+
+<ResponseField name="cf3" type="string">
+  사용자 정의 필드 3의 값
 </ResponseField>
 
 <ResponseField name="tokenId" type="string">

@@ -1,0 +1,47 @@
+---
+title: Connect claude MCP
+description: It is guide how to connect claude MCP with this ARGOS guide.
+---
+
+## 1. Preparation
+Follow MCP quickstart guide, prepare to install Claude Desktop app and node
+https://modelcontextprotocol.io/quickstart/user
+
+## 2. Update Configuration in claude_desktop_config.json
+Add the ARGOS manual configuration as follows
+
+<CodeGroup>
+    ```json claude_desktop_config.json
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/{username}/Desktop",
+        "/Users/{username}/Downloads"
+      ]
+    },
+    "argosidentity": {
+      "command": "node",
+      "args": [
+        "/Users/chanbaek/.mcp/argosidentity/src/index.js"
+      ]
+    }
+  }
+}
+```
+</CodeGroup>
+
+
+Other browsers may also be supported, but the listed options offer the most stable performance.
+
+## 3. Key Recommendations
+- **Use the Latest Version**: Always use the latest stable version of your chosen browser to ensure access to the latest security updates and performance improvements.  
+- **Enable Automatic Updates**: Set your browser to update automatically to maintain optimal security and compatibility.
+
+<Info>
+**Note:**  
+- While ID Check works on a variety of browsers, the experience and performance may vary. The browsers and versions listed above have been rigorously tested to provide the best balance of functionality, security, and privacy.
+</Info>

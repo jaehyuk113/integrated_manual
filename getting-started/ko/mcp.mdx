@@ -1,16 +1,16 @@
 ---
-title: "Connect claude MCP"
-description: "It is guide how to connect claude MCP with this ARGOS guide."
+title: "클로드 MCP 로 활용하기"
+description: "클로드 MCP 에 아르고스 가이드를 연결하는 방법입니다."
 ---
 
-## 1. Preparation
+## 1. 준비
 
-Prepare to install the Claude Desktop app and node by following the MCP Quickstart guide.
+다음 Quickstart 링크를 참조하셔서 클로드 데스크톱 앱과 Node 를 설치합니다.\
 https://modelcontextprotocol.io/quickstart/user
 
-## 2. Update Configuration in claude_desktop_config.json
+## 2. claude_desktop_config.json 설정
 
-Add the following ARGOS manual configuration:
+다음과 같이 claude_desktop_config.json 을 설정합니다.
 
 <CodeGroup>
 
@@ -55,7 +55,7 @@ Add the following ARGOS manual configuration:
 ```
 
 
-```claude_desktop_config.json (win)
+```claude_desktop_config.json claude_desktop_config.json (win)
 {
     "mcpServers": {
         "filesystem": {
@@ -79,14 +79,14 @@ Add the following ARGOS manual configuration:
 
 </CodeGroup>
 
-Other browsers may also be supported, but the listed options offer the most stable performance.
+## 3. MCP 서버 셋업
 
-## 3. Set up the MCP server
-
-Set up the MCP server by installing the command provided below. It is only necessary the first time.
+다음과 같이 MCP 서버를 셋업해야 됩니다. 최초 1회만 진행합니다.
 
 ```bash
 npx mint-mcp add argosidentity
 ```
 
-When you launch the Claude Desktop application, you will be able to search for the ARGOS manual.
+클로드 데스크톱 앱을 실행하면, 다음과 같이 적절한 프롬프트를 입력하여 아르고스 매뉴얼에 필요한 정보들을 쉽게 가져오실 수 있습니다.
+
+![Mcp Example Ko Pn](/images/mcp_example_ko.png)

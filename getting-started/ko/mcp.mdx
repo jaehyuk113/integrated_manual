@@ -1,0 +1,92 @@
+---
+title: "클로드 MCP 로 활용하기"
+description: "클로드 MCP 에 아르고스 가이드를 연결하는 방법입니다."
+---
+
+## 1. 준비
+
+다음 Quickstart 링크를 참조하셔서 클로드 데스크톱 앱과 Node 를 설치합니다.\
+https://modelcontextprotocol.io/quickstart/user
+
+## 2. claude_desktop_config.json 설정
+
+다음과 같이 claude_desktop_config.json 을 설정합니다.
+
+<CodeGroup>
+
+```json claude_desktop_config.json (mac)
+{
+    "mcpServers": {
+        "filesystem": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-filesystem",
+                "/Users/{username}/Desktop",
+                "/Users/{username}/Downloads"
+            ]
+        },
+        "argosidentity": {
+            "command": "node",
+            "args": [
+                "/Users/{username}/.mcp/argosidentity/src/index.js"
+            ]
+        }
+    }
+}{
+    "mcpServers": {
+        "filesystem": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-filesystem",
+                "/Users/{username}/Desktop",
+                "/Users/{username}/Downloads"
+            ]
+        },
+        "argosidentity": {
+            "command": "node",
+            "args": [
+                "/Users/{username}/.mcp/argosidentity/src/index.js"
+            ]
+        }
+    }
+}
+```
+
+
+```claude_desktop_config.json claude_desktop_config.json (win)
+{
+    "mcpServers": {
+        "filesystem": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-filesystem",
+                "C:\\Users\\{username}\\Desktop",
+                "C:\\Users\\{username}\\Downloads"
+            ]
+        },
+        "argosidentity": {
+            "command": "node",
+            "args": [
+                "C:\\Users\\{username}\\.mcp\\argosidentity\\src\\index.js"
+            ]
+        }
+    }
+}
+```
+
+</CodeGroup>
+
+## 3. MCP 서버 셋업
+
+다음과 같이 MCP 서버를 셋업해야 됩니다. 최초 1회만 진행합니다.
+
+```bash
+npx mint-mcp add argosidentity
+```
+
+클로드 데스크톱 앱을 실행하면, 다음과 같이 적절한 프롬프트를 입력하여 아르고스 매뉴얼에 필요한 정보들을 쉽게 가져오실 수 있습니다.
+
+![Mcp Example Ko Pn](/images/mcp_example_ko.png)

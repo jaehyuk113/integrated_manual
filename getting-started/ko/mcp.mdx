@@ -1,0 +1,92 @@
+---
+title: "Connect claude MCP"
+description: "It is guide how to connect claude MCP with this ARGOS guide."
+---
+
+## 1. Preparation
+
+Prepare to install the Claude Desktop app and node by following the MCP Quickstart guide.
+https://modelcontextprotocol.io/quickstart/user
+
+## 2. Update Configuration in claude_desktop_config.json
+
+Add the following ARGOS manual configuration:
+
+<CodeGroup>
+
+```json claude_desktop_config.json (mac)
+{
+    "mcpServers": {
+        "filesystem": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-filesystem",
+                "/Users/{username}/Desktop",
+                "/Users/{username}/Downloads"
+            ]
+        },
+        "argosidentity": {
+            "command": "node",
+            "args": [
+                "/Users/{username}/.mcp/argosidentity/src/index.js"
+            ]
+        }
+    }
+}{
+    "mcpServers": {
+        "filesystem": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-filesystem",
+                "/Users/{username}/Desktop",
+                "/Users/{username}/Downloads"
+            ]
+        },
+        "argosidentity": {
+            "command": "node",
+            "args": [
+                "/Users/{username}/.mcp/argosidentity/src/index.js"
+            ]
+        }
+    }
+}
+```
+
+
+```claude_desktop_config.json (win)
+{
+    "mcpServers": {
+        "filesystem": {
+            "command": "npx",
+            "args": [
+                "-y",
+                "@modelcontextprotocol/server-filesystem",
+                "C:\\Users\\{username}\\Desktop",
+                "C:\\Users\\{username}\\Downloads"
+            ]
+        },
+        "argosidentity": {
+            "command": "node",
+            "args": [
+                "C:\\Users\\{username}\\.mcp\\argosidentity\\src\\index.js"
+            ]
+        }
+    }
+}
+```
+
+</CodeGroup>
+
+Other browsers may also be supported, but the listed options offer the most stable performance.
+
+## 3. Set up the MCP server
+
+Set up the MCP server by installing the command provided below. It is only necessary the first time.
+
+```bash
+npx mint-mcp add argosidentity
+```
+
+When you launch the Claude Desktop application, you will be able to search for the ARGOS manual.

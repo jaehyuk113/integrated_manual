@@ -5,12 +5,12 @@ description: "It is guide how to connect claude MCP with this ARGOS guide."
 
 ## 1. Preparation
 
-Follow MCP quickstart guide, prepare to install Claude Desktop app and node
+Prepare to install the Claude Desktop app and node by following the MCP Quickstart guide.
 https://modelcontextprotocol.io/quickstart/user
 
 ## 2. Update Configuration in claude_desktop_config.json
 
-Add the ARGOS manual configuration as follows
+Add the following ARGOS manual configuration:
 
 <CodeGroup>
 
@@ -55,7 +55,7 @@ Add the ARGOS manual configuration as follows
 ```
 
 
-``` claude_desktop_config.json (win)
+```claude_desktop_config.json (win)
 {
     "mcpServers": {
         "filesystem": {
@@ -83,10 +83,10 @@ Other browsers may also be supported, but the listed options offer the most stab
 
 ## 3. Set up the MCP server
 
-Install below command and set up the MCP server. It is only required first time.
+Set up the MCP server by installing the command provided below. It is only necessary the first time.
 
 ```bash
 npx mint-mcp add argosidentity
 ```
 
-And launch claude desktop then you can search ARGOS manual in claude desktop app.
+When you launch the Claude Desktop application, you will be able to search for the ARGOS manual.

@@ -26,8 +26,16 @@ x-api-key: {yourAPIKey}
 
 ## 3. Request Parameter
 <ResponseField name="submissionId" type="string" required="true">
-Unique ID of the submission to be deleted
+  Unique ID of the submission to be deleted
 </ResponseField>
+
+<ResponseField name="admin_name" type="string" required="false">
+  Deleted the admin name
+</ResponseField>
+
+<Warning>
+The admin_name is optional; however, it is necessary for the admin to specify the admin_name parameter in order to receive a webhook after a submission is deleted.
+</Warning>
 
 ### 3-1. Data to be Deleted
 
@@ -43,7 +51,7 @@ Unique ID of the submission to be deleted
 
 ```curl DELETE/Submission
 bash Request
-curl --location --request DELETE 'https://rest-api.argosidentity.com/v3/submission?submission_id={submission_id}' \
+curl --location --request DELETE 'https://rest-api.argosidentity.com/v3/submission?submission_id={submission_id}&admin_name={admin_name}' \
 --header 'x-api-key: {yourAPIKey}'
 ```
 
@@ -74,4 +82,3 @@ If an error occurs, a 400 status code is returned along with details in the resp
 | `not Exist Submission Data`         | No data found for the specified `submission_id` |
 | `not Exist Project Data`            | Project information is missing               |
 | `delete Process FAIL`               | Deletion process failed (e.g., Meta Face ID deletion failure) |
-| `adminName and comment is required` | Admin name and comment are required when deleting from the dashboard |

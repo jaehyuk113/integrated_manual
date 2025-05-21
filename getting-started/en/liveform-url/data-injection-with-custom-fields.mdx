@@ -28,7 +28,7 @@ Query String options can be applied using the ARGOS ID Check Liveform. All Query
 - Injection URL with encryption: `https://form.argosidentity.com/?pid={project_id}&encrypted={encrypted_values}`
 
 <Warning>
-  **The Injection URL with encryption** method are required to encrypt the sid and action parameters. 
+  The Injection URL with encryption method are required to encrypt the sid and action parameters. 
 
   https://form.argosidentity.com/?pid={project_id}&encrypted={encrypted_values} (O)
 
@@ -68,40 +68,46 @@ Query String options can be applied using the ARGOS ID Check Liveform. All Query
 </ResponseField>
 
 <ResponseField name="userid" type="string">
-  **Must be encrypted.** Custom unique user identifier.
+  Must be encrypted. Custom unique user identifier.
 </ResponseField>
 
 <ResponseField name="ipRiskCategory" type="string">
-  **Must be encrypted.** Set the risk for IP-based routing services. As of now, `vpn` ,`proxy` and `tor` parameters are supported. There is no space between the comma and the option name in each option. This option is paired with the `ipRiskDurationHours` option.
+  Must be encrypted. Set the risk for IP-based routing services. As of now, `vpn` ,`proxy` and `tor` parameters are supported. There is no space between the comma and the option name in each option. This option is paired with the `ipRiskDurationHours` option.
 </ResponseField>
 
 <ResponseField name="ipRiskDurationHours" type="int">
-  **Must be encrypted.** Access can be directly restricted within a specified hour if the system determines that an IP address poses a risk. Risky IP addresses will be immediately blocked in set hours. It must be used with `ipRiskCategory`.
+  Must be encrypted. Access can be directly restricted within a specified hour if the system determines that an IP address poses a risk. Risky IP addresses will be immediately blocked in set hours. It must be used with `ipRiskCategory`.
 </ResponseField>
 
 <ResponseField name="distanceCheckSource" type="string">
-  **Must be encrypted.** The option to prevent users from continuing if their address is distant from their IP. Currently, `ipGeo` is only available. This option is paired with the `distanceMaxDistanceKm`.
+  Must be encrypted. The option to prevent users from continuing if their address is distant from their IP. Currently, `ipGeo` is only available. This option is paired with the `distanceMaxDistanceKm`.
 </ResponseField>
 
 <ResponseField name="distanceMaxDistanceKm" type="int">
-  **Must be encrypted.** Can set a distance between the entered address and the IP-based address. If `distanceCheckSource` is set without `distanceMaxDistanceKm`, It must be used with `distanceCheckSource`.
+  Must be encrypted. Can set a distance between the entered address and the IP-based address. If `distanceCheckSource` is set without `distanceMaxDistanceKm`, It must be used with `distanceCheckSource`.
 </ResponseField>
 
 <ResponseField name="blacklistCountries" type="bool">
-  **Must be encrypted.** In order to forbid a country from being blacklisted in the dashboard, it must be set to true. The default value is false.
+  Must be encrypted. In order to forbid a country from being blacklisted in the dashboard, it must be set to true. The default value is false.
 </ResponseField>
 
-## 4-2. Error Responses
+## 4-2. Responses to Rejection
 
-| Error Code                   | Description                                                            |
-| ---------------------------- | ---------------------------------------------------------------------- |
-| `Invalid required`           | Missing required parameter.                                            |
-| `Required field is missing`  | Missing one or more of the following: sid, pid, or address data.       |
-| `Invalid submissionId`       | The provided `sid` does not exist.                                     |
-| `Invalid projectId`          | The provided `pid` does not exist.                                     |
-| `Error in injecting address` | Undefined, unspecified error occurred during address injection.        |
-| `distanceChecks_ipGeo`       | The distance exceeds the set killomiter, as indicated by ipGeo.        |
-| `blackliskCountries`         | Unable to perform injection due to the presence of blacklistCountries. |
+| Rejection Code         | Description                                                            |
+| ---------------------- | ---------------------------------------------------------------------- |
+| `ipRisk_failCategory`  | Detection of selected ipRisk Categories.                               |
+| `distanceChecks_ipGeo` | The distance exceeds the set killomiter, as indicated by ipGeo.        |
+| `blackliskCountries`   | Unable to perform injection due to the presence of blacklistCountries. |
+
+## 4-3. Error Responses
+
+| Error Code                   | Description                                                      |
+| ---------------------------- | ---------------------------------------------------------------- |
+| `Invalid required`           | Missing required parameter.                                      |
+| `Required field is missing`  | Missing one or more of the following: sid, pid, or address data. |
+| `Invalid submissionId`       | The provided `sid` does not exist.                               |
+| `Invalid projectId`          | The provided `pid` does not exist.                               |
+| `Error in injecting address` | Undefined, unspecified error occurred during address injection.  |
 
 ## 5. Address Update Results
 

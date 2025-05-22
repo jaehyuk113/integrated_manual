@@ -1,30 +1,30 @@
 ---
-mode: 'default'
-title: AML 결과
-description: 이 이벤트는 Anti-Money Laundering (AML) 스크리닝 결과가 확인될 때 트리거됩니다. AML 검사는 KYC 과정의 핵심 요소로, 잠재적 금융 범죄 위험을 평가합니다. 이 웹훅을 통해 실시간으로 AML 스크리닝 결과를 수신하여 즉각적인 조치를 취할 수 있습니다.
-
+mode: "default"
+title: "AML 결과"
+description: "이 이벤트는 Anti-Money Laundering (AML) 스크리닝 결과가 확인될 때 트리거됩니다. AML 검사는 KYC 과정의 핵심 요소로, 잠재적 금융 범죄 위험을 평가합니다. 이 웹훅을 통해 실시간으로 AML 스크리닝 결과를 수신하여 즉각적인 조치를 취할 수 있습니다."
 ---
 
-<Note>AML 스크리닝은 KYC 승인(approved) 후에만 수행됩니다. KYC가 승인된 경우에만 AML 스크리닝이 진행되며, 그 결과와 함께 submission 정보가 반환됩니다. KYC가 거절된 경우에는 AML 스크리닝이 수행되지 않습니다.</Note>
-
+<Note>
+  AML 스크리닝은 KYC 승인(approved) 후에만 수행됩니다. KYC가 승인된 경우에만 AML 스크리닝이 진행되며, 그 결과와 함께 submission 정보가 반환됩니다. KYC가 거절된 경우에는 AML 스크리닝이 수행되지 않습니다.
+</Note>
 
 ```json aml-result-webhook-sample.json
 {
-	"webhook_trigger":"aml",
-	"submission_id":"string",
-    "duplicated_information" : "string",
-	"email":"string",
-	"userid":"test",
-	"cf":{
-		"cf1":"cf1",
-		"cf2":"cf2",
-		"cf3":"cf3"
-	},
-	"aml_result":{
-		"currentstatus":"Not Screened",
-		"risk_level_summary":"Not Screened"
-	},
-	"tokenId": "test"
+    "webhook_trigger": "aml",
+    "submission_id": "string",
+    "duplicated_information": "string",
+    "email": "string",
+    "userid": "test",
+    "cf": {
+        "cf1": "cf1",
+        "cf2": "cf2",
+        "cf3": "cf3"
+    },
+    "aml_result": {
+        "currentstatus": "Not Screened",
+        "risk_level_summary": "Not Screened"
+    },
+    "tokenId": "test"
 }
 ```
 
@@ -32,33 +32,29 @@ description: 이 이벤트는 Anti-Money Laundering (AML) 스크리닝 결과가
   웹훅 이벤트 유형 - `aml`은 AML 스크리닝 결과가 준비되었음을 나타냄
 </ResponseField>
 
-
-<ResponseField name="submission_id" type="string" >
+<ResponseField name="submission_id" type="string">
   KYC 제출 건별 고유 식별자
 </ResponseField>
 
-<ResponseField name="duplicated_information" type="string" >
-  이름, 생년월일, 성별, 국적을 기준으로 중복 확인용 식별자가 생성됩니다. (*네 가지 기준이 모두 제공되면 항상 생성됩니다.)
+<ResponseField name="duplicated_information" type="string">
+  이름, 생년월일, 성별, 국적을 기준으로 중복 확인용 식별자가 생성됩니다. (\*네 가지 기준이 모두 제공되면 항상 생성됩니다.)
 </ResponseField>
 
-
-<ResponseField name="email" type="string" >
+<ResponseField name="email" type="string">
   KYC 제출자 이메일 주소
 </ResponseField>
 
-
-<ResponseField name="userid" type="string" >
+<ResponseField name="userid" type="string">
   고객사에서 정의한 KYC 제출자 고유 식별자
 </ResponseField>
 
-
 <ResponseField name="cf" type="object">
-	사용자 정의 필드 (cf1, cf2, cf3) 데이터를 포함하는 객체
+  사용자 정의 필드 (cf1, cf2, cf3) 데이터를 포함하는 객체
+
   <Expandable title="properties">
     <ResponseField name="cf1" type="string">
       사용자 정의 필드 1의 값
     </ResponseField>
-
     <ResponseField name="cf2" type="string">
       사용자 정의 필드 2의 값
     </ResponseField>
@@ -69,24 +65,18 @@ description: 이 이벤트는 Anti-Money Laundering (AML) 스크리닝 결과가
 </ResponseField>
 
 <ResponseField name="aml_result" type="object">
-	사용자 정의 필드 (cf1, cf2, cf3) 데이터를 포함하는 객체
+  사용자 정의 필드 (cf1, cf2, cf3) 데이터를 포함하는 객체
+
   <Expandable title="properties">
     <ResponseField name="currentstatus" type="string">
       AML 스크리닝 최종 결과. 가능한 값: `Not Screened`, `Red Flag`
     </ResponseField>
-
     <ResponseField name="risk_level_summary" type="string">
       AML 위험 수준 요약. 가능한 값: `Not Screened`, `HIGH`, `MEDIUM`, `LOW`
     </ResponseField>
   </Expandable>
 </ResponseField>
 
-
-
-<ResponseField name="tokenId" type="string" >
+<ResponseField name="tokenId" type="string">
   비공개 모드의 라이브 폼 제출 시 사용된 토큰 ID
 </ResponseField>
-
-
-
-

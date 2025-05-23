@@ -3,10 +3,12 @@ mode: "default"
 title: "Approved (승인)"
 description: "이 이벤트는 KYC(Know Your Customer) 제출이 승인될 때 트리거됩니다. 승인은 자동화된 시스템 검증을 통과하거나 수동 검토 후 이루어질 수 있습니다. 이 이벤트는 KYC 프로세스가 성공적으로 완료되었음을 나타내며, 사용자 계정 활성화나 서비스 접근 권한 부여 등의 후속 조치를 시작할 수 있는 신호가 됩니다."
 ---
+
 <Note>
-  Projection API 로 Submission 은 설정된 정보 (full_name, gender 외) 노출을 사전에 제외시킬 수 있습니다. 
+  Projection API 로 Submission 은 설정된 정보 (full_name, gender 외) 노출을 사전에 제외시킬 수 있습니다.
   지원 가능한 항목들은 POST/Projection 의 [Fields](https://developers.argosidentity.com/api-reference/api-reference-guide/ko/post-projection#param-fields) 부분을 확인 바랍니다.
 </Note>
+
 <CodeGroup>
 
 ```json approved-webhook-id-document.json
@@ -64,7 +66,7 @@ description: "이 이벤트는 KYC(Know Your Customer) 제출이 승인될 때 �
     "date_of_birth": "string",
     "nationality": "string",
     "duplicated_information": "string",
-    "fullName": "string",
+    "full_name": "string",
     "phoneNumber": "string",
     "ssnNumber": "string",
     "additional_list": [

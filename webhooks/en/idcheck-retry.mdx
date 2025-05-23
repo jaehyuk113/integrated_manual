@@ -4,7 +4,9 @@ title: "Create and Retry"
 description: "The webhook will be triggered upon the submission’s initial creation. Additionally, the event will be triggered if it occurs during the retry of the KYC submission process. "
 ---
 
-```json create-response.json
+### Webhook: created
+
+```json created-response.json
 {
     "webhook_trigger": "created",
     "submission_id": "{submission_id}",
@@ -66,6 +68,8 @@ description: "The webhook will be triggered upon the submission’s initial crea
 
 <ResponseField name="ipAddress" type="string">
   Submitter's IP address
+
+  ### Webhook: retry
 </ResponseField>
 
 ```json retry-response.json

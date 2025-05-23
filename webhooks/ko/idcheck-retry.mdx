@@ -1,6 +1,6 @@
 ---
 mode: "default"
-title: "Create and Retry"
+title: "Create and Retry (생성 및 재시도)"
 description: "Submission 이 최초 생성시 created 웹훅이 트리거 됩니다. 그리고 KYC 프로세스 상 retry 가 발생 시에는 retry 웹훅이 발생됩니다."
 ---
 
@@ -89,15 +89,21 @@ description: "Submission 이 최초 생성시 created 웹훅이 트리거 됩니
 ```
 
 <ResponseField name="webhook_trigger" type="string">
-  Webhook trigger type - `retry` indicates that the retry triggerred during the submission.
+  웹훅 트리거 타입 - Submission 진행 간에 `retry` 가 발생된 경우
 </ResponseField>
 
 <ResponseField name="submission_id" type="string">
-  Unique identifier for each KYC submission
+  KYC 제출 건별 고유 식별자
 </ResponseField>
 
 <ResponseField name="kyc_result" type="object">
-  Object containing KYC submission results, during KYC submission status is `imcomplete`.
+  KYC 제출 결과를 포함하는 객체
+
+  <Expandable>
+    <ResponseField name="status" type="string">
+      완료되지 않은 상태로 `incomplete` 로 지정됨
+    </ResponseField>
+  </Expandable>
 </ResponseField>
 
 <ResponseField name="cf" type="object">
@@ -129,32 +135,32 @@ description: "Submission 이 최초 생성시 created 웹훅이 트리거 됩니
 </ResponseField>
 
 <ResponseField name="retryCode" type="string">
-  The code describing the reason behind the retry
+  재시도가 발생된 사유 코드
 </ResponseField>
 
 <ResponseField name="attempts" type="int">
-  Attempt to determine the submitter count.
+  재시도 횟수
 </ResponseField>
 
 ## Retry Code
 
-| retryCode                    | ID document | Knowledge Based | Description                                                                       |
-| ---------------------------- | ----------- | --------------- | --------------------------------------------------------------------------------- |
-| recognition_fail             | O           | X               | The system failed to verify the submitter’s identification.                       |
-| expired_id                   | O           | X               | The ID card is dated and has expired.                                             |
-| invalid_back_document        | O           | X               | Front and back side image mismatch.                                               |
-| missing_expiry_date          | O           | X               | The expiry date data is missing.                                                  |
-| missing_issue_date           | O           | X               | The issue date  data is missing.                                                  |
-| missing_document_number      | O           | X               | The document number data is missing.                                              |
-| missing_personal_number      | O           | X               | The personal number(ID number) data is missing.                                   |
-| missing_name                 | O           | X               | The name data is missing.                                                         |
-| blacklist_country            | O           | O               | The country was identified as a blacklist by the system based on Issuing Country. |
-| mrz_protocol_fail            | O           | X               | The system was unable to retrieve the appropriate MRZ protocol.                   |
-| Identity_verification_fail   | O           | X               | System failure to verify ID.                                                      |
-| barcode_protocol_fail        | O           | X               | The system was unable to retrieve the appropriate barcode.                        |
-| no_face                      | O           | O               | Face cannot be identified                                                         |
-| face_compare_underscore      | O           | O               | Face compare scores were incapable of attaining a standard.                       |
-| Id_livness_fail              | O           | X               | The score for ID liveliness was less than what is expected.                       |
-| liveness_fail                | O           | O               | The score for passive liveliness was less than what is expected.                  |
-| liveness_fail_active         | O           | O               | The score for active liveliness was less than what is expected.                   |
-| VERIFICATION_CODE_MISS_MATCH | X           | O               | The verification code does not match the inputted code.                           |
+| retryCode                    | ID document | Knowledge Based | Description                              |
+| ---------------------------- | ----------- | --------------- | ---------------------------------------- |
+| recognition_fail             | O           | X               | 시스템이 신분증 인식에 실패한 경우                      |
+| expired_id                   | O           | X               | 만료일자가 지난 ID                              |
+| invalid_back_document        | O           | X               | 앞면과 뒷면 정보가 불일치                           |
+| missing_expiry_date          | O           | X               | 만료일자 정보가 누락됨                             |
+| missing_issue_date           | O           | X               | 발생일자 정보가 누락됨                             |
+| missing_document_number      | O           | X               | 문서번호 정보가 누락됨                             |
+| missing_personal_number      | O           | X               | 주민번호 정보가 누락됨                             |
+| missing_name                 | O           | X               | 이름 정보가 누락됨                               |
+| blacklist_country            | O           | O               | 발급국가 기준으로 blacklist country 의 국가가 제출된 경우 |
+| mrz_protocol_fail            | O           | X               | MRZ 프로토콜 인식이 불가한 경우                      |
+| Identity_verification_fail   | O           | X               | ID 신원 인증에 실패한 경우                         |
+| barcode_protocol_fail        | O           | X               | 바코드 프로토콜 인식에 실패한 경우                      |
+| no_face                      | O           | O               | 셀피 촬영에 얼굴이 없는 경우                         |
+| face_compare_underscore      | O           | O               | 얼굴 비교 점수가 기준 미달인 경우                      |
+| Id_livness_fail              | O           | X               | ID 의 Liveness 검사에 실패한 경우                 |
+| liveness_fail                | O           | O               | Passive Liveness 점수가 기준 미달인 경우           |
+| liveness_fail_active         | O           | O               | Active Liveness 점수가 기준 미달인 경우            |
+| VERIFICATION_CODE_MISS_MATCH | X           | O               | 인증 코드가 입력한 코드와 불일치함                      |

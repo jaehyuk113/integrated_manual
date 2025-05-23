@@ -4,6 +4,14 @@ title: "Submit"
 description: "This event is triggered when new KYC information is submitted to the system. Submissions occur when a user completes and submits a KYC form or when KYC data is transmitted via an API. This event enables you to immediately recognize new KYC submissions and initiate the verification process or perform any necessary initial actions."
 ---
 
+<Warning>
+  When the status is pending, the Submit Webhook is triggered.
+
+  - **Approved** → The Approved Webhook is triggered. The Submit Webhook **does not trigger**.
+  - **Rejected** → The Rejected Webhook is triggered. The Submit Webhook **does not trigger**.
+  - **Pending** → The Submit Webhook is triggered.
+</Warning>
+
 ```json submit-webhook-sample.json
 {
     "webhook_trigger": "submit",

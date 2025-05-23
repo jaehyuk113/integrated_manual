@@ -1,0 +1,260 @@
+---
+mode: "default"
+title: "Approved"
+description: "This event is triggered when a KYC submission is approved. Approval can occur through automated system validation or after manual review. This event indicates that the KYC process has been successfully completed and serves as a signal to initiate follow-up actions such as user account activation or granting service access permissions. "
+---
+
+<Note>
+  The projection API can exclude full_name, gender, etc.
+
+  For details, refer to this [link](https://developers.argosidentity.com/api-reference/api-reference-guide/en/post-projection#param-fields).
+</Note>
+
+<CodeGroup>
+
+```json approved-webhook-id-document.json
+{
+    "submission_id": "string",
+    "email": "string",
+    "cf": {
+        "cf1": "string",
+        "cf2": "string",
+        "cf3": "string"
+    },
+    "applicant_id": "string",
+    "webhook_trigger": "approved",
+    "kyc_result": {
+        "status": "approved",
+        "updated_at": "string",
+        "created_at": "string",
+        "kyc_result_at": "string",
+        "reviewer": "string"
+    },
+    "age_group": "N/A",
+    "gender": "string",
+    "date_of_birth": "string",
+    "nationality": "string",
+    "duplicated_information": "string",
+    "full_name": "string",
+    "phoneNumber": "string",
+    "ssnNumber": "string",
+    "additional_list": [
+        {
+            "answer": "string",
+            "inputValue": "string",
+            "blockType": "string"
+        },...
+    ]
+}{
+    "submission_id": "string",
+    "email": "string",
+    "cf": {
+        "cf1": "string",
+        "cf2": "string",
+        "cf3": "string"
+    },
+    "applicant_id": "string",
+    "webhook_trigger": "approved",
+    "kyc_result": {
+        "status": "approved",
+        "updated_at": "string",
+        "created_at": "string",
+        "kyc_result_at": "string",
+        "reviewer": "string"
+    },
+    "age_group": "N/A",
+    "gender": "string",
+    "date_of_birth": "string",
+    "nationality": "string",
+    "duplicated_information": "string",
+    "fullName": "string",
+    "phoneNumber": "string",
+    "ssnNumber": "string",
+    "additional_list": [
+        {
+            "answer": "string",
+            "inputValue": "string",
+            "blockType": "string"
+        },...
+    ]
+}
+```
+
+
+```json approved-webook-knowledgebased.json
+{
+    "submission_id": "string",
+    "email": "string",
+    "cf": {
+        "cf1": "string",
+        "cf2": "string",
+        "cf3": "string"
+    },
+    "applicant_id": "string",
+    "webhook_trigger": "approved",
+    "kyc_result": {
+        "status": "approved",
+        "updated_at": "string",
+        "created_at": "string",
+        "kyc_result_at": "string",
+        "reviewer": "string"
+    },
+    "age_group": "N/A",
+    "gender": "string",
+    "date_of_birth": "string",
+    "nationality": "string",
+    "duplicated_information": "string",
+    "full_name": "string",
+    "phoneNumber": "string",
+    "ssnNumber": "string",
+    "additional_list": [
+        {
+            "answer": "string",
+            "inputValue": "string",
+            "blockType": "string"
+        },...
+    ]
+}
+```
+
+</CodeGroup>
+
+<ResponseField name="webhook_trigger" type="string">
+  Webhook trigger type - `approved` indicates that the KYC was automatically approved or approved from a pending state
+</ResponseField>
+
+<ResponseField name="kyc_result" type="object">
+  Object containing KYC submission results
+
+  <Expandable title="properties">
+    <ResponseField name="status" type="string">
+      KYC review result. Either `approved` or `rejected`
+    </ResponseField>
+    <ResponseField name="updated_at" type="string">
+      UTC time when the KYC status was last changed (ISO 8601 format)
+    </ResponseField>
+    <ResponseField name="created_at" type="string">
+      UTC time when the KYC was initially submitted (ISO 8601 format)
+    </ResponseField>
+    <ResponseField name="kyc_result_at" type="string">
+      UTC time when the KYC result was first determined. Only provided for approval/rejection (ISO 8601 format)
+    </ResponseField>
+    <ResponseField name="pending_at" type="string">
+      UTC time when the KYC was submitted in a pending state (ISO 8601 format)
+    </ResponseField>
+    <ResponseField name="reviewer" type="string">
+      Reviewer type. `system` for AI system review, `agent` for human review
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="applicant_id" type="string">
+  Unique identification ID assigned to check for duplicate submissions. Only provided when the KYC status is approved.
+</ResponseField>
+
+<ResponseField name="submission_id" type="string">
+  Unique identifier for each KYC submission
+</ResponseField>
+
+<ResponseField name="duplicated_information" type="string">
+  A unique ID is generated based on name, date of birth, gender, and nationality for duplicate checks. (\*Always generated when all four criteria are provided.)
+</ResponseField>
+
+<ResponseField name="email" type="string">
+  Email address of the KYC submitter
+</ResponseField>
+
+<ResponseField name="tokenId" type="string">
+  Token ID used when submitting via live form in private mode
+</ResponseField>
+
+<ResponseField name="cf" type="object">
+  Object containing custom field (cf1, cf2, cf3) data
+
+  <Expandable title="properties">
+    <ResponseField name="cf1" type="string">
+      Value of custom field 1
+    </ResponseField>
+    <ResponseField name="cf2" type="string">
+      Value of custom field 2
+    </ResponseField>
+    <ResponseField name="cf3" type="string">
+      Value of custom field 3
+    </ResponseField>
+  </Expandable>
+</ResponseField>
+
+<ResponseField name="userid" type="string">
+  Unique identifier for the KYC submitter defined by the client
+</ResponseField>
+
+<ResponseField name="age_group" type="string">
+  Submitter's age group category `minor`: 13 years old or younger, `early-teen`: 14 to 15 years old, `teen`: 16 to 17 years old, `adult`: 18 years old or older
+</ResponseField>
+
+<ResponseField name="gender" type="string">
+  Submitter's gender (`male` or `female`)
+</ResponseField>
+
+<ResponseField name="date_of_birth" type="string">
+  Submitter's date of birth (YYYY-MM-DD format)
+</ResponseField>
+
+<ResponseField name="nationality" type="string">
+  Submitter's nationality (ISO 3166-1 alpha-3 country code)
+</ResponseField>
+
+<ResponseField name="ipAddress" type="string">
+  Submitter's IP address
+</ResponseField>
+
+<ResponseField name="fullName" type="string">
+  Submitter's full name
+</ResponseField>
+
+<ResponseField name="idType" type="string">
+  Type of submitted identification document
+</ResponseField>
+
+<ResponseField name="issuingCountry" type="string">
+  Country that issued the identification document
+</ResponseField>
+
+<ResponseField name="issueDate" type="string">
+  Issue date of the identification document (YYYY-MM-DD format)
+</ResponseField>
+
+<ResponseField name="expireDate" type="string">
+  Expiration date of the identification document (YYYY-MM-DD format)
+</ResponseField>
+
+<ResponseField name="identityNumber" type="string">
+  National identification number or equivalent identifier
+</ResponseField>
+
+<ResponseField name="documentNumber" type="string">
+  Unique number of the identification document (e.g., passport number, driver's license number)
+</ResponseField>
+
+<ResponseField name="additional_list" type="array">
+  Array of additional form data if Additional Information is set in the dashboard settings. Only included under specific conditions.
+
+  <ResponseField name="additional_list_obj" type="object">
+    <Expandable title="properties">
+      <ResponseField name="answer" type="string">
+        Question or field name of the additional form
+      </ResponseField>
+      <ResponseField name="inputValue" type="string">
+        User input value for the additional form field
+      </ResponseField>
+      <ResponseField name="blockType" type="string">
+        Data type of the additional form field
+      </ResponseField>
+    </Expandable>
+  </ResponseField>
+</ResponseField>
+
+<ResponseField name="ssnNumber" type="string">
+  Social Security Number.\
+  \* for applying the lowerCamelCase convention to the written Number once more.
+</ResponseField>

@@ -310,7 +310,7 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
 | `email`                                  | 제출과 연관된 이메일 주소                                                                                                           | String | KYC 제출자 정보        |
 | `reviewer`                               | 검수 유형: `system`은 AI 시스템 검수, `agent`는 사람 검수를 나타냄                                                                          | Enum   | KYC 검수 정보         |
 | `Injection_action.attemptStatus`         | Injection 시도 결과                                                                                                          | String | KYC injection 정보  |
-| `Injection_action.createTime`            | Injection 생성일시 (UTC\+0)                                                                                                  | String | KYC injection 정보  |
+| `Injection_action.createTime`            | Injection 생성일시 (UTC\+0) \*순서: 최신이 최상단, 이후 오래된 순서 정렬                                                                      | String | KYC injection 정보  |
 | `Injection_action.userInput.address`     | 유저가 입력한 주소 정보                                                                                                            | Object | KYC injection 정보  |
 | `Injection_action.option.distanceChecks` | Injection 거리 측정에 사용된 서비스와 거리 정보                                                                                          | Object | KYC injection 정보  |
 | `Injection_action.option.ipRisk`         | IP 위험 평가 카테고리 및 차단 시간 정보                                                                                                 | Object | KYC injection 정보  |

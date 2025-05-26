@@ -3,9 +3,33 @@ mode: "default"
 title: "Create and Retry (생성 및 재시도)"
 description: "Submission 이 최초 생성시 created 웹훅이 트리거 됩니다. 그리고 KYC 프로세스 상 retry 가 발생 시에는 retry 웹훅이 발생됩니다."
 ---
+
 ### Webhook: created
 
+<CodeGroup>
+
 ```json create-response.json
+{
+    "webhook_trigger": "created",
+    "submission_id": "{submission_id}",
+    "kyc_result": {
+        "status": "incomplete"
+    },
+    "cf": {
+        "cf1": "{custom_field1}",
+        "cf2": "{custom_field2}",
+        "cf3": "{custom_field3}"
+    },
+    "userid": "{user_id}",
+    "tokenId": "{token_id}",
+    "retryCode": "{retry_code}",
+    "attempts": 1,
+    "ipAddress": "{ip_address}"
+}
+```
+
+
+```json create-response-no-retry.json
 {
     "webhook_trigger": "created",
     "submission_id": "{submission_id}",
@@ -22,6 +46,8 @@ description: "Submission 이 최초 생성시 created 웹훅이 트리거 됩니
     "ipAddress": "{ip_address}"
 }
 ```
+
+</CodeGroup>
 
 <ResponseField name="webhook_trigger" type="string">
   웹훅 트리거 타입 - `created` 최초 Submission 이 생성된 상태를 의미
@@ -65,9 +91,18 @@ description: "Submission 이 최초 생성시 created 웹훅이 트리거 됩니
   비공개 모드의 라이브 폼 제출 시 사용된 토큰 ID
 </ResponseField>
 
+<ResponseField name="retryCode" type="string">
+  재시도가 발생된 사유 코드
+</ResponseField>
+
+<ResponseField name="attempts" type="int">
+  재시도 횟수
+</ResponseField>
+
 <ResponseField name="ipAddress" type="string">
   제출자의 IP 주소
 </ResponseField>
+
 ### Webhook: retry
 
 ```json retry-response.json

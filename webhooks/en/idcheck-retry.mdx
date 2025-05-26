@@ -6,7 +6,30 @@ description: "The webhook will be triggered upon the submission’s initial crea
 
 ### Webhook: created
 
-```json created-response.json
+<CodeGroup>
+
+```json create-response.json
+{
+    "webhook_trigger": "created",
+    "submission_id": "{submission_id}",
+    "kyc_result": {
+        "status": "incomplete"
+    },
+    "cf": {
+        "cf1": "{custom_field1}",
+        "cf2": "{custom_field2}",
+        "cf3": "{custom_field3}"
+    },
+    "userid": "{user_id}",
+    "tokenId": "{token_id}",
+    "retryCode": "{retry_code}",
+    "attempts": 1,
+    "ipAddress": "{ip_address}"
+}
+```
+
+
+```json create-response-no-retry.json
 {
     "webhook_trigger": "created",
     "submission_id": "{submission_id}",
@@ -23,6 +46,8 @@ description: "The webhook will be triggered upon the submission’s initial crea
     "ipAddress": "{ip_address}"
 }
 ```
+
+</CodeGroup>
 
 <ResponseField name="webhook_trigger" type="string">
   Webhook trigger type - `created` indicates that the submission was created initially.
@@ -64,6 +89,14 @@ description: "The webhook will be triggered upon the submission’s initial crea
 
 <ResponseField name="tokenId" type="string">
   Token ID used when submitting via live form in private mode
+</ResponseField>
+
+<ResponseField name="retryCode" type="string">
+  The code describing the reason behind the retry
+</ResponseField>
+
+<ResponseField name="attempts" type="int">
+  Attempt to determine the submitter count
 </ResponseField>
 
 <ResponseField name="ipAddress" type="string">
@@ -141,7 +174,7 @@ description: "The webhook will be triggered upon the submission’s initial crea
 </ResponseField>
 
 <ResponseField name="attempts" type="int">
-  Attempt to determine the submitter count.
+  Attempt to determine the submitter count
 </ResponseField>
 
 ## Retry Code

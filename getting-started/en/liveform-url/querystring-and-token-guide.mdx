@@ -150,4 +150,13 @@ Validation fails (error occurs) under the following conditions:
 - **Base Form URL**: `https://form.argosidentity.com/?pid={project_Id}`
 - **URL with Token ID**: `https://form.argosidentity.com/?pid={project_Id}&token={tokenId}`
 
+## 4. Encrypted Only
+
+You can set encrypted only option in the dashboard. After set, URL query parameter only allowes `pid`(project id), `encrypted` and `lang`(language) option, other option is disabled.
+
+- `https://form.argosidentity.com/?pid={project_Id}&encrypted={encrypted_option}&lang=en`(O)
+- `https://form.argosidentity.com/?pid={project_Id}&encrypted={encrypted_option}&email=your_email_address@argosidentity.com`(X)
+
+  The unallowed parameter email was used in this URL.
+
 By using this guide, you can effectively leverage Query String and Token ID options in ID check to optimize your KYC process and enhance user experience.

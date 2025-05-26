@@ -152,4 +152,20 @@ tokenId는 Private Mode에서 Liveform 제출 시 사용되는  String 데이터
 - 기본 폼 URL: `https://form.argosidentity.com/?pid={project_Id}`
 - Token ID 포함 URL: `https://form.argosidentity.com/?pid={project_Id}&token={tokenId}`
 
+## 4. 암호화 전용
+
+Dashboard 에서 암호화 전용 옵션을 활성화 시킬 수 있습니다. 활성화 된 이후에는 URL query 형태로 파라미터는 `pid`(프로젝트 id), `encrypted` 그리고 `lang`(언어) 만 허용됩니다.
+
+<img
+  src="/images/encrypted_only/encrypted_only_kr.png"
+  alt="Encrypted Only Kr Pn"
+  title="Encrypted Only Kr Pn"
+  style={{ width:"75%" }}
+/>
+
+- `https://form.argosidentity.com/?pid={project_Id}&encrypted={encrypted_option}&lang=en`(O)
+- `https://form.argosidentity.com/?pid={project_Id}&encrypted={encrypted_option}&email=your_email_address@argosidentity.com`(X)
+
+  email 은 허용되지 않은 파라미터이므로 접근이 불가합니다.
+
 이 가이드를 통해 ID check의 QueryString 및 Token ID 옵션을 효과적으로 활용하여 KYC 프로세스를 최적화하고 사용자 경험을 개선할 수 있습니다

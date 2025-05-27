@@ -98,6 +98,18 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
                 "idType": "drivers_license",
                 "documentNumber": "{********}"
             },
+            "OCR_raw": {
+                "rotate": {
+                    "value": "0"
+                },
+                "address": {
+                    "value": "John Smith, 123 Elm Street, town, CA 91234, USA",
+                    "score": 96,
+                    "accepted": true,
+                    "coordinates": {coordinates_object}
+                    }
+                }...
+            }
             "email": "{email}",
             "submission_id": "{submission_id}",
             "duplicated_information": "{duplicated_information}",
@@ -306,6 +318,11 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
 | `data.cf1`                               | Custom field 1 optionally added during submission                                                                                                               | String    | KYC Applicant Info     |
 | `data.cf2`                               | Custom field 2 optionally added during submission                                                                                                               | String    | KYC Applicant Info     |
 | `data.cf3`                               | Custom field 3 optionally added during submission                                                                                                               | String    | KYC Applicant Info     |
+| `OCR_raw.rotate.value`                   | The degree value of recognized from OCR                                                                                                                         | String    | KYC Applicant Info     |
+| `OCR_raw.{item}.value`                   | The recognized item's value of OCR                                                                                                                              | String    | KYC Applicant Info     |
+| `OCR_raw.{item}.score`                   | Score as the recognition ratio (0~100)                                                                                                                          | Int       | KYC Applicant Info     |
+| `OCR_raw.{item}.accepted`                | Recognition success flag                                                                                                                                        | Bool      | KYC Applicant Info     |
+| `OCR_raw.{item}.coordinates`             | Vector coordinates data                                                                                                                                         | Object    | KYC Applicant Info     |
 | `email`                                  | Email address associated with the submission                                                                                                                    | String    | KYC Applicant Info     |
 | `reviewer`                               | Reviewer Type `system` indicates AI system review, `agent` indicates human review                                                                               | Enum      | KYC Review Info        |
 | `Injection_action.attemptStatus`         | The status of the injection action result                                                                                                                       | String    | KYC injection Info     |

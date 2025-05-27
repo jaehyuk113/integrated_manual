@@ -98,6 +98,18 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
                 "idType": "drivers_license",
                 "documentNumber": "{********}"
             },
+            "OCR_raw": {
+                "rotate": {
+                    "value": "0"
+                },
+                "address": {
+                    "value": "John Smith, 123 Elm Street, town, CA 91234, USA",
+                    "score": 96,
+                    "accepted": true,
+                    "coordinates": {coordinates_object}
+                    }
+                }...
+            }
             "email": "{email}",
             "submission_id": "{submission_id}",
             "duplicated_information": "{duplicated_information}",
@@ -307,6 +319,11 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
 | `data.cf1`                               | 사용자 정의 필드 #1                                                                                                             | String | KYC 제출자 정보        |
 | `data.cf2`                               | 사용자 정의 필드 #2                                                                                                             | String | KYC 제출자 정보        |
 | `data.cf3`                               | 사용자 정의 필드 #3                                                                                                             | String | KYC 제출자 정보        |
+| `OCR_raw.rotate.value`                   | OCR 이 인식된 각도                                                                                                             | String | KYC 제출자 정보        |
+| `OCR_raw.{item}.value`                   | 인식된 OCR 의 값                                                                                                              | String | KYC 제출자 정보        |
+| `OCR_raw.{item}.score`                   | 인식률 점수 (0~100)                                                                                                           | Int    | KYC 제출자 정보        |
+| `OCR_raw.{item}.accepted`                | 인식 성공 여부                                                                                                                 | Bool   | KYC 제출자 정보        |
+| `OCR_raw.{item}.coordinates`             | 인식된 OCR 의 벡터 데이터                                                                                                         | Object | KYC 제출자 정보        |
 | `email`                                  | 제출과 연관된 이메일 주소                                                                                                           | String | KYC 제출자 정보        |
 | `reviewer`                               | 검수 유형: `system`은 AI 시스템 검수, `agent`는 사람 검수를 나타냄                                                                          | Enum   | KYC 검수 정보         |
 | `Injection_action.attemptStatus`         | Injection 시도 결과                                                                                                          | String | KYC injection 정보  |

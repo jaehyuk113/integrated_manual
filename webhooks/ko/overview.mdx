@@ -1,48 +1,60 @@
 ---
-mode: 'default'
-title: 웹훅 이벤트
-description: ARGOS ID Check의 KYC 프로세스 상태 변경을 실시간으로 확인하세요. 웹훅을 통해 즉각적인 업데이트를 받아볼 수 있습니다.
-
+mode: "default"
+title: "웹훅 이벤트"
+description: "ARGOS ID Check의 KYC 프로세스 상태 변경을 실시간으로 확인하세요. 웹훅을 통해 즉각적인 업데이트를 받아볼 수 있습니다."
 ---
-
 
 ## 웹훅이란?
 
 웹훅은 특정 이벤트가 발생했을 때 실시간으로 알림을 받을 수 있는 기능입니다. KYC 데이터가 변경되거나 새로운 정보가 추가될 때마다 지정된 URL로 자동으로 알림을 보냅니다.
 
 ## 1. 웹훅 이벤트 타입을 알아보세요
-ARGOS Identity 웹훅으로 다음과 같은 실시간 업데이트를 받아보세요
 
-<img height="500" src="/images/webhooks/webhook_events.png" />
+ARGOS Identity 웹훅으로 다음과 같은 실시간 업데이트를 받아보세요.
+
+- "webhook_trigger": "created" → 서브미션이 **생성**된 경우
+- "webhook_trigger": "retry" → 진행간에 **재시도**가 발생된 경우
+- "webhook_trigger": "approved" → 서브미션이 **승인**된 경우
+- "webhook_trigger": "rejected" → 서브미션이 **거절**된 경우
+- "webhook_trigger": "submit" → 서브미션 상태가 **보류**(pending)된 경우
+- "webhook_trigger": "updated" → 서브미션이 **업데이트** 된 경우
+- "webhook_trigger": "delete" → 서브미션이 **삭제**된 경우
+- "webhook_trigger": "injection" → 서브미션에 **Injection** 이 진행된 경우
+- "webhook_trigger": "aml" → **aml** 프로세스가 진행된 경우
+
 <CardGroup cols={4}>
   <Card title="Approved" icon="badge-check" href="/webhooks/ko/idcheck-approved">
+    
   </Card>
   <Card title="Rejected" icon="ban" href="/webhooks/ko/idcheck-rejected">
-
+    
   </Card>
   <Card title="Updated" icon="pen-to-square" href="/webhooks/ko/idcheck-updated">
-
+    
   </Card>
   <Card title="Delete" icon="trash" href="/webhooks/ko/idcheck-delete">
-
+    
   </Card>
-    <Card title="Submit" icon="plus" href="/webhooks/ko/idcheck-submit">
-
+  <Card title="Submit" icon="plus" href="/webhooks/ko/idcheck-submit">
+    
   </Card>
-    <Card title="Data injection" icon="table" href="/webhooks/ko/idcheck-injection">
-
+  <Card title="Data injection" icon="table" href="/webhooks/ko/idcheck-injection">
+    
   </Card>
-    <Card title="AML 결과" icon="radar" href="/webhooks/ko/idcheck-aml-result">
-
+  <Card title="AML 결과" icon="radar" href="/webhooks/ko/idcheck-aml-result">
+    
   </Card>
 </CardGroup>
-
 
 웹훅을 활용하면 KYC 프로세스의 모든 단계를 실시간으로 모니터링하고, 필요한 조치를 즉시 취할 수 있어 고객 온보딩 프로세스를 더욱 효율적으로 관리할 수 있습니다.
 
 ## 2. 웹훅 이벤트를 등록하세요
 
-<img height="200" src="/images/webhooks/webhook.png" />
+<img
+  height="200"
+  src="/images/webhooks/webhook.png"
+/>
+
 <Steps>
   <Step title="대시보드 로그인">
     ID Check [대시보드](https://idcheck.argosidentity.com/)에 로그인합니다.
@@ -61,15 +73,13 @@ ARGOS Identity 웹훅으로 다음과 같은 실시간 업데이트를 받아보
   </Step>
 </Steps>
 
-
-
 ## 3. 안전한 데이터 전송을 위한 암호화 옵션을 활성화하세요
+
 ARGOS Identity는 웹훅을 통해 전송되는 민감한 KYC 데이터를 보호하기 위해 암호화 옵션을 제공합니다. 이 기능을 활성화하면 모든 웹훅 데이터가 자동으로 암호화되어 더욱 안전한 정보 교환이 가능해집니다.
 
-
 ### a. 암호화된 웹훅 데이터는 어떤 모습인가요?
-암호화가 적용된 웹훅 응답은 다음과 같은 형식으로 전달됩니다:
 
+암호화가 적용된 웹훅 응답은 다음과 같은 형식으로 전달됩니다:
 
 ```json data-encrpyted.json
 {
@@ -77,15 +87,16 @@ ARGOS Identity는 웹훅을 통해 전송되는 민감한 KYC 데이터를 보�
     "body": "encrypted-string"
   }
 }
-
 ```
-
 
 여기서 `encrypted-string`은 원본 데이터를 암호화한 결과입니다.
 
 ### b. 암호화 옵션을 쉽게 설정하세요
 
-<img height="200" src="/images/webhooks/secure-data-transfer.png" />
+<img
+  height="200"
+  src="/images/webhooks/secure-data-transfer.png"
+/>
 
 <Steps>
   <Step title="대시보드 로그인">

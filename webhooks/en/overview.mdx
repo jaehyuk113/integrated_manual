@@ -10,12 +10,19 @@ Webhooks are a feature that allows you to receive real-time notifications when s
 
 ## 1. Explore Webhook Event Types
 
-Receive real-time updates through ARGOS Identity webhooks including: Approved, Rejected, Updated, Delete, Submit, Data injection, and AML Result.
+Receive real-time updates through ARGOS Identity webhooks.
 
-<img
-  height="500"
-  src="/images/webhooks/webhook_events.png"
-/>
+- "webhook_trigger": "created" → When the submission is **created**
+- "webhook_trigger": "retry" → The submitter proceeded, and the **retry** occurred
+- "webhook_trigger": "approved" → The submission is **approved**
+- "webhook_trigger": "rejected" → The submission is **rejected**
+- "webhook_trigger": "submit" → The submission becames **pending** status.
+- "webhook_trigger": "updated" → The submission is **updated**
+- "webhook_trigger": "delete" → The submission **delete** proceed
+- "webhook_trigger": "injection" → The **injection** proceed in the submission 
+- "webhook_trigger": "aml" → The **aml** process proceed
+
+![Webhook Event Updated 0527 Pn](/images/webhooks/webhook_event_updated_0527.png)
 
 <CardGroup cols="4">
   <Card title="Approved" icon="badge-check" href="/webhooks/en/idcheck-approved">

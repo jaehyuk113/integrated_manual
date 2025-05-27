@@ -179,23 +179,50 @@ description: "The webhook will be triggered upon the submission’s initial crea
 
 ## Retry Code
 
-| retryCode                    | ID document | Knowledge Based | Description                                                                       |
-| ---------------------------- | ----------- | --------------- | --------------------------------------------------------------------------------- |
-| recognition_fail             | O           | X               | The system failed to verify the submitter’s identification.                       |
-| expired_id                   | O           | X               | The ID card is dated and has expired.                                             |
-| invalid_back_document        | O           | X               | Front and back side image mismatch.                                               |
-| missing_expiry_date          | O           | X               | The expiry date data is missing.                                                  |
-| missing_issue_date           | O           | X               | The issue date  data is missing.                                                  |
-| missing_document_number      | O           | X               | The document number data is missing.                                              |
-| missing_personal_number      | O           | X               | The personal number(ID number) data is missing.                                   |
-| missing_name                 | O           | X               | The name data is missing.                                                         |
-| blacklist_country            | O           | O               | The country was identified as a blacklist by the system based on Issuing Country. |
-| mrz_protocol_fail            | O           | X               | The system was unable to retrieve the appropriate MRZ protocol.                   |
-| Identity_verification_fail   | O           | X               | System failure to verify ID.                                                      |
-| barcode_protocol_fail        | O           | X               | The system was unable to retrieve the appropriate barcode.                        |
-| no_face                      | O           | O               | Face cannot be identified                                                         |
-| face_compare_underscore      | O           | O               | Face compare scores were incapable of attaining a standard.                       |
-| Id_livness_fail              | O           | X               | The score for ID liveliness was less than what is expected.                       |
-| liveness_fail                | O           | O               | The score for passive liveliness was less than what is expected.                  |
-| liveness_fail_active         | O           | O               | The score for active liveliness was less than what is expected.                   |
-| VERIFICATION_CODE_MISS_MATCH | X           | O               | The verification code does not match the inputted code.                           |
+| retryCode                     | ID document | Knowledge Based | Description                                                                       |
+| ----------------------------- | ----------- | --------------- | --------------------------------------------------------------------------------- |
+| recognition_fail              | O           | X               | The system failed to verify the submitter’s identification.                       |
+| expired_id                    | O           | X               | The ID card is outdated.                                                          |
+| document_expired              | O           | X               | The document is outdated.                                                         |
+| invalid_back_document         | O           | X               | Front and back side image mismatch.                                               |
+| invalid_dual_side             | O           | X               | There is an error in the dual-sided document.                                     |
+| document_country_mismatch     | O           | X               | The document country does not match.                                              |
+| glare_detected                | O           | X               | Detected glare from id or document                                                |
+| image_too_blurry              | O           | X               | The image is excessively blurry.                                                  |
+| recaptured_document           | O           | X               | A document that has been recaptured.                                              |
+| screen_detected               | O           | X               | From the image, a screen was identified.                                          |
+| black_white_document          | O           | X               | The colour that was detected is exclusively black and white.                      |
+| missing_birth_date            | O           | X               | The value of the birth date was missed.                                           |
+| document_name_mismatch        | O           | X               | The name in the document does not match.                                          |
+| document_dob_mismatch         | O           | X               | The date of birth in the document does not match.                                 |
+| image_forgery                 | O           | X               | The image is fraudulent.                                                          |
+| text_forgery                  | O           | X               | The text is fraudulent.                                                           |
+| feature_verification_failed   | O           | X               | Verification of the feature was unsuccessful.                                     |
+| image_edited                  | O           | X               | The image is an edited image.                                                     |
+| fake_id                       | O           | X               | The ID is fake.                                                                   |
+| artificial_image              | O           | X               | This is an artificial image.                                                      |
+| artificial_text               | O           | X               | This is an artificial text.                                                       |
+| check_digit_failed            | O           | X               | Unable to check the digit.                                                        |
+| physical_document_missing     | O           | X               | The physical document is missing.                                                 |
+| missing_expiry_date           | O           | X               | The expiry date data is missing.                                                  |
+| missing_issue_date            | O           | X               | The issue date data is missing.                                                   |
+| missing_document_number       | O           | X               | The document number data is missing.                                              |
+| missing_personal_number       | O           | X               | The personal number(ID number) data is missing.                                   |
+| missing_name                  | O           | X               | The name data is missing.                                                         |
+| bank_authentication_fail      | O           | X               | Both the authentication code number and name did not match.                       |
+| bank_authentication_code_fail | O           | X               | The authentication code number did not match.                                     |
+| bank_authentication_name_fail | O           | X               | The name does not match.                                                          |
+| blacklist_country             | O           | O               | The country was identified as a blacklist by the system based on Issuing Country. |
+| mrz_protocol_fail             | O           | X               | The system was unable to retrieve the appropriate MRZ protocol.                   |
+| Identity_verification_fail    | O           | X               | System failure to verify ID.                                                      |
+| barcode_protocol_fail         | O           | X               | The system was unable to retrieve the appropriate barcode.                        |
+| no_face                       | O           | O               | Face cannot be identified                                                         |
+| face_compare_underscore       | O           | O               | Face compare scores were incapable of attaining a standard.                       |
+| face_compare_fail             | O           | O               | Unable to continue with the face comparison.                                      |
+| face_occluded                 | O           | O               | Unable to confirm that the face was hidden.                                       |
+| Id_livness_fail               | O           | X               | The score for ID liveliness was less than what is expected.                       |
+| liveness_error                | O           | O               | Unable to proceed with the liveness.                                              |
+| liveness_fail                 | O           | O               | The score for passive liveness was less than what is expected.                    |
+| liveness_fail_active          | O           | O               | The score for active liveness was less than what is expected.                     |
+| too_many_retry                | O           | O               | Retry count has already exceeded the maximum.                                     |
+| VERIFICATION_CODE_MISS_MATCH  | X           | O               | The verification code does not match the inputted code.                           |

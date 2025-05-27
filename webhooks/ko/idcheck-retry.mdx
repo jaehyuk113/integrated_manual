@@ -181,23 +181,48 @@ description: "Submission 이 최초 생성시 created 웹훅이 트리거 됩니
 
 ## Retry Code
 
-| retryCode                    | ID document | Knowledge Based | Description                              |
-| ---------------------------- | ----------- | --------------- | ---------------------------------------- |
-| recognition_fail             | O           | X               | 시스템이 신분증 인식에 실패한 경우                      |
-| expired_id                   | O           | X               | 만료일자가 지난 ID                              |
-| invalid_back_document        | O           | X               | 앞면과 뒷면 정보가 불일치                           |
-| missing_expiry_date          | O           | X               | 만료일자 정보가 누락됨                             |
-| missing_issue_date           | O           | X               | 발생일자 정보가 누락됨                             |
-| missing_document_number      | O           | X               | 문서번호 정보가 누락됨                             |
-| missing_personal_number      | O           | X               | 주민번호 정보가 누락됨                             |
-| missing_name                 | O           | X               | 이름 정보가 누락됨                               |
-| blacklist_country            | O           | O               | 발급국가 기준으로 blacklist country 의 국가가 제출된 경우 |
-| mrz_protocol_fail            | O           | X               | MRZ 프로토콜 인식이 불가한 경우                      |
-| Identity_verification_fail   | O           | X               | ID 신원 인증에 실패한 경우                         |
-| barcode_protocol_fail        | O           | X               | 바코드 프로토콜 인식에 실패한 경우                      |
-| no_face                      | O           | O               | 셀피 촬영에 얼굴이 없는 경우                         |
-| face_compare_underscore      | O           | O               | 얼굴 비교 점수가 기준 미달인 경우                      |
-| Id_livness_fail              | O           | X               | ID 의 Liveness 검사에 실패한 경우                 |
-| liveness_fail                | O           | O               | Passive Liveness 점수가 기준 미달인 경우           |
-| liveness_fail_active         | O           | O               | Active Liveness 점수가 기준 미달인 경우            |
-| VERIFICATION_CODE_MISS_MATCH | X           | O               | 인증 코드가 입력한 코드와 불일치함                      |
+| retryCode                     | ID document | Knowledge Based | Description                              |
+| ----------------------------- | ----------- | --------------- | ---------------------------------------- |
+| recognition_fail              | O           | X               | 시스템이 신분증 인식에 실패한 경우                      |
+| expired_id                    | O           | X               | 만료일자가 지난 ID                              |
+| document_expired              | O           | X               | 제출 서류가 만료된 경우                            |
+| invalid_back_document         | O           | X               | 앞면과 뒷면의 이미지 정보가 불일치                      |
+| invalid_dual_side             | O           | X               | 양면의 이미지가 잘못 인식된 경우                       |
+| document_country_mismatch     | O           | X               | 문서의 국가 불일치                               |
+| glare_detected                | O           | X               | 빛반사 감지                                   |
+| image_too_blurry              | O           | X               | 이미지가 흐릿함                                 |
+| recaptured_document           | O           | X               | 문서 이미지를 재촬영함                             |
+| screen_detected               | O           | X               | 화면이 감지됨                                  |
+| black_white_document          | O           | X               | 문서가 흑백인 경우                               |
+| missing_birth_date            | O           | X               | 생년월일이 누락됨                                |
+| document_name_mismatch        | O           | X               | 문서상의 이름 불일치                              |
+| document_dob_mismatch         | O           | X               | 문서상의 생년월일 불일치                            |
+| image_forgery                 | O           | X               | 위조된 이미지                                  |
+| text_forgery                  | O           | X               | 위조된 텍스트                                  |
+| feature_verification_failed   | O           | X               | 특징 확인에 실패함                               |
+| image_edited                  | O           | X               | 수정된 이미지인 경우                              |
+| fake_id                       | O           | X               | 가짜 ID                                    |
+| artificial_image              | O           | X               | 인위로 바꾼 이미지                               |
+| artificial_text               | O           | X               | 인위로 바뀐 텍스트                               |
+| check_digit_failed            | O           | X               | 숫자 확인에 실패함                               |
+| physicial_document_missing    | O           | X               | 실물 문서가 누락됨                               |
+| missing_expiry_date           | O           | X               | 만료일자 정보가 누락됨                             |
+| missing_issue_date            | O           | X               | 발생일자 정보가 누락됨                             |
+| missing_document_number       | O           | X               | 문서번호 정보가 누락됨                             |
+| missing_personal_number       | O           | X               | 주민번호 정보가 누락됨                             |
+| missing_name                  | O           | X               | 이름 정보가 누락됨                               |
+| bank_authentication_fail      | O           | X               | 인증번호, 이름 모두 확인에 실패함                      |
+| bank_authentication_code_fail | O           | X               | 인증번호 확인에 실패함                             |
+| bank_authentication_name_fail | O           | X               | 이름 확인에 실패함                               |
+| blacklist_country             | O           | O               | 발급국가 기준으로 blacklist country 의 국가가 제출된 경우 |
+| mrz_protocol_fail             | O           | X               | MRZ 프로토콜 인식이 불가한 경우                      |
+| Identity_verification_fail    | O           | X               | ID 신원 인증에 실패한 경우                         |
+| barcode_protocol_fail         | O           | X               | 바코드 프로토콜 인식에 실패한 경우                      |
+| no_face                       | O           | O               | 셀피 촬영에 얼굴이 없는 경우                         |
+| face_compare_underscore       | O           | O               | 얼굴 비교 점수가 기준 미달인 경우                      |
+| Id_livness_fail               | O           | X               | ID 의 Liveness 검사에 실패한 경우                 |
+| liveness_error                | O           | O               | Liveness 검사에 오류가 발생된 경우                  |
+| liveness_fail                 | O           | O               | Passive Liveness 점수가 기준 미달인 경우           |
+| liveness_fail_active          | O           | O               | Active Liveness 점수가 기준 미달인 경우            |
+| too_many_retry                | O           | O               | 재시도 회수를 초과한 경우                           |
+| VERIFICATION_CODE_MISS_MATCH  | X           | O               | 인증 코드가 입력한 코드와 불일치함                      |

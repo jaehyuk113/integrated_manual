@@ -1,124 +1,132 @@
 ---
-title: Verify 
-description: 'New updates and improvements'
----
-<Update label="2025-01-20" description="v1.0.2">
-
-## Face Liveness API Release ##
-The Face Liveness API is now available! This API verifies whether a facial image was captured from a live person, preventing fraud attempts using fake photos or videos. It ensures a more secure and trustworthy verification process.
-
-### Key Features
-<Steps>
-  <Step title="Face Verification">
-    Instantly checks whether the submitted facial image was captured from a live person. This effectively prevents the use of fake images or videos.
-  </Step>
-  <Step title="Confidence-Based Scoring">
-    Provides a confidence score for the verified face. Utilize the liveness score to flexibly set thresholds based on your organization's specific verification requirements or patterns. Higher scores indicate greater confidence in the verification result, supporting more accurate decision-making.
-  </Step>
-  <Step title="Fraud Prevention and Enhanced Security">
-    Prevents authentication bypass attempts using fake faces, ensuring a secure identity verification process for businesses. This helps build trust with customers and strengthens data security.
-  </Step>
-</Steps>
-
-Check out the links below for more information!
-- [Face Liveness API Documentation](https://app.theneo.io/argosidentity/verify-id/face-liveness/face-liveness-api)  
-- [Face Liveness Image Guidelines](https://app.theneo.io/argosidentity/verify-id/face-liveness/best-practices-for-image)  
-- [Test the API](https://dev.argosidentity.com/api-runner/argosidentity/verify-id/face-liveness/face-liveness-api)  
-
+title: "Verify"
+description: "New updates and improvements"
 ---
 
-## Face Compare API Update
+<Update label="2025-01-20">
+  ## Face Liveness API Release
 
-The Face Compare API has been updated to provide more detailed information!
+  The Face Liveness API is now available\! This API verifies whether a facial image was captured from a live person, preventing fraud attempts using fake photos or videos. It ensures a more secure and trustworthy verification process.
 
-New Response Data:
-- `Landmarks`: Locations of key facial features detected on the face.
-- `Pose`: 3D orientation of the face (roll, yaw, and pitch).
-- `Quality`: Brightness and sharpness of the image.
+  ### Key Features
 
-Check out the links below for more information!
-- [Face Compare API Documentation](https://dev.argosidentity.com/verify-id/global-id-recognition/global-id-recognition-api-1)  
-- [Test the API](https://dev.argosidentity.com/verify-id/global-id-recognition/global-id-recognition-api-1)  
+  <Steps>
+    <Step title="Face Verification">
+      Instantly checks whether the submitted facial image was captured from a live person. This effectively prevents the use of fake images or videos.
+    </Step>
+    <Step title="Confidence-Based Scoring">
+      Provides a confidence score for the verified face. Utilize the liveness score to flexibly set thresholds based on your organization's specific verification requirements or patterns. Higher scores indicate greater confidence in the verification result, supporting more accurate decision-making.
+    </Step>
+    <Step title="Fraud Prevention and Enhanced Security">
+      Prevents authentication bypass attempts using fake faces, ensuring a secure identity verification process for businesses. This helps build trust with customers and strengthens data security.
+    </Step>
+  </Steps>
+  Check out the links below for more information\!
 
----
+  - [Face Liveness API Documentation](https://app.theneo.io/argosidentity/verify-id/face-liveness/face-liveness-api)
+  - [Face Liveness Image Guidelines](https://app.theneo.io/argosidentity/verify-id/face-liveness/best-practices-for-image)
+  - [Test the API](https://dev.argosidentity.com/api-runner/argosidentity/verify-id/face-liveness/face-liveness-api)
 
-## Global ID Recognition API Update
+  ---
 
-The Global ID Recognition API now includes support for **Middle Name**. You can now retrieve the middle name from recognized ID documents.
+  ## Face Compare API Update
 
-New Response Data:
-- `ocr_middleName`: Middle name recognized by OCR.
+  The Face Compare API has been updated to provide more detailed information\!
 
-Check out the links below for more information!
-- [Global ID Recognition API Documentation](https://dev.argosidentity.com/verify-id/global-id-recognition/global-id-recognition-api-1)  
-- [Test the API](https://dev.argosidentity.com/verify-id/global-id-recognition/global-id-recognition-api-1)  
+  New Response Data:
 
+  - `Landmarks`: Locations of key facial features detected on the face.
+  - `Pose`: 3D orientation of the face (roll, yaw, and pitch).
+  - `Quality`: Brightness and sharpness of the image.
+
+  Check out the links below for more information\!
+
+  - [Face Compare API Documentation](https://dev.argosidentity.com/verify-id/global-id-recognition/global-id-recognition-api-1)
+  - [Test the API](https://dev.argosidentity.com/verify-id/global-id-recognition/global-id-recognition-api-1)
+
+  ---
+
+  ## Global ID Recognition API Update
+
+  The Global ID Recognition API now includes support for **Middle Name**. You can now retrieve the middle name from recognized ID documents.
+
+  New Response Data:
+
+  - `ocr_middleName`: Middle name recognized by OCR.
+
+  Check out the links below for more information\!
+
+  - [Global ID Recognition API Documentation](https://dev.argosidentity.com/verify-id/global-id-recognition/global-id-recognition-api-1)
+  - [Test the API](https://dev.argosidentity.com/verify-id/global-id-recognition/global-id-recognition-api-1)
 </Update>
 
+<Update label="2024-11-18">
+  ## API Changes
 
-<Update label="2024-11-18" description="v1.0.1">
-##  API Changes
-### callbackUrl Parameter Update
-The callbackUrl parameter in the request BODY has been made optional. This change affects the API's operational mode as follows:
-1. Asynchronous Operation: When callbackUrl is provided
-Results are sent to the specified callbackUrl.
-Refer to the Callback Response Example for detailed information.
+  ### callbackUrl Parameter Update
 
-2. Synchronous Operation: When callbackUrl is omitted
-Results are included directly in the immediate response.
+  The callbackUrl parameter in the request BODY has been made optional. This change affects the API's operational mode as follows:
 
-### Affected APIs
+  1. Asynchronous Operation: When callbackUrl is provided
+     Results are sent to the specified callbackUrl.
+     Refer to the Callback Response Example for detailed information.
+  2. Synchronous Operation: When callbackUrl is omitted
+     Results are included directly in the immediate response.
 
-The following APIs are impacted by this change:
-- Global ID Recognition
-- ID Liveness
-- Face Compare
+  ### Affected APIs
 
-<Note>For synchronous responses, please refer to the 200 Response documentation. For asynchronous responses, consult the Callback Response Example.</Note>
+  The following APIs are impacted by this change:
 
+  - Global ID Recognition
+  - ID Liveness
+  - Face Compare
+
+  <Note>
+    For synchronous responses, please refer to the 200 Response documentation. For asynchronous responses, consult the Callback Response Example.
+  </Note>
 </Update>
 
+<Update label="2024-11-05">
+  ## New features
 
-<Update label="2024-11-05" description="v1.0.0">
- ## New features
- Textify API is now available, allowing you to automate data extraction and streamline document workflows like never before. Now supported in US region, Textify empowers teams with easy access to critical document data.
- ## ✨ Expanded Template Library to Meet Every Need
- Textify now supports key templates to enhance productivity across finance, logistics, HR, and healthcare and more!
+  Textify API is now available, allowing you to automate data extraction and streamline document workflows like never before. Now supported in US region, Textify empowers teams with easy access to critical document data.
 
-<Card title="Business Registration">
-  Capture business details quickly for compliance and onboarding.
-</Card>
-<Card title="Contract">
-  Extract vital terms from agreements to speed up decision-making.
-</Card>
-<Card title="Balance Certificate (KR only)">
-  Support compliance with verified financial information.
-</Card>
-<Card title="General Invoice">
-  Summarize billing information for efficient accounts payable.
-</Card>
-<Card title="Job Application">
-  Access candidate information for faster, smarter hiring.
-</Card>
-<Card title="Employment Contract" >
-  Organize employment details to simplify HR workflows.
-</Card>
-<Card title="Proof of Address" >
-  Enhance KYC with easy verification of residential data.
-</Card>
-<Card title="Bill of Lading" >
-  Ensure logistics accuracy with detailed shipment information.
-</Card>
-<Card title="Arrival Notice" >
-  Manage shipments with visibility into arrival details.
-</Card>
-<Card title="Medical Invoice" >
-  Streamline healthcare billing and claims processes.
-</Card>
-<Card title="Medical Observation">
-  Simplify record-keeping for medical histories and treatments.
-</Card>
+  ## ✨ Expanded Template Library to Meet Every Need
 
+  Textify now supports key templates to enhance productivity across finance, logistics, HR, and healthcare and more\!
 
-Textify brings efficiency to document management so you can focus on what matters most.
+  <Card title="Business Registration">
+    Capture business details quickly for compliance and onboarding.
+  </Card>
+  <Card title="Contract">
+    Extract vital terms from agreements to speed up decision-making.
+  </Card>
+  <Card title="Balance Certificate (KR only)">
+    Support compliance with verified financial information.
+  </Card>
+  <Card title="General Invoice">
+    Summarize billing information for efficient accounts payable.
+  </Card>
+  <Card title="Job Application">
+    Access candidate information for faster, smarter hiring.
+  </Card>
+  <Card title="Employment Contract">
+    Organize employment details to simplify HR workflows.
+  </Card>
+  <Card title="Proof of Address">
+    Enhance KYC with easy verification of residential data.
+  </Card>
+  <Card title="Bill of Lading">
+    Ensure logistics accuracy with detailed shipment information.
+  </Card>
+  <Card title="Arrival Notice">
+    Manage shipments with visibility into arrival details.
+  </Card>
+  <Card title="Medical Invoice">
+    Streamline healthcare billing and claims processes.
+  </Card>
+  <Card title="Medical Observation">
+    Simplify record-keeping for medical histories and treatments.
+  </Card>
+  Textify brings efficiency to document management so you can focus on what matters most.
 </Update>

@@ -1,16 +1,41 @@
 ---
 mode: "default"
-title: "Query String and Token Guide"
-description: "A comprehensive guide to the Query String and Token ID options for Liveform. These options enable features such as transmitting additional information, preventing duplicate submissions, and identifying users. Explore essential tools to optimize your ID Check process."
+title: "Return URL Guide"
+description: "Once the KYC process is complete, the submitter can redirect the specified URL with parameters by selecting the “Ok” button."
 ---
 
-## 1. Customizable Query String Options
+## 1. Customizable Query String Options in Dashboard
 
-The Query String options available in Liveform and API allow you to send additional information and customize the KYC process.
+The dashboard allows you to set the values of the parameter keys. After the KYC process is complete and the submitter selects the "Ok" button, the page will redirect to the Dynamic Fields parameters with the Return URL. The final return URL will be same to the URL of the "Ok" button when it is connected.
 
-## 2. Basic URL Structure
+![Return Url En Pn](/images/return_url_en.png)
 
-- **Base Form URL**: `https://form.argosidentity.com/?pid={project_Id}`
+## 2. Support to parameters
+
+<ResponseField name="userid" type="string">
+  Retrieve a list of submissions matching the user ID.
+</ResponseField>
+
+<ResponseField name="cf1" type="string">
+  Custom field 1 optionally added during submission
+</ResponseField>
+
+<ResponseField name="cf2" type="string">
+  Custom field 2 optionally added during submission
+</ResponseField>
+
+<ResponseField name="cf3" type="string">
+  Custom field 3 optionally added during submission
+</ResponseField>
+
+<ResponseField name="email" type="string">
+  Retrieve a list of submissions matching the email address.
+</ResponseField>
+
+<ResponseField name="kycStatus" type="string">
+  KYC result. Following this parameter name is camelCase (case-sensitive).
+</ResponseField>
+
 - **URL with Query String**: `https://form.argosidentity.com/?pid={project_Id}&blacklistCountries=false`
 
 ### 2-1. Key Query String Parameters

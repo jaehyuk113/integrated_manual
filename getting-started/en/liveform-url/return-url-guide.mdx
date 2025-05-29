@@ -4,18 +4,18 @@ title: "Return URL Guide"
 description: "Once the KYC process is complete, the submitter can redirect the specified URL with parameters by selecting the “Ok” button."
 ---
 
-## 1. Customizable Query String Options in Dashboard
+## 1. Set Return URL Option in Dashboard
 
 The dashboard allows you to set the values of the parameter keys. After the KYC process is complete and the submitter selects the "Ok" button, the page will redirect to the Dynamic Fields parameters with the Return URL. The final return URL will be same to the URL of the "Ok" button when it is connected.
 
 ![Return Url En Pn](/images/return_url_en.png)
 
-## 2. Support to parameters
+## 2. Support to parameters in Dynamic Fields
 
 ### 2-1. Key Query String Parameters
 
 <ResponseField name="userid" type="string">
-  Retrieve a list of submissions matching the user ID.
+  The user ID value, which is connected to the submission
 </ResponseField>
 
 <ResponseField name="cf1" type="string">
@@ -31,15 +31,15 @@ The dashboard allows you to set the values of the parameter keys. After the KYC 
 </ResponseField>
 
 <ResponseField name="email" type="string">
-  Retrieve a list of submissions matching the email address.
+  The email value, which is connected to the submission
 </ResponseField>
 
 <ResponseField name="kycStatus" type="string">
-  KYC result. Following this parameter name is camelCase (case-sensitive).
+  KYC result. Following this parameter name is camelCase (case-sensitive). Based on the result, it returns `approved`, `pending`, or `rejected`.
 </ResponseField>
 
 ### 2-2. Encrypted option applied
 
-Encryption is enabled when the “encrypted” parameter is included in the final return URL. AES-256-ECB is required to decrypt the value. Please consult [this guide section](https://developers.argosidentity.com/getting-started/en/encrypt-and-decrypt-data/overview#3-2-api-request-data-encryption-aes-256-ecb) for further information.
+Encryption is enabled when the “encrypted” parameter is included in the final return URL. AES-256-ECB is required to decrypt the value. Please consult [this guide section](https://developers.argosidentity.com/getting-started/en/encrypt-and-decrypt-data/overview#3-3-api-data-decryption-aes-256-ecb) for further information.
 
 By using this guide, you can effectively return URL with Query String in ID check to optimize your KYC process and enhance user experience.

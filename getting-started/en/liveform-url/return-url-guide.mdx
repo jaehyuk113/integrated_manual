@@ -12,6 +12,8 @@ The dashboard allows you to set the values of the parameter keys. After the KYC 
 
 ## 2. Support to parameters
 
+### 2-1. Key Query String Parameters
+
 <ResponseField name="userid" type="string">
   Retrieve a list of submissions matching the user ID.
 </ResponseField>
@@ -36,154 +38,8 @@ The dashboard allows you to set the values of the parameter keys. After the KYC 
   KYC result. Following this parameter name is camelCase (case-sensitive).
 </ResponseField>
 
-- **URL with Query String**: `https://form.argosidentity.com/?pid={project_Id}&blacklistCountries=false`
+### 2-2. Encrypted option applied
 
-### 2-1. Key Query String Parameters
+Encryption is enabled when the “encrypted” parameter is included in the final return URL. AES-256-ECB is required to decrypt the value. Please consult [this guide section](https://developers.argosidentity.com/getting-started/en/encrypt-and-decrypt-data/overview#3-2-api-request-data-encryption-aes-256-ecb) for further information.
 
-| Parameter               | ID Document | Knowledge-Based | Description                                                                                                                                                                                                                                                          |
-| ----------------------- | ----------- | --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `blacklistCountries`    | Yes         | Yes             | Turns off blacklist country restrictions for the specific submission (`false` only).                                                                                                                                                                                 |
-| `approvePeriod`         | Yes         | No              | Turns off the approved duplicate submission prevention period (`false` only).                                                                                                                                                                                        |
-| `rejectPeriod`          | Yes         | No              | Turns off the rejected duplicate submission prevention period (`false` only).                                                                                                                                                                                        |
-| `ageLimit`              | Yes         | Yes             | Turns off age restriction for the specific submission (`false` only).                                                                                                                                                                                                |
-| `rejectDuplicateUser`   | Yes         | Yes             | Enables/disables duplicate submission prevention (`true` or `false` accepted).  - In Knowledge-Based Submission, it works to contain Name, Gender, Birth Date, and Nationality information.                                                                          |
-| `email`                 | Yes         | Yes             | User's email address.                                                                                                                                                                                                                                                |
-| `userid`                | Yes         | Yes             | Custom unique identifier for the user.                                                                                                                                                                                                                               |
-| `pid`                   | Yes         | Yes             | Unique identifier for each project.                                                                                                                                                                                                                                  |
-| `sid`                   | Yes         | Yes             | Unique identifier for each submission.                                                                                                                                                                                                                               |
-| `cf1`                   | Yes         | Yes             | Custom option field #1.                                                                                                                                                                                                                                              |
-| `cf2`                   | Yes         | Yes             | Custom option field #2.                                                                                                                                                                                                                                              |
-| `cf3`                   | Yes         | Yes             | Custom option field #3.                                                                                                                                                                                                                                              |
-| `allowedCountries`      | Yes         | Yes             | Must be encrypted.  `allowedCountries` can only be set using the encryption option and cannot be specified directly. e.g., If the encrypted value `{'allowedCountries': 'USA,KOR'}` is provided, only the United States (USA) and South Korea (KOR) will be allowed. |
-| `knowledgeField`        | No          | Yes             | Must be encrypted.  Set visible fields from the supported fields. Refer to the value below each parameter.                                                                                                                                                           |
-| `knowledgePrefill`      | No          | Yes             | Must be encrypted.  Fill out the value in advance. Refer to the value below each parameter.                                                                                                                                                                          |
-| `allowedIdTypes`        | Yes         | No              | Must be encrypted. Can set to show ID card type. Refer to the value below each parameter.                                                                                                                                                                            |
-| `allowedDocumentFields` | Yes         | No              | Must be encrypted. Can set to show available field. Refer to the value below each parameter.                                                                                                                                                                         |
-| `projectionId`          | Yes         | Yes             | Must be encrypted. Can apply a projection to exclude fields. ProjectionName cannot be used together.                                                                                                                                                                 |
-| `projectionName`        | Yes         | Yes             | Must be encrypted. Can apply a projection to exclude fields. ProjectionId cannot be used together.                                                                                                                                                                   |
-
-### 2-1-a. ID Types, Fields and Knowledge-Based Prefill Parameter Values
-
-<AccordionGroup>
-  <Accordion title="[Knowledge-Based] knowledgeField Parameter Values" icon="lightbulb">
-    - `name`
-    - `gender`
-    - `birthDate`
-    - `nationality`
-    - `SSN` (Only the USA supported)
-    - `address`
-    - `phoneNumber`
-
-      e.g. `{'knowledgeField': 'gender,nationality,name'}`
-  </Accordion>
-  <Accordion title="[Knowledge-Based] knowledgePrefill Parameter Values" icon="lightbulb">
-    - `name` Input name
-    - `birthDate` Require input YYYY-MM-DD
-    - `gender` male or female
-    - `nationality` ISO Alpha-3
-    - `SSN` Require input number with hyphen(-)
-    - `address` Input the keyword address in Google Maps
-    - `phoneNumber` Country code with phone number without hyphen(-)
-
-      e.g. `{'knowledgePrefill': 'gender=male,birthdate=1990-01-01,SSN=123-12-0001,address=Washington D.C.,phoneNumber=+15555551234'}`
-
-      `address`is the keyword to put in the search field in Google Maps.
-  </Accordion>
-  <Accordion title="[ID document] allowedIdTypes" icon="memo-pad">
-    - `passport`
-    - `drivers_license`
-    - `government_id`
-    - `residence_permit`
-    - `vehicle_registration_certificate`
-    - `visa`
-    - `pancard`
-    - `aadhaar`
-    - `foreign_registrator`
-    - `identification_card`
-
-      e.g. `{'allowedIdTypes': 'passport,government_id,drivers_license'}`
-  </Accordion>
-  <Accordion title="[ID document] allowedDocumentFields" icon="memo-pad">
-    - `gender`
-    - `nationality`
-    - `expiry_date`
-    - `number` Same field as passport number
-    - `issue_date`
-    - `id_number`
-    - `serial_number`
-    - `name`
-    - `date_of_birth`
-    - `curp_number` Only available for Maxican ID card
-    - `version` Only available for New Zealand Driver's license
-    - `type_of_permit` Only available for Alien Registration Card in South Korea
-
-      e.g. `{'allowedDocumentFields': 'gender,name,date_of_birth,issue_date'}`
-  </Accordion>
-</AccordionGroup>
-
-Every field name is case-sensitive.\
-Every parameter value must not contain a space.
-
-❌ Non-compliant Example `{'knowledgeField': 'gender, nationality, name'}`
-
-In the example above, the query string exact option does not contain a space after the comma, like`{'knowledgeField': 'gender,nationality,name'}`
-
-### 2-1-b. Skip to Select Country in Knowledge-Based
-
-In Knowledge-Based, if `allowedCountries` set one nationality.\
-e.g. `{'allowedCountries': 'USA'}` The form skips to the select country page.
-
-<Note>
-  All Query String values must be URL-encoded.
-</Note>
-
-Below is an example of ID Check with and without an email query parameter.
-
-![dashboard](/images/en_email_queryparameter.png)
-
-### 2-2. Unique User ID and Custom Fields
-
-- Generate a unique user ID for KYC submitter identification during API calls.
-- Add up to three custom fields (`cf1`, `cf2`, `cf3`) to transmit additional information.
-
-## 3. Token ID Options
-
-The `tokenId` is a string used for Liveform submissions in Private Mode.
-
-**Purpose**: Prevent shared or duplicate use of the same URL.
-
-### 3-1. Token Validation
-
-Validation fails (error occurs) under the following conditions:
-
-1. **Time Expiry**: More than 3 minutes have elapsed since the first use.
-2. **Existing Valid Submission**: There is an existing submission with a determined KYC status (approved, rejected, pending).
-
-<Warning>
-  **Caution**:\
-  If the above conditions are not met, multiple users may proceed with the same Token ID simultaneously.
-</Warning>
-
-### 3-2. Methods to Check Token ID
-
-- Webhook
-- **GET Submission API** (single retrieval using `submission_id`)
-- Download Submission CSV from the dashboard
-
-### 3-3. URL Structure for Token ID
-
-- **Base Form URL**: `https://form.argosidentity.com/?pid={project_Id}`
-- **URL with Token ID**: `https://form.argosidentity.com/?pid={project_Id}&token={tokenId}`
-
-## 4. Encrypted Only
-
-You can set encrypted only option in the dashboard. After set, URL query parameter only allowes `pid`(project id), `encrypted` and `lang`(language) option, other option is disabled.
-
-![Encrypted Only En Pn](/encrypted_only_en.png)
-
-- `https://form.argosidentity.com/?pid={project_Id}&encrypted={encrypted_option}&lang=en`(O)
-- `https://form.argosidentity.com/?pid={project_Id}&encrypted={encrypted_option}&email=your_email_address@argosidentity.com`(X)
-
-  The unallowed parameter email was used in this URL.
-
-By using this guide, you can effectively leverage Query String and Token ID options in ID check to optimize your KYC process and enhance user experience.
+By using this guide, you can effectively return URL with Query String in ID check to optimize your KYC process and enhance user experience.

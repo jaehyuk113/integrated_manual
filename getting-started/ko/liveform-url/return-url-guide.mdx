@@ -1,0 +1,45 @@
+---
+mode: "default"
+title: "리턴 URL 가이드"
+description: "KYC 가 완료되면, 제출자는 KYC 결과 하단의 Ok 버튼을 선택할 수 있습니다. Ok 버튼을 선택 시 설정한 Return URL 이 동적 필드에서 미리 지정한 파라미터 값과 함께 리디렉션 됩니다."
+---
+
+## 1. Dashboard 에서 리턴 URL 옵션 설정하기
+
+Dashboard 에선 리턴 URL 옵션을 설정하실 수 있습니다. KYC 프로세스가 완료되고, 제출자가 "Ok" 버튼 선택시에 동적 필드의 파라미터와 함께 리턴 URL의 주소로 이동됩니다. 최종 리턴 URL 이 바로 "Ok" 버튼을 선택했을 시의 URL 입니다.
+
+![Return Url Kr Pn](/images/return_url_kr.png)
+
+## 2. 동적 필드 내 지원 파라미터
+
+### 2-1. 각 키별 파라미터의 정의
+
+<ResponseField name="userid" type="string">
+  제출된 Submission 에 설정된 사용자 ID
+</ResponseField>
+
+<ResponseField name="cf1" type="string">
+  사용자 정의 필드 #1
+</ResponseField>
+
+<ResponseField name="cf2" type="string">
+  사용자 정의 필드 #2
+</ResponseField>
+
+<ResponseField name="cf3" type="string">
+  사용자 정의 필드 #3
+</ResponseField>
+
+<ResponseField name="email" type="string">
+  제출된 Submission 의 이메일 주소
+</ResponseField>
+
+<ResponseField name="kycStatus" type="string">
+  KYC 결과, kycStatus 는 camelCase 를 따르므로 대소문자 주의. 결과에 따라 `approved`, `pending`, `rejected` 중 하나의 값이 리턴됩니다.
+</ResponseField>
+
+### 2-2. 암호화 적용
+
+암호화 옵션 적용 시, 최종 리턴 URL 에 “encrypted” 파라미터로 응답이 옵니다. 복호화 시 AES-256-ECB 를 통하여 진행하여야 하며, 암복호화 관련 가이드는 [여기](https://developers.argosidentity.com/getting-started/ko/encrypt-and-decrypt-data/overview#3-3-api-%EB%8D%B0%EC%9D%B4%ED%84%B0-%EB%B3%B5%ED%98%B8%ED%99%94-aes-256-ecb)를 참조 바랍니다.
+
+이 가이드를 통해 ID check의 Return URL 옵션을 효과적으로 활용하여 KYC 프로세스를 최적화하고 사용자 경험을 개선할 수 있습니다.

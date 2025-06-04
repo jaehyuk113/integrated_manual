@@ -84,6 +84,7 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
     "Items": [
         {
             "data": {
+                "age_group": "{age group}",
                 "first_name": "{first name}",
                 "last_name": "{last name}",
                 "full_name": "{full name}",
@@ -296,6 +297,7 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
 | Field Name                               | Description                                                                                                                                                     | Data Type | Category               |
 | ---------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------- | ---------------------- |
 | `data`                                   | KYC applicant data                                                                                                                                              | Object    | KYC Applicant Info     |
+| `data.age_group`                         | age group of the applicant: minor, early-teen, teen, adult                                                                                                      | String    | KYC Applicant Info     |
 | `data.first_name`                        | First name of the applicant                                                                                                                                     | String    | KYC Applicant Info     |
 | `data.last_name`                         | Last name of the applicant                                                                                                                                      | String    | KYC Applicant Info     |
 | `data.full_name`                         | Full name of the applicant                                                                                                                                      | String    | KYC Applicant Info     |

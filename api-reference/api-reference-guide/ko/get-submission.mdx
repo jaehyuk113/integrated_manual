@@ -84,6 +84,7 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
     "Items": [
         {
             "data": {
+                "age_group": "{age group}",
                 "first_name": "{first name}",
                 "last_name": "{last name}",
                 "full_name": "{full name}",
@@ -297,6 +298,7 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
 | 필드명                                      | 설명                                                                                                                       | 데이터 타입 | 카테고리              |
 | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ------ | ----------------- |
 | `data`                                   | KYC 제출자 데이터                                                                                                              | Object | KYC 제출자 정보        |
+| `data.age_group`                         | 제출자의 연령대: minor, early-teen, teen, adult                                                                                 | String | KYC 제출자 정보        |
 | `data.first_name`                        | 제출자의 First Name                                                                                                          | String | KYC 제출자 정보        |
 | `data.last_name`                         | 제출자의 Last Name                                                                                                           | String | KYC 제출자 정보        |
 | `data.full_name`                         | 제출자의 Full Name                                                                                                           | String | KYC 제출자 정보        |

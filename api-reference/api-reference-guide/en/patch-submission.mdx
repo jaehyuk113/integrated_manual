@@ -1,139 +1,176 @@
 ---
-title: "PARTIAL-DELETE/Submission"
-description: "This API allows you to selectively delete specific fields from a single submission data. Unlike complete deletion, you can preserve necessary data while removing only sensitive information, enabling flexible use according to your company's internal policies."
+title: "PATCH/Submission"
+description: 'This API allows you to modify the KYC data of an existing submission. Note that modified data can be further updated but cannot be reverted to its original state.'
+
 ---
 
-<Warning>
-  주의사항
+## 1. Endpoint
 
-  - 삭제된 특정 필드는 복원할 수 없습니다.
-  - 이 API를 사용할 때는 신중을 기해야 합니다. 실수로 중요한 데이터를 삭제하지 않도록 주의하세요.
-</Warning>
-
-## 1. 엔드포인트
-
-```text PARTIAL-DELETE/Submission
-DELETE https://rest-api.argosidentity.com/v3/submission/partial?submission_id={submission_id}
+```text PATCH/Submission
+PATCH https://rest-api.argosidentity.com/v3/submission
 ```
 
-## 2. 인증
+## 2. Authentication
 
-`x-api-key` 헤더에 API 키를 포함시켜야 합니다:
+
+Include the API key in the "x-api-key" header:
 
 ```text x-api-key
 x-api-key: {yourAPIKey}
 ```
 
-## 3. 요청 파라미터
+## 3. Request Body
+The request body must be in JSON format. Below are the field descriptions:
 
 <ResponseField name="submissionId" type="string" required="true">
-  삭제할 제출 건의 고유 ID
+  Administrator's email address (must be registered in the dashboard).
 </ResponseField>
 
-<ResponseField name="fields" type="string" required="false">
-  fields 파라미터를 사용하여 특정 데이터 유형을 선택적으로 삭제할 수 있습니다.
-  다음 옵션 중 하나를 사용하여 입력할 수 있습니다:
+<ResponseField name="admin" type="string" required="true">
+  Administrator's email address (must be registered in the dashboard).
 
-  - `id_image`
-  - `selfie_image`
-  - `data`
-  - `OCR_raw`
-  - `ocr`
-  - `review`
-  - `applicant_id`
-  - `email`
-  - `userid`
-  - `additional_list`
-  - `duplicated_information`
-  - `custom_duplicated_information`
-  - `injection_action`
-  - `kyc`
+</ResponseField>
+Add commentMore actions
+<ResponseField name="data" type="object" required="true">
+  Object containing the fields to be updated.
+  <Expandable title="Properties">
+    <ResponseField name="kycStatus" type="string">
+      KYC result: `approved` or `rejected`.
+    </ResponseField>
+    <ResponseField name="idType" type="string">
+      ID type. Refer to [ID Card Codes](/api-reference/api-reference-guide/en/id-card-types).
+    </ResponseField>
+    <ResponseField name="issuingCountry" type="string">
+      Country of issue. Refer to [Country Codes](/api-reference/api-reference-guide/en/iso-alpha-3-country-codes).
+    </ResponseField>
+    <ResponseField name="fullName" type="string">
+      Full name of the KYC applicant.
+    </ResponseField>
+    <ResponseField name="gender" type="string">
+      `female` or `male`.
+    </ResponseField>
+    <ResponseField name="birthDate" type="string">
+      Date of birth in `YYYY-MM-DD` format.
+    </ResponseField>
+    <ResponseField name="nationality" type="string">
+      Applicant's nationality. Refer to [Country Codes](/api-reference/api-reference-guide/en/iso-alpha-3-country-codes).
+    </ResponseField>
+    <ResponseField name="issueDate" type="string">
+      ID issue date in `YYYY-MM-DD` format.
+    </ResponseField>
+    <ResponseField name="expireDate" type="string">
+      ID expiration date in `YYYY-MM-DD` format.
+    </ResponseField>
+    <ResponseField name="documentNumber" type="string">
+      Document number of the ID.
+    </ResponseField>
+    <ResponseField name="identityNumber" type="string">
+      Identity number of the applicant.
+    </ResponseField>
+    <ResponseField name="serialNumber" type="string">
+      Driver's license serial number.
+    </ResponseField>
+  </Expandable>
 </ResponseField>
 
-<ResponseField name="data_fields" type="string">
-  data_fields 파라미터를 사용하여 data 내의 개인정보와 관련된 특정 데이터 유형을 선택적으로 삭제할 수 있습니다. fields 파라미터에 data 필드가 선언되어 있을 경우만 작동하며, 이 경우 data_fields 파라미터에 아무 값도 넣지 않으면, data 하위 데이터가 모두 삭제됩니다.
+## 4. Request Example
 
-  다음 옵션 중 하나를 사용하여 입력할 수 있습니다:
+```curl PATCH/Submission
+curl --location --request PATCH 'https://rest-api.argosidentity.com/v3/submission' \
+--header 'x-api-key: {yourAPIKey}' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "submissionId": "6xx28lo115832",
+  "admin": "yourAdmin@sample.com",
+  "data": {
+    "idType": "drivers_license",
+    "issuingCountry": "KOR",
+    "fullName": "hong kil dong",
+    "gender": "male",
+    "birthDate": "1999-11-31",
+    "nationality": "USA",
+    "kycStatus": "approved",
+    "issueDate": "2017-10-19",
+    "expireDate": "2027-10-18",
+    "identityNumber": "991131-1111111",
+    "documentNumber": "05-167-U0815",
+    "serialNumber": "07PN10"
+  }
+}'
 
-  - `age_group`
-  - `first_name`
-  - `last_name`
-  - `full_name`
-  - `name`
-  - `gender`
-  - `nationality`
-  - `date_of_birth`
-  - `address_city`
-  - `address_country`
-  - `address_state`
-  - `address_street`
-  - `address_street2`
-  - `address_zipcode`
-  - `address_globalCode`
-  - `address_compoundCode`
-  - `address_formatted`
-  - `address_input`
-  - `address_detail`
-  - `ip_address`
-  - `idcard_issuingCountry`
-  - `idcard_issueDate`
-  - `idcard_expireDate`
-  - `idType`
-  - `documentNumber`
-</ResponseField>
-
-<ResponseField name="admin_name" type="string">
-  삭제를 진행한 관리자 이름
-</ResponseField>
-
-### 3-1. 삭제되는 데이터
-
-- **fields**와 **data_fields**에서 설정한 데이터
-
-### 3-2. 유지되는 데이터
-
-- 제출된 건에서, feilds에서 선언되지 않은 파라미터들과, data_fields의 특정 파라미터 지정 시, 지정되지 않은 파라미터들의 경우 삭제되지 않고 유지됩니다.
-
-## 4. 요청 예시
-
-```curl PARTIAL-DELETE/Submission
-curl --location 'https://rest-api.argosidentity.com/v3/submission/partial?submission_id={submission_id}&fields=id_image,data&data_fields=gender,ip_address' \ --header 'x-api-key: {yourAPIKey}'
 ```
 
-## 5. 응답
+## 5. Response
 
-### 5-1. 성공 응답
+### 5-1. Success Response
 
-```result.json
+```json result.json
 {
-	"message": "success",
-	"content": "Submission {submissionID} partially deleted successfully."
+  "message": "success to edit.",
+  "statusCode": 200
 }
 ```
 
-### 5-2. 오류 응답
+### 5-2. Error Response
 
-오류가 발생하면 400 상태 코드와 함께 응답 본문에 세부 정보가 포함됩니다:
+If an error occurs, a `400` status code is returned with details in the response body:
 
 ```json error.json
 {
-    "errorCode": "not Exist Submission ID"
+    "errorCode": "invalid_payload",
 }
 ```
 
-### 5-3. 오류 코드
+### 5-3. Error Codes
+| Error Code                                   | Description                                   |
+|----------------------------------------------|-----------------------------------------------|
+| `API-Key is required.`                       | API key is missing.                          |
+| `The project is not found.`                  | Project not found.                           |
+| `Decryption is Failed. Please check the api-key.` | Data decryption failed.                     |
+| `Data Processing Error.`                     | Data encryption failed.                      |
+| `data parsing error. please check input data.` | Data parsing error.                         |
+| `submissionId is required.`                  | `submissionId` is missing.                  |
+| `projectId or x-api-key is required.`        | `projectId` or `x-api-key` is missing.       |
+| `admin is required.`                         | `admin` information is missing.             |
+| `At least one property to modify is required.` | No property to modify was provided.         |
+| `Invalid idType. Please check the idType.`   | Invalid ID type.                             |
+| `Invalid kyc status. Please check the kycStatus.` | Invalid KYC status.                        |
+| `Invalid gender. Please check the gender.`   | Invalid gender value.                        |
+| `Invalid issuingCountry. Please enter a valid ISO 3166-1 alpha-3.` | Invalid issuing country code.          |
+| `Invalid nationality. Please enter a valid ISO 3166-1 alpha-3.`    | Invalid nationality code.                |
+| `Invalid birthDate. Please enter the date as YYYY-MM-DD`            | Invalid birth date format.                |
+| `Invalid issueDate. Please enter the date as YYYY-MM-DD`            | Invalid issue date format.                |
+| `Invalid expireDate. Please enter the date as YYYY-MM-DD`           | Invalid expiration date format.           |
 
-| 오류 코드                                                                                                         | 설명                                                                    |
-| ------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| `submission_id` is required                                                                                   | 요청 파라미터에 필수 값인 `submission_id`가 누락된 경우                                |
-| fields parameter is required and cannot be empty                                                              | 요청 파라미터에 필수 값인 fields가 누락되거나 비어있는 경우                                  |
-| fields must be a string<br /><br />data_fields must be a string                                               | fields 파라미터가 문자열 형식이 아닌 경우<br /><br />data_fields 파라미터가 문자열 형식이 아닌 경우 |
-| fields cannot be empty                                                                                        | fields 파라미터가 비어있는 경우                                                  |
-| invalid fields found in fields: field1, field2<br /><br />invalid fields found in data_fields: field1, field2 | 유효하지 않은 필드가 fields에 포함된 경우<br /><br />유효하지 않은 필드가 data_fields에 포함된 경우 |
-| data_fields parameter is not allowed when fields does not include data                                        | fields에 'data'가 포함되지 않았는데 data_fields 파라미터가 제공된 경우                    |
-| invalid format for fields: error message                                                                      | fields 파라미터의 형식이 잘못된 경우                                               |
-| invalid format for data_fields: error message                                                                 | data_fields 파라미터의 형식이 잘못된 경우                                          |
-| invalid API key for this project                                                                              | 제공된 API 키가 해당 프로젝트에 유효하지 않은 경우                                        |
-| not Exist Submission Data                                                                                     | 요청된 submission_id에 해당하는 데이터가 존재하지 않는 경우                               |
-| not Exist Project Data                                                                                        | 해당 프로젝트 데이터가 존재하지 않는 경우                                               |
-| Internal server error                                                                                         | 서버 내부 오류가 발생한 경우                                                      |
+
+
+
+
+
+## 6. Encryption Options
+For enhanced security, the request body can be encrypted. When using encryption:
+- Encrypt the entire request body object.
+- Send the encrypted string as the `body` parameter.
+
+### 6-1. Encrypted Request Example
+
+```json result.json
+body : encrypt({
+		submissionId : 'string',
+		admin : 'string',
+		data : {
+            ...
+        }
+	})
+```
+### 6-2. Encrypted Response 
+The response will include the `isEncrypted` flag and encrypted data:
+
+```json result.json
+response : {
+   body : {
+    "data": "encrypted-string",
+    "isEncrypted": true
+   }
+}
+```

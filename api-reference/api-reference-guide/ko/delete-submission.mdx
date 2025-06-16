@@ -32,14 +32,13 @@ x-api-key: {yourAPIKey}
   삭제할 제출 건의 고유 ID
 </ResponseField>
 
-<ResponseField name="admin_name" type="string" required="false">
+<ResponseField name="admin_name" type="string" optional="false">
   삭제를 진행한 관리자 이름
 </ResponseField>
 
 <Warning>
   admin_name 파라미터는 선택이나, 삭제 이후에 웹훅 수신을 원할 시에는 admin_name 파라미터와 함께 호출하셔야 합니다.
 </Warning>
-
 
 ### 3-1. 삭제되는 데이터
 
@@ -83,9 +82,9 @@ curl --location --request DELETE 'https://rest-api.argosidentity.com/v3/submissi
 
 ### 5-3. 오류 코드
 
-| 오류 코드                               | 설명                               |
-| ----------------------------------- | -------------------------------- |
-| `not Exist Submission ID`           | `submission_id`가 누락됨             |
-| `not Exist Submission Data`         | 해당 `submission_id`의 데이터가 존재하지 않음 |
-| `not Exist Project Data`            | 프로젝트 정보가 존재하지 않음                 |
-| `delete Process FAIL`               | 삭제 프로세스 실패 (메타 페이스 ID 삭제 실패 등)   |
+| 오류 코드                       | 설명                               |
+| --------------------------- | -------------------------------- |
+| `not Exist Submission ID`   | `submission_id`가 누락됨             |
+| `not Exist Submission Data` | 해당 `submission_id`의 데이터가 존재하지 않음 |
+| `not Exist Project Data`    | 프로젝트 정보가 존재하지 않음                 |
+| `delete Process FAIL`       | 삭제 프로세스 실패 (메타 페이스 ID 삭제 실패 등)   |

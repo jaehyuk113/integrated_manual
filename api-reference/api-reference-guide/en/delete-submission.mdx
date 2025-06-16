@@ -1,20 +1,23 @@
 ---
-title: 'DELETE/Submission'
-description: 'This API allows you to permanently delete all information associated with a single submission. Deleted data cannot be restored, and deleted submissions are still billable.'
+title: "DELETE/Submission"
+description: "This API allows you to permanently delete all information associated with a single submission. Deleted data cannot be restored, and deleted submissions are still billable."
 ---
 
 <Warning>
-**Notes**
-- Deleted submissions cannot be restored.
-- Deleted submissions are still subject to billing.
-- Deleted submissions will appear as "Deleted Submission" in the dashboard and `GET/API` responses.
-- Use this API with caution to avoid unintentionally deleting critical data.
+  **Notes**
+
+  - Deleted submissions cannot be restored.
+  - Deleted submissions are still subject to billing.
+  - Deleted submissions will appear as "Deleted Submission" in the dashboard and `GET/API` responses.
+  - Use this API with caution to avoid unintentionally deleting critical data.
 </Warning>
 
 ## 1. Endpoint
+
 ```text DELETE/Submission
 DELETE https://rest-api.argosidentity.com/v3/submission
 ```
+
 ## 2. Authentication
 
 Include the API key in the x-api-key header:
@@ -23,18 +26,18 @@ Include the API key in the x-api-key header:
 x-api-key: {yourAPIKey}
 ```
 
-
 ## 3. Request Parameter
+
 <ResponseField name="submissionId" type="string" required="true">
   Unique ID of the submission to be deleted
 </ResponseField>
 
-<ResponseField name="admin_name" type="string" required="false">
+<ResponseField name="admin_name" type="string" optional="false">
   Deleted the admin name
 </ResponseField>
 
 <Warning>
-The admin_name is optional; however, it is necessary for the admin to specify the admin_name parameter in order to receive a webhook after a submission is deleted.
+  The admin_name is optional; however, it is necessary for the admin to specify the admin_name parameter in order to receive a webhook after a submission is deleted.
 </Warning>
 
 ### 3-1. Data to be Deleted
@@ -45,6 +48,7 @@ The admin_name is optional; however, it is necessary for the admin to specify th
 - AML data (if stored via AML options)
 
 ### 3-2. Data to be Retained
+
 - Basic data that cannot identify individuals, such as Submission ID, submission date, ID type, and ID Check approval status.
 
 ## 4. Request Example
@@ -56,7 +60,9 @@ curl --location --request DELETE 'https://rest-api.argosidentity.com/v3/submissi
 ```
 
 ## 5. Response
+
 ### 5-1. Success Response
+
 ```json result.json
 {
 	"message": "success",
@@ -64,21 +70,21 @@ curl --location --request DELETE 'https://rest-api.argosidentity.com/v3/submissi
 }
 ```
 
-
 ### 5-2. Error Response
+
 If an error occurs, a 400 status code is returned along with details in the response body:
+
 ```json error.json
 {
     "errorCode": "not Exist Submission ID"
 }
-
 ```
 
 ### 5-3. Error Codes
 
-| Error Codes  | Description                                   |
-|---------------------------------------|-----------------------------------------------|
-| `not Exist Submission ID`           | `submission_id` is missing                   |
-| `not Exist Submission Data`         | No data found for the specified `submission_id` |
-| `not Exist Project Data`            | Project information is missing               |
-| `delete Process FAIL`               | Deletion process failed (e.g., Meta Face ID deletion failure) |
+| Error Codes                 | Description                                                   |
+| --------------------------- | ------------------------------------------------------------- |
+| `not Exist Submission ID`   | `submission_id` is missing                                    |
+| `not Exist Submission Data` | No data found for the specified `submission_id`               |
+| `not Exist Project Data`    | Project information is missing                                |
+| `delete Process FAIL`       | Deletion process failed (e.g., Meta Face ID deletion failure) |

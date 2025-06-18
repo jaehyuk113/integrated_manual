@@ -1,0 +1,146 @@
+---
+title: "PARTIAL-DELETE/Submission"
+description: "This API allows you to selectively delete specific fields from a single submission data. Unlike complete deletion, you can preserve necessary data while removing only sensitive information, enabling flexible use according to your company's internal policies."
+---
+
+<Warning>
+  Notes
+
+  - Deleted specific fields cannot be restored.
+  - Use this API with caution. Be careful not to accidentally delete important data.
+  - When a partial delete is applied to a parameters which are targets for duplicates and deleted, the duplicate check is not applied to that submission.
+    - Duplicate checks are not applied to incoming data that is identical to the state before the partial delete was applied.
+</Warning>
+
+## 1. Endpoint
+
+```text PARTIAL-DELETE/Submission
+DELETE https://rest-api.argosidentity.com/v3/submission/partial?submission_id={submission_id}
+```
+
+## 2. Authentication
+
+Include the API key in the x-api-key header:
+
+```text x-api-key
+x-api-key: {yourAPIKey}
+```
+
+## 3. Request Parameter
+
+<ResponseField name="submissionId" type="string" required="true">
+  Unique ID of the submission to be deleted
+</ResponseField>
+
+<ResponseField name="fields" type="string" required="true">
+  Use the fields parameter to selectively delete specific types of data.
+  Types of the fields parameter:
+
+  - `id_image`
+  - `selfie_image`
+  - `data`
+  - `OCR_raw`(\*case-sensitive)
+  - `ocr`
+  - `review`
+  - `applicant_id`
+  - `email`
+  - `userid`
+  - `additional_list`
+  - `duplicated_information`
+  - `custom_duplicated_information`
+  - `injection_action`
+</ResponseField>
+
+<ResponseField name="data_fields" type="string">
+  Use the data_fields parameter to selectively delete specific types of personal information within the data field. \*\*This parameter only takes effect if the \*\*`data`\*\*field is specified in the \*\* `fields`**parameter.**  If data_fields is provided but left empty, all subfields under data will be deleted.
+
+  Types of the data_fields parameter:
+
+  - `age_group`
+  - `first_name`
+  - `last_name`
+  - `full_name`
+  - `name`
+  - `gender`
+  - `nationality`
+  - `date_of_birth`
+  - `address_city`
+  - `address_country`
+  - `address_state`
+  - `address_street`
+  - `address_street2`
+  - `address_zipcode`
+  - `address_globalCode`
+  - `address_compoundCode`
+  - `address_formatted`
+  - `address_input`
+  - `address_detail`
+  - `ip_address`
+  - `idcard_issuingCountry`
+  - `idcard_issueDate`
+  - `idcard_expireDate`
+  - `idType`
+  - `documentNumber`
+  - `identityNumber`
+  - `ssnNumber`
+  - `phoneNumber`
+  - `cf1`
+  - `cf2`
+  - `cf3`
+</ResponseField>
+
+<ResponseField name="admin_name" type="string">
+  Deleted the admin name
+</ResponseField>
+
+### 3-1. Data to be Deleted
+
+- parameters declared from **fields** and **data_fields**
+
+### 3-2. Data to be Retained
+
+- In submitted cases, parameters not declared in fields, as well as parameters not specified within data_fields (when data fields is declared), will not be deleted and will be retained.
+
+## 4. Request Example
+
+```curl PARTIAL-DELETE/Submission
+curl --location 'https://rest-api.argosidentity.com/v3/submission/partial?submission_id={submission_id}&fields=id_image,data&data_fields=gender,ip_address' \ --header 'x-api-key: {yourAPIKey}'
+```
+
+## 5. Response
+
+### 5-1. Success Response
+
+```result.json
+{
+	"message": "success",
+	"content": "Submission {submissionID} partially deleted successfully."
+}
+```
+
+### 5-2. Error Response
+
+If an error occurs, a 400 status code is returned along with details in the response body:
+
+```json error.json
+{
+    "errorCode": "not Exist Submission ID"
+}
+```
+
+### 5-3. Error Codes
+
+| **Error**                                                                                                   | **Description**                                                                                  |
+| :---------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------- |
+| `submission_id is required`                                                                                 | The required parameter `submission_id` is missing from the request.                              |
+| `fields parameter is required and cannot be empty`                                                          | The required parameter `fields` is missing or empty in the request.                              |
+| `fields must be a string`<br />`data_fields must be a string`                                               | The `fields` or `data_fields` parameter is not in string format.                                 |
+| `fields cannot be empty`                                                                                    | The `fields` parameter was provided but contains no values.                                      |
+| `invalid fields found in fields: field1, field2`<br />`invalid fields found in data_fields: field1, field2` | One or more invalid field names were included in `fields` or `data_fields`.                      |
+| `data_fields parameter is not allowed when fields does not include data`                                    | The `data_fields` parameter was provided, but `data` was not included in the `fields` parameter. |
+| `invalid format for fields: error message`                                                                  | The format of the `fields` parameter is invalid (see error message for details).                 |
+| `invalid format for data_fields: error message`                                                             | The format of the `data_fields` parameter is invalid (see error message for details).            |
+| `invalid API key for this project`                                                                          | The provided API key is not valid for the current project.                                       |
+| `not Exist Submission Data`                                                                                 | No data was found for the specified `submission_id`.                                             |
+| `not Exist Project Data`                                                                                    | No project data exists for the specified project.                                                |
+| `Internal server error`                                                                                     | A server-side error occurred during processing.                                                  |

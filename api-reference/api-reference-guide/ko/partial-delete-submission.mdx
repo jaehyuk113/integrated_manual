@@ -1,0 +1,146 @@
+---
+title: "PARTIAL-DELETE/Submission"
+description: "이 API를 사용하면 단일 제출 데이터(Submission)에서 특정 필드만 선택적으로 삭제할 수 있습니다. 전체 삭제와 달리, 필요한 데이터는 보존하면서 민감한 정보만 제거할 수 있어 고객사의 내부 정책에 맞춰 유연하게 활용할 수 있습니다."
+---
+
+<Warning>
+  주의사항
+
+  - 삭제된 특정 필드는 복원할 수 없습니다.
+  - 이 API를 사용할 때는 신중을 기해야 합니다. 실수로 중요한 데이터를 삭제하지 않도록 주의하세요.
+  - Partial Delete를 중복의 대상으로 보는 component에 적용하여 삭제 시, 해당 제출건에 대해서는 중복 체크가 적용되지 않습니다.
+    - Partial Delete 적용 전 상태와 동일한 데이터가 들어와도 중복 체크가 적용되지 않음.
+</Warning>
+
+## 1. 엔드포인트
+
+```text PARTIAL-DELETE/Submission
+DELETE https://rest-api.argosidentity.com/v3/submission/partial?submission_id={submission_id}
+```
+
+## 2. 인증
+
+`x-api-key` 헤더에 API 키를 포함시켜야 합니다:
+
+```text x-api-key
+x-api-key: {yourAPIKey}
+```
+
+## 3. 요청 파라미터
+
+<ResponseField name="submissionId" type="string" required="true">
+  삭제할 제출 건의 고유 ID
+</ResponseField>
+
+<ResponseField name="fields" type="string" required="false">
+  fields 파라미터를 사용하여 특정 데이터 유형을 선택적으로 삭제할 수 있습니다.
+  다음 옵션 중 하나를 사용하여 입력할 수 있습니다:
+
+  - `id_image`
+  - `selfie_image`
+  - `data`
+  - `OCR_raw` (\*대소문자 구분)
+  - `ocr`
+  - `review`
+  - `applicant_id`
+  - `email`
+  - `userid`
+  - `additional_list`
+  - `duplicated_information`
+  - `custom_duplicated_information`
+  - `injection_action`
+</ResponseField>
+
+<ResponseField name="data_fields" type="string">
+  data_fields 파라미터를 사용하여 data 내의 개인정보와 관련된 특정 데이터 유형을 선택적으로 삭제할 수 있습니다. `data_fields`\*\*는 \*\*`fields `\*\*파라미터에 \*\*`data `**필드가 선언되어 있을 경우만 작동**하며, 이 경우 data_fields 파라미터에 아무 값도 넣지 않으면, data 하위 데이터가 모두 삭제됩니다.
+
+  다음 옵션 중 하나를 사용하여 입력할 수 있습니다:
+
+  - `age_group`
+  - `first_name`
+  - `last_name`
+  - `full_name`
+  - `name`
+  - `gender`
+  - `nationality`
+  - `date_of_birth`
+  - `address_city`
+  - `address_country`
+  - `address_state`
+  - `address_street`
+  - `address_street2`
+  - `address_zipcode`
+  - `address_globalCode`
+  - `address_compoundCode`
+  - `address_formatted`
+  - `address_input`
+  - `address_detail`
+  - `ip_address`
+  - `idcard_issuingCountry`
+  - `idcard_issueDate`
+  - `idcard_expireDate`
+  - `idType`
+  - `documentNumber`
+  - `identityNumber`
+  - `ssnNumber`
+  - `phoneNumber`
+  - `cf1`
+  - `cf2`
+  - `cf3`
+</ResponseField>
+
+<ResponseField name="admin_name" type="string">
+  삭제를 진행한 관리자 이름
+</ResponseField>
+
+### 3-1. 삭제되는 데이터
+
+- **fields**와 **data_fields**에서 설정한 데이터
+
+### 3-2. 유지되는 데이터
+
+- 제출된 건에서, feilds에서 선언되지 않은 파라미터들과, data_fields의 특정 파라미터 지정 시, 지정되지 않은 파라미터들의 경우 삭제되지 않고 유지됩니다.
+
+## 4. 요청 예시
+
+```curl PARTIAL-DELETE/Submission
+curl --location 'https://rest-api.argosidentity.com/v3/submission/partial?submission_id={submission_id}&fields=id_image,data&data_fields=gender,ip_address' \ --header 'x-api-key: {yourAPIKey}'
+```
+
+## 5. 응답
+
+### 5-1. 성공 응답
+
+```result.json
+{
+	"message": "success",
+	"content": "Submission {submissionID} partially deleted successfully."
+}
+```
+
+### 5-2. 오류 응답
+
+오류가 발생하면 400 상태 코드와 함께 응답 본문에 세부 정보가 포함됩니다:
+
+```json error.json
+{
+    "errorCode": "not Exist Submission ID"
+}
+```
+
+### 5-3. 오류 코드
+
+| 오류 코드                                                                                                       | 설명                                                                        |
+| ----------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| `submission_id is required`                                                                                 | 요청 파라미터에 필수 값인 `submission_id`가 누락된 경우                                    |
+| `fields parameter is required and cannot be empty`                                                          | 요청 파라미터에 필수 값인 `fields`가 누락되거나 비어있는 경우                                    |
+| `fields must be a string`<br />`data_fields must be a string`                                               | `fields `파라미터가 문자열 형식이 아닌 경우<br /><br />`data_fields `파라미터가 문자열 형식이 아닌 경우 |
+| `fields cannot be empty`                                                                                    | `fields `파라미터가 비어있는 경우                                                    |
+| `invalid fields found in fields: field1, field2`<br />`invalid fields found in data_fields: field1, field2` | 유효하지 않은 필드가 `fields`에 포함된 경우<br /><br />유효하지 않은 필드가 `data_fields`에 포함된 경우 |
+| `data_fields parameter is not allowed when fields does not include data`                                    | `fields`에 `data`가 포함되지 않았는데 `data_fields `파라미터가 제공된 경우                    |
+| `invalid format for fields: error message`                                                                  | `fields` 파라미터의 형식이 잘못된 경우                                                 |
+| `invalid format for data_fields: error message`                                                             | `data_fields` 파라미터의 형식이 잘못된 경우                                            |
+| `invalid API key for this project`                                                                          | 제공된 API 키가 해당 프로젝트에 유효하지 않은 경우                                            |
+| `not Exist Submission Data`                                                                                 | 요청된 `submission_id`에 해당하는 데이터가 존재하지 않는 경우                                 |
+| `not Exist Project Data`                                                                                    | 해당 프로젝트 데이터가 존재하지 않는 경우                                                   |
+| `Internal server error`                                                                                     | 서버 내부 오류가 발생한 경우                                                          |

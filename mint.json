@@ -209,7 +209,8 @@
             "api-reference/api-reference-guide/en/get-submission/applicantId"
           ]
         },
-        "api-reference/api-reference-guide/en/delete-submission"
+        "api-reference/api-reference-guide/en/delete-submission",
+        "api-reference/api-reference-guide/en/partial-delete-submission"        
       ],
       "version": "English"
     },
@@ -360,7 +361,8 @@
             "api-reference/api-reference-guide/ko/get-submission/applicantId"
           ]
         },
-        "api-reference/api-reference-guide/ko/delete-submission"
+        "api-reference/api-reference-guide/ko/delete-submission",
+        "api-reference/api-reference-guide/ko/partial-delete-submission"        
       ],
       "version": "한국어"
     },

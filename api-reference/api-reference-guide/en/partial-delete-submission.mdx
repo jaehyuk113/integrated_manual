@@ -28,7 +28,7 @@ x-api-key: {yourAPIKey}
 
 ## 3. Request Parameter
 
-<ResponseField name="submissionId" type="string" required="true">
+<ResponseField name="submission_id" type="string" required="true">
   Unique ID of the submission to be deleted
 </ResponseField>
 
@@ -103,8 +103,16 @@ x-api-key: {yourAPIKey}
 
 ## 4. Request Example
 
+### Using fields only
+
 ```curl PARTIAL-DELETE/Submission
-curl --location 'https://rest-api.argosidentity.com/v3/submission/partial?submission_id={submission_id}&fields=id_image,data&data_fields=gender,ip_address' \ --header 'x-api-key: {yourAPIKey}'
+curl --location --request DELETE 'https://rest-api.argosidentity.com/v3/submission/partial?submission_id={submission_id}&fields=id_image' \ --header 'x-api-key: {yourAPIKey}'
+```
+
+### Using fields and data_fields
+
+```curl PARTIAL-DELETE/Submission
+curl --location --request DELETE 'https://rest-api.argosidentity.com/v3/submission/partial?submission_id={submission_id}&fields=data&data_fields=gender,ip_address' \ --header 'x-api-key: {yourAPIKey}'
 ```
 
 ## 5. Response
@@ -114,7 +122,7 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission/partial?submis
 ```result.json
 {
 	"message": "success",
-	"content": "Submission {submissionID} partially deleted successfully."
+	"content": "Submission {submission_id} partially deleted successfully."
 }
 ```
 

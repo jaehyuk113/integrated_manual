@@ -4,106 +4,91 @@ og:image: "/images/og-image.png"
 ---
 
 <div style={{ textAlign:"center",padding:"4rem 0",background:"radial-gradient(circle, rgba(0,100,255,1) 0%, rgba(0,212,255,1) 100%)" }}>
-<div style={{ display:"flex",flexDirection:"column",alignItems:"center",gap:"1rem" }}>
-<h1 style={{ fontSize:"2.5rem",fontWeight:"normal",display:"flex",alignItems:"center",gap:"0.5rem" }}>
-<span style={{ type:"mdxJsxAttributeValueExpression",value:"{color: '#f0f0f0'}",data:{estree:{type:"Program",start:490,end:508,body:[{type:"ExpressionStatement",expression:{type:"ObjectExpression",start:490,end:508,loc:{start:{line:25,column:18,offset:490},end:{line:25,column:36,offset:508}},properties:[{type:"Property",start:491,end:507,loc:{start:{line:25,column:19,offset:491},end:{line:25,column:35,offset:507}},method:false,shorthand:false,computed:false,key:{type:"Identifier",start:491,end:496,loc:{start:{line:25,column:19,offset:491},end:{line:25,column:24,offset:496}},name:"color",range:[491,496]},value:{type:"Literal",start:498,end:507,loc:{start:{line:25,column:26,offset:498},end:{line:25,column:35,offset:507}},value:"#f0f0f0",raw:"'#f0f0f0'",range:[498,507]},kind:"init",range:[491,507]}],range:[490,508]},start:490,end:508,loc:{start:{line:25,column:18,offset:490},end:{line:25,column:36,offset:508}},range:[490,508]}],sourceType:"module",comments:[],loc:{start:{line:25,column:18,offset:490},end:{line:25,column:36,offset:508}},range:[490,508]}} }}>
- Build with</span>
-
- <span style={{ type:"mdxJsxAttributeValueExpression",value:"{fontWeight: 'bold',color:'#f0f0f0'}",data:{estree:{type:"Program",start:542,end:578,body:[{type:"ExpressionStatement",expression:{type:"ObjectExpression",start:542,end:578,loc:{start:{line:25,column:70,offset:542},end:{line:25,column:106,offset:578}},properties:[{type:"Property",start:543,end:561,loc:{start:{line:25,column:71,offset:543},end:{line:25,column:89,offset:561}},method:false,shorthand:false,computed:false,key:{type:"Identifier",start:543,end:553,loc:{start:{line:25,column:71,offset:543},end:{line:25,column:81,offset:553}},name:"fontWeight",range:[543,553]},value:{type:"Literal",start:555,end:561,loc:{start:{line:25,column:83,offset:555},end:{line:25,column:89,offset:561}},value:"bold",raw:"'bold'",range:[555,561]},kind:"init",range:[543,561]},{type:"Property",start:562,end:577,loc:{start:{line:25,column:90,offset:562},end:{line:25,column:105,offset:577}},method:false,shorthand:false,computed:false,key:{type:"Identifier",start:562,end:567,loc:{start:{line:25,column:90,offset:562},end:{line:25,column:95,offset:567}},name:"color",range:[562,567]},value:{type:"Literal",start:568,end:577,loc:{start:{line:25,column:96,offset:568},end:{line:25,column:105,offset:577}},value:"#f0f0f0",raw:"'#f0f0f0'",range:[568,577]},kind:"init",range:[562,577]}],range:[542,578]},start:542,end:578,loc:{start:{line:25,column:70,offset:542},end:{line:25,column:106,offset:578}},range:[542,578]}],sourceType:"module",comments:[],loc:{start:{line:25,column:70,offset:542},end:{line:25,column:106,offset:578}},range:[542,578]}} }}>
-ARGOS Identity</span>
-
-</h1>
-
-<p style={{ fontSize:"1rem",color:"#f2f2f1",margin:"0" }}>
-Discover how to get started with ID check and Verify.
-
-</p>
-
-</div>
-
+  <div style={{ display:"flex",flexDirection:"column",alignItems:"center",gap:"1rem" }}>
+    <h1 style={{ fontSize:"2.5rem",fontWeight:"normal",display:"flex",alignItems:"center",gap:"0.5rem" }}>
+      <span style={{ color: '#f0f0f0' }}>Build with</span>
+      <span style={{ fontWeight: 'bold',color:'#f0f0f0' }}>ARGOS Identity</span>
+    </h1>
+    <p style={{ fontSize:"1rem",color:"#f2f2f1",margin:"0" }}>
+      Discover how to get started with ID check and Verify.
+    </p>
+  </div>
 </div>
 
 <div style={{ marginTop:"6rem",marginBottom:"8rem",maxWidth:"70rem",marginLeft:"auto",marginRight:"auto",paddingLeft:"1.25rem",paddingRight:"1.25rem" }}>
-<div className="block text-black dark:text-white" style={{ textAlign:"center",fontSize:"24px",fontWeight:"600",marginBottom:"3rem",marginTop:"-1rem" }}>
-<span className="block">
-<span className="text-primary">
-ID check </span>
 
-is a powerful and flexible all-in-one identity verification solution. It provides all the tools you need for accurate identity verification and enhanced security in one place.
+  <div className="block text-black dark:text-white" style={{ textAlign:"center",fontSize:"24px",fontWeight:"600",marginBottom:"3rem",marginTop:"-1rem" }}>
+    <span className="block">
+      <span className="text-primary">ID check </span>
+      is a powerful and flexible all-in-one identity verification solution. It provides all the tools you need for accurate identity verification and enhanced security in one place.
+    </span>
+  </div>
 
-</span>
+  <CardGroup cols={4}>
+    <Card title="Getting Started" icon="book-open" href="/getting-started/en/introduction">
+      Learn how to quickly start and integrate the ID check service.
+    </Card>
+    <Card title="API Reference" icon="code" href="/api-reference/api-reference-guide/en/overview">
+      Implement ID check features easily with detailed API documentation.
+    </Card>
+    <Card title="Webhook Events" icon="webhook" href="/webhooks/en/overview">
+      Automate your ID verification process with real-time notifications.
+    </Card>
+    <Card title="Security" icon="grid-round" iconType="solid" href="/getting-started/en/encrypt-and-decrypt-data/overview">
+      Apply encryption and decryption techniques to secure your data.
+    </Card>
+    <Card title="Recommended Browsers and Devices" icon="browser" href="/getting-started/en/recommended-browsers-and-devices">
+      Ensure the best user experience by setting up the optimal environment.
+    </Card>
+    <Card title="Data Structure Guide" icon="database" href="/api-reference/api-reference-guide/en/supported-id-types-alpha-3-country-codes">
+      Learn about data formats and structures needed for API interaction.
+    </Card>
+    <Card title="Changelog" icon="sparkles" href="/changelog/en/idcheck/overview">
+      Stay updated with the latest changes and updates.
+    </Card>
+  </CardGroup>
 
-</div>
+  <div className="block text-black dark:text-white" style={{ textAlign:"center",fontSize:"24px",fontWeight:"600",marginBottom:"3rem",marginTop:"4rem" }}>
+    <span className="block">
+      <span className="text-primary">Verify </span>
+      offers independent modules like building blocks. Select only the features you need, such as document data extraction, face ID, and global ID recognition, to create a customized identity verification process.
+    </span>
+  </div>
 
-<CardGroup cols={4}>
-  <Card title="Getting Started" icon="book-open" href="/getting-started/en/introduction">
-    Learn how to quickly start and integrate the ID check service.
-  </Card>
-  <Card title="API Reference" icon="code" href="/api-reference/api-reference-guide/en/overview">
-    Implement ID check features easily with detailed API documentation.
-  </Card>
-  <Card title="Webhook Events" icon="webhook" href="/webhooks/en/overview">
-    Automate your ID verification process with real-time notifications.
-  </Card>
-  <Card title="Security" icon="grid-round" iconType="solid" href="/getting-started/en/encrypt-and-decrypt-data/overview">
-    Apply encryption and decryption techniques to secure your data.
-  </Card>
-  <Card title="Recommended Browsers and Devices" icon="browser" href="/getting-started/en/recommended-browsers-and-devices">
-    Ensure the best user experience by setting up the optimal environment.
-  </Card>
-  <Card title="Data Structure Guide" icon="database" href="/api-reference/api-reference-guide/en/supported-id-types-alpha-3-country-codes">
-    Learn about data formats and structures needed for API interaction.
-  </Card>
-  <Card title="Changelog" icon="sparkles" href="/changelog/en/idcheck/overview">
-    Stay updated with the latest changes and updates.
-  </Card>
-</CardGroup>
-
-<div className="block text-black dark:text-white" style={{ textAlign:"center",fontSize:"24px",fontWeight:"600",marginBottom:"3rem",marginTop:"4rem" }}>
-<span className="block">
-<span className="text-primary">
-Verify </span>
-
-offers independent modules like building blocks. Select only the features you need, such as document data extraction, face ID, and global ID recognition, to create a customized identity verification process.
-
-</span>
-
-</div>
-
-<CardGroup cols={4}>
-  <Card title="Getting Started" icon="book-open" href="https://dev.argosidentity.com/verify/getting-started">
-    Learn how to quickly start and use the Verify service.
-  </Card>
-  <Card title="Textify" icon="file-contract" href="https://dev.argosidentity.com/verify/textify/introduction">
-    Digitize various documents quickly and easily. Supports templates for business registration, invoices, medical records, and more.
-  </Card>
-  <Card title="Face ID" icon="face-viewfinder" href="https://dev.argosidentity.com/face-id/face-id-1/introduction-5">
-    Manage and search face data effortlessly, providing robust identity verification and authentication features.
-  </Card>
-  <Card title="Global ID Recognition" icon="address-card" iconType="solid" href="https://dev.argosidentity.com/verify-id/global-id-recognition-api/global-id-recognition-api-1">
-    Experience advanced OCR solutions that automatically verify and extract data from ID documents worldwide.
-  </Card>
-  <Card title="ID Liveness" icon="wave-pulse" href="https://dev.argosidentity.com/verify-id/id-liveness/id-liveness-api-1">
-    Detect tampering in ID images to ensure document reliability.
-  </Card>
-  <Card title="Face Compare" icon="code-compare" href="https://dev.argosidentity.com/verify-id/face-compare/face-compare-api-1">
-    Compare two facial images to verify identity with high accuracy.
-  </Card>
-  <Card title="Face Liveness" icon="image-portrait" href="https://dev.argosidentity.com/verify-id/face-liveness/face-liveness-api">
-    Verifies whether the face image is captured from a live person, ensuring the authenticity of the identity verification process.
-  </Card>
-  <Card title="Text Verifier" icon="text-size" href="https://dev.argosidentity.com/verifier/text-verifier/text-verifier-api">
-    Compare text to verify content similarity, useful for fraud prevention.
-  </Card>
-  <Card title="Image Verifier" icon="images" href="https://dev.argosidentity.com/verifier/image-verifier/image-verifier-api">
-    Assess the similarity between two images for applications requiring visual verification.
-  </Card>
-  <Card title="Validate Curp" icon="hashtag" href="https://app.theneo.io/argosidentity/verifier/curp-verifier-2/validate-curp-api">
-    Verify the CURP number on Mexican ID with the Mexican government database (RENAPO).
-  </Card>
-  <Card title="Changelog" icon="sparkles" href="/changelog/en/verify/overview">
-    Stay updated with the latest changes and updates.
-  </Card>
-</CardGroup>
+  <CardGroup cols={4}>
+    <Card title="Getting Started" icon="book-open" href="https://dev.argosidentity.com/verify/getting-started">
+      Learn how to quickly start and use the Verify service.
+    </Card>
+    <Card title="Textify" icon="file-contract" href="https://dev.argosidentity.com/verify/textify/introduction">
+      Digitize various documents quickly and easily. Supports templates for business registration, invoices, medical records, and more.
+    </Card>
+    <Card title="Face ID" icon="face-viewfinder" href="https://dev.argosidentity.com/face-id/face-id-1/introduction-5">
+      Manage and search face data effortlessly, providing robust identity verification and authentication features.
+    </Card>
+    <Card title="Global ID Recognition" icon="address-card" iconType="solid" href="https://dev.argosidentity.com/verify-id/global-id-recognition-api/global-id-recognition-api-1">
+      Experience advanced OCR solutions that automatically verify and extract data from ID documents worldwide.
+    </Card>
+    <Card title="ID Liveness" icon="wave-pulse" href="https://dev.argosidentity.com/verify-id/id-liveness/id-liveness-api-1">
+      Detect tampering in ID images to ensure document reliability.
+    </Card>
+    <Card title="Face Compare" icon="code-compare" href="https://dev.argosidentity.com/verify-id/face-compare/face-compare-api-1">
+      Compare two facial images to verify identity with high accuracy.
+    </Card>
+    <Card title="Face Liveness" icon="image-portrait" href="https://dev.argosidentity.com/verify-id/face-liveness/face-liveness-api">
+      Verifies whether the face image is captured from a live person, ensuring the authenticity of the identity verification process.
+    </Card>
+    <Card title="Text Verifier" icon="text-size" href="https://dev.argosidentity.com/verifier/text-verifier/text-verifier-api">
+      Compare text to verify content similarity, useful for fraud prevention.
+    </Card>
+    <Card title="Image Verifier" icon="images" href="https://dev.argosidentity.com/verifier/image-verifier/image-verifier-api">
+      Assess the similarity between two images for applications requiring visual verification.
+    </Card>
+    <Card title="Validate Curp" icon="hashtag" href="https://app.theneo.io/argosidentity/verifier/curp-verifier-2/validate-curp-api">
+      Verify the CURP number on Mexican ID with the Mexican government database (RENAPO).
+    </Card>
+    <Card title="Changelog" icon="sparkles" href="/changelog/en/verify/overview">
+      Stay updated with the latest changes and updates.
+    </Card>
+  </CardGroup>
 
 </div>

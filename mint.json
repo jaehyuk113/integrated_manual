@@ -164,9 +164,15 @@
       "pages": [
          "getting-started/en/introduction",
          "getting-started/en/recommended-browsers-and-devices",
-         "getting-started/en/liveform-languages",
+         "getting-started/en/liveform-languages"
+      ],
+      "version": "English"
+    },
+    {
+      "group": "MCP",
+      "pages": [
          "getting-started/en/mcp",
-         "getting-started/en/cursor_mcp"
+         "getting-started/en/cursor-mcp"
       ],
       "version": "English"
     },
@@ -317,7 +323,13 @@
       "pages": [
          "getting-started/ko/introduction",
          "getting-started/ko/recommended-browsers-and-devices",
-         "getting-started/ko/liveform-languages",
+         "getting-started/ko/liveform-languages"
+      ],
+      "version": "한국어"
+    },
+    {
+      "group": "MCP",
+      "pages": [
          "getting-started/ko/mcp",
          "getting-started/ko/cursor-mcp"
       ],

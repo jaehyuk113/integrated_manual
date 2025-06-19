@@ -169,14 +169,6 @@
       "version": "English"
     },
     {
-      "group": "Developer's Guide MCP",
-      "pages": [
-         "getting-started/en/Developer-Guide-MCP/mcp",
-         "getting-started/en/Developer-Guide-MCP/cursor_mcp"
-      ],
-      "version": "English"
-    },
-    {
       "group": "Liveform URL",
       "pages": [
         "getting-started/en/liveform-url/data-injection-with-custom-fields",
@@ -189,6 +181,14 @@
       "group": "Security",
       "pages": [
           "getting-started/en/encrypt-and-decrypt-data/overview"
+      ],
+      "version": "English"
+    },
+    {
+      "group": "Developer's Guide MCP",
+      "pages": [
+         "getting-started/en/Developer-Guide-MCP/mcp",
+         "getting-started/en/Developer-Guide-MCP/cursor_mcp"
       ],
       "version": "English"
     },
@@ -328,14 +328,6 @@
       "version": "한국어"
     },
     {
-      "group": "개발자 문서 MCP",
-      "pages": [
-         "getting-started/ko/Developer-Guide-MCP/mcp",
-         "getting-started/ko/Developer-Guide-MCP/cursor-mcp"
-      ],
-      "version": "한국어"
-    },
-    {
       "group": "라이브폼 URL",
       "pages": [
         "getting-started/ko/liveform-url/data-injection-with-custom-fields",
@@ -348,6 +340,14 @@
       "group": "보안",
       "pages": [
           "getting-started/ko/encrypt-and-decrypt-data/overview"
+      ],
+      "version": "한국어"
+    },
+    {
+      "group": "개발자 문서 MCP",
+      "pages": [
+         "getting-started/ko/Developer-Guide-MCP/mcp",
+         "getting-started/ko/Developer-Guide-MCP/cursor-mcp"
       ],
       "version": "한국어"
     },

@@ -171,8 +171,8 @@
     {
       "group": "MCP",
       "pages": [
-         "getting-started/en/mcp",
-         "getting-started/en/cursor-mcp"
+         "getting-started/en/Developer-Guide-MCP/mcp",
+         "getting-started/en/Developer-Guide-MCP/cursor-mcp"
       ],
       "version": "English"
     },
@@ -330,8 +330,8 @@
     {
       "group": "MCP",
       "pages": [
-         "getting-started/ko/mcp",
-         "getting-started/ko/cursor-mcp"
+         "getting-started/ko/Developer-Guide-MCP/mcp",
+         "getting-started/ko/Developer-Guide-MCP/cursor-mcp"
       ],
       "version": "한국어"
     },

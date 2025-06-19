@@ -1,0 +1,52 @@
+---
+title: "ARGOS Identity (Dev Guide) MCP를 Cursor에서 활용하기"
+description: "ARGOS Identity MCP를 Cursor에 연결하는 방법을 안내합니다."
+---
+
+## 1. 준비
+
+- Node.js: 버전 16 이상
+- CURSOR IDE: 최신 버전 (권장 버전 0.47.8 이상)
+
+이미 설치되어 있는지 확인하세요:
+
+```bash
+node --version
+
+npm --version
+```
+
+## 2. Terminal에서 MCP 설치
+
+최초 1회만 아래 명령어를 사용해 MCP 서버를 설치합니다.
+
+```bash
+npx mint-mcp add argosidentity
+```
+
+어떤 플랫폼에 설치할 것인지 선택하라는 메시지가 표시됩니다.
+
+![image.png](/images/image.png)
+
+Cursor를 선택하면 `.mcp`가 어디에 설치되었는지 경로가 표시됩니다.
+
+![스크린샷2025 06 19182140 Pn](/images/스크린샷2025-06-19182140.png)
+
+_\*Claude Desktop에 설치하려는 경우, 별도의 Claude 개발자 가이드를 참고하세요._
+
+설치 후, Cursor IDE에서 ARGOS Identity MCP가 활성화되어 있는지 아래 경로에서 확인하세요:
+
+<img
+  src="/images/스크린샷2025-06-19182535.png"
+  alt="스크린샷2025 06 19182535 Pn"
+  title="스크린샷2025 06 19182535 Pn"
+  className="mx-auto"
+  style={{ width:"67%" }}
+/>
+
+## 3. ARGOS Dev Guide MCP 사용 시작하기
+
+Cursor의 **New Chat** 창에서 직접 ARGOS 개발 문서 관련 질문을 할 수 있습니다.\
+아래는 실제 질문 및 응답 예시입니다:
+
+![스크린샷2025 06 19183216 Pn](/images/스크린샷2025-06-19183216.png)

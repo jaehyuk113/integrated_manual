@@ -1,0 +1,118 @@
+---
+title: "POST/REVIEW"
+description: "This API allows project administrators to review and update the status of pending KYC submissions. Project settings determine whether reviews are handled by clients or Argos Agents, providing flexible control over the review workflow."
+---
+
+<Note>
+  This API is particularly useful for project administrators who need to manually review pending KYC submissions based on their project configuration. When the reviewer is set to 'Client' in project settings, Argos Agents will not review these pending submissions.
+</Note>
+
+<Warning>
+  Only pending submissions can be reviewed using this API. Submissions that are already approved or rejected cannot be modified through this endpoint. Ensure that the admin email is registered in the dashboard with proper permissions for the project.
+</Warning>
+
+## 1. Endpoint
+
+```plaintext
+POST https://rest-api.argosidentity.com/v3/submission/review
+```
+
+## 2. Authentication
+
+Include the API key in the x-api-key header:
+
+```text x-api-key
+x-api-key: {yourAPIKey}
+```
+
+## 3. Request Body
+
+The request parameters should be in URL query format. Below are the field descriptions for each parameter:
+
+<ResponseField name="admin" type="string" required="true">
+  Admin account registered as an administrator in the project of the submission to be reviewed
+</ResponseField>
+
+<ResponseField name="submissionId" type="string" required="true">
+  Unique ID of the pending submission to be reviewed
+</ResponseField>
+
+<ResponseField name="status" type="string" required="true">
+  Status value to be changed: `approved` or `rejected`
+</ResponseField>
+
+<ResponseField name="rejectComment" type="string" required="semi-true">
+  Comment explaining the review decision (optional). Required when status is `rejected`
+</ResponseField>
+
+<ResponseField name="updateFields" type="string">
+  Data fields to be updated
+</ResponseField>
+
+
+## 4. Request Example
+
+```curl POST/Review
+curl --location 'https://rest-api.argosidentity.com/v3/submission/review' \
+--header 'Content-Type: application/json' \
+--header 'x-api-key: {yourAPIKey}' \
+--data-raw '{
+    "submissionId": "string",
+    "status": "string",
+    "rejectComment": "string",
+    "updateFields": {
+      "fullName": "string",
+      "gender": "string",
+      "issueDate": "string",
+      "expireDate": "string",
+      "birthDate": "string",
+      "idType": "string"
+    },
+    "admin": "string"
+  }
+```
+
+## 5. Response
+
+### 5-1. Success Response
+
+```json result.json
+{
+    "submissionId": "string",
+    "message": "Success to review submission.",
+    "finalStatus": "approved"
+}
+```
+
+### 5-2. Error Response
+
+If an error occurs, a `400` status code is returned with details in the response body:
+
+```json error.json
+{
+    "message": "Project not found."
+}
+```
+
+### 5-3. Error Codes
+
+| Error Type                    | Message                                                       | Description                                                |
+| ----------------------------- | ------------------------------------------------------------- | ---------------------------------------------------------- |
+| `Validation : project`        | Project not found.                                            | Invalid api-key or project data                           |
+| `Validation : project`        | admin is required.                                            | admin parameter not provided                               |
+| `Validation : project`        | Access denied. The admin is not registered in the project.   | admin not registered in project or invalid admin data     |
+| `Validation : submission`     | Submission Id is required.                                    | submission ID not provided                                 |
+| `Validation : submission`     | Invalid Submission Id.                                        | Invalid submission data                                    |
+| `Validation : submission`     | Only submissions in pending status can be reviewed           | submission is not in pending status                       |
+| `Validation : submission`     | This submission cannot be reviewed by client                 | submission not eligible for client review                 |
+| `Validation : request parameter` | Invalid status                                             | status must be 'approved' or 'rejected'                   |
+| `Validation : request parameter` | Invalid data format.                                       | updateFields format is incorrect (object required)        |
+| `Validation : request parameter` | Reject comment is required                                 | rejectedComment required when changing status to rejected |
+| `Validation : request parameter` | Invalid idType                                             | Invalid idType                                             |
+| `Validation : request parameter` | Invalid gender                                             | Invalid gender                                             |
+| `Validation : request parameter` | Invalid issueDate format. Use YYYY-MM-DD                  | Invalid date format (yyyy-mm-dd required)                 |
+| `Validation : request parameter` | Invalid expireDate format. Use YYYY-MM-DD                 | Invalid date format (yyyy-mm-dd required)                 |
+| `Validation : request parameter` | Invalid birthDate format. Use YYYY-MM-DD                  | Invalid date format (yyyy-mm-dd required)                 |
+| `Processing Error`            | Failed to process submission                                  | Undefined error occurred during data processing            |
+| `Processing Error`            | Error in submission review process.                           | Undefined error occurred during review processing          |
+

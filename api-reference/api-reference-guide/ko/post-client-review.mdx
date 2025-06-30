@@ -1,0 +1,119 @@
+---
+title: "POST/REVIEW"
+description: "이 API는 프로젝트 관리자가 pending 상태의 KYC 제출 건을 검토하고 상태를 업데이트할 수 있도록 합니다. 프로젝트 설정에 따라 고객사 또는 Argos Agent 중 검토자를 지정하여 유연한 검토 워크플로우를 제공합니다."
+---
+
+<Note>
+  이 API는 프로젝트 설정에 따라 pending 상태의 KYC 제출 건을 수동으로 검토해야 하는 프로젝트 관리자에게 특히 유용합니다. 프로젝트 설정에서 검토자가 'Client'로 설정된 경우, Argos Agent는 해당 pending 제출 건을 검토하지 않습니다.
+</Note>
+
+<Warning>
+  이 API를 사용해서는 pending 상태의 제출 건만 검토할 수 있습니다. 이미 승인되거나 거부된 제출 건은 이 엔드포인트를 통해 수정할 수 없습니다. 관리자 이메일이 대시보드에 등록되어 있고 해당 프로젝트에 대한 적절한 권한이 있는지 확인하세요.
+</Warning>
+
+## 1. 엔드포인트
+
+```plaintext
+POST https://rest-api.argosidentity.com/v3/submission/review
+```
+
+## 2. 인증
+
+`x-api-key` 헤더에 API 키를 포함시켜야 합니다:
+
+```text x-api-key
+x-api-key: {yourAPIKey}
+```
+
+## 3. 요청 본문
+
+요청 파라미터는 URL query 형식이어야 합니다. 각 파라미터에 대한 설명은 다음과 같습니다.
+
+<ResponseField name="admin" type="string" required="true">
+  검수 할 submission 의 프로젝트에 관리자로 등록된 admin 계정
+</ResponseField>
+
+<ResponseField name="submissionId" type="string" required="true">
+  검토할 pending 제출 건의 고유 ID
+</ResponseField>
+
+<ResponseField name="status" type="string" required="true">
+  변경하고자 하는 상태 값: `approved` 또는 `rejected`
+</ResponseField>
+
+<ResponseField name="rejectComment" type="string" required="semi-true">
+  검토 결정에 대한 설명 코멘트 (선택사항). status가 `rejected`인 경우 필수 값
+</ResponseField>
+
+<ResponseField name="updateFields" type="string">
+  변경할 데이터 필드
+</ResponseField>
+
+
+## 4. 요청 예시
+
+```curl POST/Review
+curl --location 'https://rest-api.argosidentity.com/v3/submission/review' \
+--header 'Content-Type: application/json' \
+--header 'x-api-key: {yourAPIKey}' \
+--data-raw '{
+    "submissionId": "string",
+    "status": "string",
+    "rejectComment": "string",
+    "updateFields": {
+      "fullName": "string",
+      "gender": "string",
+      "issueDate": "string",
+      "expireDate": "string",
+      "birthDate": "string",
+      "idType": "string"
+    },
+    "admin": "string"
+  }
+```
+
+
+## 5. 응답
+
+### 5-1. 성공 응답
+
+```json result.json
+{
+    "submissionId": "string",
+    "message": "Success to review submission.",
+    "finalStatus": "approved"
+}
+```
+
+### 5-2. 오류 응답 예시
+
+오류가 발생하면 400 상태 코드와 함께 응답 본문에 세부 정보가 포함됩니다:
+
+```json error.json
+{
+    "message": "Project not found."
+}
+```
+
+### 5-3. 오류 코드
+
+| 오류 유형                          | 메시지                                                            | 설명                                                       |
+| -------------------------------- | ---------------------------------------------------------------- | ---------------------------------------------------------- |
+| `Validation : project`           | Project not found.                                               | 유효하지 않은 api-key 또는 project 데이터                          |
+| `Validation : project`           | admin is required.                                               | admin 미제출                                                |
+| `Validation : project`           | Access denied. The admin is not registered in the project.      | project 에 등록되지 않은 admin 또는 유효하지 않은 admin 데이터           |
+| `Validation : submission`        | Submission Id is required.                                       | submission ID 미제출                                        |
+| `Validation : submission`        | Invalid Submission Id.                                           | 유효하지 않은 submission 데이터                                  |
+| `Validation : submission`        | Only submissions in pending status can be reviewed              | submission 이 pending 상태가 아님.                             |
+| `Validation : submission`        | This submission cannot be reviewed by client                     | client review 가능한 submission 아님                          |
+| `Validation : request parameter` | Invalid status                                                   | 변경할 status 가 approved 또는 rejected 가 아님                   |
+| `Validation : request parameter` | Invalid data format.                                             | updateFields 의 포맷이 올바르지 않음 (object 필수)                 |
+| `Validation : request parameter` | Reject comment is required                                       | rejected 로 상태 변경 시, rejectedComment 필수값 미제출             |
+| `Validation : request parameter` | Invalid idType                                                   | 유효하지 않은 idType                                          |
+| `Validation : request parameter` | Invalid gender                                                   | 유효하지 않은 gender                                          |
+| `Validation : request parameter` | Invalid issueDate format. Use YYYY-MM-DD                        | 유효하지 않은 date format (yyyy-mm-dd 필수)                     |
+| `Validation : request parameter` | Invalid expireDate format. Use YYYY-MM-DD                       | 유효하지 않은 date format (yyyy-mm-dd 필수)                     |
+| `Validation : request parameter` | Invalid birthDate format. Use YYYY-MM-DD                        | 유효하지 않은 date format (yyyy-mm-dd 필수)                     |
+| `Processing Error`               | Failed to process submission                                     | 데이터 프로세싱 중 정의되지 않은 에러 발생                              |
+| `Processing Error`               | Error in submission review process.                              | 검수 프로세싱 중 정의되지 않은 에러 발생                               |
+

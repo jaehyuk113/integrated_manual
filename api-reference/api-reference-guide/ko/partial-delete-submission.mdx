@@ -115,6 +115,13 @@ curl --location --request DELETE 'https://rest-api.argosidentity.com/v3/submissi
 curl --location --request DELETE 'https://rest-api.argosidentity.com/v3/submission/partial?submission_id={submission_id}&fields=data&data_fields=gender,ip_address' \ --header 'x-api-key: {yourAPIKey}'
 ```
 
+### 여러개의 fields와 data_fields 동시 사용시
+
+```curl PARTIAL-DELETE/Submission
+curl --location --request DELETE 'https://rest-api.argosidentity.com/v3/submission/partial?submission_id={submission_id}&fields=id_image,data,selfie_image&data_fields=gender,ip_address' \ --header 'x-api-key: {yourAPIKey}'
+```
+
+
 ## 5. 응답
 
 ### 5-1. 성공 응답

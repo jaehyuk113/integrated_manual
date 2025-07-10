@@ -66,7 +66,8 @@ curl --location --request DELETE 'https://rest-api.argosidentity.com/v3/submissi
 ```json result.json
 {
 	"message": "success",
-	"content": "Submission {submissionID} deleted successfully."
+	"content": "Submission {submissionID} deleted successfully.",
+	"statusCode": 200
 }
 ```
 
@@ -76,7 +77,8 @@ If an error occurs, a 400 status code is returned along with details in the resp
 
 ```json error.json
 {
-    "errorCode": "not Exist Submission ID"
+    "message": "not Exist Submission ID",
+    "statusCode": 400
 }
 ```
 

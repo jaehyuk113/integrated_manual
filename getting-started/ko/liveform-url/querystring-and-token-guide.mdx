@@ -148,8 +148,9 @@ tokenId는 Private Mode에서 Liveform 제출 시 사용되는  String 데이터
 ### 3-1. Token 검증 방식
 
 다음 조건 중 하나라도 해당되면 검증 실패(에러) 발생:
-시간 만료: 최초 사용으로부터 3분 경과
-유효한 제출 건 존재: KYC Status가 결정된 제출건 존재 (approved, rejected, pending)
+
+1. **시간 만료**: 최초 사용으로부터 3분 경과
+2. **유효한 제출 건 존재**: KYC Status가 결정된 제출건 존재 (approved, rejected, pending)
 
 <Warning>
   주의

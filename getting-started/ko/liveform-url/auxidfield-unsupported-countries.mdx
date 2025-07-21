@@ -1,0 +1,143 @@
+---
+mode: "default"
+title: "auxidField SMS 인증 미지원 국가 목록"
+description: "auxidField phoneNumber 기능에서 SMS 인증을 지원하지 않는 91개 국가의 상세 목록입니다."
+---
+
+# auxidField SMS 인증 미지원 국가 목록
+
+auxidField의 phoneNumber 기능은 현재 **91개 국가**에서 SMS 인증을 지원하지 않습니다.
+
+아래는 대륙별로 정리된 미지원 국가 목록입니다:
+
+<AccordionGroup>
+  <Accordion title="Asia (아시아) - 29개국" icon="globe-asia">
+    - Afghanistan (+93)
+    - Armenia (+374)
+    - China (+86)
+    - Georgia (+995)
+    - Hong Kong (+852)
+    - India (+91)
+    - Indonesia (+62)
+    - Iraq (+964)
+    - Jordan (+962)
+    - Kuwait (+965)
+    - Kyrgyzstan (+996)
+    - Lebanon (+961)
+    - Malaysia (+60)
+    - Maldives (+960)
+    - Myanmar (+95)
+    - Nepal (+977)
+    - Philippines (+63)
+    - Qatar (+974)
+    - Russia/Kazakhstan (+7)
+    - Saudi Arabia (+966)
+    - Singapore (+65)
+    - Syria (+963)
+    - Taiwan (+886)
+    - Thailand (+66)
+    - Turkiye (+90)
+    - United Arab Emirates (+971)
+    - Uzbekistan (+998)
+    - Vietnam (+84)
+    - Yemen (+967)
+  </Accordion>
+  
+  <Accordion title="Europe (유럽) - 18개국" icon="globe-europe">
+    - Albania (+355)
+    - Austria (+43)
+    - Belarus (+375)
+    - Bosnia and Herzegovina (+387)
+    - Cyprus (+357)
+    - Czech Republic (+420)
+    - Finland/Aland Islands (+358)
+    - France (+33)
+    - Greece (+30)
+    - Italy (+39)
+    - Montenegro (+382)
+    - Poland (+48)
+    - Republic of North Macedonia (+389)
+    - Romania (+40)
+    - Serbia (+381)
+    - Slovakia (+421)
+    - Ukraine (+380)
+    - United Kingdom (+44)
+  </Accordion>
+  
+  <Accordion title="North America/Caribbean (북미/카리브해) - 9개국" icon="globe-americas">
+    - Bahamas (+1242)
+    - Cuba (+53)
+    - Dominican Republic (+1829)
+    - Dominican Republic (+1849)
+    - Dominican Republic (+1809201)
+    - Dominican Republic (+1809)
+    - El Salvador (+503)
+    - Nicaragua (+505)
+    - Trinidad and Tobago (+1868)
+  </Accordion>
+  
+  <Accordion title="South America (남미) - 6개국" icon="globe-americas">
+    - Bolivia (+591)
+    - Brazil (+55)
+    - Paraguay (+595)
+    - Peru (+51)
+    - Uruguay (+598)
+    - Venezuela (+58)
+  </Accordion>
+  
+  <Accordion title="Africa (아프리카) - 28개국" icon="globe-africa">
+    - Benin (+229)
+    - Botswana (+267)
+    - Cameroon (+237)
+    - Cape Verde (+238)
+    - Chad (+235)
+    - Congo (+242)
+    - Egypt (+20)
+    - Ethiopia (+251)
+    - Ghana (+233)
+    - Guinea (+224)
+    - Guinea-Bissau (+245)
+    - Ivory Coast (+225)
+    - Kenya (+254)
+    - Lesotho (+266)
+    - Liberia (+231)
+    - Libya (+218)
+    - Malawi (+265)
+    - Morocco/Western Sahara (+212)
+    - Mozambique (+258)
+    - Reunion/Mayotte (+262)
+    - Rwanda (+250)
+    - Sierra Leone (+232)
+    - South Africa (+27)
+    - South Sudan (+211)
+    - Sudan (+249)
+    - Swaziland (+268)
+    - Tanzania (+255)
+    - Zambia (+260)
+  </Accordion>
+  
+  <Accordion title="Oceania (오세아니아) - 1개국" icon="globe">
+    - New Zealand (+64)
+  </Accordion>
+</AccordionGroup>
+
+---
+# Use-case: SMS Verification을 적용하고 싶으나, 일부 User의 국가가 지원되지 않는 경우
+- Admin은 querystring 옵션을 통해, 다음의 작업을 적용할 수 있습니다.
+- user가 한국과 홍콩인 경우(한국은 지원, 홍콩은 미지원)
+- ip 주소를 기반으로 고객의 ip가 한국인 경우, Liveform-url에 "auxidField": "phoneNumber" 적용한 url로 유도.
+- ip 주소를 기반으로 고객의 ip가 홍콩 경우, "auxidField": "phoneNumber"를 미적용한 url로 유도.
+
+
+<Note>
+  이 목록은 현재 기준이며, 향후 고객 지원을 통해 지원 국가가 확대될 예정입니다.
+  지원되지 않는 국가의 전화번호를 사용하여 auxidField를 설정할 경우 SMS 인증이 정상적으로 작동하지 않을 수 있습니다.
+  지원되지 않는 국가의 전화번호를 사용이 필요하시면, 다음 링크를 통해 요청해주시기 바랍니다.
+  - https://tally.so/r/nGRQ9e
+</Note>
+
+
+
+## 관련 문서
+- [쿼리 스트링 및 토큰 가이드](/getting-started/ko/liveform-url/querystring-and-token-guide)
+- [데이터 암호화 및 복호화](/getting-started/ko/encrypt-and-decrypt-data/overview) 

@@ -172,7 +172,13 @@
       "group": "Liveform URL",
       "pages": [
         "getting-started/en/liveform-url/data-injection-with-custom-fields",
-        "getting-started/en/liveform-url/querystring-and-token-guide",
+        {
+          "group": "Query String and Token",
+          "pages": [
+            "getting-started/en/liveform-url/querystring-and-token-guide",
+            "getting-started/en/liveform-url/auxidfield-unsupported-countries"
+          ]
+        },
         "getting-started/en/liveform-url/return-url-guide"
       ],
       "version": "English"
@@ -332,7 +338,13 @@
       "group": "라이브폼 URL",
       "pages": [
         "getting-started/ko/liveform-url/data-injection-with-custom-fields",
-        "getting-started/ko/liveform-url/querystring-and-token-guide",
+        {
+          "group": "쿼리 스트링 및 토큰",
+          "pages": [
+            "getting-started/ko/liveform-url/querystring-and-token-guide",
+            "getting-started/ko/liveform-url/auxidfield-unsupported-countries"
+          ]
+        },
         "getting-started/ko/liveform-url/return-url-guide"
       ],
       "version": "한국어"

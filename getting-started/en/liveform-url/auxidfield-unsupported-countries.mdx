@@ -1,0 +1,141 @@
+---
+mode: "default"
+title: "auxidField SMS Verification Unsupported Countries"
+description: "Complete list of 91 countries where SMS verification for auxidField phoneNumber feature is not supported."
+---
+
+# auxidField SMS Verification Unsupported Countries
+
+The auxidField phoneNumber feature currently does not support SMS verification in **91 countries**.
+
+Below is the list of unsupported countries organized by continent:
+
+<AccordionGroup>
+  <Accordion title="Asia - 29 Countries" icon="globe-asia">
+    - Afghanistan (+93)
+    - Armenia (+374)
+    - China (+86)
+    - Georgia (+995)
+    - Hong Kong (+852)
+    - India (+91)
+    - Indonesia (+62)
+    - Iraq (+964)
+    - Jordan (+962)
+    - Kuwait (+965)
+    - Kyrgyzstan (+996)
+    - Lebanon (+961)
+    - Malaysia (+60)
+    - Maldives (+960)
+    - Myanmar (+95)
+    - Nepal (+977)
+    - Philippines (+63)
+    - Qatar (+974)
+    - Russia/Kazakhstan (+7)
+    - Saudi Arabia (+966)
+    - Singapore (+65)
+    - Syria (+963)
+    - Taiwan (+886)
+    - Thailand (+66)
+    - Turkiye (+90)
+    - United Arab Emirates (+971)
+    - Uzbekistan (+998)
+    - Vietnam (+84)
+    - Yemen (+967)
+  </Accordion>
+  
+  <Accordion title="Europe - 18 Countries" icon="globe-europe">
+    - Albania (+355)
+    - Austria (+43)
+    - Belarus (+375)
+    - Bosnia and Herzegovina (+387)
+    - Cyprus (+357)
+    - Czech Republic (+420)
+    - Finland/Aland Islands (+358)
+    - France (+33)
+    - Greece (+30)
+    - Italy (+39)
+    - Montenegro (+382)
+    - Poland (+48)
+    - Republic of North Macedonia (+389)
+    - Romania (+40)
+    - Serbia (+381)
+    - Slovakia (+421)
+    - Ukraine (+380)
+    - United Kingdom (+44)
+  </Accordion>
+  
+  <Accordion title="North America/Caribbean - 9 Countries" icon="globe-americas">
+    - Bahamas (+1242)
+    - Cuba (+53)
+    - Dominican Republic (+1829)
+    - Dominican Republic (+1849)
+    - Dominican Republic (+1809201)
+    - Dominican Republic (+1809)
+    - El Salvador (+503)
+    - Nicaragua (+505)
+    - Trinidad and Tobago (+1868)
+  </Accordion>
+  
+  <Accordion title="South America - 6 Countries" icon="globe-americas">
+    - Bolivia (+591)
+    - Brazil (+55)
+    - Paraguay (+595)
+    - Peru (+51)
+    - Uruguay (+598)
+    - Venezuela (+58)
+  </Accordion>
+  
+  <Accordion title="Africa - 28 Countries" icon="globe-africa">
+    - Benin (+229)
+    - Botswana (+267)
+    - Cameroon (+237)
+    - Cape Verde (+238)
+    - Chad (+235)
+    - Congo (+242)
+    - Egypt (+20)
+    - Ethiopia (+251)
+    - Ghana (+233)
+    - Guinea (+224)
+    - Guinea-Bissau (+245)
+    - Ivory Coast (+225)
+    - Kenya (+254)
+    - Lesotho (+266)
+    - Liberia (+231)
+    - Libya (+218)
+    - Malawi (+265)
+    - Morocco/Western Sahara (+212)
+    - Mozambique (+258)
+    - Reunion/Mayotte (+262)
+    - Rwanda (+250)
+    - Sierra Leone (+232)
+    - South Africa (+27)
+    - South Sudan (+211)
+    - Sudan (+249)
+    - Swaziland (+268)
+    - Tanzania (+255)
+    - Zambia (+260)
+  </Accordion>
+  
+  <Accordion title="Oceania - 1 Country" icon="globe">
+    - New Zealand (+64)
+  </Accordion>
+</AccordionGroup>
+
+---
+# Use-case: When you want to apply SMS Verification but some users' countries are not supported
+- Admin can apply the following actions through querystring options.
+- When users are from Korea and Hong Kong (Korea is supported, Hong Kong is not supported)
+- If the customer's IP address is from Korea, redirect to Liveform-url with "auxidField": "phoneNumber" applied.
+- If the customer's IP address is from Hong Kong, redirect to url without "auxidField": "phoneNumber" applied.
+
+
+<Note>
+  This list is current as of now and support for additional countries is planned through future customer support.
+  If you configure auxidField with phone numbers from unsupported countries, SMS verification may not work properly.
+  If you need to use phone numbers from unsupported countries, please request through the following link:
+  - https://tally.so/r/wg946l
+</Note>
+
+## Related Documentation
+- [Query String and Token Guide](/getting-started/en/liveform-url/querystring-and-token-guide)
+- [Data Encryption and Decryption](/getting-started/en/encrypt-and-decrypt-data/overview) 

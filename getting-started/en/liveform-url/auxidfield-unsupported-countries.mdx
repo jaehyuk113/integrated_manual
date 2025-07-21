@@ -1,10 +1,10 @@
 ---
 mode: "default"
-title: "auxidField SMS Verification Unsupported Countries"
+title: "SMS Verification Unsupported Countries"
 description: "Complete list of 91 countries where SMS verification for auxidField phoneNumber feature is not supported."
 ---
 
-# auxidField SMS Verification Unsupported Countries
+# SMS Verification Unsupported Countries
 
 The auxidField phoneNumber feature currently does not support SMS verification in **91 countries**.
 
@@ -116,25 +116,26 @@ Below is the list of unsupported countries organized by continent:
     - Zambia (+260)
   </Accordion>
   
-  <Accordion title="Oceania - 1 Country" icon="globe">
+  <Accordion title="Oceania - 1 Country">
     - New Zealand (+64)
   </Accordion>
 </AccordionGroup>
 
 ---
-# Use-case: When you want to apply SMS Verification but some users' countries are not supported
+<Note>
+  This list is current as of now and support for additional countries is planned through future customer support.\
+  If you configure auxidField with phone numbers from unsupported countries, SMS verification may not work properly.\
+  If you need to use phone numbers from unsupported countries, please request through the following link:
+  - https://tally.so/r/wg946l
+</Note>
+
+## Use-case: When you want to apply SMS Verification but some users' countries are not supported
 - Admin can apply the following actions through querystring options.
 - When users are from Korea and Hong Kong (Korea is supported, Hong Kong is not supported)
 - If the customer's IP address is from Korea, redirect to Liveform-url with "auxidField": "phoneNumber" applied.
 - If the customer's IP address is from Hong Kong, redirect to url without "auxidField": "phoneNumber" applied.
 
 
-<Note>
-  This list is current as of now and support for additional countries is planned through future customer support.
-  If you configure auxidField with phone numbers from unsupported countries, SMS verification may not work properly.
-  If you need to use phone numbers from unsupported countries, please request through the following link:
-  - https://tally.so/r/wg946l
-</Note>
 
 ## Related Documentation
 - [Query String and Token Guide](/getting-started/en/liveform-url/querystring-and-token-guide)

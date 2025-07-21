@@ -1,10 +1,8 @@
 ---
 mode: "default"
-title: "auxidField SMS 인증 미지원 국가 목록"
+title: "SMS 인증 미지원 국가 목록"
 description: "auxidField phoneNumber 기능에서 SMS 인증을 지원하지 않는 91개 국가의 상세 목록입니다."
 ---
-
-# auxidField SMS 인증 미지원 국가 목록
 
 auxidField의 phoneNumber 기능은 현재 **91개 국가**에서 SMS 인증을 지원하지 않습니다.
 
@@ -122,19 +120,18 @@ auxidField의 phoneNumber 기능은 현재 **91개 국가**에서 SMS 인증을 
 </AccordionGroup>
 
 ---
-# Use-case: SMS Verification을 적용하고 싶으나, 일부 User의 국가가 지원되지 않는 경우
+<Note>
+  이 목록은 현재 기준이며, 향후 고객 지원을 통해 지원 국가가 확대될 예정입니다.\
+  지원되지 않는 국가의 전화번호를 사용하여 auxidField를 설정할 경우 SMS 인증이 정상적으로 작동하지 않을 수 있습니다.\
+  지원되지 않는 국가의 전화번호를 사용이 필요하시면, 다음 링크를 통해 요청해주시기 바랍니다.
+  - https://tally.so/r/nGRQ9e
+</Note>
+
+## Use-case: SMS Verification을 적용하고 싶으나, 일부 User의 국가가 지원되지 않는 경우
 - Admin은 querystring 옵션을 통해, 다음의 작업을 적용할 수 있습니다.
 - user가 한국과 홍콩인 경우(한국은 지원, 홍콩은 미지원)
 - ip 주소를 기반으로 고객의 ip가 한국인 경우, Liveform-url에 "auxidField": "phoneNumber" 적용한 url로 유도.
 - ip 주소를 기반으로 고객의 ip가 홍콩 경우, "auxidField": "phoneNumber"를 미적용한 url로 유도.
-
-
-<Note>
-  이 목록은 현재 기준이며, 향후 고객 지원을 통해 지원 국가가 확대될 예정입니다.
-  지원되지 않는 국가의 전화번호를 사용하여 auxidField를 설정할 경우 SMS 인증이 정상적으로 작동하지 않을 수 있습니다.
-  지원되지 않는 국가의 전화번호를 사용이 필요하시면, 다음 링크를 통해 요청해주시기 바랍니다.
-  - https://tally.so/r/nGRQ9e
-</Note>
 
 
 

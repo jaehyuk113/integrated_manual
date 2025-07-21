@@ -29,7 +29,8 @@ description: "라이브폼의 QueryString 및 Token ID 옵션에 대한 종합 �
 | `cf1`                    | Yes         | Yes             | 사용자 정의 옵션 필드1                                                                                                                                                                                                                                                                                       |
 | `cf2`                    | Yes         | Yes             | 사용자 정의 옵션 필드2                                                                                                                                                                                                                                                                                       |
 | `cf3`                    | Yes         | Yes             | 사용자 정의 옵션 필드3                                                                                                                                                                                                                                                                                       |
-| `allowedCountries`       | Yes         | Yes             | 반드시 encrypted 로 암호화해서 사용해야 됩니다.  예시로 `'allowedCountries': 'USA,KOR'}` 값을 암호화하여 전달하면 United States (USA) 및 South Korea (KOR)만 허용됩니다.                                                                                                                                                                 |
+| `auxidField`             | Yes         | No              | 반드시 encrypted 로 암호화해서 사용해야 됩니다.  신분증 정보와 셀피 사진 이외에 보조적으로 검증이 필요한 신원 인증 정보가 필요한 경우 사용할 수 있습니다. 현재 phoneNumber가 구현되어 있으며 자세한 내용은 하단의 내용을 참조하세요. selectedIssuingCountry 및 selectedIdType과 동시에 적용할 수 없습니다. 추후 업데이트를 통해 변경될 예정입니다. |
+| `allowedCountries`       | Yes         | Yes             | 반드시 encrypted 로 암호화해서 사용해야 됩니다.  예시로 `{'allowedCountries': 'USA,KOR'}` 값을 암호화하여 전달하면 United States (USA) 및 South Korea (KOR)만 허용됩니다.                                                                                                                                                                 |
 | `knowledgeField`         | No          | Yes             | 반드시 encrypted 로 암호화해서 사용해야 됩니다.  Knowledge-based Form 에 노출시킬 필드를 정합니다. 지원하는 필드는 하단 매개변수 값 설정을 참조하세요.                                                                                                                                                                                                |
 | `knowledgePrefill`       | No          | Yes             | 반드시 encrypted 로 암호화해서 사용해야 됩니다.  필드에 값을 미리 입력할 수 있습니다. 각 필드 별 입력이 가능한 값은 하단 매개변수 값 설정을 참조하세요.                                                                                                                                                                                                       |
 | `allowedIdTypes`         | Yes         | No              | 반드시 encrypted 로 암호화해서 사용해야 됩니다.  신분증 ID 타입 선택지를 정할 수 있습니다. 각 필드 별 입력이 가능한 값은 하단 매개변수 값 설정을 참조하세요.                                                                                                                                                                                                   |
@@ -39,7 +40,7 @@ description: "라이브폼의 QueryString 및 Token ID 옵션에 대한 종합 �
 | `selectedIssuingCountry` | Yes         | Yes             | 반드시 encrypted로 암호화해서 사용해야 됩니다. 선택 시 사용자는 국가 선택 페이지를 건너뛸 수 있습니다. `allowedCountries`와 `selectedIdType`를 함께 사용할 수 있습니다. 또한 `allowedCountries`가 설정된 경우, `allowedCountries`에 포함되지 않은 국가는 사용할 수 없습니다. `blacklistCountries`와 동일한 국가는 함께 사용할 수 없습니다.                                                        |
 | `selectedIdType`         | Yes         | No              | 반드시 encrypted로 암호화해서 사용해야 됩니다. 선택 시 사용자는 신분증 타입 선택 페이지를 건너뛸 수 있습니다. `selectedIssuingCountry`와 함께 사용해야 합니다. `selectedIdType`을 단독으로 사용하면 오류가 발생합니다. 또한 **Universal mode**와 `selectedIdType`을 함께 사용하면 오류가 발생합니다; (예외 케이스: 국가 선택이 한국으로 되어있고 **Universal mode** 옵션이 활성화 되어 있으면, 신분증 선택 페이지가 유저에게 나타납니다.) |
 
-### 2-1-a. ID Type, Field 및 Knowledge-Based 관련 매개변수 값 설정
+### 2-1-a. ID Type, Field 및 Knowledge-Based, Auxiliary ID Field 관련 매개변수 값 설정
 
 <AccordionGroup>
   <Accordion title="[Knowledge-Based] knowledgeField 매개변수 값 설정" icon="lightbulb">
@@ -112,6 +113,11 @@ description: "라이브폼의 QueryString 및 Token ID 옵션에 대한 종합 �
 
       e.g. `{'selectedIdType': 'passport'}`
   </Accordion>
+  <Accordion title="[ID document] auxidField 매개변수 값 설정" icon="memo-pad">
+    - `phoneNumber` SMS기반 휴대폰 번호 인증
+
+      e.g. `{'auxidField': 'phoneNumber'}`
+  </Accordion>
 </AccordionGroup>
 
 모든 필드의 이름은 대소문자를 구분합니다.\
@@ -123,7 +129,7 @@ description: "라이브폼의 QueryString 및 Token ID 옵션에 대한 종합 �
 
 ### 2-1-b. Knowledge-Based 에서 국가 선택화면 건너뛰기
 
-`allowedCountries` 에 국가를 하나만 기입시 국가 선택화면을 건너뛸수 있습니다.\
+`allowedCountries` 에 국가를 하나만 기입시 국가 선택화면을 건너뛸 수 있습니다.\
 e.g. `{'allowedCountries': 'USA'}`
 
 <Note>
@@ -138,6 +144,28 @@ e.g. `{'allowedCountries': 'USA'}`
 
 - API 호출 시 KYC 제출자 식별을 위한 고유 유저 ID를 생성할 수 있습니다.
 - 최대 3개의 커스텀 필드(cf1, cf2, cf3)를 추가하여 추가 정보를 전송할 수 있습니다.
+
+### 2-3. 보조 신원 필드 [Auxiliary ID Field]
+신분증과 셀피 정보 이외에 검증이 필요한 신원 정보의 경우 (예: 휴대폰 번호) auxidField 옵션을 통해 수집 및 검증할 수 있습니다.
+지원하는 필드들 
+- 'phoneNumber': SMS기반 전화번호 인증
+  
+<Warning>
+  주의
+  -  반드시 encrypted 로 암호화해서 사용해야 됩니다.
+  -  상기의 매개변수 값은 대소문자를 동일하게 기재해야 동작합니다. 예를들면 phonenumber 로 기재시 동작하지 않습니다. 위의 값과 동일하게 phoneNumber로 기재하셔야 됩니다.
+  -  selectedIssuingCountry 및 selectedIdType과 동시에 적용할 수 없습니다. 추후 업데이트를 통해 변경될 예정입니다.
+  -  현재 91개의 국가가 지원되지 않고 있습니다. 
+</Warning>
+
+대륙별 지원되지 않는 국가 리스트 
+  - Asia: Afghanistan (+93), Armenia (+374), China (+86), Georgia (+995), Hong Kong (+852), India (+91), Indonesia (+62), Iraq (+964), Jordan (+962), Kuwait (+965), Kyrgyzstan (+996), Lebanon (+961), Malaysia (+60), Maldives (+960), Myanmar (+95), Nepal (+977), Philippines (+63), Qatar (+974), Russia/Kazakhstan (+7), Saudi Arabia (+966), Singapore (+65), Syria (+963), Taiwan (+886), Thailand (+66), Turkiye (+90), United Arab Emirates (+971), Uzbekistan (+998), Vietnam (+84), Yemen (+967)
+  - Europe: Albania (+355), Austria (+43), Belarus (+375), Bosnia and Herzegovina (+387), Cyprus (+357), Czech Republic (+420), Finland/Aland Islands (+358), France (+33), Greece (+30), Italy (+39), Montenegro (+382), Poland (+48), Republic of North Macedonia (+389), Romania (+40), Serbia (+381), Slovakia (+421), Ukraine (+380), United Kingdom (+44)
+  - North America/Caribbean: Bahamas (+1242), Cuba (+53), Dominican Republic (+1829), Dominican Republic (+1849), Dominican Republic (+1809201), Dominican Republic (+1809), El Salvador (+503), Nicaragua (+505), Trinidad and Tobago (+1868)
+  - South America: Bolivia (+591), Brazil (+55), Paraguay (+595), Peru (+51), Uruguay (+598), Venezuela (+58)
+  - Africa: Benin (+229), Botswana (+267), Cameroon (+237), Cape Verde (+238), Chad (+235), Congo (+242), Egypt (+20), Ethiopia (+251), Ghana (+233), Guinea (+224), Guinea-Bissau (+245), Ivory Coast (+225), Kenya (+254), Lesotho (+266), Liberia (+231), Libya (+218), Malawi (+265), Morocco/Western Sahara (+212), Mozambique (+258), Reunion/Mayotte (+262), Rwanda (+250), Sierra Leone (+232), South Africa (+27), South Sudan (+211), Sudan (+249), Swaziland (+268), Tanzania (+255), Zambia (+260)
+  - Oceania: New Zealand (+64)
+
 
 ## 3. Token ID 옵션
 

@@ -230,11 +230,31 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
                         "retryCode": [
                             "liveness_error"
                         ]
+                    }
+                ],
+                "retry": [
+                    {
+                        "type": "step1",
+                        "retryCnt": 1,
+                        "retryCode": "barcode_protocol_fail",
+                        "retryMessage": "Failed to read PDF417 Barcode."
                     },
-                }
-            ]
+                    {
+                        "type": "step2",
+                        "retryCnt": 2,
+                        "retryCode": "face_compare_underscore",
+                        "retryMessage": "The face doesn't match. Please retry with another face image."
+                    },
+                    {
+                        "type": "step2",
+                        "retryCnt": 3,
+                        "retryCode": "liveness_error",
+                        "retryMessage": "Liveness fail: Failed to detect face."
+                    }
+                ]
+            }
         }
-    }
+    ]
 }
 ```
 
@@ -412,6 +432,11 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
 | `kyc.attempts[i].liveness.score`         | Overall liveness score                                                                                                                                          | Float     | KYC Attempt Info       |
 | `kyc.attempts[i].liveness.probability`   | Probability value for liveness                                                                                                                                  | Float     | KYC Attempt Info       |
 | `kyc.attempts[i].liveness.quality`       | Quality score for liveness                                                                                                                                      | Float     | KYC Attempt Info       |
+| `kyc.retry`                              | Array containing retry information that caused retry conditions during KYC processing                                                                           | Array     | KYC Retry Info         |
+| `kyc.retry[i].type`                      | Step type that caused the retry (`step1`, `step2`)                                                                                                             | String    | KYC Retry Info         |
+| `kyc.retry[i].retryCnt`                  | Retry attempt number for this specific retry condition                                                                                                          | Number    | KYC Retry Info         |
+| `kyc.retry[i].retryCode`                 | Code identifying the specific retry condition that occurred                                                                                                     | String    | KYC Retry Info         |
+| `kyc.retry[i].retryMessage`              | Detailed message explaining the retry condition and recommended action                                                                                          | String    | KYC Retry Info         |
 | `aml`                                    | Object containing AML screening result data                                                                                                                     | Object    | AML Screening Info     |
 | `aml.raw_data`                           | Object containing raw AML screening results                                                                                                                     | Object    | AML Screening Info     |
 | `aml.risk_level_summary`                 | Summary of the risk level (`Not Screened`, `High`, `Medium`, `Low`)[Risk Level](/api-reference/api-reference-guide/en/aml-codes#)                               | Enum      | AML Screening Info     |

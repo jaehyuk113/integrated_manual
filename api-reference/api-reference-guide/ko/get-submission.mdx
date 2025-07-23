@@ -230,11 +230,31 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
                         "retryCode": [
                             "liveness_error"
                         ]
+                    }
+                ],
+                "retry": [
+                    {
+                        "type": "step1",
+                        "retryCnt": 1,
+                        "retryCode": "barcode_protocol_fail",
+                        "retryMessage": "Failed to read PDF417 Barcode."
                     },
-                }
-            ]
+                    {
+                        "type": "step2",
+                        "retryCnt": 2,
+                        "retryCode": "face_compare_underscore",
+                        "retryMessage": "The face doesn't match. Please retry with another face image."
+                    },
+                    {
+                        "type": "step2",
+                        "retryCnt": 3,
+                        "retryCode": "liveness_error",
+                        "retryMessage": "Liveness fail: Failed to detect face."
+                    }
+                ]
+            }
         }
-    }
+    ]
 }
 ```
 
@@ -413,6 +433,11 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
 | `kyc.attempts[i].liveness.score`         | 생체 인증의 전체 점수                                                                                                             | Float  | KYC 시도 정보          |
 | `kyc.attempts[i].liveness.probability`   | 생체 인증의 확률 값                                                                                                              | Float  | KYC 시도 정보          |
 | `kyc.attempts[i].liveness.quality`       | 생체 인증의 품질 점수                                                                                                             | Float  | KYC 시도 정보          |
+| `kyc.retry`                              | KYC 처리 중 재시도 조건을 일으킨 재시도 정보를 포함하는 배열                                                                                   | Array  | KYC 재시도 정보        |
+| `kyc.retry[i].type`                      | 재시도를 일으킨 단계 유형 (`step1`, `step2`)                                                                                        | String | KYC 재시도 정보        |
+| `kyc.retry[i].retryCnt`                  | 해당 재시도 조건에 대한 재시도 횟수                                                                                                    | Number | KYC 재시도 정보        |
+| `kyc.retry[i].retryCode`                 | 발생한 특정 재시도 조건을 식별하는 코드                                                                                                  | String | KYC 재시도 정보        |
+| `kyc.retry[i].retryMessage`              | 재시도 조건을 설명하고 권장 조치를 제공하는 상세 메시지                                                                                        | String | KYC 재시도 정보        |
 | `aml`                                    | AML 스크리닝 결과를 포함하는 객체                                                                                                     | Object | AML 스크리닝 정보        |
 | `aml.raw_data`                           | AML 스크리닝의 원시 데이터                                                                                                         | Object | AML 스크리닝 정보        |
 | `aml.risk_level_summary`                 | 리스크 수준 요약 (`Not Screened`, `High`, `Medium`, `Low`) [Risk Level](/api-reference/api-reference-guide/en/aml-codes#)       | Enum   | AML 스크리닝 정보        |

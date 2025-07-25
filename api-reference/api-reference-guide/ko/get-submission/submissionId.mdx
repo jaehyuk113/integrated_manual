@@ -43,6 +43,7 @@ curl --location --request GET 'https://rest-api.argosidentity.com/v3/submission?
     "Items": [
         {
             "data": {
+                "age_group": "N/A",
                 "first_name": "Ji Sung",
                 "last_name": "Park",
                 "full_name": "Ji Sung Park",
@@ -59,7 +60,53 @@ curl --location --request GET 'https://rest-api.argosidentity.com/v3/submission?
             "submission_id": "{submission_id}",
             "duplicated_information" : "{duplicated_information}",
             "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
+            "updated_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
+            "kyc_result_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
+            "reviewer": "system",
             "userid": "{userid}",
+            "project_options": {
+                "option_aml": true,
+                "option_addressData": false,
+                "policy_approvePeriod": 0,
+                "option_idNumber": true,
+                "policy_blacklistCountries": [],
+                "policy_acceptedID": [
+                    "government_id",
+                    "foreign_registrator",
+                    "passport",
+                    "drivers_license",
+                    "vehicle_registration_certificate",
+                    "aadhaar",
+                    "residence_permit",
+                    "pancard",
+                    "visa",
+                    "identification_card"
+                ],
+                "option_mask_documentNumber": false,
+                "webhook": {
+                    "createTime": "YYYY-MM-DDTHH:MM:SS.SSSZ",
+                    "members": [
+                        {
+                            "name": "{memberName}",
+                            "addDate": "YYYY-MM-DDTHH:MM:SS.SSSZ",
+                            "email": "{memberEmail}"
+                        }
+                    ],
+                    "url": "{webhookUrl}"
+                },
+                "option_mask_idNumber": false,
+                "option_documentNumber": true,
+                "webhookURL": "{webhookURL}",
+                "policy_ageLimit": 18,
+                "option_ai_only": true
+            },
+            "ocr": {
+                "gender": "male",
+                "typeOfPermit": "F-4",
+                "issueDate": "YYYY-MM-DD",
+                "birthDate": "YYYY-MM-DD",
+                "fullName": "Ji Sung Park"
+            },
             "kyc": {
                 "result": "rejected",
                 "comment": [
@@ -71,37 +118,135 @@ curl --location --request GET 'https://rest-api.argosidentity.com/v3/submission?
                 "attempts": [
                     {
                         "attemptCnt": 1,
-                        "retryMsg": [
-                            "Liveness fail: Face is too close to one or more borders. Please retry."
-                        ],
-                        "retryCode": [
-                            "liveness_error"
-                        ]
+                        "step1Time1st": "YYYY-MM-DDTHH:MM:SS.SSSZ",
+                        "ocrResult": "success"
+                    }
+                ],
+                "retry": [
+                    {
+                        "type": "step1",
+                        "retryCnt": 1,
+                        "retryCode": "recognition_fail",
+                        "retryMessage": "recognition score under threshold"
                     },
                     {
-                        "attemptCnt": 2,
-                        "retryMsg": [
-                            "Liveness fail: Absolute face size is too small. Please retry."
-                        ],
-                        "retryCode": [
-                            "liveness_error"
-                        ]
+                        "type": "step1",
+                        "retryCnt": 2,
+                        "retryCode": "recognition_fail",
+                        "retryMessage": "recognition score under threshold"
                     },
                     {
-                        "attemptCnt": 3,
-                        "livenessScore": 99,
-                        "retryMsg": [
-                            "The face doesn't match. Please retry with another face image."
-                        ],
-                        "retryCode": [
-                            "face_compare_underscore"
-                        ]
+                        "type": "step1",
+                        "retryCnt": 3,
+                        "retryCode": "recognition_fail",
+                        "retryMessage": "recognition score under threshold"
                     }
                 ]
             },
+            "OCR_raw": {
+                "rotate": {
+                    "value": "0"
+                },
+                "birth_date": {
+                    "value": "DD.MM.YYYY"
+                },
+                "number": {
+                    "value": "{identityNumber}",
+                    "score": 99,
+                    "accepted": true,
+                    "coordinates": {
+                        "third": {
+                            "x": 954,
+                            "y": 245
+                        },
+                        "fourth": {
+                            "x": 591,
+                            "y": 238
+                        },
+                        "first": {
+                            "x": 591,
+                            "y": 169
+                        },
+                        "second": {
+                            "x": 955,
+                            "y": 177
+                        }
+                    }
+                },
+                "name_eng": {
+                    "value": "JI SUNG PARK",
+                    "score": 79,
+                    "accepted": true,
+                    "coordinates": {
+                        "third": {
+                            "x": 814,
+                            "y": 326
+                        },
+                        "fourth": {
+                            "x": 581,
+                            "y": 321
+                        },
+                        "first": {
+                            "x": 582,
+                            "y": 259
+                        },
+                        "second": {
+                            "x": 815,
+                            "y": 265
+                        }
+                    }
+                },
+                "gender": {
+                    "value": "M",
+                    "score": 100,
+                    "accepted": true,
+                    "coordinates": {
+                        "third": {
+                            "x": 1127,
+                            "y": 249
+                        },
+                        "fourth": {
+                            "x": 1095,
+                            "y": 248
+                        },
+                        "first": {
+                            "x": 1096,
+                            "y": 180
+                        },
+                        "second": {
+                            "x": 1128,
+                            "y": 181
+                        }
+                    }
+                },
+                ....
+                "issue_date": {
+                    "value": "DD.MM.YYYY",
+                    "score": 100,
+                    "accepted": true,
+                    "coordinates": {
+                        "third": {
+                            "x": 1121,
+                            "y": 654
+                        },
+                        "fourth": {
+                            "x": 909,
+                            "y": 651
+                        },
+                        "first": {
+                            "x": 910,
+                            "y": 595
+                        },
+                        "second": {
+                            "x": 1122,
+                            "y": 599
+                        }
+                    }
+                }
+            },
             "projection": {
-                "projectionId": "5y7f8asd9qm8u71",
-                "projectionName": "age_projection"
+                "projectionId": "sdajkhfkjsdhfkadfh",
+                "projectionName": "projection"
             }
         }
     ]

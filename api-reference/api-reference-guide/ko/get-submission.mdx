@@ -131,6 +131,8 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
                 },
             "email": "{email}",
             "submission_id": "{submission_id}",
+            "recognition_score": "{recognition_score}",
+            "argos_score": "{argos_score}",
             "duplicated_information": "{duplicated_information}",
             "custom_duplicated_information": "{custom_duplication_information}",
             "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
@@ -396,6 +398,8 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
 | `Injection_action.option.ipRisk`         | IP 위험 평가 카테고리 및 차단 시간 정보                                                                                                 | Object | KYC injection 정보   |
 | `Injection_action.option.ipVerification` | Injection 진행 시 확인된 IP 정보                                                                                                 | Object | KYC injection 정보   |
 | `submission_id`                          | 각 제출 건에 부여된 고유 식별자                                                                                                       | String | 제출 정보              |
+| `recognition_score`                      | 신분증 인식 점수                                                                                                               | Float  | 제출 정보              |
+| `argos_score`                            | ARGOS 시스템의 종합 평가 점수                                                                                                         | Float  | 제출 정보              |
 | `duplicated_information`                 | 이름, 생년월일, 성별, 국적을 기준으로 중복 확인용 식별자가 생성됩니다. (\*네 가지 기준이 모두 제공되면 항상 생성됩니다.)                                                 | String | 제출 정보              |
 | `applicant_id`                           | 중복 제출된 사용자에 부여된 식별자                                                                                                      | String | 제출 정보              |
 | `created_at`                             | 제출된 날짜와 시간 (UTC\+0)                                                                                                      | String | 제출 정보              |

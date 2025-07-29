@@ -131,6 +131,8 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
                 },
             "email": "{email}",
             "submission_id": "{submission_id}",
+            "recognition_score": "{recognition_score}",
+            "argos_score": "{argos_score}",
             "duplicated_information": "{duplicated_information}",
             "custom_duplicated_information": "{custom_duplication_information}",
             "created_at": "YYYY-MM-DD-HH-MM-SS-ZZZ",
@@ -395,6 +397,8 @@ curl --location 'https://rest-api.argosidentity.com/v3/submission?submission_id=
 | `Injection_action.option.ipRisk`         | IP risk assessment category and prohibition time details                                                                                                        | Object    | KYC injection Info     |
 | `Injection_action.option.ipVerification` | Verified accessed IP information                                                                                                                                | Object    | KYC injection Info     |
 | `submission_id`                          | Unique identifier assigned to each submission                                                                                                                   | String    | Submission Info        |
+| `recognition_score`                      | ID document recognition score                                                                                                                                   | Float     | Submission Info        |
+| `argos_score`                           | ARGOS system comprehensive evaluation score                                                                                                                     | Float     | Submission Info        |
 | `duplicated_information`                 | A unique ID is generated based on name, date of birth, gender, and nationality for duplicate checks. (\*Always generated when all four criteria are provided.)  | String    | Submission Info        |
 | `applicant_id`                           | Identifier for users with duplicate submissions                                                                                                                 | String    | Submission Info        |
 | `created_at`                             | Date and time of submission (UTC\+0)                                                                                                                            | String    | Submission Info        |

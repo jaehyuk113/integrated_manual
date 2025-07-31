@@ -8,7 +8,6 @@ description: "This event is triggered when a KYC submission is deleted from the 
 {
     "webhook_trigger": "delete",
     "submission_id": "string",
-    "duplicated_information": "string",
     "account_email": "string",
     "delete_time": "string",
     "comment": "string"
@@ -21,10 +20,6 @@ description: "This event is triggered when a KYC submission is deleted from the 
 
 <ResponseField name="submission_id" type="string">
   Unique identifier of the deleted KYC submission.
-</ResponseField>
-
-<ResponseField name="duplicated_information" type="string">
-  A unique ID is generated based on name, date of birth, gender, and nationality for duplicate checks. (\*Always generated when all four criteria are provided.)
 </ResponseField>
 
 <ResponseField name="account_email" type="string">

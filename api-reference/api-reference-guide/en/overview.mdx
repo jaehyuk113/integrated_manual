@@ -1,6 +1,6 @@
 ---
 title: "Getting Started"
-description: "The ID Check API is a solution designed to help enterprise clients manage KYC (Know Your Customer) and AML (Anti-Money Laundering) processes more systematically and efficiently. This API supports seamless integration with existing systems and provides features to securely handle and manage user data."
+description: "The ID check API is a solution designed to help enterprise clients manage KYC (Know Your Customer) and AML (Anti-Money Laundering) processes more systematically and efficiently. This API supports seamless integration with existing systems and provides features to securely handle and manage user data."
 ---
 
 ## Key Features
@@ -10,6 +10,27 @@ The ARGOS KYC API offers the following core functionalities:
 - **KYC Data Submission and Management**: Create, retrieve, update, and delete customer information.
 - **AML Checks and Report Retrieval**: Request AML checks and review results.
 - **Image Processing**: Upload and manage ID documents and other required images.
+
+## Important Notes
+
+### Understanding Our ID check APIs
+Our ID check APIs are designed to seamlessly transfer data, acting as a conduit for information moving both into and out of the ARGOS system. Think of them as secure pipelines: you can use them to bring external data into ARGOS, or to extract data from ARGOS for use in other applications. Their primary function is efficient data movement, ensuring your information flows where it needs to go.
+
+### Data Handling and Limitations
+It's crucial to understand that while these APIs are excellent for data transfer, they do not process or validate the data itself. This means if you use a POST submission API to send data to ARGOS, or a PUT Image API to upload images, the system won't automatically approve or reject the results. The APIs facilitate the transfer, but any subsequent data processing, validation, or decision-making would not work.
+
+### Verify Module for Custom UI Development
+For customers who want to utilize ID check functionality through their own UI, we recommend using the Verify module. Verify is a flexible tool that provides ARGOS functionality in API format.
+
+<Warning>
+**Considerations When Using the Verify Module**
+- **No Built-in Database**: Requires building your own database
+- **No Built-in Processing**: All data processing logic must be implemented by you
+- **No Dashboard**: No web interface provided for submission management
+- **Complete Self-Configuration**: You must configure everything yourself - connecting all features, storage, and management
+
+If your goal is to provide API-based services to clients, ARGOS is willing to provide support for integration and connectivity. For more detailed information, please refer to the [Verify Getting Started page](/getting-started/en/introduction).
+</Warning>
 
 ## API Endpoints
 

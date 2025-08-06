@@ -2,10 +2,154 @@
 title: "ID check"
 description: "Latest updates and changes for ID check"
 ---
+<Update label="2025-08-06">
+  # Manual Submission Control System
+
+  Admins can now immediately block new submissions for a project if an emergency stop is required. When stopped, the project URL changes, and access via POST API is blocked. To resume the project, the status must be manually changed via the dashboard.
+
+  # Return URL Enhancement
+
+  Enhanced the return URL behavior by appending the submission_id parameter after submission completion. This allows integration partners to reliably track user submissions.
+
+  # Encryption Algorithm Update
+
+  AES-GCM was added as a new encryption option alongside existing methods, and a new encryption key was introduced. Admins can now flexibly choose from multiple encryption modules based on their security requirements.
+</Update>
+
+<Update label="2025-08-01">
+  # Mid-Session Resume Bug Fix
+
+  Previously, when a user entered a new QR code after abandoning a session, the system resumed the previous project instead. This has been fixed: entering a new QR code will no longer resume the previously abandoned project.
+
+  # Retry Flow Improvement
+
+  In cases where both front and back images failed, the retry flow used to start from the back image page. It has now been updated so that the retry flow starts from the front image page instead.
+
+  # Auto-English Name Conversion Enhancement
+
+  For auto-English name conversion, `name_en` is now prioritized over `name` in Step 1 responses. For KR passports, `name` will only be prioritized when the "Government Authenticity Check" option is enabled.
+</Update>
+
+<Update label="2025-07-30">
+  # Submission Rate Limiting
+
+  When configured, user access is allowed based on the specified number of submissions or allowed time window. If the configured limits are violated, access to the liveform is denied. Additionally, by setting an access block duration, users who violate the initial access logic are granted a specific time after which they can reattempt to access the liveform.
+
+  # Encrypted Image Transmission
+
+  Implemented encryption for image uploads from the front-end when sending images to the liveform. GET Submission api now provides id_LivenessScore.
+</Update>
+
+<Update label="2025-07-28">
+  # Vertical Mode Support
+
+  Added support for vertical mode during ID document capture in Step 1, along with UI improvements for better user experience.
+
+  # Smart ID Engine Update
+
+  Updated Smart ID engine to support 95 ID documents from 46 countries, including 6 new PHL ID documents that were not previously supported.
+
+  # Name Field English Conversion
+
+  All ID document names are now automatically converted to English and stored in the dashboard, regardless of ID type and country.
+</Update>
+
+<Update label="2025-07-25">
+  # CodeF Certificate Issue Resolution
+
+  Resolved an issue where Korean ID authenticity checks were failing due to an expired CodeF certificate.
+
+  # MRZ Verification Logic Update
+
+  Updated MRZ verification logic so that only missing fields are bypassed, rather than bypassing the entire MRZ check when a single field is missing. This ensures more accurate argosScore calculation.
+</Update>
+
+<Update label="2025-07-21">
+  # SMS Verification Feature
+
+  Added SMS verification functionality that requires encrypted URL query parameters. Admins can verify phone numbers in submission details after submission.
+
+  # UX Improvements
+
+  Active liveness now gets captured by the tip button. Passive liveness gets captured by the tip button while hiding existing "See the Selfie Guide". Updated duplicate user rejection message from "KYC is rejected" to "Your Identification has previously been verified. Further attempts are not allowed under the policy."
+</Update>
+
+<Update label="2025-07-14">
+  # eKYC Process Resume Feature
+
+  Users can now resume interrupted eKYC processes between Step 1 and Step 2 after navigating away, refreshing, or restarting the page. The system uses unique hash-based identification with 15-minute validity to track user progress and determine the appropriate resume point.
+</Update>
+
+<Update label="2025-07-11">
+  # Search Functionality Enhancement
+
+  It is now possible to search items by userid, nationality has been added. AML Search Performance improved. The information message for Private Mode has been improved.
+</Update>
+
+<Update label="2025-07-04">
+  # Review Owner Feature
+
+  Added Review Owner functionality in User policy settings.
+
+  # Additional Information Enhancement
+
+  Improved Additional Information section in Settings.
+</Update>
+
+<Update label="2025-06-20">
+  # CURP Validation Display
+
+  The dashboard now displays CURP validation information.
+
+  # Liveness Score Display
+
+  When ID liveness retry happens, the dashboard shows the liveness score on the retry message. It is visible on the dashboard under the submission details.
+
+  # Liveness Exception for Peru
+
+  Liveness (paper printed) on PER.id (Peru national ID card) was applied as an exception.
+</Update>
+
 <Update label="2025-06-27">
   # POST/REVIEW API Added
 
   A new API has been added that allows project administrators to directly review pending KYC submissions. Project settings can configure reviewers as either Client or Argos Agent, and when set to Client, Agents will not review those pending submissions.
+</Update>
+
+<Update label="2025-06-19">
+  # ID Document KYC Enhancement
+
+  Enhanced the KYC process for ID documents to display information tooltips regarding national IDs when selecting the appropriate ID type.
+
+  # State ID Support
+
+  The Console now has an option for Identification cards (only for the USA): The administrator can add an ID type called State ID in the Liveform.
+</Update>
+
+<Update label="2025-06-18">
+  # Partial Delete API
+
+  Added Partial Delete API for management purposes. Clients can delete data in part. Refer to the developer guide for more information.
+</Update>
+
+<Update label="2025-06-17">
+  # CURP Validation Feature
+
+  Added CURP Validation functionality in Dashboard > Settings > Multi Verification & Anti Fraud. Validates CURP number from 3rd Party API.
+
+  # AML Watchlist Filtering
+
+  Added AML Watchlist filtering in Dashboard > Settings > Anti Money Laundering. AML score thresholds and checkboxes for exact DOB matching can be set by the administrator.
+</Update>
+
+<Update label="2025-06-02">
+  # Return URL Feature
+
+  Added Return URL functionality. If the submitter clicks the "Ok" button after the KYC process is complete, the URL will be redirected based on the advanced set parameters. Location: Dashboard > Project Info > Return URL.
+
+  # LLM Engine Update
+
+  Updated LLM Engine (GPT 3.5 → GPT 4.1-mini). GPT is the engine that supports recognition, and the update has made it work better.
 </Update>
 
 <Update label="2025-06-16">

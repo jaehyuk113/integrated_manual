@@ -3,10 +3,6 @@ title: "ID check"
 description: "Latest updates and changes for ID check"
 ---
 <Update label="2025-08-06">
-  # Manual Submission Control System
-
-  Admins can now immediately block new submissions for a project if an emergency stop is required. When stopped, the project URL changes, and access via POST API is blocked. To resume the project, the status must be manually changed via the dashboard.
-
   # Return URL Enhancement
 
   Enhanced the return URL behavior by appending the submission_id parameter after submission completion. This allows integration partners to reliably track user submissions.
@@ -17,17 +13,14 @@ description: "Latest updates and changes for ID check"
 </Update>
 
 <Update label="2025-08-01">
-  # Mid-Session Resume Bug Fix
+  # Manual Submission Control System
 
-  Previously, when a user entered a new QR code after abandoning a session, the system resumed the previous project instead. This has been fixed: entering a new QR code will no longer resume the previously abandoned project.
+  Admins can now immediately block new submissions for a project if an emergency stop is required. When stopped, the project URL changes, and access via POST API is blocked. To resume the project, the status must be manually changed via the dashboard.
 
   # Retry Flow Improvement
 
   In cases where both front and back images failed, the retry flow used to start from the back image page. It has now been updated so that the retry flow starts from the front image page instead.
 
-  # Auto-English Name Conversion Enhancement
-
-  For auto-English name conversion, `name_en` is now prioritized over `name` in Step 1 responses. For KR passports, `name` will only be prioritized when the "Government Authenticity Check" option is enabled.
 </Update>
 
 <Update label="2025-07-30">
@@ -45,23 +38,13 @@ description: "Latest updates and changes for ID check"
 
   Added support for vertical mode during ID document capture in Step 1, along with UI improvements for better user experience.
 
-  # Smart ID Engine Update
+  # Engine Update
 
-  Updated Smart ID engine to support 95 ID documents from 46 countries, including 6 new PHL ID documents that were not previously supported.
+  Updated ID engine to support 95 new ID documents from 46 countries.
 
   # Name Field English Conversion
 
   All ID document names are now automatically converted to English and stored in the dashboard, regardless of ID type and country.
-</Update>
-
-<Update label="2025-07-25">
-  # CodeF Certificate Issue Resolution
-
-  Resolved an issue where Korean ID authenticity checks were failing due to an expired CodeF certificate.
-
-  # MRZ Verification Logic Update
-
-  Updated MRZ verification logic so that only missing fields are bypassed, rather than bypassing the entire MRZ check when a single field is missing. This ensures more accurate argosScore calculation.
 </Update>
 
 <Update label="2025-07-21">
@@ -104,10 +87,6 @@ description: "Latest updates and changes for ID check"
   # Liveness Score Display
 
   When ID liveness retry happens, the dashboard shows the liveness score on the retry message. It is visible on the dashboard under the submission details.
-
-  # Liveness Exception for Peru
-
-  Liveness (paper printed) on PER.id (Peru national ID card) was applied as an exception.
 </Update>
 
 <Update label="2025-06-27">
@@ -140,16 +119,6 @@ description: "Latest updates and changes for ID check"
   # AML Watchlist Filtering
 
   Added AML Watchlist filtering in Dashboard > Settings > Anti Money Laundering. AML score thresholds and checkboxes for exact DOB matching can be set by the administrator.
-</Update>
-
-<Update label="2025-06-02">
-  # Return URL Feature
-
-  Added Return URL functionality. If the submitter clicks the "Ok" button after the KYC process is complete, the URL will be redirected based on the advanced set parameters. Location: Dashboard > Project Info > Return URL.
-
-  # LLM Engine Update
-
-  Updated LLM Engine (GPT 3.5 → GPT 4.1-mini). GPT is the engine that supports recognition, and the update has made it work better.
 </Update>
 
 <Update label="2025-06-16">

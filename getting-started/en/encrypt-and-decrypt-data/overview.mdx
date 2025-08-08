@@ -18,20 +18,35 @@ description: "Comprehensive guide to secure customer data through robust encrypt
 ## Encryption Options
 
 <CardGroup cols="2">
-  <Card title="Query String Encryption" icon="square-1">
+  <Card title="Types of Encryption Modules" icon="square-1">
+    Types of Encryption Modules
+  </Card>
+  <Card title="Query String Encryption" icon="square-2">
     Query String Encryption
   </Card>
-  <Card title="Secure Data Transmission Options" icon="square-2">
+  <Card title="Secure Data Transmission Options" icon="square-3">
     Secure Data Transmission Options
   </Card>
-  <Card title="Encryption/Decryption Methods" icon="square-3">
+  <Card title="Encryption/Decryption Methods" icon="square-4">
     Encryption/Decryption Methods
   </Card>
 </CardGroup>
 
-## 1. Query String Encryption
+## 1. Types of Encryption Modules
 
-Sensitive data sent via URL query strings is encrypted using the `AES-256-ECB` encryption method.
+There are two types of encryption modules available:
+- AES-256: Fast and simple block encryption method
+- GCM-256: Enhanced encryption method with authentication and integrity features
+
+### Types of Encryption Keys
+- API Key: API key assigned to the Project
+- Custom API Key (secretKey): New secretKey issued from Liveform for use
+
+![Encryption modules](/images/encryption_modules/encryption_en.png)
+
+## 2. Query String Encryption
+
+Sensitive data sent via URL query strings is encrypted using the `AES-256-ECB` or `GCM-256` encryption method.
 
 <Steps>
   <Step title="Prepare Data in JSON Format">
@@ -78,11 +93,25 @@ Sensitive data sent via URL query strings is encrypted using the `AES-256-ECB` e
 
     </CodeGroup>
   </Step>
-  <Step title="Perform AES-256 Encryption Using the Provided API Key">
+  <Step title="Select Encryption Module AES-256/GCM-256 and API Key or secretKey">
+    <img
+      height="200"
+      src="/images/encryption_modules/encryption_en.png"
+    />
+    <Note>
+      Once issued, secretKey will not be displayed again. If lost, please reissue and use it.
+    </Note>
+  </Step>
+  <Step title="Perform AES-256/GCM-256 Encryption Using the Provided API Key">
     <img
       height="200"
       src="/images/api-reference/api-key.png"
     />
+
+    <Note>
+      Before performing AES-256 encryption, please verify the query string encryption and decryption steps. <br />
+      If you have received a secretKey, please use the secretKey.
+    </Note>
   </Step>
   <Step title="Add Encrypted Data to the URL as the 'encrypted' Query Parameter">
     <CodeGroup>
@@ -100,14 +129,37 @@ Sensitive data sent via URL query strings is encrypted using the `AES-256-ECB` e
   The `pid`, `lang` query strings and the `sid`, `action` query strings used on the "Additional Process (Injection)" page do not support encryption.
 </Warning>
 
-## 2. Query String Encryption and Decryption Methods
+## 3. Query String Encryption and Decryption Methods
 
-### 2-1. Key Generation Process
+### 3-1. Key Generation Process
 
+AES-256
 ```mermaid
  graph LR
     A[API Key] -->|SHA-256 Hash| B[Hashed Key]
     B -->|Used in AES-256 Encryption| C[Encryption/Decryption]
+```
+
+GCM-256
+```mermaid
+flowchart LR
+  %% Key Generation
+  API[API Key] -->|SHA-256 Hash| KEY[Hashed Key (32 bytes)]
+  
+  %% Encryption
+  KEY --> ENC[AES-256-GCM Encryption]
+  IV[IV(Nonce) 12 bytes, random generation] --> ENC
+  AAD[AAD(Additional Authenticated Data, optional)] --> ENC
+  DATA[Plaintext Data] --> ENC
+  
+  ENC --> CT[Ciphertext]
+  ENC --> TAG[Authentication Tag (16 bytes)]
+  
+  %% Packaging
+  CT --> OUT[(IV || Ciphertext || Tag)]
+  IV --> OUT
+  TAG --> OUT
+  AAD -->|Header or separate field| OUT
 ```
 
 <Steps>
@@ -211,6 +263,233 @@ Sensitive data sent via URL query strings is encrypted using the `AES-256-ECB` e
 
     </CodeGroup>
   </Step>
+  <Step title="GCM Encryption Example">
+    Below are examples of encrypting data using AES-256-GCM
+
+    <CodeGroup>
+
+    ```javascript Node.js(crypto module)
+    var crypto = require('crypto');
+
+    /**
+     * @param {string} data - Stringified JSON data
+     * @param {string} apiKey - Project API key
+     * @returns {string} Encrypted data in hex format (IV + ciphertext + tag)
+     *
+     * GCM mode provides authenticated encryption and includes IV and authentication tag.
+     * Return value is hex string encoded form of 12-byte IV + ciphertext + 16-byte authentication tag.
+     */
+    function encryptGCM(data, apiKey) {
+        var hashedKey = crypto.createHash('sha256').update(apiKey).digest();
+        var iv = crypto.randomBytes(12);
+        var cipher = crypto.createCipheriv('aes-256-gcm', hashedKey, iv);
+        
+        var encrypted = cipher.update(data, 'utf8');
+        encrypted = Buffer.concat([encrypted, cipher.final()]);
+        
+        var tag = cipher.getAuthTag();
+        var result = Buffer.concat([iv, encrypted, tag]);
+        
+        return result.toString('hex');
+    }
+
+    /**
+     * @param {string} encryptedHex - Hex encoded encrypted data
+     * @param {string} apiKey - Project API key
+     * @returns {string} Decrypted data
+     */
+    function decryptGCM(encryptedHex, apiKey) {
+        var hashedKey = crypto.createHash('sha256').update(apiKey).digest();
+        var encryptedBuffer = Buffer.from(encryptedHex, 'hex');
+        
+        var iv = encryptedBuffer.slice(0, 12);
+        var tag = encryptedBuffer.slice(-16);
+        var encrypted = encryptedBuffer.slice(12, -16);
+        
+        var decipher = crypto.createDecipheriv('aes-256-gcm', hashedKey, iv);
+        decipher.setAuthTag(tag);
+        
+        var decrypted = decipher.update(encrypted);
+        decrypted = Buffer.concat([decrypted, decipher.final()]);
+        
+        return decrypted.toString('utf8');
+    }
+    ```
+
+    ```javascript Node.js(crypto-js library)
+    import CryptoJS from 'crypto-js';
+
+    /**
+     * @param {string} data - Stringified JSON data
+     * @param {string} apiKey - Project API key
+     * @returns {string} Encrypted data in hex format
+     */
+    const encryptGCM = (data, apiKey) => {
+        const hashedKey = CryptoJS.SHA256(apiKey);
+        const iv = CryptoJS.lib.WordArray.random(12);
+        
+        // GCM mode is not directly supported in crypto-js, 
+        // so it's recommended to use Node.js crypto module.
+        // Below is a conceptual example.
+        
+        // For actual implementation, use Node.js crypto module
+        throw new Error('GCM mode is not supported in crypto-js. Please use Node.js crypto module.');
+    };
+
+    /**
+     * @param {string} encryptedHex - Hex encoded encrypted data
+     * @param {string} apiKey - Project API key
+     * @returns {string} Decrypted data
+     */
+    const decryptGCM = (encryptedHex, apiKey) => {
+        // crypto-js doesn't support GCM, so use Node.js crypto module
+        throw new Error('GCM mode is not supported in crypto-js. Please use Node.js crypto module.');
+    };
+    ```
+
+    ```java Java
+    import javax.crypto.Cipher;
+    import javax.crypto.spec.GCMParameterSpec;
+    import javax.crypto.spec.SecretKeySpec;
+    import java.nio.charset.StandardCharsets;
+    import java.security.MessageDigest;
+    import java.security.SecureRandom;
+    import java.util.Base64;
+    import java.util.HexFormat;
+
+    public class GCMEncryption {
+        private static final int GCM_IV_LENGTH = 12;
+        private static final int GCM_TAG_LENGTH = 16;
+
+        /**
+         * @param data - Stringified JSON data
+         * @param apiKey - Project API key
+         * @return Encrypted data in hex format (IV + ciphertext + tag)
+         */
+        public static String encryptGCM(String data, String apiKey) throws Exception {
+            // Hash the API key using SHA-256
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hashedKey = digest.digest(apiKey.getBytes(StandardCharsets.UTF_8));
+            
+            // Create AES key for encryption
+            SecretKeySpec secretKey = new SecretKeySpec(hashedKey, "AES");
+            
+            // Initialize Cipher in GCM mode
+            Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+            
+            // Generate 12-byte IV
+            byte[] iv = new byte[GCM_IV_LENGTH];
+            SecureRandom random = new SecureRandom();
+            random.nextBytes(iv);
+            
+            // Set GCM parameters (tag length 128 bits)
+            GCMParameterSpec gcmSpec = new GCMParameterSpec(GCM_TAG_LENGTH * 8, iv);
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey, gcmSpec);
+            
+            // Encrypt the data
+            byte[] encryptedBytes = cipher.doFinal(data.getBytes(StandardCharsets.UTF_8));
+            
+            // Combine IV + ciphertext + tag and encode as hex
+            byte[] result = new byte[iv.length + encryptedBytes.length];
+            System.arraycopy(iv, 0, result, 0, iv.length);
+            System.arraycopy(encryptedBytes, 0, result, iv.length, encryptedBytes.length);
+            
+            return HexFormat.of().formatHex(result);
+        }
+
+        /**
+         * @param encryptedHex - Hex encoded encrypted data
+         * @param apiKey - Project API key
+         * @return Decrypted data
+         */
+        public static String decryptGCM(String encryptedHex, String apiKey) throws Exception {
+            // Hash the API key using SHA-256
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hashedKey = digest.digest(apiKey.getBytes(StandardCharsets.UTF_8));
+            
+            // Create AES key for decryption
+            SecretKeySpec secretKey = new SecretKeySpec(hashedKey, "AES");
+            
+            // Convert hex string to byte array
+            byte[] encryptedData = HexFormat.of().parseHex(encryptedHex);
+            
+            // Separate IV and ciphertext
+            byte[] iv = new byte[GCM_IV_LENGTH];
+            byte[] ciphertext = new byte[encryptedData.length - GCM_IV_LENGTH];
+            System.arraycopy(encryptedData, 0, iv, 0, GCM_IV_LENGTH);
+            System.arraycopy(encryptedData, GCM_IV_LENGTH, ciphertext, 0, ciphertext.length);
+            
+            // Initialize Cipher in GCM mode
+            Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+            GCMParameterSpec gcmSpec = new GCMParameterSpec(GCM_TAG_LENGTH * 8, iv);
+            cipher.init(Cipher.DECRYPT_MODE, secretKey, gcmSpec);
+            
+            // Decrypt the data
+            byte[] decryptedBytes = cipher.doFinal(ciphertext);
+            return new String(decryptedBytes, StandardCharsets.UTF_8);
+        }
+    }
+    ```
+
+    ```python Python
+    import os
+    import base64
+    from cryptography.hazmat.primitives import hashes
+    from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+
+    def hashed_key(api_key: str) -> bytes:
+        """Hash API key using SHA-256 to generate 32-byte key"""
+        digest = hashes.Hash(hashes.SHA256())
+        digest.update(api_key.encode("utf-8"))
+        return digest.finalize()
+
+    def encrypt_gcm(data: str, api_key: str) -> str:
+        """
+        Encrypt data using AES-256-GCM method.
+        
+        Args:
+            data: JSON string to encrypt
+            api_key: Project API key
+            
+        Returns:
+            hex format encrypted data (IV + ciphertext + tag)
+        """
+        key = hashed_key(api_key)
+        iv = os.urandom(12)  # Generate 12-byte IV
+        aesgcm = AESGCM(key)
+        
+        # Encrypt data (includes authentication tag)
+        ct_tag = aesgcm.encrypt(iv, data.encode("utf-8"), None)
+        
+        # Combine IV + ciphertext + tag and encode as hex
+        result = iv + ct_tag
+        return result.hex()
+
+    def decrypt_gcm(encrypted_hex: str, api_key: str) -> str:
+        """
+        Decrypt data encrypted using AES-256-GCM method.
+        
+        Args:
+            encrypted_hex: hex format encrypted data
+            api_key: Project API key
+            
+        Returns:
+            decrypted data
+        """
+        key = hashed_key(api_key)
+        encrypted_data = bytes.fromhex(encrypted_hex)
+        
+        # Separate IV and ciphertext+tag
+        iv = encrypted_data[:12]
+        ct_tag = encrypted_data[12:]
+        
+        aesgcm = AESGCM(key)
+        decrypted_data = aesgcm.decrypt(iv, ct_tag, None)
+        return decrypted_data.decode("utf-8")
+    ```
+
+    </CodeGroup>
+  </Step>
   <Step title="Decryption Example">
     Below are examples of decrypting data encrypted with AES-256
 
@@ -247,13 +526,139 @@ Sensitive data sent via URL query strings is encrypted using the `AES-256-ECB` e
 
     </CodeGroup>
   </Step>
+  <Step title="GCM Decryption Example">
+    Below are examples of decrypting data encrypted with AES-256-GCM
+
+    <CodeGroup>
+
+    ```javascript Node.js(crypto module)
+    var crypto = require('crypto');
+
+    /**
+     * @param {string} encryptedHex - Hex encoded encrypted data (IV + ciphertext + tag)
+     * @param {string} apiKey - Project API key
+     * @returns {string} Decrypted data
+     */
+    function decryptGCM(encryptedHex, apiKey) {
+        var hashedKey = crypto.createHash('sha256').update(apiKey).digest();
+        var encryptedBuffer = Buffer.from(encryptedHex, 'hex');
+        
+        // Separate IV, ciphertext, and tag
+        var iv = encryptedBuffer.slice(0, 12);
+        var tag = encryptedBuffer.slice(-16);
+        var encrypted = encryptedBuffer.slice(12, -16);
+        
+        var decipher = crypto.createDecipheriv('aes-256-gcm', hashedKey, iv);
+        decipher.setAuthTag(tag);
+        
+        var decrypted = decipher.update(encrypted);
+        decrypted = Buffer.concat([decrypted, decipher.final()]);
+        
+        return decrypted.toString('utf8');
+    }
+    ```
+
+    ```javascript Node.js(crypto-js library)
+    import CryptoJS from 'crypto-js';
+
+    /**
+     * @param {string} encryptedHex - Hex encoded encrypted data
+     * @param {string} apiKey - Project API key
+     * @returns {string} Decrypted data
+     */
+    const decryptGCM = (encryptedHex, apiKey) => {
+        // crypto-js doesn't support GCM, so use Node.js crypto module
+        throw new Error('GCM mode is not supported in crypto-js. Please use Node.js crypto module.');
+    };
+    ```
+
+    ```java Java
+    import javax.crypto.Cipher;
+    import javax.crypto.spec.GCMParameterSpec;
+    import javax.crypto.spec.SecretKeySpec;
+    import java.nio.charset.StandardCharsets;
+    import java.security.MessageDigest;
+    import java.util.HexFormat;
+
+    public class GCMDecryption {
+        private static final int GCM_IV_LENGTH = 12;
+        private static final int GCM_TAG_LENGTH = 16;
+
+        /**
+         * @param encryptedHex - Hex encoded encrypted data (IV + ciphertext + tag)
+         * @param apiKey - Project API key
+         * @return Decrypted data
+         */
+        public static String decryptGCM(String encryptedHex, String apiKey) throws Exception {
+            // Hash the API key using SHA-256
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hashedKey = digest.digest(apiKey.getBytes(StandardCharsets.UTF_8));
+            
+            // Create AES key for decryption
+            SecretKeySpec secretKey = new SecretKeySpec(hashedKey, "AES");
+            
+            // Convert hex string to byte array
+            byte[] encryptedData = HexFormat.of().parseHex(encryptedHex);
+            
+            // Separate IV and ciphertext+tag
+            byte[] iv = new byte[GCM_IV_LENGTH];
+            byte[] ciphertext = new byte[encryptedData.length - GCM_IV_LENGTH];
+            System.arraycopy(encryptedData, 0, iv, 0, GCM_IV_LENGTH);
+            System.arraycopy(encryptedData, GCM_IV_LENGTH, ciphertext, 0, ciphertext.length);
+            
+            // Initialize Cipher in GCM mode
+            Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+            GCMParameterSpec gcmSpec = new GCMParameterSpec(GCM_TAG_LENGTH * 8, iv);
+            cipher.init(Cipher.DECRYPT_MODE, secretKey, gcmSpec);
+            
+            // Decrypt the data
+            byte[] decryptedBytes = cipher.doFinal(ciphertext);
+            return new String(decryptedBytes, StandardCharsets.UTF_8);
+        }
+    }
+    ```
+
+    ```python Python
+    import os
+    from cryptography.hazmat.primitives import hashes
+    from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+
+    def hashed_key(api_key: str) -> bytes:
+        """Hash API key using SHA-256 to generate 32-byte key"""
+        digest = hashes.Hash(hashes.SHA256())
+        digest.update(api_key.encode("utf-8"))
+        return digest.finalize()
+
+    def decrypt_gcm(encrypted_hex: str, api_key: str) -> str:
+        """
+        Decrypt data encrypted using AES-256-GCM method.
+        
+        Args:
+            encrypted_hex: hex format encrypted data (IV + ciphertext + tag)
+            api_key: Project API key
+            
+        Returns:
+            decrypted data
+        """
+        key = hashed_key(api_key)
+        encrypted_data = bytes.fromhex(encrypted_hex)
+        
+        # Separate IV and ciphertext+tag
+        iv = encrypted_data[:12]
+        ct_tag = encrypted_data[12:]
+        
+        aesgcm = AESGCM(key)
+        decrypted_data = aesgcm.decrypt(iv, ct_tag, None)
+        return decrypted_data.decode("utf-8")
+    ```
+
+    </CodeGroup>
+  </Step>
 </Steps>
 
-## 3. Secure Data Transfer Options
+## 4. Secure Data Transfer Options
 
 Encrypt data for secure transmission in API methods (GET, POST, PATCH) and WEBHOOKs. API methods use the `AES-256-ECB` encryption method, while WEBHOOKs use `AES-256-CBC` encryption. Ensure that secure data transfer is enabled before using it to protect sensitive information.
-
-![Secure Data Transfer](/images/api-reference/secure-data-transfer.png)
 
 If this option is enabled, the request body must be encrypted. Inquire about a body parameter that is encrypted data. It is necessary to encrypt AES-256-ECB and refer to the Key Features and instructions on how to encrypt.
 
@@ -271,7 +676,7 @@ body : encrypt({
 
 </CodeGroup>
 
-Responses include encrypted data and the “isEncrypted” flag.
+Responses include encrypted data and the "isEncrypted" flag.
 
 <CodeGroup>
 
@@ -284,14 +689,19 @@ body : {
 
 </CodeGroup>
 
-### 3-1. Key Features
+### 4-1. Key Features
 
 - GET, POST, PATCH requests are encrypted using `AES-256-ECB`
 - WEBHOOK data is encrypted using `AES-256-CBC`
 - Ensures data integrity and authentication through PKI
 - Enhances data protection during transmission
 
-### 3-2. API Request Data Encryption (AES-256-ECB)
+<img
+  height="200"
+  src="/images/api-reference/secure-data-transfer.png"
+/>
+
+### 4-2. API Request Data Encryption (AES-256-ECB)
 
 <CodeGroup>
 
@@ -340,7 +750,7 @@ public class Encryptor {
 
 </CodeGroup>
 
-### 3-3. API Data Decryption (AES-256-ECB)
+### 4-3. API Data Decryption (AES-256-ECB)
 
 <CodeGroup>
 
@@ -390,7 +800,7 @@ public class Encryptor {
 
 </CodeGroup>
 
-### 3-4. WEBHOOK Data Encryption (AES-256-CBC)
+### 4-4. WEBHOOK Data Encryption (AES-256-CBC)
 
 <CodeGroup>
 
@@ -448,7 +858,7 @@ public class Encryptor {
 
 </CodeGroup>
 
-### 3-5. WEBHOOK Data Decryption (AES-256-CBC)
+### 4-5. WEBHOOK Data Decryption (AES-256-CBC)
 
 <CodeGroup>
 

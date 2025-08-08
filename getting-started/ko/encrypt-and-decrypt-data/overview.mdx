@@ -18,20 +18,34 @@ description: "고객 데이터를 안전하게 보호하고 무단 접근과 데
 ## 암호화 옵션
 
 <CardGroup cols="2">
-  <Card title="쿼리 스트링 암호화" icon="square-1">
+  <Card title="쿼리 스트링 암호화 모듈의 종류" icon="square-1">
+    암호화 모듈의 종류
+  <Card title="쿼리 스트링 암호화" icon="square-2">
     쿼리 스트링 암호화
   </Card>
-  <Card title="안전한 데이터 전송 옵션" icon="square-2">
+  <Card title="안전한 데이터 전송 옵션" icon="square-3">
     안전한 데이터 전송 옵션
   </Card>
-  <Card title="암/복호화 방식" icon="square-3">
+  <Card title="암/복호화 방식" icon="square-4">
     암/복호화 방식
   </Card>
 </CardGroup>
 
-## 1. 쿼리 스트링 암호화
+## 1. 암호화 모듈의 종류
+적용 가능한 암호화 모듈의 종류는 다음 두가지 입니다.
+- AES-256: 빠르고 간단한 블록 암호화 방식
+- GCM-256: 인증 및 무결성 기능을 포함한 강화된 암호화 방식
 
-URL의 쿼리 스트링으로 전송되는 민감한 데이터를 AES-256 방식으로 암호화합니다.
+### 암호화 키 종류
+- API 키: Project에 부여된 API 키
+- Custom API 키키: 라이브폼에서 신규로 발급받아 사용하는 secretKey
+![Encryption modules](manual-idcheck/images/encryption_modules/encryption_kr.png)
+
+
+
+## 2. 쿼리 스트링 암호화
+
+URL의 쿼리 스트링으로 전송되는 민감한 데이터를 AES-256 방식이나 GCM-256 방식으로 암호화합니다.
 
 <Steps>
   <Step title="암호화할 데이터를 JSON 형식으로 준비">
@@ -78,14 +92,25 @@ URL의 쿼리 스트링으로 전송되는 민감한 데이터를 AES-256 방식
 
     </CodeGroup>
   </Step>
-  <Step title="제공된 API 키로 AES-256 암호화 수행">
+  <Step title="암호화 모듈 AES-256/GCM-256 및 API 키 및 secretKey 중 하나를 선택">
+    <img
+      height="200"
+      src="/images/encryption_modules/encryption_kr.png"
+    />
+    <Note>
+      secretKey의 경우 한번 발급 이후 표시되지 않습니다. 분실 시, 재발급해서 사용해주세요.
+    </Note>
+  </Step>
+  </Step>
+  <Step title="제공된 API 키로 AES-256/GCM-256 암호화 수행">
     <img
       height="200"
       src="/images/api-reference/api-key.png"
     />
 
     <Note>
-      AES-256 암호화 수행 전에 쿼리 스트링 암호화 및 복호화 단계를 확인해주세요.
+      AES-256 암호화 수행 전에 쿼리 스트링 암호화 및 복호화 단계를 확인해주세요. <br />
+      secretKey를 발급받은 경우, secretKey를 활용해주세요.
     </Note>
   </Step>
   <Step title="암호화된 데이터를 URL의 encrypted 쿼리 파라미터에 추가">
@@ -103,14 +128,35 @@ URL의 쿼리 스트링으로 전송되는 민감한 데이터를 AES-256 방식
   주의: pid, lang 쿼리 스트링 및 ‘추가 프로세스 (Injection)’ 페이지에서 사용하는 sid, action 쿼리 스트링은 암호화를 지원하지 않습니다.
 </Warning>
 
-## 2. 쿼리 스트링 암호화 및 복호화 방법
+## 3. 쿼리 스트링 암호화 및 복호화 방법
 
-### 2-1. 키 생성 프로세스
-
+### 3-1. 키 생성 프로세스
+AES-256
 ```mermaid
  graph LR
     A[API Key] -->|SHA-256 해시| B[Hashed Key]
     B -->|AES-256 암호화에 사용| C[암호화/복호화]
+```
+GCM-256
+```mermaid
+flowchart LR
+  %% 키 생성
+  API[API Key] -->|SHA-256 해시| KEY[해시된 키 (32바이트)]
+  
+  %% 암호화
+  KEY --> ENC[AES-256-GCM 암호화]
+  IV[IV(Nonce) 12바이트, 랜덤 생성] --> ENC
+  AAD[AAD(추가 인증 데이터, 선택)] --> ENC
+  DATA[평문 데이터] --> ENC
+  
+  ENC --> CT[암호문]
+  ENC --> TAG[인증 태그(16바이트)]
+  
+  %% 패키징
+  CT --> OUT[(IV || 암호문 || 태그)]
+  IV --> OUT
+  TAG --> OUT
+  AAD -->|헤더 또는 별도 필드| OUT
 ```
 
 <Steps>
@@ -213,6 +259,233 @@ URL의 쿼리 스트링으로 전송되는 민감한 데이터를 AES-256 방식
 
     </CodeGroup>
   </Step>
+  <Step title="GCM 암호화 예시">
+    아래 예시는 데이터를 AES-256-GCM 방식으로 암호화하는 방법을 보여줍니다.
+
+    <CodeGroup>
+
+    ```javascript Node.js(crypto module)
+    var crypto = require('crypto');
+
+    /**
+     * @param {string} data - Stringified JSON data
+     * @param {string} apiKey - Project API key
+     * @returns {string} Encrypted data in hex format (IV + ciphertext + tag)
+     *
+     * GCM 모드는 인증된 암호화를 제공하며, IV와 인증 태그가 포함됩니다.
+     * 반환값은 12바이트 IV + 암호문 + 16바이트 인증 태그를 hex 문자열로 인코딩한 형태입니다.
+     */
+    function encryptGCM(data, apiKey) {
+        var hashedKey = crypto.createHash('sha256').update(apiKey).digest();
+        var iv = crypto.randomBytes(12);
+        var cipher = crypto.createCipheriv('aes-256-gcm', hashedKey, iv);
+        
+        var encrypted = cipher.update(data, 'utf8');
+        encrypted = Buffer.concat([encrypted, cipher.final()]);
+        
+        var tag = cipher.getAuthTag();
+        var result = Buffer.concat([iv, encrypted, tag]);
+        
+        return result.toString('hex');
+    }
+
+    /**
+     * @param {string} encryptedHex - Hex encoded encrypted data
+     * @param {string} apiKey - Project API key
+     * @returns {string} Decrypted data
+     */
+    function decryptGCM(encryptedHex, apiKey) {
+        var hashedKey = crypto.createHash('sha256').update(apiKey).digest();
+        var encryptedBuffer = Buffer.from(encryptedHex, 'hex');
+        
+        var iv = encryptedBuffer.slice(0, 12);
+        var tag = encryptedBuffer.slice(-16);
+        var encrypted = encryptedBuffer.slice(12, -16);
+        
+        var decipher = crypto.createDecipheriv('aes-256-gcm', hashedKey, iv);
+        decipher.setAuthTag(tag);
+        
+        var decrypted = decipher.update(encrypted);
+        decrypted = Buffer.concat([decrypted, decipher.final()]);
+        
+        return decrypted.toString('utf8');
+    }
+    ```
+
+    ```javascript Node.js(crypto-js library)
+    import CryptoJS from 'crypto-js';
+
+    /**
+     * @param {string} data - Stringified JSON data
+     * @param {string} apiKey - Project API key
+     * @returns {string} Encrypted data in hex format
+     */
+    const encryptGCM = (data, apiKey) => {
+        const hashedKey = CryptoJS.SHA256(apiKey);
+        const iv = CryptoJS.lib.WordArray.random(12);
+        
+        // GCM 모드는 crypto-js에서 직접 지원하지 않으므로 
+        // Node.js crypto 모듈을 사용하는 것을 권장합니다.
+        // 아래는 개념적인 예시입니다.
+        
+        // 실제 구현시에는 Node.js crypto 모듈 사용을 권장
+        throw new Error('GCM 모드는 crypto-js에서 지원하지 않습니다. Node.js crypto 모듈을 사용하세요.');
+    };
+
+    /**
+     * @param {string} encryptedHex - Hex encoded encrypted data
+     * @param {string} apiKey - Project API key
+     * @returns {string} Decrypted data
+     */
+    const decryptGCM = (encryptedHex, apiKey) => {
+        // crypto-js는 GCM을 지원하지 않으므로 Node.js crypto 모듈 사용 권장
+        throw new Error('GCM 모드는 crypto-js에서 지원하지 않습니다. Node.js crypto 모듈을 사용하세요.');
+    };
+    ```
+
+    ```java Java
+    import javax.crypto.Cipher;
+    import javax.crypto.spec.GCMParameterSpec;
+    import javax.crypto.spec.SecretKeySpec;
+    import java.nio.charset.StandardCharsets;
+    import java.security.MessageDigest;
+    import java.security.SecureRandom;
+    import java.util.Base64;
+    import java.util.HexFormat;
+
+    public class GCMEncryption {
+        private static final int GCM_IV_LENGTH = 12;
+        private static final int GCM_TAG_LENGTH = 16;
+
+        /**
+         * @param data - Stringified JSON data
+         * @param apiKey - Project API key
+         * @return Encrypted data in hex format (IV + ciphertext + tag)
+         */
+        public static String encryptGCM(String data, String apiKey) throws Exception {
+            // API 키를 SHA-256으로 해시
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hashedKey = digest.digest(apiKey.getBytes(StandardCharsets.UTF_8));
+            
+            // AES 암호화를 위한 키 생성
+            SecretKeySpec secretKey = new SecretKeySpec(hashedKey, "AES");
+            
+            // GCM 모드로 Cipher 초기화
+            Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+            
+            // 12바이트 IV 생성
+            byte[] iv = new byte[GCM_IV_LENGTH];
+            SecureRandom random = new SecureRandom();
+            random.nextBytes(iv);
+            
+            // GCM 파라미터 설정 (태그 길이 128비트)
+            GCMParameterSpec gcmSpec = new GCMParameterSpec(GCM_TAG_LENGTH * 8, iv);
+            cipher.init(Cipher.ENCRYPT_MODE, secretKey, gcmSpec);
+            
+            // 데이터 암호화
+            byte[] encryptedBytes = cipher.doFinal(data.getBytes(StandardCharsets.UTF_8));
+            
+            // IV + 암호문 + 태그를 결합하여 hex로 인코딩
+            byte[] result = new byte[iv.length + encryptedBytes.length];
+            System.arraycopy(iv, 0, result, 0, iv.length);
+            System.arraycopy(encryptedBytes, 0, result, iv.length, encryptedBytes.length);
+            
+            return HexFormat.of().formatHex(result);
+        }
+
+        /**
+         * @param encryptedHex - Hex encoded encrypted data
+         * @param apiKey - Project API key
+         * @return Decrypted data
+         */
+        public static String decryptGCM(String encryptedHex, String apiKey) throws Exception {
+            // API 키를 SHA-256으로 해시
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hashedKey = digest.digest(apiKey.getBytes(StandardCharsets.UTF_8));
+            
+            // AES 복호화를 위한 키 생성
+            SecretKeySpec secretKey = new SecretKeySpec(hashedKey, "AES");
+            
+            // hex 문자열을 바이트 배열로 변환
+            byte[] encryptedData = HexFormat.of().parseHex(encryptedHex);
+            
+            // IV와 암호문 분리
+            byte[] iv = new byte[GCM_IV_LENGTH];
+            byte[] ciphertext = new byte[encryptedData.length - GCM_IV_LENGTH];
+            System.arraycopy(encryptedData, 0, iv, 0, GCM_IV_LENGTH);
+            System.arraycopy(encryptedData, GCM_IV_LENGTH, ciphertext, 0, ciphertext.length);
+            
+            // GCM 모드로 Cipher 초기화
+            Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+            GCMParameterSpec gcmSpec = new GCMParameterSpec(GCM_TAG_LENGTH * 8, iv);
+            cipher.init(Cipher.DECRYPT_MODE, secretKey, gcmSpec);
+            
+            // 데이터 복호화
+            byte[] decryptedBytes = cipher.doFinal(ciphertext);
+            return new String(decryptedBytes, StandardCharsets.UTF_8);
+        }
+    }
+    ```
+
+    ```python Python
+    import os
+    import base64
+    from cryptography.hazmat.primitives import hashes
+    from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+
+    def hashed_key(api_key: str) -> bytes:
+        """API 키를 SHA-256으로 해시하여 32바이트 키 생성"""
+        digest = hashes.Hash(hashes.SHA256())
+        digest.update(api_key.encode("utf-8"))
+        return digest.finalize()
+
+    def encrypt_gcm(data: str, api_key: str) -> str:
+        """
+        AES-256-GCM 방식으로 데이터를 암호화합니다.
+        
+        Args:
+            data: 암호화할 JSON 문자열
+            api_key: 프로젝트 API 키
+            
+        Returns:
+            hex 형식의 암호화된 데이터 (IV + ciphertext + tag)
+        """
+        key = hashed_key(api_key)
+        iv = os.urandom(12)  # 12바이트 IV 생성
+        aesgcm = AESGCM(key)
+        
+        # 데이터 암호화 (인증 태그 포함)
+        ct_tag = aesgcm.encrypt(iv, data.encode("utf-8"), None)
+        
+        # IV + 암호문 + 태그를 결합하여 hex로 인코딩
+        result = iv + ct_tag
+        return result.hex()
+
+    def decrypt_gcm(encrypted_hex: str, api_key: str) -> str:
+        """
+        AES-256-GCM 방식으로 암호화된 데이터를 복호화합니다.
+        
+        Args:
+            encrypted_hex: hex 형식의 암호화된 데이터
+            api_key: 프로젝트 API 키
+            
+        Returns:
+            복호화된 데이터
+        """
+        key = hashed_key(api_key)
+        encrypted_data = bytes.fromhex(encrypted_hex)
+        
+        # IV와 암호문+태그 분리
+        iv = encrypted_data[:12]
+        ct_tag = encrypted_data[12:]
+        
+        aesgcm = AESGCM(key)
+        decrypted_data = aesgcm.decrypt(iv, ct_tag, None)
+        return decrypted_data.decode("utf-8")
+    ```
+
+    </CodeGroup>
+  </Step>
   <Step title="복호화 예시">
     아래 예시는 AES-256 방식으로 암호화된 데이터를 복호화하는 방법을 보여줍니다.
 
@@ -249,9 +522,137 @@ URL의 쿼리 스트링으로 전송되는 민감한 데이터를 AES-256 방식
 
     </CodeGroup>
   </Step>
+  <Step title="GCM 복호화 예시">
+    아래 예시는 AES-256-GCM 방식으로 암호화된 데이터를 복호화하는 방법을 보여줍니다.
+
+    <CodeGroup>
+
+    ```javascript Node.js(crypto module)
+    var crypto = require('crypto');
+
+    /**
+     * @param {string} encryptedHex - Hex encoded encrypted data (IV + ciphertext + tag)
+     * @param {string} apiKey - Project API key
+     * @returns {string} Decrypted data
+     */
+    function decryptGCM(encryptedHex, apiKey) {
+        var hashedKey = crypto.createHash('sha256').update(apiKey).digest();
+        var encryptedBuffer = Buffer.from(encryptedHex, 'hex');
+        
+        // IV, 암호문, 태그 분리
+        var iv = encryptedBuffer.slice(0, 12);
+        var tag = encryptedBuffer.slice(-16);
+        var encrypted = encryptedBuffer.slice(12, -16);
+        
+        var decipher = crypto.createDecipheriv('aes-256-gcm', hashedKey, iv);
+        decipher.setAuthTag(tag);
+        
+        var decrypted = decipher.update(encrypted);
+        decrypted = Buffer.concat([decrypted, decipher.final()]);
+        
+        return decrypted.toString('utf8');
+    }
+    ```
+
+    ```javascript Node.js(crypto-js library)
+    import CryptoJS from 'crypto-js';
+
+    /**
+     * @param {string} encryptedHex - Hex encoded encrypted data
+     * @param {string} apiKey - Project API key
+     * @returns {string} Decrypted data
+     */
+    const decryptGCM = (encryptedHex, apiKey) => {
+        // crypto-js는 GCM을 지원하지 않으므로 Node.js crypto 모듈 사용 권장
+        throw new Error('GCM 모드는 crypto-js에서 지원하지 않습니다. Node.js crypto 모듈을 사용하세요.');
+    };
+    ```
+
+    ```java Java
+    import javax.crypto.Cipher;
+    import javax.crypto.spec.GCMParameterSpec;
+    import javax.crypto.spec.SecretKeySpec;
+    import java.nio.charset.StandardCharsets;
+    import java.security.MessageDigest;
+    import java.util.HexFormat;
+
+    public class GCMDecryption {
+        private static final int GCM_IV_LENGTH = 12;
+        private static final int GCM_TAG_LENGTH = 16;
+
+        /**
+         * @param encryptedHex - Hex encoded encrypted data (IV + ciphertext + tag)
+         * @param apiKey - Project API key
+         * @return Decrypted data
+         */
+        public static String decryptGCM(String encryptedHex, String apiKey) throws Exception {
+            // API 키를 SHA-256으로 해시
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hashedKey = digest.digest(apiKey.getBytes(StandardCharsets.UTF_8));
+            
+            // AES 복호화를 위한 키 생성
+            SecretKeySpec secretKey = new SecretKeySpec(hashedKey, "AES");
+            
+            // hex 문자열을 바이트 배열로 변환
+            byte[] encryptedData = HexFormat.of().parseHex(encryptedHex);
+            
+            // IV와 암호문+태그 분리
+            byte[] iv = new byte[GCM_IV_LENGTH];
+            byte[] ciphertext = new byte[encryptedData.length - GCM_IV_LENGTH];
+            System.arraycopy(encryptedData, 0, iv, 0, GCM_IV_LENGTH);
+            System.arraycopy(encryptedData, GCM_IV_LENGTH, ciphertext, 0, ciphertext.length);
+            
+            // GCM 모드로 Cipher 초기화
+            Cipher cipher = Cipher.getInstance("AES/GCM/NoPadding");
+            GCMParameterSpec gcmSpec = new GCMParameterSpec(GCM_TAG_LENGTH * 8, iv);
+            cipher.init(Cipher.DECRYPT_MODE, secretKey, gcmSpec);
+            
+            // 데이터 복호화
+            byte[] decryptedBytes = cipher.doFinal(ciphertext);
+            return new String(decryptedBytes, StandardCharsets.UTF_8);
+        }
+    }
+    ```
+
+    ```python Python
+    import os
+    from cryptography.hazmat.primitives import hashes
+    from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+
+    def hashed_key(api_key: str) -> bytes:
+        """API 키를 SHA-256으로 해시하여 32바이트 키 생성"""
+        digest = hashes.Hash(hashes.SHA256())
+        digest.update(api_key.encode("utf-8"))
+        return digest.finalize()
+
+    def decrypt_gcm(encrypted_hex: str, api_key: str) -> str:
+        """
+        AES-256-GCM 방식으로 암호화된 데이터를 복호화합니다.
+        
+        Args:
+            encrypted_hex: hex 형식의 암호화된 데이터 (IV + ciphertext + tag)
+            api_key: 프로젝트 API 키
+            
+        Returns:
+            복호화된 데이터
+        """
+        key = hashed_key(api_key)
+        encrypted_data = bytes.fromhex(encrypted_hex)
+        
+        # IV와 암호문+태그 분리
+        iv = encrypted_data[:12]
+        ct_tag = encrypted_data[12:]
+        
+        aesgcm = AESGCM(key)
+        decrypted_data = aesgcm.decrypt(iv, ct_tag, None)
+        return decrypted_data.decode("utf-8")
+    ```
+
+    </CodeGroup>
+  </Step>
 </Steps>
 
-## 3. 안전한 데이터 전송 옵션
+## 4. 안전한 데이터 전송 옵션
 
 API 메서드(GET, POST, PATCH)와 WEBHOOK에서 데이터를 암호화하여 안전하게 전송합니다. API 메서드는 AES-256-ECB 방식을, WEBHOOK은 AES-256-CBC 방식을 사용하여 암호화합니다. 데이터를 안전하게 보호하기 위해 사용 전에 반드시 안전한 데이터 전송 기능이 활성화되어 있는지 확인하세요.
 
@@ -284,7 +685,7 @@ body : {
 
 </CodeGroup>
 
-### 3-1. 주요 특징
+### 4-1. 주요 특징
 
 - GET, POST, PATCH 요청은 `AES-256-ECB` 방식으로 암호화
 - WEBHOOK 데이터는 `AES-256-CBC` 방식으로 암호화
@@ -296,7 +697,7 @@ body : {
   src="/images/api-reference/secure-data-transfer.png"
 />
 
-### 3-2. API 요청 데이터 암호화 (AES-256-ECB)
+### 4-2. API 요청 데이터 암호화 (AES-256-ECB)
 
 <CodeGroup>
 
@@ -345,7 +746,7 @@ public class Encryptor {
 
 </CodeGroup>
 
-### 3-3.  API 데이터 복호화 (AES-256-ECB)
+### 4-3.  API 데이터 복호화 (AES-256-ECB)
 
 <CodeGroup>
 
@@ -395,7 +796,7 @@ public class Encryptor {
 
 </CodeGroup>
 
-### 3-4. WEBHOOK 데이터 암호화 (AES-256-CBC)
+### 4-4. WEBHOOK 데이터 암호화 (AES-256-CBC)
 
 <CodeGroup>
 
@@ -453,7 +854,7 @@ public class Encryptor {
 
 </CodeGroup>
 
-### 3-5. WEBHOOK 데이터 복호화 (AES-256-CBC)
+### 4-5. WEBHOOK 데이터 복호화 (AES-256-CBC)
 
 <CodeGroup>
 

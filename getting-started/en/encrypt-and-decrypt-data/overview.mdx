@@ -96,7 +96,7 @@ Sensitive data sent via URL query strings is encrypted using the `AES-256-ECB` o
   <Step title="Select Encryption Module AES-256/GCM-256 and API Key or secretKey">
     <img
       height="200"
-      src="/images/encryption_modules/encryption_en.png"
+      src="/images/encryption_modules/encryption_secretkey_en.png"
     />
     <Note>
       Once issued, secretKey will not be displayed again. If lost, please reissue and use it.
@@ -144,19 +144,19 @@ GCM-256
 ```mermaid
 flowchart LR
   %% Key Generation
-  API[API Key] -->|SHA-256 Hash| KEY[Hashed Key (32 bytes)]
+  API[API Key] -->|SHA-256 Hash| KEY[Hashed Key 32 bytes]
   
   %% Encryption
   KEY --> ENC[AES-256-GCM Encryption]
-  IV[IV(Nonce) 12 bytes, random generation] --> ENC
-  AAD[AAD(Additional Authenticated Data, optional)] --> ENC
+  IV[IV Nonce 12 bytes random generation] --> ENC
+  AAD[AAD Additional Authenticated Data optional] --> ENC
   DATA[Plaintext Data] --> ENC
   
   ENC --> CT[Ciphertext]
-  ENC --> TAG[Authentication Tag (16 bytes)]
+  ENC --> TAG[Authentication Tag 16 bytes]
   
   %% Packaging
-  CT --> OUT[(IV || Ciphertext || Tag)]
+  CT --> OUT[IV + Ciphertext + Tag]
   IV --> OUT
   TAG --> OUT
   AAD -->|Header or separate field| OUT
@@ -174,7 +174,7 @@ flowchart LR
 
     
     ```javascript Node.js(crypto-js library)
-    import CryptoJS from 'crypto-js';
+    const CryptoJS = require('crypto-js');
     const hashedKey = CryptoJS.SHA256(APIKEY);
     
     ```
@@ -215,7 +215,7 @@ flowchart LR
 
     
     ```javascript Node.js(crypto-js library)
-    import CryptoJS from 'crypto-js';
+    const CryptoJS = require('crypto-js');
     
     const encrypt = (data, apiKey) => {
       const hashedKey = CryptoJS.SHA256(apiKey);
@@ -317,7 +317,7 @@ flowchart LR
     ```
 
     ```javascript Node.js(crypto-js library)
-    import CryptoJS from 'crypto-js';
+    const CryptoJS = require('crypto-js');
 
     /**
      * @param {string} data - Stringified JSON data
@@ -513,7 +513,7 @@ flowchart LR
 
     
     ```javascript Node.js(crypto-js library)
-    import CryptoJS from 'crypto-js';
+    const CryptoJS = require('crypto-js');
     
     const decrypt = (encryptedData, apiKey) => {
       const hashedKey = CryptoJS.SHA256(apiKey);
@@ -559,7 +559,7 @@ flowchart LR
     ```
 
     ```javascript Node.js(crypto-js library)
-    import CryptoJS from 'crypto-js';
+    const CryptoJS = require('crypto-js');
 
     /**
      * @param {string} encryptedHex - Hex encoded encrypted data
@@ -706,7 +706,6 @@ body : {
 <CodeGroup>
 
 ```javascript Node.js(crypto-js library)
-import CryptoJS from 'crypto-js';
 const CryptoJS = require('crypto-js');
 
 function encryptECB(data, apiKey) {
@@ -805,7 +804,7 @@ public class Encryptor {
 <CodeGroup>
 
 ```javascript Node.js (crypto-js library)
-import CryptoJS from 'crypto-js';
+const CryptoJS = require('crypto-js');
 
 function generateKeyAndIV(apiKey) {
     const hashedKey = CryptoJS.SHA256(apiKey);

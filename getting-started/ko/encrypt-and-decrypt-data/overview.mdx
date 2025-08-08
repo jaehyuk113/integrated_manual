@@ -13,13 +13,14 @@ description: "고객 데이터를 안전하게 보호하고 무단 접근과 데
   맥OS에서 사용시, 첫 실행때 "개인정보 보호 및 보안" 설정에서 허용을 해주셔야 사용이 가능합니다.
 </Tip>
 
-![Encrypt Tool Pn](/encryption_preview_image_0611.png)
+![Encrypt Tool Preview](/encryption_preview_image_0611.png)
 
 ## 암호화 옵션
 
 <CardGroup cols="2">
   <Card title="쿼리 스트링 암호화 모듈의 종류" icon="square-1">
     암호화 모듈의 종류
+  </Card>
   <Card title="쿼리 스트링 암호화" icon="square-2">
     쿼리 스트링 암호화
   </Card>
@@ -38,8 +39,8 @@ description: "고객 데이터를 안전하게 보호하고 무단 접근과 데
 
 ### 암호화 키 종류
 - API 키: Project에 부여된 API 키
-- Custom API 키키: 라이브폼에서 신규로 발급받아 사용하는 secretKey
-![Encryption modules](manual-idcheck/images/encryption_modules/encryption_kr.png)
+- Custom API 키: 라이브폼에서 신규로 발급받아 사용하는 secretKey
+![Encryption modules](/images/encryption_modules/encryption_kr.png)
 
 
 
@@ -95,12 +96,11 @@ URL의 쿼리 스트링으로 전송되는 민감한 데이터를 AES-256 방식
   <Step title="암호화 모듈 AES-256/GCM-256 및 API 키 및 secretKey 중 하나를 선택">
     <img
       height="200"
-      src="/images/encryption_modules/encryption_kr.png"
+      src="/images/encryption_modules/encryption_secretkey_kr.png"
     />
     <Note>
       secretKey의 경우 한번 발급 이후 표시되지 않습니다. 분실 시, 재발급해서 사용해주세요.
     </Note>
-  </Step>
   </Step>
   <Step title="제공된 API 키로 AES-256/GCM-256 암호화 수행">
     <img
@@ -116,7 +116,7 @@ URL의 쿼리 스트링으로 전송되는 민감한 데이터를 AES-256 방식
   <Step title="암호화된 데이터를 URL의 encrypted 쿼리 파라미터에 추가">
     <CodeGroup>
 
-    ```text exmaple.txt
+    ```text example.url
     https://form.argosidentity.com/?pid={project_Id}&encrypted={encrypted_json_text}
     ```
 
@@ -139,31 +139,31 @@ AES-256
 ```
 GCM-256
 ```mermaid
-flowchart LR
-  %% 키 생성
-  API[API Key] -->|SHA-256 해시| KEY[해시된 키 (32바이트)]
-  
-  %% 암호화
-  KEY --> ENC[AES-256-GCM 암호화]
-  IV[IV(Nonce) 12바이트, 랜덤 생성] --> ENC
-  AAD[AAD(추가 인증 데이터, 선택)] --> ENC
-  DATA[평문 데이터] --> ENC
-  
-  ENC --> CT[암호문]
-  ENC --> TAG[인증 태그(16바이트)]
-  
-  %% 패키징
-  CT --> OUT[(IV || 암호문 || 태그)]
-  IV --> OUT
-  TAG --> OUT
-  AAD -->|헤더 또는 별도 필드| OUT
+  flowchart LR
+    %% 키 생성
+    API[API Key] -->|SHA-256 해시| KEY[해시된 키 32바이트]
+    
+    %% 암호화
+    KEY --> ENC[AES-256-GCM 암호화]
+    IV[IV Nonce 12바이트 랜덤 생성] --> ENC
+    AAD[AAD 추가 인증 데이터 선택] --> ENC
+    DATA[평문 데이터] --> ENC
+    
+    ENC --> CT[암호문]
+    ENC --> TAG[인증 태그 16바이트]
+    
+    %% 패키징
+    CT --> OUT[IV + 암호문 + 태그]
+    IV --> OUT
+    TAG --> OUT
+    AAD -->|헤더 또는 별도 필드| OUT
 ```
 
 <Steps>
   <Step title="Hashed Key 생성">
     <CodeGroup>
 
-    ```javascript Node.js(crpyto module)
+    ```javascript Node.js(crypto module)
     var crypto = require('crypto');
     var hashedKey = crypto.createHash('sha256').update(APIKEY).digest();
     
@@ -171,7 +171,7 @@ flowchart LR
 
     
     ```javascript Node.js(crypto-js library)
-    import CryptoJS from 'crypto-js';
+    const CryptoJS = require('crypto-js');
     const hashedKey = CryptoJS.SHA256(APIKEY);
     
     ```
@@ -183,7 +183,7 @@ flowchart LR
 
     <CodeGroup>
 
-    ```javascript Node.js(crpyto module)
+    ```javascript Node.js(crypto module)
       var crypto = require('crypto');
     
       /**
@@ -211,7 +211,7 @@ flowchart LR
 
     
     ```javascript Node.js(crypto-js library)
-    import CryptoJS from 'crypto-js';
+    const CryptoJS = require('crypto-js');
     
     const encrypt = (data, apiKey) => {
       const hashedKey = CryptoJS.SHA256(apiKey);
@@ -313,7 +313,7 @@ flowchart LR
     ```
 
     ```javascript Node.js(crypto-js library)
-    import CryptoJS from 'crypto-js';
+    const CryptoJS = require('crypto-js');
 
     /**
      * @param {string} data - Stringified JSON data
@@ -491,7 +491,7 @@ flowchart LR
 
     <CodeGroup>
 
-    ```javascript Node.js(crpyto module)
+    ```javascript Node.js(crypto module)
         var crypto = require('crypto');
     
       /**
@@ -509,7 +509,7 @@ flowchart LR
 
     
     ```javascript Node.js(crypto-js library)
-    import CryptoJS from 'crypto-js';
+    const CryptoJS = require('crypto-js');
     
     const decrypt = (encryptedData, apiKey) => {
       const hashedKey = CryptoJS.SHA256(apiKey);
@@ -555,7 +555,7 @@ flowchart LR
     ```
 
     ```javascript Node.js(crypto-js library)
-    import CryptoJS from 'crypto-js';
+    const CryptoJS = require('crypto-js');
 
     /**
      * @param {string} encryptedHex - Hex encoded encrypted data
@@ -702,7 +702,6 @@ body : {
 <CodeGroup>
 
 ```javascript Node.js(crypto-js library)
-import CryptoJS from 'crypto-js';
 const CryptoJS = require('crypto-js');
 
 function encryptECB(data, apiKey) {
@@ -801,7 +800,7 @@ public class Encryptor {
 <CodeGroup>
 
 ```javascript Node.js(crypto-js library)
-import CryptoJS from 'crypto-js';
+const CryptoJS = require('crypto-js');
 
 function generateKeyAndIV(apiKey) {
     const hashedKey = CryptoJS.SHA256(apiKey);
